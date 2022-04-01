@@ -1,12 +1,5 @@
-/**
-* Template Name: Kelly - v4.7.0
-* Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 /*--------------------------------------------------------------
-# General
+首頁
 --------------------------------------------------------------*/
 body {
   font-family: "Open Sans", sans-serif;
@@ -98,7 +91,7 @@ h6 {
   visibility: hidden;
   opacity: 0;
   right: 15px;
-  bottom: 20px;
+  bottom: 15px;
   z-index: 996;
   background: #34b7a7;
   width: 40px;
@@ -130,7 +123,7 @@ h6 {
   background: #e9e8e6;
   box-shadow: 0px 0px 25px 0 rgba(0, 0, 0, 0.08);
   z-index: 997;
-  padding: 10px 0;
+  padding: 15px 0;
 }
 
 #header .logo {
@@ -175,6 +168,41 @@ h6 {
 
 .header-social-links a:hover {
   color: #34b7a7;
+}
+
+.header-nav .nav-profile {
+  color: #012970;
+}
+
+.header-nav .nav-profile img {
+  max-height: 36px;
+}
+
+.header-nav .nav-profile span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Bordered Tabs */
+.nav-tabs-bordered {
+  border-bottom: 2px solid #ebeef4;
+}
+
+.nav-tabs-bordered .nav-link {
+  margin-bottom: -2px;
+  border: none;
+  color: #2c384e;
+}
+
+.nav-tabs-bordered .nav-link:hover,
+.nav-tabs-bordered .nav-link:focus {
+  color: #4154f1;
+}
+
+.nav-tabs-bordered .nav-link.active {
+  background-color: #fff;
+  color: #4154f1;
+  border-bottom: 2px solid #4154f1;
 }
 
 /*--------------------------------------------------------------
@@ -315,6 +343,102 @@ h6 {
   }
 }
 
+/*--------------------------------------------------------------
+# Icon
+--------------------------------------------------------------*/
+.rounded-circle {
+  border-radius: 50% !important;
+  height: 50px;
+}
+
+/* Bordered Tabs */
+.nav-tabs-bordered {
+  border-bottom: 2px solid #ebeef4;
+}
+
+.nav-tabs-bordered .nav-link {
+  margin-bottom: -2px;
+  border: none;
+  color: #2c384e;
+}
+
+.nav-tabs-bordered .nav-link:hover,
+.nav-tabs-bordered .nav-link:focus {
+  color: #4154f1;
+}
+
+.nav-tabs-bordered .nav-link.active {
+  background-color: #fff;
+  color: #4154f1;
+  border-bottom: 2px solid #4154f1;
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+  border-radius: 4px;
+  padding: 10px 0;
+  -webkit-animation-name: dropdown-animate;
+  animation-name: dropdown-animate;
+  -webkit-animation-duration: 0.2s;
+  animation-duration: 0.2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  border: 0;
+  box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+}
+
+.dropdown-menu .dropdown-header,
+.dropdown-menu .dropdown-footer {
+  text-align: center;
+  font-size: 15px;
+  padding: 10px 25px;
+}
+
+.dropdown-menu .dropdown-footer a {
+  color: #444444;
+  text-decoration: underline;
+}
+
+.dropdown-menu .dropdown-footer a:hover {
+  text-decoration: none;
+}
+
+.dropdown-menu .dropdown-divider {
+  color: #a5c5fe;
+  margin: 0;
+}
+
+.dropdown-menu .dropdown-item {
+  font-size: 14px;
+  padding: 10px 15px;
+  transition: 0.3s;
+}
+
+.dropdown-menu .dropdown-item i {
+  margin-right: 10px;
+  font-size: 18px;
+  line-height: 0;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #f6f9ff;
+}
+
+@media (min-width: 768px) {
+  .dropdown-menu-arrow::before {
+    content: "";
+    width: 13px;
+    height: 13px;
+    background: #fff;
+    position: absolute;
+    top: -7px;
+    right: 20px;
+    transform: rotate(45deg);
+    border-top: 1px solid #eaedf1;
+    border-left: 1px solid #eaedf1;
+  }
+}
+
 /**
 * Mobile Navigation 
 */
@@ -434,6 +558,7 @@ h6 {
   background: url("../img/stripy-127.png") top right;
   background-size: cover;
   opacity: 0.7;
+  box-sizing: border-box;
   /* Illustration by <a href="https://icons8.com/illustrations/author/HxMFjfKZdNq2">Rosina Gavrilash</a> from <a href="https://icons8.com/illustrations">Ouch!</a> */
 }
 
@@ -472,25 +597,6 @@ h6 {
   color: #6f6f6f;
   margin: 10px 0 0 0;
   font-size: 22px;
-}
-
-#hero .btn-about {
-  font-family: "Raleway", sans-serif;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 1px;
-  display: inline-block;
-  padding: 12px 40px;
-  border-radius: 50px;
-  transition: 0.5s;
-  margin-top: 30px;
-  color: #fff;
-  background: #34b7a7;
-}
-
-#hero .btn-about:hover {
-  background: #3dc8b7;
 }
 
 @media (min-width: 1024px) {
@@ -1308,10 +1414,11 @@ section {
 --------------------------------------------------------------*/
 #footer {
   background: #e9e8e6;
-  padding: 20px 0;
+  padding: 30px 0;
   color: #222222;
   font-size: 14px;
   text-align: center;
+  padding: 30px 0px;
 }
 
 #footer .credits {
@@ -1321,50 +1428,4 @@ section {
 
 #footer .credits a {
   color: #34b7a7;
-}
-
-/*--------------------------------------------------------------
-# dropdown
---------------------------------------------------------------*/
-
-.dropbtn {
-  background-color: #e9e8e6;
-  /* color: white;
-  padding: 16px;
-  font-size: 16px; */
-  border: none;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.nav-item-right {
-  position: absolute;
-  right: 5px;
 }
