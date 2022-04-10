@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>:: WorkFun ::</title>
+
+    <!-- Favicons -->
+    <link href="../assets/img/wf.png" rel="icon" />
+    <link href="../assets/img/wf.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="../assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="../assets/vendor/boxicsdfdsfdsfons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="../assets/css/style.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <!-- <h1 class="logo me-auto me-lg-0"><a href="">WorkFun</a></h1> -->
+            <!-- 公司logo圖片 -->
+            <a href="Home.html" class="logo"><img src="../assets/img/workfun.gif" alt="" class="img-fluid"
+                    width="230px"></a>
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <!-- 修改跳頁 -->
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">揪團訂餐</button>
+                            <div class="dropdown-content">
+                                <a href="#">我要揪團</a>
+                                <a href="#">查詢揪團</a>
+                                <a href="#">查詢參團</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">二手競標</button>
+                            <div class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">問題回報</button>
+                            <div class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">硬體預約</button>
+                            <div class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">塗鴉牆</button>
+                            <div class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- .navbar -->
+
+            <div class="navbar">
+                <ul>
+                    <li>
+                        <div>
+                            <a href=""><i class="bi bi-chat-dots" style="font-size: 25px; color: black"></i></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a href=""><i class="bi bi-chat" style="font-size: 25px; color: black"></i></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">
+                                <i class="bi bi-bell" style="font-size: 25px"></i>
+                            </button>
+                            <div class="dropdown-content nav-item-right">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">
+                                <i class="bi bi-person" style="font-size: 25px"></i>
+                            </button>
+                            <div class="dropdown-content nav-item-right">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a> -->
+                <!-- <a href="#" class="instagram"><i class="bi bi-bell"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-person-fill"></i></i></a> -->
+            </div>
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
+    <main style="height: 130vh;">
+        <div style="height: 90px;"></div>
+        <!-- 從這裡開始 -->
+        <!-- table -->
+        <div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h5 class="m-0 font-weight-bold text-info"><strong>回報LIST</strong></h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                            <div class="row">
+                                <div class="col-10" style="height: 60px;display: inline-block;">
+                                    <form class="my-1">
+                                        <div class="form-group col-2" style="display : inline-block;">
+                                            <select class="form-control" id="exampleFormControlSelect1"
+                                                style="border: gray solid 2px;">
+                                                <option>選擇類型</option>
+                                                <option>添購新品</option>
+                                                <option>損壞報修</option>
+                                                <option>軟硬體問題</option>
+                                                <option>其他</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-3" style="display : inline-block">
+                                            <input type="text" class="form-control" id="exampleFormControlInput1"
+                                                placeholder="輸入關鍵字" style="border: gray solid 2px;">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mb-2 mt-1 col"
+                                            style="display : inline-block;">搜尋</button>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered dataTable" id="dataTable" width="100%"
+                                        cellspacing="0" role="grid" aria-describedby="dataTable_info"
+                                        style="width: 100%;">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
+                                                    rowspan="1" colspan="1" aria-sort="ascending"
+                                                    aria-label="Name: activate to sort column descending" style="">類型
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                    colspan="1" aria-label="Position: activate to sort column ascending"
+                                                    style="">標題</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                    colspan="1" aria-label="Office: activate to sort column ascending"
+                                                    style="">回報人</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Start date: activate to sort column ascending" style="">
+                                                    回報時間</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                    colspan="1" aria-label="Salary: activate to sort column ascending"
+                                                    style="">回報結束時間</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="odd">
+                                                <td class="sorting_1">Airi Satou</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td class="sorting_1">Angelica Ramos</td>
+                                                <td>Chief Executive Officer (CEO)</td>
+                                                <td>London</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="sorting_1">Ashton Cox</td>
+                                                <td>Junior Technical Author</td>
+                                                <td>San Francisco</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td class="sorting_1">Bradley Greer</td>
+                                                <td>Software Engineer</td>
+                                                <td>London</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="sorting_1">Brenden Wagner</td>
+                                                <td>Software Engineer</td>
+                                                <td>San Francisco</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td class="sorting_1">Brielle Williamson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>New York</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="sorting_1">Bruno Nash</td>
+                                                <td>Software Engineer</td>
+                                                <td>London</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td class="sorting_1">Caesar Vance</td>
+                                                <td>Pre-Sales Support</td>
+                                                <td>New York</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="sorting_1">Cara Stevens</td>
+                                                <td>Sales Assistant</td>
+                                                <td>New York</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td class="sorting_1">Cedric Kelly</td>
+                                                <td>Senior Javascript Developer</td>
+                                                <td>Edinburgh</td>
+                                                <td>2022/4/9</td>
+                                                <td>2022/4/9</td>
+                                                <td><a href="#"><button type="button"
+                                                            class="btn btn-info">刪除回報</button></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
+                                            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0"
+                                                class="page-link">Previous</a>
+                                        </li>
+                                        <li class="paginate_button page-item active"><a href="#"
+                                                aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+                                                class="page-link">1</a></li>
+                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
+                                        <li class="paginate_button page-item next" id="dataTable_next"><a href="#"
+                                                aria-controls="dataTable" data-dt-idx="7" tabindex="0"
+                                                class="page-link">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>WorkFun</span></strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer>
+    <!-- End  Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/purecounter/purecounter.js"></script>
+    <script src="../assets/vendor/aos/aos.js"></script>
+    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/jquery/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main.js"></script>
+
+</body>
+
+</html>
