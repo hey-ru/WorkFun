@@ -123,7 +123,7 @@ h6 {
   background: #e9e8e6;
   box-shadow: 0px 0px 25px 0 rgba(0, 0, 0, 0.08);
   z-index: 997;
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 #header .logo {
@@ -141,7 +141,7 @@ h6 {
 }
 
 #header .logo img {
-  max-height: 40px;
+  max-height: 50px;
 }
 
 @media (max-width: 992px) {
@@ -163,7 +163,7 @@ h6 {
   display: inline-block;
   line-height: 0px;
   transition: 0.3s;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .header-social-links a:hover {
@@ -234,7 +234,7 @@ h6 {
   align-items: center;
   justify-content: space-between;
   font-family: "Raleway", sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: #888888;
   white-space: nowrap;
@@ -375,6 +375,7 @@ h6 {
 
 /* Dropdown menus */
 .dropdown-menu {
+
   border-radius: 4px;
   padding: 10px 0;
   -webkit-animation-name: dropdown-animate;
@@ -548,6 +549,7 @@ h6 {
 .navbar-mobile .dropdown>.dropdown-active {
   display: block;
 }
+
 
 /*--------------------------------------------------------------
 # Hero Section
