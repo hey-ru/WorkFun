@@ -27,9 +27,28 @@
     <!-- Template Main CSS File -->
     <link href="../assets/css/style.css" rel="stylesheet" />
     <style>
-        table {
-            vertical-align: middle;
+        .menu {
+            padding: 1px 5px;
+        }
+
+        .menu-header {
+            height: 130px;
+        }
+
+        .menu-header div {
+            height: 125px;
+        }
+
+        .menu-item {
+            margin: 5px 23px;
+            width: 29%;
+            height: 50px;
+            line-height: 50px;
             text-align: center;
+            font-size: 25px;
+            font-weight: bolder;
+            background-color: cornflowerblue;
+            color: whitesmoke;
         }
     </style>
 
@@ -175,17 +194,30 @@
     <!-- End Header -->
 
     <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-    <main style="height: 200vh;">
+    <main style="height: auto;">
         <div style="height: 98px;"></div>
         <!-- 從這裡開始 -->
         <div class="menu">
-            <div class="menu-header" style="height: 130px;border: solid 2px;">
+            <div class="menu-header container">
+                <div class="row">
+                    <div class="col-5" style="padding: 20px;">
+                        <h2>店名: 可不可</h2>
+                        <h4>電話:04-1234567</h4>
+                    </div>
+                    <div class="col-7" style="text-align:right;">
+                        <a href="#"><i class="bi bi-person-plus-fill"
+                                style="font-size: 100px;line-height: 125px;"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid menu-body overflow-hidden">
+                <div class="row row-cols-4">
+                    <div class="col menu-item">
+                        Column
+                    </div>
+                </div>
             </div>
         </div>
-
-
-
-
 
     </main>
     <!-- ======= Footer ======= -->
@@ -218,6 +250,17 @@
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
+    <script>
+        const fragment = document.createDocumentFragment();
+        let menuItem = document.getElementsByClassName("menu-item")[0];
+
+        let num = 30;
+        for (let i = 1; i < num; i++) {
+            let newMenuItem = menuItem.cloneNode(true);
+            fragment.append(newMenuItem);
+        }
+        menuItem.after(fragment);
+    </script>
 
 </body>
 
