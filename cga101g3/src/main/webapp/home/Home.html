@@ -50,17 +50,60 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <!-- 修改跳頁 -->
-                    <li><a href=" ">揪團訂餐</a></li>
-                    <li><a href=" ">二手競標</a></li>
-                    <li><a href=" ">問題回報</a></li>
-                    <li><a href=" ">器材預約</a></li>
-                    <li><a href=" ">塗鴉牆</a></li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">揪團訂餐</button>
+                            <div class="dropdown-content">
+                                <a href="../groupbuy/gb_home_1.html"> 主頁 </a>
+                                <a href="../groupbuy/shoplist.html">我要揪團</a>
+                                <a href="#">查詢揪團</a>
+                                <a href="#">查詢參團</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">二手競標</button>
+                            <div class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">問題回報</button>
+                            <div class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">器材預約</button>
+                            <div class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="dropbtn">塗鴉牆</button>
+                            <div class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-
-                <nav class="navbar navbar-light bg-light" style="margin-left: 120px;">
-                </nav>
-
+                <div style="margin-left: 120px;"> </div>
                 <!-- 左邊icon -->
                 <div class="navbar">
                     <ul>
@@ -74,9 +117,7 @@
                         </li>
                         <li>
                             <div class="dropdown">
-                                <!-- <button class="dropbtn"> -->
                                 <i class="bi bi-bell" style="font-size:25px"></i>
-                                <!-- </button> -->
                                 <div class="dropdown-content nav-item-right">
                                     <a href="#">訊息一</a>
                                     <a href="#">訊息二</a>
@@ -85,7 +126,7 @@
                             </div>
                         </li>
 
-                        <!-- 測試 -->
+                        <!-- 個人頁面dropdown -->
                         <li class="nav-item dropdown pe-3">
 
                             <a class="nav-link nav-profile d-flex align-items-center pe-0 ; width:2px" href="#"
@@ -104,9 +145,8 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
                                         <i class="bi bi-person"></i>
                                         <span>My Profile</span>
                                     </a>
@@ -114,9 +154,8 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
                                         <i class="bi bi-gear"></i>
                                         <span>Account Settings</span>
                                     </a>
@@ -124,21 +163,18 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <i class="bi bi-box-arrow-right"></i>
                                         <span>Sign Out</span>
                                     </a>
                                 </li>
-
                             </ul>
-
-                        </li><!-- End Profile Nav -->
-
+                        </li>
+                        <!-- End Profile Nav -->
                     </ul>
                 </div>
-
+            </nav>
         </div>
 
     </header><!-- End Header -->

@@ -455,7 +455,7 @@ h5 {
   color: #fff;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 600px) {
   .mobile-nav-toggle {
     display: block;
   }
@@ -488,8 +488,8 @@ h5 {
   position: absolute;
   top: 55px;
   right: 15px;
-  bottom: 15px;
-  left: 15px;
+  bottom: 25px;
+  left: 70%;
   padding: 10px 0;
   border-radius: 10px;
   background-color: #fff;
