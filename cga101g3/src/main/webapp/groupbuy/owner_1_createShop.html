@@ -2,59 +2,35 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>:: WorkFun ::</title>
 
     <!-- Favicons -->
-    <link href="../assets/img/wf.png" rel="icon" />
-    <link href="../assets/img/wf.png" rel="apple-touch-icon" />
+    <link href="../assets/img/wf.png" rel="icon">
+    <link href="../assets/img/wf.png" rel=" apple-touch-icon">
 
     <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet" />
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="../assets/vendor/aos/aos.css" rel="stylesheet" />
-    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-    <link href="../assets/vendor/boxicsdfdsfdsfons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
-    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="../assets/css/style.css" rel="stylesheet" />
-    <style>
-        .menu {
-            padding: 1px 5px;
-        }
-
-        .menu-header {
-            height: 130px;
-        }
-
-        .menu-header div {
-            height: 125px;
-        }
-
-        .menu-item {
-            margin: 5px 23px;
-            width: 29%;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            font-size: 25px;
-            font-weight: bolder;
-            background-color: cornflowerblue;
-            color: whitesmoke;
-        }
-    </style>
+    <link href="style_gb.css" rel="stylesheet">
 
 </head>
 
 <body>
+
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
         <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -68,10 +44,11 @@
                         <div class="dropdown">
                             <button class="dropbtn">揪團訂餐</button>
                             <div class="dropdown-content">
-                                <a href="./gb_home_1.html"> 主頁 </a>
+                                <a href="./gbhome.html">瀏覽揪團</a>
                                 <a href="./shoplist.html">我要揪團</a>
                                 <a href="#">查詢揪團</a>
                                 <a href="#">查詢參團</a>
+
                             </div>
                         </div>
                     </li>
@@ -117,7 +94,10 @@
                     </li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-                <div style="margin-left: 120px;"> </div>
+
+                <nav class="navbar navbar-light bg-light" style="margin-left: 120px;">
+                </nav>
+
                 <!-- 左邊icon -->
                 <div class="navbar">
                     <ul>
@@ -184,42 +164,173 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <!-- End Profile Nav -->
+                        </li><!-- End Profile Nav -->
                     </ul>
                 </div>
-            </nav>
         </div>
     </header>
+
     <!-- End Header -->
-
     <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-    <main style="height: auto;">
-        <div style="height: 98px;"></div>
-        <!-- 從這裡開始 -->
-        <div class="menu">
-            <div class="menu-header container">
-                <div class="row">
-                    <div class="col-5" style="padding: 20px;">
-                        <h2>店名: 可不可</h2>
-                        <h4>電話:04-1234567</h4>
-                    </div>
-                    <div class="col-7" style="text-align:right;">
-                        <a href="#"><i class="bi bi-person-plus-fill"
-                                style="font-size: 100px;line-height: 125px;"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid menu-body overflow-hidden">
-                <div class="row row-cols-4">
-                    <div class="col menu-item">
-                        Column
-                    </div>
-                </div>
-            </div>
-        </div>
+    <main id="main" class="main">
 
+        <section class="section">
+            <div class="row">
+
+                <!-- ======= 新增店家Form ======= -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">店家資訊</h5>
+
+                            <!-- Multi Columns Form -->
+                            <form class="row g-3">
+                                <div class="col-md-12">
+                                    <label for="inputName5" class="form-label">名稱</label>
+                                    <input type="text" class="form-control" id="inputName5">
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label">類型</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected>選擇店家類型</option>
+                                            <option value="1">飲料</option>
+                                            <option value="2">中式</option>
+                                            <option value="3">異國</option>
+                                            <option value="4">小吃</option>
+                                            <option value="5">素食</option>
+                                            <option value="6">其他</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="inputAddress5" class="form-label">地址(改成select)</label>
+                                    <input type="text" class="form-control" id="inputAddres5s"
+                                        placeholder="320 桃園市中壢區...">
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label">電話</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label">網站</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="inputName5" class="form-label">低消</label>
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                </div>
+                            </form><!-- End Multi Columns Form -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======= 新增菜單Form ======= -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">菜單資訊</h5>
+                            <!-- Table with hoverable rows -->
+                            <table class="table table-hover" style="text-align: center;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" width="200px">編號</th>
+                                        <th scope="col" width="500px">品項</th>
+                                        <th scope="col" width="200px">單價</th>
+                                        <th scope="col" width="500px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">7</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">8</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">9</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">10</th>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="text" name="remark" size="10" value=></td>
+                                        <td><input type="submit" class="btn btn-secondary btn-sm" value="刪除"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Table with hoverable rows -->
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+            <!-- 提交/清除 -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">送出</button>
+            </div>
+
+
+        </section>
     </main>
+    <!-- End of Main  -->
     <!-- ======= Footer ======= -->
     <footer id="footer">
         <div class="container">
@@ -227,8 +338,7 @@
                 &copy; Copyright <strong><span>WorkFun</span></strong>. All Rights Reserved
             </div>
         </div>
-    </footer>
-    <!-- End  Footer -->
+    </footer><!-- End  Footer -->
 
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -237,6 +347,7 @@
     <!-- Vendor JS Files -->
     <script src="../assets/vendor/purecounter/purecounter.js"></script>
     <script src="../assets/vendor/aos/aos.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
@@ -250,17 +361,6 @@
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
-    <script>
-        const fragment = document.createDocumentFragment();
-        let menuItem = document.getElementsByClassName("menu-item")[0];
-
-        let num = 30;
-        for (let i = 1; i < num; i++) {
-            let newMenuItem = menuItem.cloneNode(true);
-            fragment.append(newMenuItem);
-        }
-        menuItem.after(fragment);
-    </script>
 
 </body>
 

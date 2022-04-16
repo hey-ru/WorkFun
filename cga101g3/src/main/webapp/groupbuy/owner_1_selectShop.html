@@ -182,7 +182,7 @@
         <div>
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h5 class="m-0 font-weight-bold text-info"><strong>店家LIST</strong></h5>
+                    <h6><strong>查詢店家</strong></h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -194,26 +194,27 @@
                                         <div class="form-group col-2" style="display : inline-block;">
                                             <select class="form-control" id="exampleFormControlSelect1"
                                                 style="border: gray solid 2px;">
-                                                <option>選擇類型</option>
-                                                <option>飲料</option>
-                                                <option>中式</option>
-                                                <option>西式</option>
-                                                <option>小吃</option>
-                                                <option>素食</option>
+                                                <option selected>選擇店家類型</option>
+                                                <option value="1">飲料</option>
+                                                <option value="2">中式</option>
+                                                <option value="3">異國</option>
+                                                <option value="4">小吃</option>
+                                                <option value="5">素食</option>
+                                                <option value="6">其他</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-3" style="display : inline-block">
                                             <input type="text" class="form-control" id="exampleFormControlInput1"
                                                 placeholder="輸入店名" style="border: gray solid 2px;">
                                         </div>
-                                        <button type="submit" class="btn btn-primary mb-2 mt-1 col"
+                                        <button type="submit" class="btn btn-dark mb-2 mt-1 col"
                                             style="display : inline-block;">搜尋</button>
 
                                     </form>
                                 </div>
-                                <div class="col-2" style="height: 60px;display: inline-block;">
-                                    <a href="#"><button type="button"
-                                            class="btn btn-secondary btn-lg my-1 mx-3">新增店家</button></a>
+                                <div class="col-2" style="left: 0;">
+                                    <a href="owner_1_createShop.html"><button type="button"
+                                            class="btn btn-warning btn-lg">新增店家</button></a>
                                 </div>
                             </div>
 
@@ -228,10 +229,10 @@
                                                     rowspan="1" colspan="1" aria-sort="ascending"
                                                     aria-label="Name: activate to sort column descending"
                                                     style="width: 50px;">
-                                                    店名</th>
+                                                    店家名稱</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                     colspan="1" aria-label="Position: activate to sort column ascending"
-                                                    style="width: 20px;">類型</th>
+                                                    style="width: 20px;">店家類型</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                     colspan="1" aria-label="Position: activate to sort column ascending"
                                                     style="width: 150px;">店家地址</th>
@@ -242,12 +243,14 @@
                                                     colspan="1" aria-label="Age: activate to sort column ascending"
                                                     style="width: 30px;">店家網站</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                    colspan="1"
-                                                    aria-label="Start date: activate to sort column ascending"
-                                                    style="width: 67px;">Menu</th>
+                                                    colspan="1" aria-label="Office: activate to sort column ascending"
+                                                    style="width: 50px;">低消金額</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                                                     colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                    style="width: 60px;">揪團</th>
+                                                    style="width: 60px;"></th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                    colspan="1" aria-label="Salary: activate to sort column ascending"
+                                                    style="width: 60px;"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -257,9 +260,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="even">
                                                 <td class="sorting_1">大同町</td>
@@ -267,9 +272,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="odd">
                                                 <td class="sorting_1">大同町</td>
@@ -277,9 +284,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="even">
                                                 <td class="sorting_1">大同町</td>
@@ -287,9 +296,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="odd">
                                                 <td class="sorting_1">大同町</td>
@@ -297,9 +308,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="even">
                                                 <td class="sorting_1">大同町</td>
@@ -307,9 +320,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="odd">
                                                 <td class="sorting_1">大同町</td>
@@ -317,9 +332,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="even">
                                                 <td class="sorting_1">大同町</td>
@@ -327,9 +344,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="odd">
                                                 <td class="sorting_1">大同町</td>
@@ -337,9 +356,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                             <tr class="even">
                                                 <td class="sorting_1">大同町</td>
@@ -347,9 +368,11 @@
                                                 <td>320桃園市中壢區忠孝路201-2號</td>
                                                 <td>03-4224695</td>
                                                 <td><a href="#">website</a></td>
-                                                <td><a href="#">詳細</a></td>
+                                                <td></td>
+                                                <td><a href="owner_1_createShop.html"><button type="button"
+                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
                                                 <td><a href="#"><button type="button"
-                                                            class="btn btn-info">我要揪這個</button></a></td>
+                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
