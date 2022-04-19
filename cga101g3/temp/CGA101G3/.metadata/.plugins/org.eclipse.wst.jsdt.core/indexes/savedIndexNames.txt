@@ -1,0 +1,2 @@
+INDEX VERSION 1.4+/Users/ryan/Coding/CGA101/Project/CGA101G3/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+282087432.index
