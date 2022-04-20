@@ -54,7 +54,7 @@ public class ChatRoomMemberJDBCDAO implements ChatRoomMemberDAO_interface {
 	}
 
 //	@Override
-//	public void update(chatRoomMemberVO chatroommemberVO) {
+//	public void update(ChatRoomMemberVO chatroommemberVO) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //		
@@ -73,8 +73,8 @@ public class ChatRoomMemberJDBCDAO implements ChatRoomMemberDAO_interface {
 //			if (pstmt != null) {
 //				try {
 //					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
 //				}
 //			}
 //			if (con != null) {
@@ -89,7 +89,7 @@ public class ChatRoomMemberJDBCDAO implements ChatRoomMemberDAO_interface {
 //	}
 
 //	@Override
-//	public void delete(chatRoomMemberVO chatroommemberVO) {
+//	public void delete(ChatRoomMemberVO chatroommemberVO) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //		
@@ -169,9 +169,9 @@ public class ChatRoomMemberJDBCDAO implements ChatRoomMemberDAO_interface {
 	}
 
 //	@Override
-//	public List<chatRoomMemberVO> getAll() {
-//		List<chatRoomMemberVO> list = new ArrayList<chatRoomMemberVO>();
-//		chatRoomMemberVO chatroommemberVO;
+//	public List<ChatRoomMemberVO> getAll() {
+//		List<ChatRoomMemberVO> list = new ArrayList<ChatRoomMemberVO>();
+//		ChatRoomMemberVO chatroommemberVO;
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //		ResultSet rs = null;
@@ -183,7 +183,7 @@ public class ChatRoomMemberJDBCDAO implements ChatRoomMemberDAO_interface {
 //			rs = pstmt.executeQuery();
 //			
 //			while(rs.next()) {
-//				chatroommemberVO = new chatRoomMemberVO();
+//				chatroommemberVO = new ChatRoomMemberVO();
 //				chatroommemberVO.setChat_room_member_id(rs.getInt("chat_room_member_id"));
 //				chatroommemberVO.setChat_room_id(rs.getInt("chat_room_id"));
 //				list.add(chatroommemberVO);
@@ -216,19 +216,19 @@ public class ChatRoomMemberJDBCDAO implements ChatRoomMemberDAO_interface {
 		ChatRoomMemberJDBCDAO dao = new ChatRoomMemberJDBCDAO();
 
 		// 新增
-		ChatRoomMemberVO chatroommemberVO1 = new ChatRoomMemberVO();
-		chatroommemberVO1.setChat_room_member_id(1013);
-		chatroommemberVO1.setChat_room_id(10007);
-		dao.insert(chatroommemberVO1);
+//		ChatRoomMemberVO chatroommemberVO1 = new ChatRoomMemberVO();
+//		chatroommemberVO1.setChat_room_member_id(1013);
+//		chatroommemberVO1.setChat_room_id(10007);
+//		dao.insert(chatroommemberVO1);
 		
 		// 新增
-//		chatRoomMemberVO chatroommemberVO2 = new chatRoomMemberVO();
+//		ChatRoomMemberVO chatroommemberVO2 = new ChatRoomMemberVO();
 //		chatroommemberVO2.setChat_room_member_id(1014);
 //		chatroommemberVO2.setChat_room_id(10007);
 //		dao.insert(chatroommemberVO2);
 
 		// 修改
-//		chatRoomMemberVO chatroommemberVO2 = new chatRoomMemberVO();
+//		ChatRoomMemberVO chatroommemberVO2 = new ChatRoomMemberVO();
 //		chatroommemberVO2.setChat_room_id(10007);
 //		chatroommemberVO2.setChat_room_member_id(1014);
 //		dao.update(chatroommemberVO2);
@@ -237,42 +237,16 @@ public class ChatRoomMemberJDBCDAO implements ChatRoomMemberDAO_interface {
 //		dao.delete(1009);
 
 		// 查詢
-//		secondHandVO secondhandVO3 = dao.findByPrimaryKey(1005);
-//		System.out.print(secondhandVO3.getsecond_hand_id() + ",");
-//		System.out.print(secondhandVO3.getSaler() + ",");
-//		System.out.print(secondhandVO3.getBid_winner() + ",");
-//		System.out.print(secondhandVO3.getDeal_price() + ",");
-//		System.out.print(secondhandVO3.getName() + ",");
-//		System.out.print(secondhandVO3.getBottom_price() + ",");
-//		System.out.print(secondhandVO3.getTop_price() + ",");
-//		System.out.print(secondhandVO3.getStart_time() + ",");
-//		System.out.print(secondhandVO3.getEnd_time() + ",");
-//		System.out.print(secondhandVO3.getIs_deal() + ",");
-//		System.out.print(secondhandVO3.getImg1() + "test1,");
-//		System.out.print(secondhandVO3.getImg2() + "2,");
-//		System.out.print(secondhandVO3.getImg3() + "3,");
-//		System.out.print(secondhandVO3.getCreate_time() + ",");
-//		System.out.println(secondhandVO3.getUpdate_time());
+//		ChatRoomMemberVO chatroommemberVO3 = dao.findByPrimaryKey(1014, 10006);
+//		System.out.print(chatroommemberVO3.getChat_room_member_id() + ",");
+//		System.out.println(chatroommemberVO3.getChat_room_id());
 //		System.out.println("---------------------");
 
 		// 查詢
-//		List<secondHandVO> list = dao.getAll();
-//		for (secondHandVO listSecondHandVO : list) {
-//			System.out.print(listSecondHandVO.getsecond_hand_id() + ",");
-//			System.out.print(listSecondHandVO.getSaler() + ",");
-//			System.out.print(listSecondHandVO.getBid_winner() + ",");
-//			System.out.print(listSecondHandVO.getDeal_price() + ",");
-//			System.out.print(listSecondHandVO.getName() + ",");
-//			System.out.print(listSecondHandVO.getBottom_price() + ",");
-//			System.out.print(listSecondHandVO.getTop_price() + ",");
-//			System.out.print(listSecondHandVO.getStart_time() + ",");
-//			System.out.print(listSecondHandVO.getEnd_time() + ",");
-//			System.out.print(listSecondHandVO.getIs_deal() + ",");
-//			System.out.print(listSecondHandVO.getImg1() + ",");
-//			System.out.print(listSecondHandVO.getImg2() + ",");
-//			System.out.print(listSecondHandVO.getImg3() + ",");
-//			System.out.print(listSecondHandVO.getCreate_time() + ",");
-//			System.out.println(listSecondHandVO.getUpdate_time());
+//		List<ChatRoomMemberVO> list = dao.getAll();
+//		for (ChatRoomMemberVO listChatRoomMemberVO : list) {
+//			System.out.print(listChatRoomMemberVO.getChat_room_member_id() + ",");
+//			System.out.println(listChatRoomMemberVO.getChat_room_id());
 //		}
 	}
 

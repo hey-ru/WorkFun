@@ -57,7 +57,7 @@ public class MessageJDBCDAO implements MessageDAO_interface {
 	}
 
 //	@Override
-//	public void update(messageVO messageVO) {
+//	public void update(MessageVO messageVO) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //
@@ -167,9 +167,9 @@ public class MessageJDBCDAO implements MessageDAO_interface {
 	}
 
 //	@Override
-//	public List<messageVO> getAll() {
-//		List<messageVO> list = new ArrayList<messageVO>();
-//		messageVO messageVO = null;
+//	public List<MessageVO> getAll() {
+//		List<MessageVO> list = new ArrayList<MessageVO>();
+//		MessageVO messageVO = null;
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //		ResultSet rs = null;
@@ -182,7 +182,7 @@ public class MessageJDBCDAO implements MessageDAO_interface {
 //			rs = pstmt.executeQuery();
 //
 //			while (rs.next()) {
-//				messageVO = new messageVO();
+//				messageVO = new MessageVO();
 //				messageVO.setMessage_id(rs.getInt("message_id"));
 //				messageVO.setChat_room_id(rs.getInt("chat_room_id"));
 //				messageVO.setChat_room_member_id(rs.getInt("chat_room_member_id"));
@@ -204,8 +204,8 @@ public class MessageJDBCDAO implements MessageDAO_interface {
 //			if (pstmt != null) {
 //				try {
 //					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
 //				}
 //			}
 //			if (con != null) {
@@ -225,14 +225,14 @@ public class MessageJDBCDAO implements MessageDAO_interface {
 		MessageJDBCDAO dao = new MessageJDBCDAO();
 
 		// 新增
-//		messageVO messageVO1 = new messageVO();
+//		MessageVO messageVO1 = new MessageVO();
 //		messageVO1.setChat_room_id(10006);
 //		messageVO1.setChat_room_member_id(1012);
 //		messageVO1.setContent("有加薪嗎?");
 //		dao.insert(messageVO1);
 
 		// 修改
-//		messageVO messageVO2 = new messageVO();
+//		MessageVO messageVO2 = new MessageVO();
 //		messageVO2.setContent("有放假嗎?");
 //		dao.update(messageVO2);
 
@@ -240,7 +240,7 @@ public class MessageJDBCDAO implements MessageDAO_interface {
 //		dao.delete(1000013);
 
 		// 查詢
-//		messageVO messageVO3 = dao.findByPrimaryKey(1000012);
+//		MessageVO messageVO3 = dao.findByPrimaryKey(1000012);
 //		System.out.print(messageVO3.getMessage_id() + ",");
 //		System.out.print(messageVO3.getChat_room_id() + ",");
 //		System.out.print(messageVO3.getChat_room_member_id() + ",");
@@ -249,8 +249,8 @@ public class MessageJDBCDAO implements MessageDAO_interface {
 //		System.out.println("---------------------");
 
 		// 查詢
-//		List<messageVO> list = dao.getAll();
-//		for (messageVO listMessageVO : list) {
+//		List<MessageVO> list = dao.getAll();
+//		for (MessageVO listMessageVO : list) {
 //			System.out.print(listMessageVO.getMessage_id() + ",");
 //			System.out.print(listMessageVO.getChat_room_id() + ",");
 //			System.out.print(listMessageVO.getChat_room_member_id() + ",");

@@ -311,7 +311,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();
 
 		// 新增
-//		secondHandVO secondhandVO1 = new secondHandVO();
+//		SecondHandVO secondhandVO1 = new SecondHandVO();
 //		secondhandVO1.setSaler(1015);
 //		secondhandVO1.setName("埼玉的頭髮");
 //		secondhandVO1.setBottom_price(10);
@@ -324,7 +324,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //		dao.insert(secondhandVO1);
 
 		// 修改
-//		secondHandVO secondhandVO2 = new secondHandVO();
+//		SecondHandVO secondhandVO2 = new SecondHandVO();
 //		secondhandVO2.setsecond_hand_id(1009);
 //		secondhandVO2.setBid_winner(1014);
 //		secondhandVO2.setDeal_price(50);
@@ -343,7 +343,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //		dao.delete(1009);
 
 		// 查詢
-//		secondHandVO secondhandVO3 = dao.findByPrimaryKey(1005);
+//		SecondHandVO secondhandVO3 = dao.findByPrimaryKey(1005);
 //		System.out.print(secondhandVO3.getsecond_hand_id() + ",");
 //		System.out.print(secondhandVO3.getSaler() + ",");
 //		System.out.print(secondhandVO3.getBid_winner() + ",");
@@ -362,8 +362,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //		System.out.println("---------------------");
 
 		// 查詢
-//		List<secondHandVO> list = dao.getAll();
-//		for (secondHandVO listSecondHandVO : list) {
+//		List<SecondHandVO> list = dao.getAll();
+//		for (SecondHandVO listSecondHandVO : list) {
 //			System.out.print(listSecondHandVO.getsecond_hand_id() + ",");
 //			System.out.print(listSecondHandVO.getSaler() + ",");
 //			System.out.print(listSecondHandVO.getBid_winner() + ",");

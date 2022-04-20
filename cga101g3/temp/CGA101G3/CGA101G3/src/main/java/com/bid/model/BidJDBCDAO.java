@@ -87,14 +87,8 @@ public class BidJDBCDAO implements BidDAO_interface {
 				pstmt.executeUpdate();
 
 				// Handle any driver errors
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. "
-						+ e.getMessage());
-				// Handle any SQL errors
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
+			} catch (Exception e) {
+				e.printStackTrace();
 			} finally {
 				if (pstmt != null) {
 					try {
@@ -268,14 +262,14 @@ public class BidJDBCDAO implements BidDAO_interface {
 			BidJDBCDAO dao = new BidJDBCDAO();
 
 //			// 新增
-//			bidVO bidVO1 = new bidVO();
+//			BidVO bidVO1 = new BidVO();
 //			bidVO1.setsecond_hand_id(1004);
 //			bidVO1.setBidder(1012);
 //			bidVO1.setPrice(20);
 //			dao.insert(bidVO1);
 
 			// 修改
-//			bidVO bidVO2 = new bidVO();
+//			BidVO bidVO2 = new BidVO();
 //			bidVO2.setBid_id(100014);
 //			bidVO2.setPrice(30);
 //			dao.update(bidVO2);
@@ -284,7 +278,7 @@ public class BidJDBCDAO implements BidDAO_interface {
 //			dao.delete(100014);
 
 			// 查詢
-//			bidVO bidVO3 = dao.findByPrimaryKey(100013);
+//			BidVO bidVO3 = dao.findByPrimaryKey(100013);
 //			System.out.print(bidVO3.getBid_id() + ",");
 //			System.out.print(bidVO3.getsecond_hand_id() + ",");
 //			System.out.print(bidVO3.getBidder() + ",");
@@ -294,14 +288,14 @@ public class BidJDBCDAO implements BidDAO_interface {
 //			System.out.println("---------------------");
 
 			// 查詢
-//			List<bidVO> list = dao.getAll();
-//			for (bidVO listbidVO : list) {
-//				System.out.print(listbidVO.getBid_id() + ",");
-//				System.out.print(listbidVO.getsecond_hand_id() + ",");
-//				System.out.print(listbidVO.getBidder() + ",");
-//				System.out.print(listbidVO.getPrice() + ",");
-//				System.out.print(listbidVO.getCreate_time() + ",");
-//				System.out.println(listbidVO.getUpdate_time());
+//			List<BidVO> list = dao.getAll();
+//			for (BidVO listBidVO : list) {
+//				System.out.print(listBidVO.getBid_id() + ",");
+//				System.out.print(listBidVO.getsecond_hand_id() + ",");
+//				System.out.print(listBidVO.getBidder() + ",");
+//				System.out.print(listBidVO.getPrice() + ",");
+//				System.out.print(listBidVO.getCreate_time() + ",");
+//				System.out.println(listBidVO.getUpdate_time());
 //			}
 		}
 		
