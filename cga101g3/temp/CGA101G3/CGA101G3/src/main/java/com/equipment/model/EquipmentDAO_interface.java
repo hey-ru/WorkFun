@@ -3,27 +3,27 @@ package com.equipment.model;
 import java.util.List;
 
 public interface EquipmentDAO_interface {
-	// ·s¼W¾¹§÷
+	// æ–°å¢å™¨æ
 	public void insert(EquipmentVO equipmentVO);
 
-	// §ó·s¾¹§÷
+	// æ›´æ–°å™¨æ
 	public void update(EquipmentVO equipmentVO);
 
-	// §R°£¾¹§÷ by ¾¹§÷½s¸¹
+	// åˆªé™¤å™¨æ by å™¨æç·¨è™Ÿ
 	public void deleteByEqID(Integer equipmentId);
 
-	// §R°£¾¹§÷ by ¾¹§÷¦WºÙ
+	// åˆªé™¤å™¨æ by å™¨æåç¨±
 	public void deleteByEqName(String eqName);
 
-	// ¬d¸ß by ¾¹§÷¦WºÙ
+	// æŸ¥è©¢ by å™¨æåç¨±
 	public EquipmentVO getByEqName(String eqName);
 	
-	// ¬d¸ß by ¾¹§÷½s¸¹
+	// æŸ¥è©¢ by å™¨æç·¨è™Ÿ
 	public EquipmentVO getByEqId(Integer equipmentId);
 	
-	// ¬d¸ß by ¾¹§÷ª¬ºA
+	// æŸ¥è©¢ by å™¨æç‹€æ…‹
 	public EquipmentVO getByEqStatus(Integer eqStatus);
 
-	// ¬d¸ß¥ş³¡
+	// æŸ¥è©¢å…¨éƒ¨
 	public List<EquipmentVO> getALL();
 }

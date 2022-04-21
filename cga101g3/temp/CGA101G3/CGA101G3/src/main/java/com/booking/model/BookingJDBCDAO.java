@@ -11,29 +11,29 @@ import java.util.List;
 public class BookingJDBCDAO implements BookingDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?useUnicode=yes&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Taipei";
-	// database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com --> ¸ê®Æ®w³s½u
+	// database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com --> è³‡æ–™åº«é€£ç·š
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
 
-	// ·s¼W¤@µ§¹w¬ù³æ
+	// æ–°å¢ä¸€ç­†é ç´„å–®
 	private static final String INSERT = "INSERT INTO booking (emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price) VALUES (?,?,?,?,?,?,?)";
 
-	// §R°£¹w¬ù³æ
+	// åˆªé™¤é ç´„å–®
 	private static final String DELETE = "DELETE FROM booking where booking_id=?";
 
-	// «á¥x¬d¸ß¹w¬ù³æ by ­q³æ½s¸¹
+	// å¾Œå°æŸ¥è©¢é ç´„å–® by è¨‚å–®ç·¨è™Ÿ
 	private static final String GET_BY_BOOKINGID = "SELECT booking_id,emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price from booking where booking_id=?";
 
-	// «á¥x¬d¸ß¹w¬ù³æ by ­û¤u
+	// å¾Œå°æŸ¥è©¢é ç´„å–® by å“¡å·¥
 	private static final String GET_BY_EMPID = "SELECT booking_id,emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price from booking where emp_id=?";
 
-	// ¬d¸ß¹w¬ù³æ©Ò¦³Äæ¦ì
+	// æŸ¥è©¢é ç´„å–®æ‰€æœ‰æ¬„ä½
 	private static final String GET_ALL = "SELECT booking_id,emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price from booking";
 
-	// ­û¤u¬d¸ß¦Û¤v¹w¬ù³æ
+	// å“¡å·¥æŸ¥è©¢è‡ªå·±é ç´„å–®
 	private static final String GET_BY_RETURNSTATUS = "SELECT booking_id,start_date,end_date,return_status from booking where return_status=?";
 
-	// ­û¤u§ó§ï¤w¹w¬ù¤é´Á
+	// å“¡å·¥æ›´æ”¹å·²é ç´„æ—¥æœŸ
 	private static final String UPDATE_DATE = "UPDATE booking set start_date=?,end_date=? where booking_id=?";
 
 	@Override
@@ -393,7 +393,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 
 		BookingJDBCDAO dao = new BookingJDBCDAO();
 
-		// ·s¼W
+		// æ–°å¢
 //		BookingVO bookingVO1 = new BookingVO();
 //		bookingVO1.setEmpId(1005);
 //		bookingVO1.setEquipmentId(105);
@@ -404,25 +404,25 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 //		bookingVO1.setOverduePrice(new Integer(20300));
 //		dao.insert(bookingVO1);
 
-		// ­×§ï
+		// ä¿®æ”¹
 //		BookingVO bookingVO2 = new BookingVO();
 //		bookingVO2.setStartDate(java.sql.Timestamp.valueOf("2022-04-01 17:24:57"));
 //		bookingVO2.setEndDate(java.sql.Timestamp.valueOf("2022-04-10 09:57:10"));
 //		bookingVO2.setBookingId(1002);
 //		dao.updateDate(bookingVO2);
 
-		// §R°£
+		// åˆªé™¤
 //		dao.delete(1002);
 
-		// ¬d¸ß¹w¬ù³æ by Booking Id
+		// æŸ¥è©¢é ç´„å–® by Booking Id
 //		BookingVO bookingVO3 = dao.getByBookingId(1006);
 //		System.out.println(bookingVO3.toString());
 
-		// ¬d¸ß¹w¬ù³æ by empId
+		// æŸ¥è©¢é ç´„å–® by empId
 //		BookingVO bookingVO4 = dao.getByEmpId(1005);
 //		System.out.println(bookingVO4.toString());
 
-		// ¬d¸ß
+		// æŸ¥è©¢
 //		List<BookingVO> list = dao.getAll();
 //		for (BookingVO aBooking : list) {
 //			System.out.print(aBooking.getBookingId() + ",");
@@ -436,7 +436,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 //			System.out.println();
 //		}
 	
-		// ¬d¸ß¦Û¤v¹w¬ù³æ by ª¬ºA
+		// æŸ¥è©¢è‡ªå·±é ç´„å–® by ç‹€æ…‹
 		BookingVO bookingVO5 = dao.getbyReturnStatus(0);
 		System.out.println(bookingVO5.toString());
 	

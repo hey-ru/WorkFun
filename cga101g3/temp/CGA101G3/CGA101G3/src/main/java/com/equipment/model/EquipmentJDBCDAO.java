@@ -273,7 +273,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ä¹Ÿç¨±ç‚º Domain objects
 				equipmentVO = new EquipmentVO();
 				equipmentVO.setEquipmentId(rs.getInt("Equipment_id"));
 				equipmentVO.setEqName(rs.getString("eq_name"));
@@ -443,31 +443,31 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	public static void main(String[] args) {
 		EquipmentJDBCDAO dao = new EquipmentJDBCDAO();
 
-		// ·s¼W
+		// æ–°å¢
 //		EquipmentVO equipmentVO1 = new EquipmentVO();
 //		equipmentVO1.setEqName("GAMEBOY");
 //		equipmentVO1.setPrice(Integer.valueOf(2800));
 //		equipmentVO1.setEqStatus(3);
-//		equipmentVO1.setIntroduction("ªì¥N GAMEBOY 1989¦~²£ªºªì¥NGAMEBOY");
-//		equipmentVO1.setSpec("º¿§Q¼Ú");
+//		equipmentVO1.setIntroduction("åˆä»£ GAMEBOY 1989å¹´ç”¢çš„åˆä»£GAMEBOY");
+//		equipmentVO1.setSpec("ç‘ªåˆ©æ­");
 //		dao.insert(equipmentVO1);
 
-		// ­×§ï
+		// ä¿®æ”¹
 //		EquipmentVO equipmentVO2 = new EquipmentVO();
 //		equipmentVO2.setEqName("PSP PRO");
 //		equipmentVO2.setPrice(Integer.valueOf(3301));
 //		equipmentVO2.setEqStatus(2);
-//		equipmentVO2.setIntroduction("1.·sªºPSP­«¶q¬ù189§J(­ì¬°280§J) «p«×18.6mm(­ì¬°23.0mm)");
-//		equipmentVO2.setSpec("¡´(480¡Ñ272¡A1677¸U¦â");
+//		equipmentVO2.setIntroduction("1.æ–°çš„PSPé‡é‡ç´„189å…‹(åŸç‚º280å…‹) åšåº¦18.6mm(åŸç‚º23.0mm)");
+//		equipmentVO2.setSpec("â—(480Ã—272ï¼Œ1677è¬è‰²");
 //		dao.insert(equipmentVO2);
 
-		// §R°£ by eqID
+		// åˆªé™¤ by eqID
 //		dao.deleteByEqID(102);
 
-		// §R°£ by eqName
+		// åˆªé™¤ by eqName
 //		dao.deleteByEqName("PSP");
 
-		// ¬d¸ß by EqName
+		// æŸ¥è©¢ by EqName
 		EquipmentVO equipmentVO3 = dao.getByEqName("PSP");
 		System.out.print(equipmentVO3.getEquipmentId() + ", ");
 		System.out.print(equipmentVO3.getEqName() + ", ");
@@ -477,7 +477,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		System.out.println(equipmentVO3.getSpec() + ", ");
 		System.out.println("-------------------------------------");
 		
-		// ¬d¸ß by EQUIPMENTID
+		// æŸ¥è©¢ by EQUIPMENTID
 		EquipmentVO equipmentVO4 = dao.getByEqId(104);
 		System.out.print(equipmentVO4.getEquipmentId() + ", ");
 		System.out.print(equipmentVO4.getEqName() + ", ");
@@ -487,7 +487,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		System.out.println(equipmentVO4.getSpec() + ", ");
 		System.out.println("-------------------------------------");
 
-		// ¬d¸ß by EQUIPMENTID
+		// æŸ¥è©¢ by EQUIPMENTID
 		EquipmentVO equipmentVO5 = dao.getByEqStatus(3);
 		System.out.print(equipmentVO5.getEquipmentId() + ", ");
 		System.out.print(equipmentVO5.getEqName() + ", ");
@@ -497,7 +497,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		System.out.println(equipmentVO5.getSpec() + ", ");
 		System.out.println("-------------------------------------");
 		
-		// ¬d¸ß ALL
+		// æŸ¥è©¢ ALL
 		List<EquipmentVO> list = dao.getALL();
 		for (EquipmentVO aEquipment : list) {
 			System.out.print(equipmentVO3.getEquipmentId() + ", ");

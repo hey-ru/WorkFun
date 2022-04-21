@@ -3,24 +3,24 @@ package com.booking.model;
 import java.util.List;
 
 public interface BookingDAO_interface {
-	// ·s¼W¹w¬ù³æ
+	// æ–°å¢é ç´„å–®
 	public void insert(BookingVO bookingVO);
 
-	// §ó§ï¹w¬ù³æ¤é´Á
+	// æ›´æ”¹é ç´„å–®æ—¥æœŸ
 	public void updateDate(BookingVO bookingVO);
 
-	// §R°£¹w¬ù³æ
+	// åˆªé™¤é ç´„å–®
 	public void delete(Integer bookingId);
 	
-	// ¬d¸ß¹w¬ù³æ by Booking Id
+	// æŸ¥è©¢é ç´„å–® by Booking Id
 	public BookingVO getByBookingId(Integer bookingId);
 	
-	// ¬d¸ß¹w¬ù³æ by ­û¤u½s¸¹
+	// æŸ¥è©¢é ç´„å–® by å“¡å·¥ç·¨è™Ÿ
 	public BookingVO getByEmpId(Integer empId);
 
-	// ¬d¸ß¹w¬ù³æ©Ò¦³Äæ¦ì
+	// æŸ¥è©¢é ç´„å–®æ‰€æœ‰æ¬„ä½
 	public List<BookingVO> getAll(); 
 
-	// ¬d¸ß¦Û¤v¹w¬ù³æ by ª¬ºA
+	// æŸ¥è©¢è‡ªå·±é ç´„å–® by ç‹€æ…‹
 	public BookingVO getbyReturnStatus(Integer returnStatus); 
 }

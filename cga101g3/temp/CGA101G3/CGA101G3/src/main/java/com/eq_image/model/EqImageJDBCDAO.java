@@ -14,7 +14,7 @@ import java.util.List;
 public class EqImageJDBCDAO implements EqImageDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?useUnicode=yes&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Taipei";
-	// database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com --> ¸ê®Æ®w³s½u
+	// database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com --> è³‡æ–™åº«é€£ç·š
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
 
@@ -150,7 +150,7 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ä¹Ÿç¨±ç‚º Domain objects
 				eqImageVO = new EqImageVO();
 				eqImageVO = new EqImageVO();
 				eqImageVO.setImageId(rs.getInt("image_id"));
@@ -195,24 +195,23 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 	public static void main(String[] args) throws Exception {
 		EqImageJDBCDAO dao = new EqImageJDBCDAO();
 
-		// ·s¼W
+		// æ–°å¢ž
 //		EqImageVO eqImageVO1 = new EqImageVO();
 //		eqImageVO1.setEquipmentId(104);
-//		byte[] image1 = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\·Ó¤ù\\¹Ï¤ù1.jpg");
+//		byte[] image1 = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\ç…§ç‰‡\\åœ–ç‰‡1.jpg");
 //		eqImageVO1.setEqImage(image1);
 //		dao.insert(eqImageVO1);
 
-		// ¬d¸ß
+		// æŸ¥è©¢
 //		EqImageVO eqImageVO2 = dao.findByPrimaryKey(11);
 //		System.out.println(eqImageVO2.getImageId());
 //		System.out.println(eqImageVO2.getEquipmentId());
 //		System.out.println(eqImageVO2.getEqImage());
 	
-		// ¬d¸ß
+		// æŸ¥è©¢
 		List<EqImageVO> list = dao.getAll();
 		for(EqImageVO aeqImageVO : list) {
 			System.out.println(aeqImageVO.toString());
 		}
 	}
-
 }
