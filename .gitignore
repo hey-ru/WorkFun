@@ -1,6 +1,10 @@
 /build/classes/
 /.idea/
-/target/
 /bin/
 .DS_Store
 /.metadata/
+.classpath
+.project
+.settings/
+log/
+target/

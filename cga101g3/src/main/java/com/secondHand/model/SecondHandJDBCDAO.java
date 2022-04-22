@@ -362,23 +362,23 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //		System.out.println("---------------------");
 
 		// 查詢
-		List<SecondHandVO> list = dao.getAll();
-		for (SecondHandVO listSecondHandVO : list) {
-			System.out.print(listSecondHandVO.getsecond_hand_id() + ",");
-			System.out.print(listSecondHandVO.getSaler() + ",");
-			System.out.print(listSecondHandVO.getBid_winner() + ",");
-			System.out.print(listSecondHandVO.getDeal_price() + ",");
-			System.out.print(listSecondHandVO.getName() + ",");
-			System.out.print(listSecondHandVO.getBottom_price() + ",");
-			System.out.print(listSecondHandVO.getTop_price() + ",");
-			System.out.print(listSecondHandVO.getStart_time() + ",");
-			System.out.print(listSecondHandVO.getEnd_time() + ",");
-			System.out.print(listSecondHandVO.getIs_deal() + ",");
-			System.out.print(listSecondHandVO.getImg1() + ",");
-			System.out.print(listSecondHandVO.getImg2() + ",");
-			System.out.print(listSecondHandVO.getImg3() + ",");
-			System.out.print(listSecondHandVO.getCreate_time() + ",");
-			System.out.println(listSecondHandVO.getUpdate_time());
-		}
+//		List<SecondHandVO> list = dao.getAll();
+//		for (SecondHandVO listSecondHandVO : list) {
+//			System.out.print(listSecondHandVO.getsecond_hand_id() + ",");
+//			System.out.print(listSecondHandVO.getSaler() + ",");
+//			System.out.print(listSecondHandVO.getBid_winner() + ",");
+//			System.out.print(listSecondHandVO.getDeal_price() + ",");
+//			System.out.print(listSecondHandVO.getName() + ",");
+//			System.out.print(listSecondHandVO.getBottom_price() + ",");
+//			System.out.print(listSecondHandVO.getTop_price() + ",");
+//			System.out.print(listSecondHandVO.getStart_time() + ",");
+//			System.out.print(listSecondHandVO.getEnd_time() + ",");
+//			System.out.print(listSecondHandVO.getIs_deal() + ",");
+//			System.out.print(listSecondHandVO.getImg1() + ",");
+//			System.out.print(listSecondHandVO.getImg2() + ",");
+//			System.out.print(listSecondHandVO.getImg3() + ",");
+//			System.out.print(listSecondHandVO.getCreate_time() + ",");
+//			System.out.println(listSecondHandVO.getUpdate_time());
+//		}
 	}
 }
