@@ -7,9 +7,9 @@ public interface SecondHandDAO_interface {
 
 	public void update(SecondHandVO secondhandVO);
 
-//	public void delete(Integer second_hand_id);
+	public SecondHandVO getById(Integer second_hand_id);
 
-	public SecondHandVO findByPrimaryKey(Integer second_hand_id);
+	public List<SecondHandVO> getByName(String name);
 
 	public List<SecondHandVO> getAll();
 }

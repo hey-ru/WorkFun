@@ -8,11 +8,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SecondHandJDBCDAO implements SecondHandDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
-	String userid = "cga101-03";
-	String passwd = "cga101-03";
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class SecondHandDAO implements SecondHandDAO_interface {
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO second_hand (saler,name,bottom_price,top_price,start_time,end_time,img1,img2,img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 //	private static final String DELETE = "DELETE FROM second_hand where second_hand_id = ?";
@@ -28,9 +38,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, secondHandVO.getSaler());
@@ -72,9 +80,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //		PreparedStatement pstmt = null;
 //
 //		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
+//			con = ds.getConnection();
 //			pstmt = con.prepareStatement(UPDATE);
 //
 //			pstmt.setInt(1, secondHandVO.getBid_winner());
@@ -119,9 +125,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, secondHandVO.getBid_winner());
@@ -168,9 +172,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_BY_ID);
 
 			pstmt.setInt(1, second_hand_id);
@@ -217,8 +219,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_BY_NAME);
 
 			pstmt.setString(1, name);
@@ -282,9 +283,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -338,7 +337,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 	public static void main(String[] args) {
 
-		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();
+		SecondHandDAO dao = new SecondHandDAO();
 
 		// 新增
 //		SecondHandVO secondHandVO1 = new SecondHandVO();
