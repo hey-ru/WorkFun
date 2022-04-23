@@ -20,29 +20,8 @@ public class ShopVO implements java.io.Serializable {
 	
 	
 	public ShopVO() {
-		super();
 	}
 	
-	
-	
-	public ShopVO(Integer shop_id, String shop_name, Integer shop_type, String address, String tel, String website,
-			Integer min_amt, byte[] shop_img1, byte[] shop_img2, byte[] shop_img3, Integer is_disable,
-			Timestamp shop_upd) {
-		super();
-		this.shop_id = shop_id;
-		this.shop_name = shop_name;
-		this.shop_type = shop_type;
-		this.address = address;
-		this.tel = tel;
-		this.website = website;
-		this.min_amt = min_amt;
-		this.shop_img1 = shop_img1;
-		this.shop_img2 = shop_img2;
-		this.shop_img3 = shop_img3;
-		this.is_disable = is_disable;
-		this.shop_upd = shop_upd;
-	}
-
 	@Override
 	public String toString() {
 		return shop_id + "," + shop_name + "," + shop_type + ","

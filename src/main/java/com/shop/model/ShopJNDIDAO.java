@@ -1,19 +1,25 @@
 package com.shop.model;
 
 import java.util.*;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
 
-public class ShopJDBCDAO implements ShopDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/dbcga101g3?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "1qaz2wsx";
-//	String driver = "com.mysql.cj.jdbc.Driver";
-//	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
-//	String userid = "cga101-03";
-//	String passwd = "cga101-03";
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class ShopJNDIDAO implements ShopDAO_interface {
+
+	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO shop (shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop order by shop_id";
@@ -28,8 +34,7 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, shopVO.getShop_name());
@@ -44,12 +49,10 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -72,13 +75,13 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 
 	@Override
 	public void update(ShopVO shopVO) {
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, shopVO.getShop_name());
@@ -95,11 +98,9 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -122,6 +123,7 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 
 	@Override
 	public ShopVO findByPrimaryKey(Integer shop_id) {
+
 		ShopVO shopVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -129,8 +131,7 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, shop_id);
@@ -152,11 +153,9 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -195,8 +194,7 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -215,12 +213,11 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 				list.add(shopVO);
 			}
 
+
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -246,101 +243,5 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 			}
 		}
 		return list;
-	}
-
-	public static void main(String[] args) {
-
-		ShopJDBCDAO dao = new ShopJDBCDAO();
-
-		// 新增
-		ShopVO shopVO1 = new ShopVO();
-		shopVO1.setShop_name("大同町");
-		shopVO1.setShop_type(2);
-		shopVO1.setAddress("320桃園市中壢區大同路70號");
-		shopVO1.setTel("03-4224695");
-		shopVO1.setWebsite(
-				"https://www.facebook.com/%E5%A4%A7%E5%90%8C%E7%94%BA-%E5%B9%B3%E5%83%B9%E6%97%A5%E5%BC%8F%E8%B1%AC%E6%8E%92%E7%82%B8%E9%9B%9E%E5%A1%8A%E4%B8%BC%E9%A3%AF-%E5%B0%88%E8%B3%A3-2019007434995879/");
-		shopVO1.setMin_amt(0);
-		byte[] vo1_img1 = null;
-		byte[] vo1_img2 = null;
-		byte[] vo1_img3 = null;
-		try {
-			vo1_img1 = getPictureByteArray("C:\\images\\FC_Barcelona.png");
-			vo1_img2 = getPictureByteArray("C:\\images\\FC_Bayern.png");
-			vo1_img3 = getPictureByteArray("C:\\images\\FC_Real_Madrid.png");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		shopVO1.setShop_img1(vo1_img1);
-		shopVO1.setShop_img2(vo1_img2);
-		shopVO1.setShop_img3(vo1_img3);
-		dao.insert(shopVO1);
-//
-		// 修改
-//		ShopVO shopVO2 = new ShopVO();
-//		shopVO2.setShop_id(102);
-//		shopVO2.setShop_name("可不可熟成紅茶-中壢中山店");
-//		shopVO2.setShop_type(0);
-//		shopVO2.setAddress("320桃園市中壢區中正路29號");
-//		shopVO2.setTel("03-4224008");
-//		shopVO2.setWebsite("https://www.facebook.com/kebuke4224008/");
-//		shopVO2.setMin_amt(100);
-//		byte[] vo2_img1 = null;
-//		byte[] vo2_img2 = null;
-//		byte[] vo2_img3 = null;
-//		try {
-//			vo2_img1 = getPictureByteArray("C:\\images\\boss.jpg");
-//			//vo2_img2 = getPictureByteArray("C:\\images\\boss.jpg");
-//			//vo2_img3 = getPictureByteArray("C:\\images\\drink2-2.jpg");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		shopVO2.setShop_img1(vo2_img1);
-//		shopVO2.setShop_img2(vo2_img2);
-//		shopVO2.setShop_img3(vo2_img3);
-//		dao.update(shopVO2);
-//
-//		// 查詢
-		ShopVO shopVO3 = dao.findByPrimaryKey(101);
-		System.out.println(shopVO3.toString());
-//		System.out.print(shopVO3.getShop_id() + ",");
-//		System.out.print(shopVO3.getShop_name() + ",");
-//		System.out.print(shopVO3.getShop_type() + ",");
-//		System.out.print(shopVO3.getAddress() + ",");
-//		System.out.print(shopVO3.getTel() + ",");
-//		System.out.print(shopVO3.getWebsite() + ",");
-//		System.out.print(shopVO3.getMin_amt() + ",");
-//		System.out.print(shopVO3.getShop_img1() + ",");
-//		System.out.print(shopVO3.getShop_img2() + ",");
-//		System.out.println(shopVO3.getShop_img3());
-//		System.out.println("---------------------");
-//
-//		// 查詢
-		List<ShopVO> list = dao.getAll();
-		for (ShopVO aShop : list) {
-			System.out.print(aShop.toString());
-			System.out.println();
-
-//			System.out.print(aShop.getShop_id() + ",");
-//			System.out.print(aShop.getShop_name() + ",");
-//			System.out.print(aShop.getShop_type() + ",");
-//			System.out.print(aShop.getAddress() + ",");
-//			System.out.print(aShop.getTel() + ",");
-//			System.out.print(aShop.getWebsite() + ",");
-//			System.out.print(aShop.getMin_amt() + ",");
-//			System.out.print(aShop.getShop_img1() + ",");
-//			System.out.print(aShop.getShop_img2() + ",");
-//			System.out.println(aShop.getShop_img3());
-//			System.out.println();
-		}
-	}
-
-
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
-		return buffer;
 	}
 }

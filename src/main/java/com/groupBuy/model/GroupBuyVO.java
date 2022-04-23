@@ -3,8 +3,6 @@ package com.groupBuy.model;
 import java.sql.Timestamp;
 
 public class GroupBuyVO implements java.io.Serializable {
-	
-    private static final long serialVersionUID = 1L;
 	private Integer gb_id;
 	private Integer shop_id;
 	private String shop_name;
@@ -15,11 +13,16 @@ public class GroupBuyVO implements java.io.Serializable {
 	private Integer gb_status;
 	private Integer min_amt;
 	
-	public GroupBuyVO() {
-		super();
-		// TODO Auto-generated constructor stub
+	
+	
+	@Override
+	public String toString() {
+		return "GroupBuyVO [gb_id=" + gb_id + ", shop_id=" + shop_id + ", shop_name=" + shop_name + ", gb_owner="
+				+ gb_owner + ", start_time=" + start_time + ", end_time=" + end_time + ", arr_time=" + arr_time
+				+ ", gb_status=" + gb_status + ", min_amt=" + min_amt + "]";
 	}
-		
+	public GroupBuyVO() {
+	}
 	public GroupBuyVO(Integer gb_id, Integer shop_id, String shop_name, Integer gb_owner, Timestamp start_time,
 			Timestamp end_time, Timestamp arr_time, Integer gb_status, Integer min_amt) {
 		super();
@@ -33,14 +36,6 @@ public class GroupBuyVO implements java.io.Serializable {
 		this.gb_status = gb_status;
 		this.min_amt = min_amt;
 	}
-
-	@Override
-	public String toString() {
-		return "GroupBuyVO [gb_id=" + gb_id + ", shop_id=" + shop_id + ", shop_name=" + shop_name + ", gb_owner="
-				+ gb_owner + ", start_time=" + start_time + ", end_time=" + end_time + ", arr_time=" + arr_time
-				+ ", gb_status=" + gb_status + ", min_amt=" + min_amt + "]";
-	}
-
 	public Integer getGb_id() {
 		return gb_id;
 	}
@@ -95,6 +90,7 @@ public class GroupBuyVO implements java.io.Serializable {
 	public void setMin_amt(Integer min_amt) {
 		this.min_amt = min_amt;
 	}
-	
+
+
 
 }
