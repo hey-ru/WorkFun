@@ -2,11 +2,13 @@ package com.menu.model;
 
 import java.util.*;
 
+public interface MenuDAO_Interface {
 
-public interface MenuDAO_interface {
-
-	 public void insert(MenuVO menuVO);
-     public void update(MenuVO menuVO);
-     public MenuVO findByPrimaryKey(Integer menu_id);
-     public List<MenuVO> getAll();
+	 public void insert(MenuVO menuVO); //前台 新增店家單品項目
+     public void update(MenuVO menuVO); //前台 修改店家單品項目
+     public List<MenuVO> getByShopId(Integer shop_id);  //前台 查詢一間店家菜單
+     
+     public List<MenuVO> getAll(); //後台 查詢各店家菜單
+     
+//     public MenuVO findByPrimaryKey(Integer menu_id);
 }

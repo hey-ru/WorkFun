@@ -9,37 +9,36 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
 
+//  <<åƒåœ˜ç®¡ç†>>
+//	åƒåœ˜è€…æ–°å¢ä¸€ç­†åƒåœ˜
 	private static final String INSERT_STMT = "INSERT INTO groupBuyList (gb_id, buyer, buyer_name, menu_id, item, "
-			+ "price, qty, remark, is_pay, is_pickup) " + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "price, qty, remark) " + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 	
-//	-- 2-1.­×§ï§Úªº´ª¹Î³æµ§: ¼Æ¶q(+-¼Æ¦r)&³Æµù(¤å¦r)
-//	update groupBuyList set qty = 2, remark = '½µ¦n¦Y'
-//	where buyer_name="®f®f" and gbList_id= 10001;
+//	-- 1.æŸ¥è©¢æˆ‘çš„åƒåœ˜: æŸ¥è©¢å„åœ˜ç¸½é¡åŠç‹€æ…‹(ä¸»é æŸ¥è©¢ç•«é¢, ä¾çµæŸæ™‚é–“é™å†ªæ’åº)-->join groupbuy
+	
+//	-- 1-1. é€€å‡ºæŒ‰éˆ•: (æªåœ˜æˆªæ­¢å‰)åˆªé™¤ è¨‚å–®æ‰€æœ‰é …ç›® 	
+	private static final String DELETEMYGB = "DELETE FROM groupbuy where buyer = ? and gb_id = ?";
+
+//	-- 2. æª¢è¦–æŒ‰éˆ•: æŸ¥è©¢ æˆ‘çš„å–®ç­†æ˜ç´°
+	private static final String GET_ONE_BYBUYER = "SELECT gbList_id, gb_id, item, price, qty, (price*qty), remark "
+			+ "FROM groupBuyList where buyer = ? and gb_id= ? group by gbList_id ";
+	
+//	-- 2-1. ä¿®æ”¹æŒ‰éˆ•: (æªåœ˜æˆªæ­¢å‰)ä¿®æ”¹ å–®ç­†é …ç›®çš„æ•¸é‡&å‚™è¨»
 	private static final String UPDATE = "UPDATE groupBuyList set qty=?, remark=? where buyer=? and gbList_id=?";
 
-//	-- 2-2.§R°£«ö¶s: §R°£³æ­Ó«~¶µ
-//	DELETE FROM groupBuyList 
-//	where buyer_name="®f®f" and gbList_id= 10008;
+//	-- 2-2. åˆªé™¤æŒ‰éˆ•: (æªåœ˜æˆªæ­¢å‰)åˆªé™¤ å–®å€‹å“é …
 	private static final String DELETE = "DELETE FROM groupBuyList where gbList_id = ?";
-
-//	-- 1-1. °h¥X«ö¶s--(ª½±µ§R°£¸Óµ§) 
-//	DELETE FROM groupbuy 
-//	where buyer_name="®f®f" and gb_id= 1003;	
-	private static final String DELETEMYGB = "DELETE FROM groupbuy where buyer = ? and gb_id = ?";
 	
-//	-- 2.½s¿è«ö¶s-->¬d¸ß§Úªº³æµ§©ú²Ó
-//	SELECT gbList_id, item "«~¶µ" , price '³æ»ù', qty '¼Æ¶q', (price*qty) as 'ª÷ÃB', remark '³Æµù'
-//	FROM groupBuyList where buyer_name="®f®f" and gb_id= 1001 group by gbList_id;	
-	private static final String GET_ONE_STMT = "SELECT gbList_id, gb_id, item, price, qty, (price*qty), remark "
-			+ "FROM groupBuyList where buyer = ? and gb_id= ? group by gbList_id";
 
-	private static final String GET_ALL_STMT = "SELECT * FROM groupBuyList order by gb_id";
+//	[å¾Œå°]: æŸ¥è©¢æ‰€æœ‰æªåœ˜æ˜ç´°
+//	private static final String GET_ALL_STMT = "SELECT * FROM groupBuyList group by gb_id order by gbList_id";
 
+//	åƒåœ˜è€…æ–°å¢ä¸€ç­†åƒåœ˜	
 	@Override
-	public void insert(GroupBuyListVO groupBuyListVO) {
+	public void insertItem(GroupBuyListVO groupBuyListVO) {
 		try (Connection con = DriverManager.getConnection(url, userid, passwd);
 				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
-			// ·s¼W³æµ§¶µ¥Ø			
+			// æ–°å¢å–®ç­†é …ç›®			
 			pstmt.setInt(1, groupBuyListVO.getGb_id());
 			pstmt.setInt(2, groupBuyListVO.getBuyer());
 			pstmt.setString(3, groupBuyListVO.getBuyer_name());
@@ -48,9 +47,6 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
 			pstmt.setInt(6, groupBuyListVO.getPrice());
 			pstmt.setInt(7, groupBuyListVO.getQty());
 			pstmt.setString(8, groupBuyListVO.getRemark());
-			pstmt.setInt(9, groupBuyListVO.getIs_pay());
-			pstmt.setInt(10, groupBuyListVO.getIs_pickup());
-
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -58,9 +54,9 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
 		}
 	}
 
-	// ­×§ï¼Æ¶q¤Î³Æµù
+//	-- 2-1. ä¿®æ”¹æŒ‰éˆ•: (æªåœ˜æˆªæ­¢å‰)ä¿®æ”¹ å–®ç­†é …ç›®çš„æ•¸é‡&å‚™è¨»
 	@Override
-	public void update(GroupBuyListVO groupBuyListVO) {
+	public void updateItem(GroupBuyListVO groupBuyListVO) {
 		
 		try (Connection con = DriverManager.getConnection(url, userid, passwd);
 				PreparedStatement pstmt = con.prepareStatement(UPDATE)) {
@@ -88,51 +84,21 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
 		}		
 	}
 
-	// §R°£³æ­Ó«~¶µ
+//	-- 2-2. åˆªé™¤æŒ‰éˆ•: (æªåœ˜æˆªæ­¢å‰)åˆªé™¤ å–®å€‹å“é …
 	@Override
-	public void delete(Integer gbList_id) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(DELETE);
-
+	public void deleteItem(Integer gbList_id) {
+		try (Connection con = DriverManager.getConnection(url, userid, passwd);
+				PreparedStatement pstmt = con.prepareStatement(DELETE)) {
 			pstmt.setInt(1, gbList_id);
-
 			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 	
-	//¬Y¤H°h¥X´ª¹Î(§R°£¬Y¤H©Ò¦³¶µ¥Ø)
-	@Override
-	public void delete(Integer buyer, Integer gb_id) {
+//	-- 1-1. é€€å‡ºæŒ‰éˆ•: (æªåœ˜æˆªæ­¢å‰)åˆªé™¤ è¨‚å–®æ‰€æœ‰é …ç›® 
+	public void deleteMyGb(Integer buyer, Integer gb_id) {
 		try (Connection con = DriverManager.getConnection(url, userid, passwd);
 				PreparedStatement pstmt = con.prepareStatement(DELETEMYGB)) {
 			pstmt.setInt(1, buyer);
@@ -144,22 +110,16 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
 			e.printStackTrace();
 		}		
 	}
-
-	@Override
-	public GroupBuyListVO findByPrimaryKey(Integer gbList_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	//¬d¸ß§Úªº³æµ§°Ñ¹Î©ú²Ó
+//	-- 2. æª¢è¦–æŒ‰éˆ•: æŸ¥è©¢ æˆ‘çš„å–®ç­†æ˜ç´°
 	@Override
-	public List<GroupBuyListVO> findMyGb() {
+	public List<GroupBuyListVO> getMyGb(Integer buyer, Integer gb_id) {
 		List<GroupBuyListVO> mygblist = new ArrayList<GroupBuyListVO>();
 
 		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT)) {
-					pstmt.setInt(1, 1010); //buyer = ?
-					pstmt.setInt(2, 1002); //gb_id= ?
+				PreparedStatement pstmt = con.prepareStatement(GET_ONE_BYBUYER)) {
+					pstmt.setInt(1, buyer); //buyer = ?
+					pstmt.setInt(2, gb_id); //gb_id= ?
 					
 					ResultSet rs = pstmt.executeQuery();
 			
@@ -182,98 +142,39 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
 		return mygblist;
 	}
 	
-
-	@Override
-	public List<GroupBuyListVO> getAll() {
-		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
-
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
-			ResultSet rs = pstmt.executeQuery(); // ·íStatementÃö³¬¡AResultSet¤]·|¦Û°ÊÃö³¬¡A¤£»İ±NResultSet«Å§i¸m¤Jtry with resource
-
-			while (rs.next()) {
-				GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
-				groupBuyListVO.setGbList_id(rs.getInt(1));
-				groupBuyListVO.setGbList_id(rs.getInt(1));
-				groupBuyListVO.setGb_id(rs.getInt(2));
-				groupBuyListVO.setBuyer(rs.getInt(3));
-				groupBuyListVO.setBuyer_name(rs.getString(4));
-				groupBuyListVO.setMenu_id(rs.getInt(5));
-				groupBuyListVO.setItem(rs.getString(6));
-				groupBuyListVO.setPrice(rs.getInt(7));
-				groupBuyListVO.setQty(rs.getInt(8));
-				groupBuyListVO.setRemark(rs.getString(9));
-				groupBuyListVO.setIs_pay(rs.getInt(10));
-				groupBuyListVO.setIs_pickup(rs.getInt(11));
-				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
-
-				list.add(groupBuyListVO);
-			}
-		} catch (SQLException se) {
-			se.printStackTrace();
-		}
-		return list;
-	}
-
-	public static void main(String[] args) {
-
-		GroupBuyListJDBCDAO dao = new GroupBuyListJDBCDAO();	
-		
-		//§ó·s¬Y¤H³æ«~¶µ
-		GroupBuyListVO gblVO2 = new GroupBuyListVO();
-		
-		gblVO2.setQty(10);
-		gblVO2.setRemark("Âæ¤Ö");
-		gblVO2.setBuyer(1002);
-		gblVO2.setGbList_id(10008);
-//		gblVO2.setBuyer_name("®f®f");
-//		gblVO2.setMenu_id(1021);
-//		gblVO2.setItem("ªã¥½¼í»æ");
-//		gblVO2.setPrice(45);
-//		gblVO2.setTotal(null);
-//		gblVO2.setIs_pay(0);
-//		gblVO2.setIs_pickup(0);
-		dao.update(gblVO2);
-		
-		
-		// §R°£³æ­Ó­qÁÊ¶µ
-//		dao.delete(10012);
-		
-		// ¬Y¤H°h¥X´ª¹Î
-//		dao.delete(1002, 1002);	
-		
-		//¬d¬İ§Úªº³æµ§°Ñ¹Î©ú²Ó
-//		List<GroupBuyListVO> mygblist = dao.findMyGb();
-//		int countList = 1;
-//		for (GroupBuyListVO m_List : mygblist) {
-//			System.out.println(m_List);
-//			System.out.println("---------------------µ§¼Æ:" + countList++);
+	
+//	[å¾Œå°]: æŸ¥è©¢æ‰€æœ‰æªåœ˜æ˜ç´°
+//	@Override
+//	public List<GroupBuyListVO> getAll() {
+//		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
+//
+//		try (Connection con = DriverManager.getConnection(url, userid, passwd);
+//				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
+//			ResultSet rs = pstmt.executeQuery(); // ç•¶Statementé—œé–‰ï¼ŒResultSetä¹Ÿæœƒè‡ªå‹•é—œé–‰ï¼Œä¸éœ€å°‡ResultSetå®£å‘Šç½®å…¥try with resource
+//
+//			while (rs.next()) {
+//				GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+//				groupBuyListVO.setGbList_id(rs.getInt(1));
+//				groupBuyListVO.setGbList_id(rs.getInt(1));
+//				groupBuyListVO.setGb_id(rs.getInt(2));
+//				groupBuyListVO.setBuyer(rs.getInt(3));
+//				groupBuyListVO.setBuyer_name(rs.getString(4));
+//				groupBuyListVO.setMenu_id(rs.getInt(5));
+//				groupBuyListVO.setItem(rs.getString(6));
+//				groupBuyListVO.setPrice(rs.getInt(7));
+//				groupBuyListVO.setQty(rs.getInt(8));
+//				groupBuyListVO.setRemark(rs.getString(9));
+//				groupBuyListVO.setIs_pay(rs.getInt(10));
+//				groupBuyListVO.setIs_pickup(rs.getInt(11));
+//				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
+//
+//				list.add(groupBuyListVO);
+//			}
+//		} catch (SQLException se) {
+//			se.printStackTrace();
 //		}
-		
-		// ¬d¸ß¥ş³¡´ª¹Î©ú²Ó
-//		List<GroupBuyListVO> list = dao.getAll();
-//		int countList = 1;
-//		for (GroupBuyListVO allList : list) {
-//			System.out.println(allList.toString());
-//			System.out.println("---------------------µ§¼Æ:" + countList++);
-//		}
-
-		// ·s¼W³æµ§¸ê®Æ(¥[¤J´ª¹Î)
-//		GroupBuyListVO gblVO1 = new GroupBuyListVO();
-//		gblVO1.setGb_id(1002);
-//		gblVO1.setBuyer(1013);
-//		gblVO1.setBuyer_name("william");
-//		gblVO1.setMenu_id(1004);
-//		gblVO1.setItem("¤ûÉd©@­ù¶º");
-//		gblVO1.setPrice(90);
-//		gblVO1.setQty(3);
-//		gblVO1.setRemark("¶º¦h");
-//		gblVO1.setIs_pay(0);
-//		gblVO1.setIs_pickup(0);
-//		dao.insert(gblVO1);
-
-
-	}
+//		return list;
+//	}
 
 
 }

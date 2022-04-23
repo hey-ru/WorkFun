@@ -14,7 +14,7 @@ public class GroupBuyListVO implements java.io.Serializable {
 	private String item;
 	private Integer price;
 	private Integer qty;
-	private Integer total; //≥Êª˘*º∆∂q
+	private Integer total; //ÈáëÈ°ç
 	private String remark;
 	private Integer is_pay;
 	private Integer is_pickup;
@@ -22,10 +22,8 @@ public class GroupBuyListVO implements java.io.Serializable {
 			
 	public GroupBuyListVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
-
 
 	public GroupBuyListVO(Integer gbList_id, Integer gb_id, Integer buyer, String buyer_name, Integer menu_id,
 			String item, Integer price, Integer qty, Integer total, String remark, Integer is_pay, Integer is_pickup,
@@ -47,7 +45,6 @@ public class GroupBuyListVO implements java.io.Serializable {
 	}
 
 
-
 	@Override
 	public String toString() {
 		return "GroupBuyListVO [gbList_id=" + gbList_id + ", gb_id=" + gb_id + ", buyer=" + buyer + ", buyer_name="
@@ -55,7 +52,6 @@ public class GroupBuyListVO implements java.io.Serializable {
 				+ ", total=" + total + ", remark=" + remark + ", is_pay=" + is_pay + ", is_pickup=" + is_pickup
 				+ ", gbList_upd=" + gbList_upd + "]";
 	}
-
 
 
 	public Integer getGbList_id() {
@@ -138,7 +134,5 @@ public class GroupBuyListVO implements java.io.Serializable {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
-		
-
 	
 }

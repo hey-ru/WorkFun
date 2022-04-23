@@ -3,16 +3,15 @@ package com.groupBuyList.model;
 import java.util.*;
 
 public interface GroupBuyListDAO_Interface {
-    public void insert(GroupBuyListVO groupBuyListVO);
-    public void update(GroupBuyListVO groupBuyListVO);
-    public void delete(Integer gbList_id); //§R°£³æµ§¶µ¥Ø
-    public void delete(Integer buyer, Integer gb_id); //°h¥X´ª¹Î(µ¥join§¹¦¨¦A¼g)
+    public void insertItem(GroupBuyListVO groupBuyListVO); //æ–°å¢åƒåœ˜å–®ç­†é …ç›®
+    public void updateItem(GroupBuyListVO groupBuyListVO); //ä¿®æ”¹å–®ç­†é …ç›®
+    public void deleteItem(Integer gbList_id); //åˆªé™¤å–®ç­†é …ç›®
+    public void deleteMyGb(Integer buyer, Integer gb_id); //é€€å‡ºæªåœ˜
     
     
-    public GroupBuyListVO findByPrimaryKey(Integer gbList_id);
-    
-    public List<GroupBuyListVO> findMyGb();//¬d¸ß§Úªº³æµ§©ú²Ó
-    public List<GroupBuyListVO> getAll();
+    public List<GroupBuyListVO> getMyGb(Integer buyer, Integer gb_id);//æŸ¥è©¢æˆ‘çš„å–®ç­†æ˜ç´°
+//    public List<GroupBuyListVO> getAll(); 
+//    public GroupBuyListVO findByPrimaryKey(Integer gb_id); 
 }
 
-//«e¥x:°Ñ¹Î ¬d¸ß ºI¤î«e¥i·s¼W­×§ï§R°£«~¶µ¼Æ¶q
+//å‰å°:æŸ¥è©¢æ–°å¢åˆªé™¤åƒåœ˜, æˆªæ­¢å‰å¯æ–°å¢ä¿®æ”¹åˆªé™¤å“é …åŠå‚™è¨»
