@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+import com.emp.model.EmpVO;
+
 public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
@@ -20,8 +22,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO second_hand (saler,name,bottom_price,top_price,start_time,end_time,img1,img2,img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 //	private static final String DELETE = "DELETE FROM second_hand where second_hand_id = ?";
-	private static final String UPDATE = "UPDATE second_hand set bid_winner=?, deal_price=?, name=?, bottom_price=?, top_price=?, start_time=?, end_time=?, is_deal=?, img1=?, img2=?, img3=? where second_hand_id = ?";
-//	private static final String UPDATE = "UPDATE second_hand set ";
+//	private static final String UPDATE = "UPDATE second_hand set bid_winner=?, deal_price=?, name=?, bottom_price=?, top_price=?, start_time=?, end_time=?, is_deal=?, img1=?, img2=?, img3=? where second_hand_id = ?";
+	private static final String UPDATE = "UPDATE second_hand set ";
 	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
 	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand order by second_hand_id";
@@ -118,30 +120,106 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //	}
 
 	@Override
-	public void update(SecondHandVO secondHandVO) {
+	public void update(SecondHandVO newSecondHandVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		int count = 0;
 
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
+			SecondHandVO oldSecondHandVO = getById(newSecondHandVO.getsecond_hand_id());
+			StringBuilder sb = new StringBuilder().append(UPDATE);
 
-			pstmt.setInt(1, secondHandVO.getBid_winner());
-			pstmt.setInt(2, secondHandVO.getDeal_price());
-			pstmt.setString(3, secondHandVO.getName());
-			pstmt.setInt(4, secondHandVO.getBottom_price());
-			pstmt.setInt(5, secondHandVO.getTop_price());
-			pstmt.setTimestamp(6, secondHandVO.getStart_time());
-			pstmt.setTimestamp(7, secondHandVO.getEnd_time());
-			pstmt.setInt(8, secondHandVO.getIs_deal());
-			pstmt.setString(9, secondHandVO.getImg1());
-			pstmt.setString(10, secondHandVO.getImg2());
-			pstmt.setString(11, secondHandVO.getImg3());
-			pstmt.setInt(12, secondHandVO.getsecond_hand_id());
+			if (newSecondHandVO.getBid_winner() != null) {
+				sb.append("bid_winner=?, ");
+			}
+			if (newSecondHandVO.getDeal_price() != null) {
+				sb.append("deal_price=?, ");
+			}
+			if (newSecondHandVO.getName() != null) {
+				sb.append("name=?, ");
+			}
+			if (newSecondHandVO.getBottom_price() != null) {
+				sb.append("bottom_price=?, ");
+			}
+			if (newSecondHandVO.getTop_price() != null) {
+				sb.append("top_price=?, ");
+			}
+			if (newSecondHandVO.getStart_time() != null) {
+				sb.append("start_time=?, ");
+			}
+			if (newSecondHandVO.getEnd_time() != null) {
+				sb.append("end_time=?, ");
+			}
+			if (newSecondHandVO.getIs_deal() != null) {
+				sb.append("is_deal=?, ");
+			}
+			if (newSecondHandVO.getImg1() != null) {
+				sb.append("img1=?, ");
+			}
+			if (newSecondHandVO.getImg2() != null) {
+				sb.append("img2=?, ");
+			}
+			if (newSecondHandVO.getImg3() != null) {
+				sb.append("img3=?, ");
+			}
+			sb.append("second_hand_id=? where second_hand_id = ?");
+
+			pstmt = con.prepareStatement(sb.toString());
+
+			if (newSecondHandVO.getBid_winner() != null) {
+				count++;
+				pstmt.setInt(count, newSecondHandVO.getBid_winner());
+			}
+			if (newSecondHandVO.getDeal_price() != null) {
+				count++;
+				pstmt.setInt(count, newSecondHandVO.getDeal_price());
+			}
+			if (newSecondHandVO.getName() != null) {
+				count++;
+				pstmt.setString(count, newSecondHandVO.getName());
+			}
+			if (newSecondHandVO.getBottom_price() != null) {
+				count++;
+				pstmt.setInt(count, newSecondHandVO.getBottom_price());
+			}
+			if (newSecondHandVO.getTop_price() != null) {
+				count++;
+				pstmt.setInt(count, newSecondHandVO.getTop_price());
+			}
+			if (newSecondHandVO.getStart_time() != null) {
+				count++;
+				pstmt.setTimestamp(count, newSecondHandVO.getStart_time());
+			}
+			if (newSecondHandVO.getEnd_time() != null) {
+				count++;
+				pstmt.setTimestamp(count, newSecondHandVO.getEnd_time());
+			}
+			if (newSecondHandVO.getIs_deal() != null) {
+				count++;
+				pstmt.setInt(count, newSecondHandVO.getIs_deal());
+			}
+			if (newSecondHandVO.getImg1() != null) {
+				count++;
+				pstmt.setString(count, newSecondHandVO.getImg1());
+			}
+			if (newSecondHandVO.getImg2() != null) {
+				count++;
+				pstmt.setString(count, newSecondHandVO.getImg2());
+			}
+			if (newSecondHandVO.getImg3() != null) {
+				count++;
+				pstmt.setString(count, newSecondHandVO.getImg3());
+			}
+			count++;
+			pstmt.setInt(count, newSecondHandVO.getsecond_hand_id());
+			count++;// where
+			pstmt.setInt(count, newSecondHandVO.getsecond_hand_id());
 
 			pstmt.executeUpdate();
+			System.out.println("update " + (count - 2) + " data!");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -342,38 +420,37 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 	public static void main(String[] args) throws Exception {
 
 		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();
-		
-		String fileName = "/Users/ryan/Coding/CGA101/secondHand_pic/貪婪之島_1.jpeg";
+
+		String fileName = "/Users/ryan/Coding/CGA101/secondHand_pic/木木梟.jpeg";
 		File file = new File(fileName);
 		FileInputStream fis = new FileInputStream(file);
-		byte[] buffer = new byte[(int)file.length()];
+		byte[] buffer = new byte[(int) file.length()];
 		fis.read(buffer);
 		fis.close();
-		
-		ByteBuffer src = ByteBuffer.wrap (buffer);
+
+		ByteBuffer src = ByteBuffer.wrap(buffer);
 		ByteBuffer base64encoded = Base64.getEncoder().encode(src);
-		
-		
-		String fileName1 = "/Users/ryan/Coding/CGA101/secondHand_pic/貪婪之島_2.png";
-		File file1 = new File(fileName1);
-		FileInputStream fis1 = new FileInputStream(file1);
-		byte[] buffer1 = new byte[(int)file1.length()];
-		fis1.read(buffer1);
-		fis1.close();
-		
-		ByteBuffer src1 = ByteBuffer.wrap (buffer1);
-		ByteBuffer base64encoded1 = Base64.getEncoder().encode(src1);
-		
-		
-		String fileName2 = "/Users/ryan/Coding/CGA101/secondHand_pic/貪婪之島_3.jpeg";
-		File file2 = new File(fileName2);
-		FileInputStream fis2 = new FileInputStream(file2);
-		byte[] buffer2 = new byte[(int)file2.length()];
-		fis2.read(buffer2);
-		fis2.close();
-		
-		ByteBuffer src2 = ByteBuffer.wrap (buffer2);
-		ByteBuffer base64encoded2 = Base64.getEncoder().encode(src2);
+
+//		String fileName1 = "/Users/ryan/Coding/CGA101/secondHand_pic/火紅眼_2.jpg";
+//		File file1 = new File(fileName1);
+//		FileInputStream fis1 = new FileInputStream(file1);
+//		byte[] buffer1 = new byte[(int)file1.length()];
+//		fis1.read(buffer1);
+//		fis1.close();
+//		
+//		ByteBuffer src1 = ByteBuffer.wrap (buffer1);
+//		ByteBuffer base64encoded1 = Base64.getEncoder().encode(src1);
+//		
+//		
+//		String fileName2 = "/Users/ryan/Coding/CGA101/secondHand_pic/火紅眼_3.jpg";
+//		File file2 = new File(fileName2);
+//		FileInputStream fis2 = new FileInputStream(file2);
+//		byte[] buffer2 = new byte[(int)file2.length()];
+//		fis2.read(buffer2);
+//		fis2.close();
+//		
+//		ByteBuffer src2 = ByteBuffer.wrap (buffer2);
+//		ByteBuffer base64encoded2 = Base64.getEncoder().encode(src2);
 
 		// 新增
 //		SecondHandVO secondHandVO1 = new SecondHandVO();
@@ -391,18 +468,18 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 		// 修改
 		SecondHandVO secondHandVO2 = new SecondHandVO();
-		secondHandVO2.setsecond_hand_id(1001);
-		secondHandVO2.setBid_winner(1014);
-		secondHandVO2.setDeal_price(2);
-		secondHandVO2.setName("貪婪之島");
-		secondHandVO2.setBottom_price(8900000);
-		secondHandVO2.setTop_price(17000000);
-		secondHandVO2.setStart_time(java.sql.Timestamp.valueOf("2022-06-30 18:00:00"));
-		secondHandVO2.setEnd_time(java.sql.Timestamp.valueOf("2022-06-30 22:00:00"));
-		secondHandVO2.setIs_deal(0);
+		secondHandVO2.setsecond_hand_id(1004);
+//		secondHandVO2.setBid_winner(null);
+//		secondHandVO2.setDeal_price(null);
+//		secondHandVO2.setName(null);
+//		secondHandVO2.setBottom_price(100000);
+//		secondHandVO2.setTop_price(5000000);
+//		secondHandVO2.setStart_time(java.sql.Timestamp.valueOf(unll));
+//		secondHandVO2.setEnd_time(java.sql.Timestamp.valueOf("2022-03-20 18:30:00"));
+//		secondHandVO2.setIs_deal(1);
 		secondHandVO2.setImg1(new String(base64encoded.array()));
-		secondHandVO2.setImg2(new String(base64encoded1.array()));
-		secondHandVO2.setImg3(new String(base64encoded2.array()));
+//		secondHandVO2.setImg2(new String(base64encoded1.array()));
+//		secondHandVO2.setImg3(new String(base64encoded2.array()));
 		dao.update(secondHandVO2);
 
 		// 查詢 by id
@@ -462,7 +539,5 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //			System.out.print(listSecondHandVO.getCreate_time() + ",");
 //			System.out.println(listSecondHandVO.getUpdate_time());
 //		}
-		
-//		System.out.println(123);
 	}
 }

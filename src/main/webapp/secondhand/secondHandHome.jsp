@@ -227,7 +227,7 @@ pageContext.setAttribute("list", list);
 						begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 							<div class="portfolio-wrap">
-								<img src="data:image/png;base64, ${secondHandVO.img3}" class="img-fluid"
+								<img src="data:image/png;base64, ${secondHandVO.img1}" class="img-fluid"
 								alt"" style="max-height: 100%; max-width: 100%; width: auto;
 								height: auto; position: absolute; top: 0; bottom: 0; left: 0;
 								right: 0; margin: auto;">
