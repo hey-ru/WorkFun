@@ -1,6 +1,9 @@
 package com.secondHand.model;
 
+import java.sql.Blob;
 import java.sql.Timestamp;
+
+
 
 public class SecondHandVO implements java.io.Serializable {
 
@@ -15,7 +18,7 @@ public class SecondHandVO implements java.io.Serializable {
 	private Timestamp start_time;
 	private Timestamp end_time;
 	private Integer is_deal;
-	private byte[] img1;
+	private String img1;
 	private byte[] img2;
 	private byte[] img3;
 	private Timestamp create_time;
@@ -101,11 +104,11 @@ public class SecondHandVO implements java.io.Serializable {
 		this.is_deal = is_deal;
 	}
 
-	public byte[] getImg1() {
+	public String getImg1() {
 		return img1;
 	}
 
-	public void setImg1(byte[] img1) {
+	public void setImg1(String img1) {
 		this.img1 = img1;
 	}
 
