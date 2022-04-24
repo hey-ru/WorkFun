@@ -1,7 +1,6 @@
 package com.secondHand.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,9 +46,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 			pstmt.setInt(4, secondHandVO.getTop_price());
 			pstmt.setTimestamp(5, secondHandVO.getStart_time());
 			pstmt.setTimestamp(6, secondHandVO.getEnd_time());
-			pstmt.setBytes(7, secondHandVO.getImg1());
-			pstmt.setBytes(8, secondHandVO.getImg2());
-			pstmt.setBytes(9, secondHandVO.getImg3());
+			pstmt.setString(7, secondHandVO.getImg1());
+			pstmt.setString(8, secondHandVO.getImg2());
+			pstmt.setString(9, secondHandVO.getImg3());
 
 			pstmt.executeUpdate();
 
@@ -91,9 +90,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 //			pstmt.setTimestamp(6, secondHandVO.getStart_time());
 //			pstmt.setTimestamp(7, secondHandVO.getEnd_time());
 //			pstmt.setInt(8, secondHandVO.getIs_deal());
-//			pstmt.setBytes(9, secondHandVO.getImg1());
-//			pstmt.setBytes(10, secondHandVO.getImg2());
-//			pstmt.setBytes(11, secondHandVO.getImg3());
+//			pstmt.setString(9, secondHandVO.getImg1());
+//			pstmt.setString(10, secondHandVO.getImg2());
+//			pstmt.setString(11, secondHandVO.getImg3());
 //			pstmt.setInt(12, secondHandVO.getsecond_hand_id());
 //
 //			pstmt.executeUpdate();
@@ -136,9 +135,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 			pstmt.setTimestamp(6, secondHandVO.getStart_time());
 			pstmt.setTimestamp(7, secondHandVO.getEnd_time());
 			pstmt.setInt(8, secondHandVO.getIs_deal());
-			pstmt.setBytes(9, secondHandVO.getImg1());
-			pstmt.setBytes(10, secondHandVO.getImg2());
-			pstmt.setBytes(11, secondHandVO.getImg3());
+			pstmt.setString(9, secondHandVO.getImg1());
+			pstmt.setString(10, secondHandVO.getImg2());
+			pstmt.setString(11, secondHandVO.getImg3());
 			pstmt.setInt(12, secondHandVO.getsecond_hand_id());
 
 			pstmt.executeUpdate();
@@ -191,9 +190,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getBytes("img1"));
-				secondHandVO.setImg2(rs.getBytes("img2"));
-				secondHandVO.setImg3(rs.getBytes("img3"));
+				secondHandVO.setImg1(rs.getString("img1"));
+				secondHandVO.setImg2(rs.getString("img2"));
+				secondHandVO.setImg3(rs.getString("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
 				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
 			}
@@ -238,9 +237,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getBytes("img1"));
-				secondHandVO.setImg2(rs.getBytes("img2"));
-				secondHandVO.setImg3(rs.getBytes("img3"));
+				secondHandVO.setImg1(rs.getString("img1"));
+				secondHandVO.setImg2(rs.getString("img2"));
+				secondHandVO.setImg3(rs.getString("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
 				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
 				list.add(secondHandVO);
@@ -299,9 +298,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getBytes("img1"));
-				secondHandVO.setImg2(rs.getBytes("img2"));
-				secondHandVO.setImg3(rs.getBytes("img3"));
+				secondHandVO.setImg1(rs.getString("img1"));
+				secondHandVO.setImg2(rs.getString("img2"));
+				secondHandVO.setImg3(rs.getString("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
 				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
 				list.add(secondHandVO);
