@@ -48,7 +48,7 @@
 </c:if>
 
 <ul>
-  <li><a href='listMenu.jsp'>List</a> all MenuItems  <br><br></li>
+  <li><a href='listAllMenu.jsp'>List</a> all MenuItems  <br><br></li>
   
   
   <li>
@@ -60,15 +60,40 @@
     </FORM>
   </li>
 
-  <jsp:useBean id="ms" scope="page" class="com.menu.model.MenuService" />
+  <jsp:useBean id="menuService" scope="page" class="com.menu.model.MenuService" />
    
+<!--  <li> -->
+<!--      <FORM METHOD="post" ACTION="menu.do" > -->
+<!--        <b>選擇員工編號:</b> -->
+<!--        <select size="1" name="shop_id"> -->
+<%--          <c:forEach var="menuVO" items="${menuSvc.all}" >  --%>
+<%--           <option value="${menuVO.shop_id}">${menuVO.shop_id} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        <input type="hidden" name="action" value="getmenu"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--     </FORM> -->
+<!--   </li> -->
+  
+<!--   <li> -->
+<!--      <FORM METHOD="post" ACTION="menu.do" > -->
+<!--        <b>選擇員工姓名:</b> -->
+<!--        <select size="1" name="menu_id"> -->
+<%--          <c:forEach var="menuVO" items="${menuSvc.all}" >  --%>
+<%--           <option value="${menuVO.menuno}">${menuVO.ename} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        <input type="hidden" name="action" value="getmenu"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--      </FORM> -->
+<!--   </li> -->
 </ul>
 
 
 <h3>員工管理</h3>
 
 <ul>
-  <li><a href='addEmp.jsp'>Add</a> a new Emp.</li>
+  <li><a href='addMenu.jsp'>Add</a> a new menu.</li>
 </ul>
 
 </body>

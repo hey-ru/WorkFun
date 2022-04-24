@@ -46,7 +46,7 @@ public class GroupBuyService {
 		return groupBuyVO;
 	}
 
-	public GroupBuyVO getOneEmp(Integer gb_id) {
+	public GroupBuyVO getOneGB(Integer gb_id) {
 		return dao.findByPrimaryKey(gb_id);
 	}
 

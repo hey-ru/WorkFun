@@ -2,6 +2,8 @@ package com.groupBuyList.model;
 
 import java.sql.Timestamp;
 
+import com.groupBuy.model.GroupBuyDAO_interface;
+
 public class GroupBuyListVO implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -19,12 +21,12 @@ public class GroupBuyListVO implements java.io.Serializable {
 	private Integer is_pay;
 	private Integer is_pickup;
 	private Timestamp gbList_upd;
+	
 			
 	public GroupBuyListVO() {
 		super();
 	}
 	
-
 	public GroupBuyListVO(Integer gbList_id, Integer gb_id, Integer buyer, String buyer_name, Integer menu_id,
 			String item, Integer price, Integer qty, Integer total, String remark, Integer is_pay, Integer is_pickup,
 			Timestamp gbList_upd) {
@@ -44,7 +46,6 @@ public class GroupBuyListVO implements java.io.Serializable {
 		this.gbList_upd = gbList_upd;
 	}
 
-
 	@Override
 	public String toString() {
 		return "GroupBuyListVO [gbList_id=" + gbList_id + ", gb_id=" + gb_id + ", buyer=" + buyer + ", buyer_name="
@@ -52,7 +53,6 @@ public class GroupBuyListVO implements java.io.Serializable {
 				+ ", total=" + total + ", remark=" + remark + ", is_pay=" + is_pay + ", is_pickup=" + is_pickup
 				+ ", gbList_upd=" + gbList_upd + "]";
 	}
-
 
 	public Integer getGbList_id() {
 		return gbList_id;
@@ -134,5 +134,12 @@ public class GroupBuyListVO implements java.io.Serializable {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
+	
+	   // for join gb_id from groupbuy
+    public com.groupBuy.model.GroupBuyVO getGroupBuyVO() {
+	    com.groupBuy.model.GroupBuyService gbSvc = new com.groupBuy.model.GroupBuyService();
+	    com.groupBuy.model.GroupBuyVO GroupBuyVO = gbSvc.getOneGB(gb_id);
+	    return GroupBuyVO;
+    }
 	
 }

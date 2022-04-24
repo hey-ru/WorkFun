@@ -54,14 +54,18 @@ public class TestGroupBuyList {
 //		System.out.println("新增一筆參團完成");
 
 		// 查詢全部揪團明細
-//		List<GroupBuyListVO> list = dao.getAll();
-//		int countList1 = 1;
-//		for (GroupBuyListVO allList : list) {
-//			System.out.println(allList.toString());
-//			System.out.println("---------------------筆數:" + countList1++);
-//		}
+		List<GroupBuyListVO> list = dao.getAll();
+		int countList1 = 0;
+		for (GroupBuyListVO allList : list) {
+			System.out.println(allList.toString());
+			System.out.println("---------------------筆數:" + ++countList1);
+		}
+		
+		
+		GroupBuyListService gbListSvc = new GroupBuyListService();
+		
+//		gbListSvc.getAll().toString();
+		
 	}
-	
-	
 
 }

@@ -3,23 +3,25 @@ package com.menu.model;
 import java.util.*;
 import java.sql.*;
 
-public class MenuJDBCDAO implements MenuDAO_Interface {
+public class MenuJDBCDAO implements MenuDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
-	
-	//前台 新增店家單品項目
-	private static final String INSERT_STMT = "INSERT INTO menu (shop_id,item,price) VALUES (?, ?, ?)";
-	//前台 修改店家單品項目
-	private static final String UPDATE = "UPDATE menu set shop_id=?, item=?, price=?, is_item=? where menu_id = ?";
-	//前台 查詢一間店家菜單
-	private static final String GET_ByShopId = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ?";	
-	//後台 查詢各店家菜單
-	private static final String GET_ALL_STMT = "SELECT * FROM menu ";
 
+	// 前台 新增店家單品項目
+	private static final String INSERT_STMT = "INSERT INTO menu (shop_id,item,price) VALUES (?, ?, ?)";
+	// 前台 修改店家單品項目
+	private static final String UPDATE = "UPDATE menu set shop_id=?, item=?, price=?, is_item=? where menu_id = ?";
+	// 前台 查詢一間店家菜單
+	private static final String GET_ByShopId = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ?";
+	// 後台 查詢各店家菜單
+	private static final String GET_ALL_STMT = "SELECT * FROM menu ";
 	
-	//前台 新增店家單品項目
+	//查詢一筆菜單項目
+	private static final String GET_ONE_STMT = " SELECT menu_id, shop_id, item, price, is_item, menu_upd FROM menu where menu_id = ?";
+
+	// 前台 新增店家單品項目
 	@Override
 	public void insert(MenuVO menuVO) {
 
@@ -64,7 +66,7 @@ public class MenuJDBCDAO implements MenuDAO_Interface {
 
 	}
 
-	//前台 修改店家單品項目
+	// 前台 修改店家單品項目
 	@Override
 	public void update(MenuVO menuVO) {
 		Connection con = null;
@@ -109,9 +111,9 @@ public class MenuJDBCDAO implements MenuDAO_Interface {
 		}
 
 	}
-	
+
 	@Override
-	//前台 查詢一間店家菜單
+	// 前台 查詢一間店家菜單
 	public List<MenuVO> getByShopId(Integer shop_id) {
 		List<MenuVO> list = new ArrayList<MenuVO>();
 		MenuVO menuVO = null;
@@ -125,9 +127,9 @@ public class MenuJDBCDAO implements MenuDAO_Interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ByShopId);
-			
+
 			pstmt.setInt(1, shop_id);
-			 
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -173,8 +175,7 @@ public class MenuJDBCDAO implements MenuDAO_Interface {
 		return list;
 	}
 
-		
-	//後台 查詢各店家菜單
+	// 後台 查詢各店家菜單
 	@Override
 	public List<MenuVO> getAll() {
 		List<MenuVO> list = new ArrayList<MenuVO>();
@@ -234,68 +235,65 @@ public class MenuJDBCDAO implements MenuDAO_Interface {
 		}
 		return list;
 	}
-	
-//	@Override
-//	public MenuVO findByPrimaryKey(Integer menu_id) {
-//		  MenuVO menuVO = null;
-//		  Connection con = null;
-//		  PreparedStatement pstmt = null;
-//		  ResultSet rs = null;
-//
-//		  try {
-//
-//		   Class.forName(driver);
-//		   con = DriverManager.getConnection(url, userid, passwd);
-//		   pstmt = con.prepareStatement(GET_ONE_STMT);
-//
-//		   pstmt.setInt(1, menu_id);
-//
-//		   rs = pstmt.executeQuery();
-//
-//		   while (rs.next()) {
-//		    menuVO = new MenuVO();
-//		    menuVO.setMenu_id(rs.getInt("menu_id"));
-//		    menuVO.setShop_id(rs.getInt("shop_id"));
-//		    menuVO.setItem(rs.getString("item"));
-//		    menuVO.setPrice(rs.getInt("price"));
-//		    menuVO.setIs_item(rs.getInt("is_item"));
-//		    menuVO.setMenu_upd(rs.getTimestamp("menu_upd"));
-//
-//		   }
-//
-//		   // Handle any driver errors
-//		  } catch (ClassNotFoundException e) {
-//		   throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-//		   // Handle any SQL errors
-//		  } catch (SQLException se) {
-//		   throw new RuntimeException("A database error occured. " + se.getMessage());
-//		   // Clean up JDBC resources
-//		  } finally {
-//		   if (rs != null) {
-//		    try {
-//		     rs.close();
-//		    } catch (SQLException se) {
-//		     se.printStackTrace(System.err);
-//		    }
-//		   }
-//		   if (pstmt != null) {
-//		    try {
-//		     pstmt.close();
-//		    } catch (SQLException se) {
-//		     se.printStackTrace(System.err);
-//		    }
-//		   }
-//		   if (con != null) {
-//		    try {
-//		     con.close();
-//		    } catch (Exception e) {
-//		     e.printStackTrace(System.err);
-//		    }
-//		   }
-//		  }
-//		  return menuVO;
-//		 }
-	
-	
+
+	@Override
+	public MenuVO findByPrimaryKey(Integer menu_id) {
+		MenuVO menuVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setInt(1, menu_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				menuVO = new MenuVO();
+				menuVO.setMenu_id(rs.getInt("menu_id"));
+				menuVO.setShop_id(rs.getInt("shop_id"));
+				menuVO.setItem(rs.getString("item"));
+				menuVO.setPrice(rs.getInt("price"));
+				menuVO.setIs_item(rs.getInt("is_item"));
+				menuVO.setMenu_upd(rs.getTimestamp("menu_upd"));
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return menuVO;
+	}
 
 }

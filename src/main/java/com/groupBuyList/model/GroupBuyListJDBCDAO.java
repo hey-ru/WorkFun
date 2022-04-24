@@ -3,7 +3,7 @@ package com.groupBuyList.model;
 import java.util.*;
 import java.sql.*;
 
-public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
+public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
@@ -31,7 +31,7 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
 	
 
 //	[後台]: 查詢所有揪團明細
-//	private static final String GET_ALL_STMT = "SELECT * FROM groupBuyList group by gb_id order by gbList_id";
+	private static final String GET_ALL_STMT = "SELECT * FROM groupBuyList order by gb_id";
 
 //	參團者新增一筆參團	
 	@Override
@@ -144,37 +144,66 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_Interface {
 	
 	
 //	[後台]: 查詢所有揪團明細
-//	@Override
-//	public List<GroupBuyListVO> getAll() {
-//		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
-//
-//		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-//				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
-//			ResultSet rs = pstmt.executeQuery(); // 當Statement關閉，ResultSet也會自動關閉，不需將ResultSet宣告置入try with resource
-//
-//			while (rs.next()) {
-//				GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
-//				groupBuyListVO.setGbList_id(rs.getInt(1));
-//				groupBuyListVO.setGbList_id(rs.getInt(1));
-//				groupBuyListVO.setGb_id(rs.getInt(2));
-//				groupBuyListVO.setBuyer(rs.getInt(3));
-//				groupBuyListVO.setBuyer_name(rs.getString(4));
-//				groupBuyListVO.setMenu_id(rs.getInt(5));
-//				groupBuyListVO.setItem(rs.getString(6));
-//				groupBuyListVO.setPrice(rs.getInt(7));
-//				groupBuyListVO.setQty(rs.getInt(8));
-//				groupBuyListVO.setRemark(rs.getString(9));
-//				groupBuyListVO.setIs_pay(rs.getInt(10));
-//				groupBuyListVO.setIs_pickup(rs.getInt(11));
-//				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
-//
-//				list.add(groupBuyListVO);
-//			}
-//		} catch (SQLException se) {
-//			se.printStackTrace();
-//		}
-//		return list;
-//	}
+	@Override
+	public List<GroupBuyListVO> getAll() {
+		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
+
+		try (Connection con = DriverManager.getConnection(url, userid, passwd);
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
+			ResultSet rs = pstmt.executeQuery(); // 當Statement關閉，ResultSet也會自動關閉，不需將ResultSet宣告置入try with resource
+
+			while (rs.next()) {
+				GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+				groupBuyListVO.setGbList_id(rs.getInt(1));
+				groupBuyListVO.setGb_id(rs.getInt(2));
+				groupBuyListVO.setBuyer(rs.getInt(3));
+				groupBuyListVO.setBuyer_name(rs.getString(4));
+				groupBuyListVO.setMenu_id(rs.getInt(5));
+				groupBuyListVO.setItem(rs.getString(6));
+				groupBuyListVO.setPrice(rs.getInt(7));
+				groupBuyListVO.setQty(rs.getInt(8));
+				groupBuyListVO.setRemark(rs.getString(9));
+				groupBuyListVO.setIs_pay(rs.getInt(10));
+				groupBuyListVO.setIs_pickup(rs.getInt(11));
+				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
+
+				list.add(groupBuyListVO);
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public GroupBuyListVO findByPrimaryKey(Integer gb_id) {
+		GroupBuyListVO groupBuyListVO = null;
+		
+		try (Connection con = DriverManager.getConnection(url, userid, passwd);
+			PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
+			ResultSet rs = pstmt.executeQuery(); // 當Statement關閉，ResultSet也會自動關閉，不需將ResultSet宣告置入try with resource
+
+			while (rs.next()) {
+				groupBuyListVO = new GroupBuyListVO();
+				groupBuyListVO.setGbList_id(rs.getInt(1));
+				groupBuyListVO.setGb_id(rs.getInt(2));
+				groupBuyListVO.setBuyer(rs.getInt(3));
+				groupBuyListVO.setBuyer_name(rs.getString(4));
+				groupBuyListVO.setMenu_id(rs.getInt(5));
+				groupBuyListVO.setItem(rs.getString(6));
+				groupBuyListVO.setPrice(rs.getInt(7));
+				groupBuyListVO.setQty(rs.getInt(8));
+				groupBuyListVO.setRemark(rs.getString(9));
+				groupBuyListVO.setIs_pay(rs.getInt(10));
+				groupBuyListVO.setIs_pickup(rs.getInt(11));
+				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
+
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return groupBuyListVO;
+	}
 
 
 }

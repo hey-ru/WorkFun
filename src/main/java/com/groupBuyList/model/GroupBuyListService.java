@@ -1,10 +1,11 @@
 package com.groupBuyList.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class GroupBuyListService {
 
-	private GroupBuyListDAO_Interface dao;
+	private GroupBuyListDAO_interface dao;
 
 	public GroupBuyListService() {
 		dao = new GroupBuyListJDBCDAO();
@@ -58,5 +59,13 @@ public class GroupBuyListService {
 	public void deleteMyGb(Integer buyer, Integer gb_id) {
 		dao.deleteMyGb(buyer, gb_id);
 	}
+	
+	public List<GroupBuyListVO> getMyGb(Integer buyer, Integer gb_id){
+		return dao.getMyGb(buyer, gb_id);		
+	}
+	
+	public List<GroupBuyListVO> getAll(){
+		return dao.getAll();
+	} 
 	
 }

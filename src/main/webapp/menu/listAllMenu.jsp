@@ -9,7 +9,7 @@
     List<MenuVO> list = menuService.getAll();
     pageContext.setAttribute("list",list);
 %>
-<jsp:useBean id="ms" scope="page" class="com.menu.model.MenuService" />
+<jsp:useBean id="menus" scope="page" class="com.menu.model.MenuService" />
 
 <html>
 <head>
@@ -75,7 +75,7 @@
 		<th>品項</th>
 		<th>單價</th>
 		<th></th>
-		<th></th>
+		
 	
 	</tr>
 	<%@ include file="page1.file" %> 
@@ -91,12 +91,7 @@
 			     <input type="hidden" name="menu_id"  value="${menuVO.menu_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/menu.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
-			     <input type="hidden" name="menu_id"  value="${menuVO.menu_id}">
-			     <input type="hidden" name="action" value="delete"></FORM>
-			</td>
+
 		</tr>
 	</c:forEach>
 </table>
