@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class post_reportDAO implements post_reportDAO_interface{
+public class Post_ReportDAO implements Post_ReportDAO_interface{
 	
 	private static DataSource ds = null;
 	static {
@@ -30,7 +30,7 @@ public class post_reportDAO implements post_reportDAO_interface{
 	private static final String UPDATE = "UPDATE post_report set post_id=?,emp_id=?,reason=?,status=? where post_report_id = ?";
 
 	@Override
-	public void insert(post_reportVO post_reportVO) {
+	public void insert(Post_ReportVO post_reportVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -69,7 +69,7 @@ public class post_reportDAO implements post_reportDAO_interface{
 	}
 
 	@Override
-	public void update(post_reportVO post_reportVO) {
+	public void update(Post_ReportVO post_reportVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -109,8 +109,8 @@ public class post_reportDAO implements post_reportDAO_interface{
 	}
 
 	@Override
-	public post_reportVO findByPrimaryKey(Integer post_report_id) {
-		post_reportVO post_reportVO = null;
+	public Post_ReportVO findByPrimaryKey(Integer post_report_id) {
+		Post_ReportVO post_reportVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -125,7 +125,7 @@ public class post_reportDAO implements post_reportDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_reportVO = new post_reportVO();
+				post_reportVO = new Post_ReportVO();
 				post_reportVO.setPost_report_id(rs.getInt("post_report_id"));
 				post_reportVO.setPost_id(rs.getInt("post_id"));
 				post_reportVO.setEmp_id(rs.getInt("emp_id"));							
@@ -163,9 +163,9 @@ public class post_reportDAO implements post_reportDAO_interface{
 	}
 
 	@Override
-	public List<post_reportVO> getAll() {
-		List<post_reportVO> list = new ArrayList<post_reportVO>();
-		post_reportVO post_reportVO = null;
+	public List<Post_ReportVO> getAll() {
+		List<Post_ReportVO> list = new ArrayList<Post_ReportVO>();
+		Post_ReportVO post_reportVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -175,7 +175,7 @@ public class post_reportDAO implements post_reportDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_reportVO = new post_reportVO();
+				post_reportVO = new Post_ReportVO();
 				post_reportVO.setPost_report_id(rs.getInt("post_report_id"));
 				post_reportVO.setPost_id(rs.getInt("post_id"));
 				post_reportVO.setEmp_id(rs.getInt("emp_id"));							

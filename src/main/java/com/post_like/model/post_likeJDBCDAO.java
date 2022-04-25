@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class post_likeJDBCDAO implements post_likeDAO_interface{
+public class Post_LikeJDBCDAO implements Post_LikeDAO_interface{
 	
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Taipei";
@@ -20,7 +20,7 @@ public class post_likeJDBCDAO implements post_likeDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT post_id,emp_id FROM post_like where post_id = ? AND emp_id = ?";
 	private static final String DELETE = "DELETE FROM post_like where post_id = ? AND emp_id = ?";
 	@Override
-	public void insert(post_likeVO post_likeVO) {
+	public void insert(Post_LikeVO post_likeVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -101,8 +101,8 @@ public class post_likeJDBCDAO implements post_likeDAO_interface{
 
 	}
 	@Override
-	public post_likeVO findByPrimaryKey(Integer post_id, Integer emp_id) {
-		post_likeVO post_likeVO = null;
+	public Post_LikeVO findByPrimaryKey(Integer post_id, Integer emp_id) {
+		Post_LikeVO post_likeVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -118,7 +118,7 @@ public class post_likeJDBCDAO implements post_likeDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_likeVO = new post_likeVO();
+				post_likeVO = new Post_LikeVO();
 				post_likeVO.setPost_id(rs.getInt("post_id"));
 				post_likeVO.setEmp_id(rs.getInt("emp_id"));
 				
@@ -156,9 +156,9 @@ public class post_likeJDBCDAO implements post_likeDAO_interface{
 	}
 
 	@Override
-	public List<post_likeVO> getAll() {
-		List<post_likeVO> list = new ArrayList<post_likeVO>();
-		post_likeVO post_likeVO = null;
+	public List<Post_LikeVO> getAll() {
+		List<Post_LikeVO> list = new ArrayList<Post_LikeVO>();
+		Post_LikeVO post_likeVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -169,7 +169,7 @@ public class post_likeJDBCDAO implements post_likeDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_likeVO = new post_likeVO();
+				post_likeVO = new Post_LikeVO();
 				post_likeVO.setPost_id(rs.getInt("post_id"));
 				post_likeVO.setEmp_id(rs.getInt("emp_id"));
 				list.add(post_likeVO);
@@ -206,9 +206,9 @@ public class post_likeJDBCDAO implements post_likeDAO_interface{
 		return list;
 	}
 	
-	public static void main(String[] args) {
-		post_likeJDBCDAO dao = new post_likeJDBCDAO();
-		post_likeVO post_likeVO = new post_likeVO();
+//	public static void main(String[] args) {
+//		Post_LikeJDBCDAO dao = new Post_LikeJDBCDAO();
+//		Post_LikeVO post_likeVO = new Post_LikeVO();
 		
 //		Insert
 //		post_likeVO.setPost_id(1002);
@@ -224,10 +224,10 @@ public class post_likeJDBCDAO implements post_likeDAO_interface{
 //		System.out.println(post_likeVO2.getEmp_id());
 		
 //		selectALL-------------------------------
-		List<post_likeVO> list = dao.getAll();
-		for(post_likeVO post_like : list) {
-			System.out.println(post_like.getPost_id());
-			System.out.println(post_like.getEmp_id());
-		}
-	}
+//		List<Post_LikeVO> list = dao.getAll();
+//		for(Post_LikeVO post_like : list) {
+//			System.out.println(post_like.getPost_id());
+//			System.out.println(post_like.getEmp_id());
+//		}
+//	}
 }

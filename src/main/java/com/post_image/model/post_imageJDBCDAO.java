@@ -1,7 +1,5 @@
 package com.post_image.model;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class post_imageJDBCDAO implements post_imageDAO_interface{
+public class Post_ImageJDBCDAO implements Post_ImageDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
@@ -19,10 +17,10 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 	private static final String INSERT_STMT = "INSERT INTO post_image (post_id,image) VALUES (?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM post_image";
 	private static final String GET_ONE_STMT = "SELECT post_id,image FROM post_image where post_image_id = ?";
-	private static final String UPDATE = "UPDATE post_image set post_id=?,image=? where post_image_id = ?";
+	private static final String UPDATE = "UPDATE post_image set ";
 
 	@Override
-	public void insert(post_imageVO post_imageVO) {
+	public void insert(Post_ImageVO post_imageVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -63,19 +61,35 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 	}
 
 	@Override
-	public void update(post_imageVO post_imageVO) {
+	public void update(Post_ImageVO post_imageVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		int count = 0;
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setInt(1, post_imageVO.getPost_id());
-			pstmt.setBytes(2, post_imageVO.getImage());
-			pstmt.setInt(3, post_imageVO.getPost_image_id());
+			StringBuilder sb = new StringBuilder();
+			sb.append(UPDATE);
+			
+			if(post_imageVO.getImage()!=null) {
+				sb.append("image=?,");
+			}
 
+			sb.append("post_image_id=?");
+			sb.append(" where post_image_id=?");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			
+			if(post_imageVO.getImage()!=null) {
+				count++;
+				pstmt.setBytes(count, post_imageVO.getImage());
+			}
+			count++;
+			pstmt.setInt(count, post_imageVO.getPost_image_id());
+			count++;
+			pstmt.setInt(count, post_imageVO.getPost_image_id());
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors
@@ -105,8 +119,8 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 	}
 
 	@Override
-	public post_imageVO findByPrimaryKey(Integer post_image_id) {
-		post_imageVO post_imageVO = null;
+	public Post_ImageVO findByPrimaryKey(Integer post_image_id) {
+		Post_ImageVO post_imageVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -121,7 +135,7 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_imageVO = new post_imageVO();
+				post_imageVO = new Post_ImageVO();
 				post_imageVO.setPost_id(rs.getInt("post_id"));
 				post_imageVO.setImage(rs.getBytes("image"));
 				
@@ -159,9 +173,9 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 	}
 
 	@Override
-	public List<post_imageVO> getAll() {
-		List<post_imageVO> list = new ArrayList<post_imageVO>();
-		post_imageVO post_imageVO = null;
+	public List<Post_ImageVO> getAll() {
+		List<Post_ImageVO> list = new ArrayList<Post_ImageVO>();
+		Post_ImageVO post_imageVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -172,7 +186,7 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_imageVO = new post_imageVO();
+				post_imageVO = new Post_ImageVO();
 				post_imageVO.setPost_image_id(rs.getInt("post_image_id"));
 				post_imageVO.setPost_id(rs.getInt("post_id"));
 				post_imageVO.setImage(rs.getBytes("image"));
@@ -210,12 +224,12 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 		return list;
 	}
 
-	public static void main(String[] args) throws IOException {
-		post_imageJDBCDAO dao = new post_imageJDBCDAO();
-		post_imageVO post_imageVO = new post_imageVO();
-		FileInputStream in = new FileInputStream("C:\\Users\\Tibame_T14\\Desktop\\image\\4.png");
-		byte[] buf = new byte[in.available()];
-		in.read(buf);
+//	public static void main(String[] args) throws IOException {
+//		post_imageJDBCDAO dao = new post_imageJDBCDAO();
+//		post_imageVO post_imageVO = new post_imageVO();
+//		FileInputStream in = new FileInputStream("C:\\Users\\Tibame_T14\\Desktop\\image\\5.png");
+//		byte[] buf = new byte[in.available()];
+//		in.read(buf);
 		
 //		Insert
 		
@@ -225,9 +239,8 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 		
 // 		Update-------------------------------------------------------
 //		post_imageVO post_imageVO2 = new post_imageVO();
-//		post_imageVO2.setPost_id(1002);
-//		post_imageVO2.setImage(null);
 //		post_imageVO2.setPost_image_id(1);
+//		post_imageVO2.setImage(buf);
 //		dao.update(post_imageVO2);
 
 		// -select------------------------------------------
@@ -237,13 +250,13 @@ public class post_imageJDBCDAO implements post_imageDAO_interface{
 		
 		// selectALL----------------------------------------
 		
-		List<post_imageVO> list = dao.getAll();
-		for (post_imageVO postImg : list) {
-			System.out.println(postImg.getPost_image_id());
-			System.out.println(postImg.getPost_id());
-			System.out.println(postImg.getImage());
+//		List<post_imageVO> list = dao.getAll();
+//		for (post_imageVO postImg : list) {
+//			System.out.println(postImg.getPost_image_id());
+//			System.out.println(postImg.getPost_id());
+//			System.out.println(postImg.getImage());
 
 		
-	}
-	}
+//	}
+//	}
 }

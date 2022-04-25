@@ -1,6 +1,6 @@
 package com.post_keep.model;
 
-public class post_keepVO {
+public class Post_KeepVO {
 	private Integer post_id;
 	private Integer emp_id;
 	public Integer getPost_id() {

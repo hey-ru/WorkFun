@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class post_imageDAO implements post_imageDAO_interface{
+public class Post_ImageDAO implements Post_ImageDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -29,7 +29,7 @@ public class post_imageDAO implements post_imageDAO_interface{
 	private static final String UPDATE = "UPDATE post_image set post_id=?,image=? where post_image_id = ?";
 
 	@Override
-	public void insert(post_imageVO post_imageVO) {
+	public void insert(Post_ImageVO post_imageVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -66,7 +66,7 @@ public class post_imageDAO implements post_imageDAO_interface{
 	}
 
 	@Override
-	public void update(post_imageVO post_imageVO) {
+	public void update(Post_ImageVO post_imageVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -104,8 +104,8 @@ public class post_imageDAO implements post_imageDAO_interface{
 	}
 
 	@Override
-	public post_imageVO findByPrimaryKey(Integer post_image_id) {
-		post_imageVO post_imageVO = null;
+	public Post_ImageVO findByPrimaryKey(Integer post_image_id) {
+		Post_ImageVO post_imageVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -119,7 +119,7 @@ public class post_imageDAO implements post_imageDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_imageVO = new post_imageVO();
+				post_imageVO = new Post_ImageVO();
 				post_imageVO.setPost_image_id(rs.getInt("post_image_id"));
 				post_imageVO.setPost_id(rs.getInt("post_id"));
 				post_imageVO.setImage(rs.getBytes("image"));
@@ -155,9 +155,9 @@ public class post_imageDAO implements post_imageDAO_interface{
 	}
 
 	@Override
-	public List<post_imageVO> getAll() {
-		List<post_imageVO> list = new ArrayList<post_imageVO>();
-		post_imageVO post_imageVO = null;
+	public List<Post_ImageVO> getAll() {
+		List<Post_ImageVO> list = new ArrayList<Post_ImageVO>();
+		Post_ImageVO post_imageVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -167,7 +167,7 @@ public class post_imageDAO implements post_imageDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_imageVO = new post_imageVO();
+				post_imageVO = new Post_ImageVO();
 				post_imageVO.setPost_image_id(rs.getInt("post_image_id"));
 				post_imageVO.setPost_id(rs.getInt("post_id"));
 				post_imageVO.setImage(rs.getBytes("image"));

@@ -5,11 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class post_commentJDBCDAO implements post_commentDAO_interface{
+public class Post_CommentJDBCDAO implements Post_CommentDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
@@ -18,9 +17,9 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 	private static final String INSERT_STMT = "INSERT INTO post_comment (post_id,emp_id,post_comment) VALUES (?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM post_comment";
 	private static final String GET_ONE_STMT = "SELECT post_comment_id,post_id,emp_id,post_comment,comment_createtime,comment_updatetime FROM post_comment where post_comment_id = ?";
-	private static final String UPDATE = "UPDATE post_comment set post_id=?,emp_id=?,post_comment=?,comment_updatetime=? where post_comment_id = ?";
+	private static final String UPDATE = "UPDATE post_comment set ";
 	@Override
-	public void insert(post_commentVO post_commentVO) {
+	public void insert(Post_CommentVO post_commentVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -62,21 +61,45 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 	}
 
 	@Override
-	public void update(post_commentVO post_commentVO) {
+	public void update(Post_CommentVO post_commentVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		int count = 0;
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
-			
-			pstmt.setInt(1, post_commentVO.getPost_id());
-			pstmt.setInt(2, post_commentVO.getEmp_id());
-			pstmt.setString(3, post_commentVO.getPost_comment());
-			pstmt.setTimestamp(4, post_commentVO.getComment_updatetime());
-			pstmt.setInt(5, post_commentVO.getPost_comment_id());
+			StringBuilder sb  = new StringBuilder();
+			sb.append(UPDATE);
 
+			if(post_commentVO.getPost_comment()!=null) {
+				sb.append("post_comment=?,");
+			}
+			
+			if(post_commentVO.getComment_updatetime()!=null) {
+				sb.append("comment_updatetime=?,");
+			}
+			
+			sb.append("post_comment_id=?");
+			sb.append(" where post_comment_id=?");
+			
+			pstmt = con.prepareStatement(sb.toString());
+
+			
+			if(post_commentVO.getPost_comment()!=null) {
+				count++;
+				pstmt.setString(count, post_commentVO.getPost_comment());
+			}
+			
+			if(post_commentVO.getComment_updatetime()!=null) {
+				count++;
+				pstmt.setTimestamp(count, post_commentVO.getComment_updatetime());
+			}
+			
+			count++;
+			pstmt.setInt(count, post_commentVO.getPost_comment_id());
+			count++;
+			pstmt.setInt(count, post_commentVO.getPost_comment_id());
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors
@@ -106,8 +129,8 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 	}
 
 	@Override
-	public post_commentVO findByPrimaryKey(Integer post_comment_id) {
-		post_commentVO post_commentVO = null;
+	public Post_CommentVO findByPrimaryKey(Integer post_comment_id) {
+		Post_CommentVO post_commentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -122,7 +145,7 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_commentVO = new post_commentVO();
+				post_commentVO = new Post_CommentVO();
 				post_commentVO.setPost_comment_id(rs.getInt("post_comment_id"));
 				post_commentVO.setPost_id(rs.getInt("post_id"));
 				post_commentVO.setEmp_id(rs.getInt("emp_id"));							
@@ -164,9 +187,9 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 	}
 
 	@Override
-	public List<post_commentVO> getAll() {
-		List<post_commentVO> list = new ArrayList<post_commentVO>();
-		post_commentVO post_commentVO = null;
+	public List<Post_CommentVO> getAll() {
+		List<Post_CommentVO> list = new ArrayList<Post_CommentVO>();
+		Post_CommentVO post_commentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -177,7 +200,7 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_commentVO = new post_commentVO();
+				post_commentVO = new Post_CommentVO();
 				post_commentVO.setPost_comment_id(rs.getInt("post_comment_id"));
 				post_commentVO.setPost_id(rs.getInt("post_id"));
 				post_commentVO.setEmp_id(rs.getInt("emp_id"));							
@@ -217,11 +240,11 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 		}
 		return list;
 	}
-	public static void main(String[] args) throws Exception {
-		post_commentJDBCDAO dao = new post_commentJDBCDAO();
-		post_commentVO post_commentVO = new post_commentVO();
-		Long datetime = System.currentTimeMillis();
-		Timestamp timestamp = new Timestamp(datetime);
+//	public static void main(String[] args) throws Exception {
+//		post_commentJDBCDAO dao = new post_commentJDBCDAO();
+//		post_commentVO post_commentVO = new post_commentVO();
+//		Long datetime = System.currentTimeMillis();
+//		Timestamp timestamp = new Timestamp(datetime);
 		
 //		Insert
 //		post_commentVO.setPost_id(1002);
@@ -232,9 +255,7 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 // 		Update-------------------------------------------------------
 //		post_commentVO post_commentVO2 = new post_commentVO();
 //		post_commentVO2.setPost_comment_id(10003);
-//		post_commentVO2.setPost_id(1002);
-//		post_commentVO2.setEmp_id(1012);
-//		post_commentVO2.setPost_comment("=____=!!!");
+//		post_commentVO2.setPost_comment("測試1");
 //		post_commentVO2.setComment_updatetime(timestamp);
 //		dao.update(post_commentVO2);
 		
@@ -248,15 +269,15 @@ public class post_commentJDBCDAO implements post_commentDAO_interface{
 		
 	// selectALL----------------------------------------
 		
-		List<post_commentVO> list = dao.getAll();
-		for (post_commentVO postCom : list) {
-			System.out.println(postCom.getPost_comment_id());
-			System.out.println(postCom.getPost_id());
-			System.out.println(postCom.getEmp_id());
-			System.out.println(postCom.getPost_comment());
-			System.out.println(postCom.getComment_createtime());
-			System.out.println(postCom.getComment_updatetime());
-		
-	}
-}
+//		List<post_commentVO> list = dao.getAll();
+//		for (post_commentVO postCom : list) {
+//			System.out.println(postCom.getPost_comment_id());
+//			System.out.println(postCom.getPost_id());
+//			System.out.println(postCom.getEmp_id());
+//			System.out.println(postCom.getPost_comment());
+//			System.out.println(postCom.getComment_createtime());
+//			System.out.println(postCom.getComment_updatetime());
+//		
+//	}
+//}
 }

@@ -1,6 +1,6 @@
 package com.post_image.model;
 
-public class post_imageVO {
+public class Post_ImageVO {
 	private Integer post_image_id;
 	private Integer post_id;
 	private byte[] image;

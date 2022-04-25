@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class post_commentDAO implements post_commentDAO_interface{
+public class Post_CommentDAO implements Post_CommentDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -28,7 +28,7 @@ public class post_commentDAO implements post_commentDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT post_comment_id,post_id,emp_id,post_comment,comment_createtime,comment_updatetime FROM post_comment where post_comment_id = ?";
 	private static final String UPDATE = "UPDATE post_comment set post_id=?,emp_id=?,post_comment=?,comment_createtime=?,comment_updatetime=? where post_comment_id = ?";
 	@Override
-	public void insert(post_commentVO post_commentVO) {
+	public void insert(Post_CommentVO post_commentVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -68,7 +68,7 @@ public class post_commentDAO implements post_commentDAO_interface{
 	}
 
 	@Override
-	public void update(post_commentVO post_commentVO) {
+	public void update(Post_CommentVO post_commentVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -108,8 +108,8 @@ public class post_commentDAO implements post_commentDAO_interface{
 	}
 
 	@Override
-	public post_commentVO findByPrimaryKey(Integer post_comment_id) {
-		post_commentVO post_commentVO = null;
+	public Post_CommentVO findByPrimaryKey(Integer post_comment_id) {
+		Post_CommentVO post_commentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -123,7 +123,7 @@ public class post_commentDAO implements post_commentDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_commentVO = new post_commentVO();
+				post_commentVO = new Post_CommentVO();
 				post_commentVO.setPost_comment_id(rs.getInt("post_comment_id"));
 				post_commentVO.setPost_id(rs.getInt("post_id"));
 				post_commentVO.setEmp_id(rs.getInt("emp_id"));							
@@ -162,9 +162,9 @@ public class post_commentDAO implements post_commentDAO_interface{
 	}
 
 	@Override
-	public List<post_commentVO> getAll() {
-		List<post_commentVO> list = new ArrayList<post_commentVO>();
-		post_commentVO post_commentVO = null;
+	public List<Post_CommentVO> getAll() {
+		List<Post_CommentVO> list = new ArrayList<Post_CommentVO>();
+		Post_CommentVO post_commentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -174,7 +174,7 @@ public class post_commentDAO implements post_commentDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_commentVO = new post_commentVO();
+				post_commentVO = new Post_CommentVO();
 				post_commentVO.setPost_comment_id(rs.getInt("post_comment_id"));
 				post_commentVO.setPost_id(rs.getInt("post_id"));
 				post_commentVO.setEmp_id(rs.getInt("emp_id"));							

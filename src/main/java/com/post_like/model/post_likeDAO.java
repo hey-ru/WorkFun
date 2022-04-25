@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class post_likeDAO implements post_likeDAO_interface{
+public class Post_LikeDAO implements Post_LikeDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -28,7 +28,7 @@ public class post_likeDAO implements post_likeDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT post_id,emp_id FROM post_like where post_id = ? AND emp_id = ?";
 	private static final String DELETE = "DELETE FROM post_like where post_id = ? AND emp_id = ?";
 	@Override
-	public void insert(post_likeVO post_likeVO) {
+	public void insert(Post_LikeVO post_likeVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -99,8 +99,8 @@ public class post_likeDAO implements post_likeDAO_interface{
 
 	}
 	@Override
-	public post_likeVO findByPrimaryKey(Integer post_id, Integer emp_id) {
-		post_likeVO post_likeVO = null;
+	public Post_LikeVO findByPrimaryKey(Integer post_id, Integer emp_id) {
+		Post_LikeVO post_likeVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -115,7 +115,7 @@ public class post_likeDAO implements post_likeDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_likeVO = new post_likeVO();
+				post_likeVO = new Post_LikeVO();
 				post_likeVO.setPost_id(rs.getInt("post_id"));
 				post_likeVO.setEmp_id(rs.getInt("emp_id"));
 				
@@ -150,9 +150,9 @@ public class post_likeDAO implements post_likeDAO_interface{
 	}
 
 	@Override
-	public List<post_likeVO> getAll() {
-		List<post_likeVO> list = new ArrayList<post_likeVO>();
-		post_likeVO post_likeVO = null;
+	public List<Post_LikeVO> getAll() {
+		List<Post_LikeVO> list = new ArrayList<Post_LikeVO>();
+		Post_LikeVO post_likeVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -162,7 +162,7 @@ public class post_likeDAO implements post_likeDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_likeVO = new post_likeVO();
+				post_likeVO = new Post_LikeVO();
 				post_likeVO.setPost_id(rs.getInt("post_id"));
 				post_likeVO.setEmp_id(rs.getInt("emp_id"));
 			}

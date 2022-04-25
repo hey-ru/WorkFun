@@ -1,6 +1,6 @@
 package com.post_report.model;
 
-public class post_reportVO {
+public class Post_ReportVO {
 	
 	@Override
 	public String toString() {

@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class post_keepDAO implements post_keepDAO_interface{
+public class Post_KeepDAO implements Post_KeepDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -28,7 +28,7 @@ public class post_keepDAO implements post_keepDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT post_id,emp_id FROM post_keep where post_id = ? AND emp_id = ?";
 	private static final String DELETE = "DELETE FROM post_keep where post_id = ? AND emp_id = ?";
 	@Override
-	public void insert(post_keepVO post_keepVO) {
+	public void insert(Post_KeepVO post_keepVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -99,8 +99,8 @@ public class post_keepDAO implements post_keepDAO_interface{
 
 	}
 	@Override
-	public post_keepVO findByPrimaryKey(Integer post_id, Integer emp_id) {
-		post_keepVO post_keepVO = null;
+	public Post_KeepVO findByPrimaryKey(Integer post_id, Integer emp_id) {
+		Post_KeepVO post_keepVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -115,7 +115,7 @@ public class post_keepDAO implements post_keepDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_keepVO = new post_keepVO();
+				post_keepVO = new Post_KeepVO();
 				post_keepVO.setPost_id(rs.getInt("post_id"));
 				post_keepVO.setEmp_id(rs.getInt("emp_id"));
 				
@@ -149,9 +149,9 @@ public class post_keepDAO implements post_keepDAO_interface{
 		return post_keepVO;
 	}
 	@Override
-	public List<post_keepVO> getAll() {
-		List<post_keepVO> list = new ArrayList<post_keepVO>();
-		post_keepVO post_keepVO = null;
+	public List<Post_KeepVO> getAll() {
+		List<Post_KeepVO> list = new ArrayList<Post_KeepVO>();
+		Post_KeepVO post_keepVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -161,7 +161,7 @@ public class post_keepDAO implements post_keepDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				post_keepVO = new post_keepVO();
+				post_keepVO = new Post_KeepVO();
 				post_keepVO.setPost_id(rs.getInt("post_id"));
 				post_keepVO.setEmp_id(rs.getInt("emp_id"));
 			}

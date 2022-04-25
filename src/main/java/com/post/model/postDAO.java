@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class postDAO implements postDAO_interface{
+public class PostDAO implements PostDAO_interface{
 	
 	private static DataSource ds = null;
 	static {
@@ -30,7 +30,7 @@ public class postDAO implements postDAO_interface{
 	private static final String UPDATE = "UPDATE post set emp_id=?,post_title=?,post_content=?,post_video=?,post_createtime=?,post_updatetime=?,is_disable=? where post_id = ?";
 
 	@Override
-	public void insert(postVO postVO) {
+	public void insert(PostVO postVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -72,7 +72,7 @@ public class postDAO implements postDAO_interface{
 	}
 
 	@Override
-	public void update(postVO postVO) {
+	public void update(PostVO postVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -115,8 +115,8 @@ public class postDAO implements postDAO_interface{
 	}
 
 	@Override
-	public postVO findByPrimaryKey(Integer post_id) {
-		postVO postVO = null;
+	public PostVO findByPrimaryKey(Integer post_id) {
+		PostVO postVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -131,7 +131,7 @@ public class postDAO implements postDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				postVO = new postVO();
+				postVO = new PostVO();
 				postVO.setPost_id(rs.getInt("post_id"));
 				postVO.setEmp_id(rs.getInt("emp_id"));
 				postVO.setPost_title(rs.getString("post_title"));
@@ -172,9 +172,9 @@ public class postDAO implements postDAO_interface{
 	}
 
 	@Override
-	public List<postVO> getAll() {
-		List<postVO> list = new ArrayList<postVO>();
-		postVO postVO = null;
+	public List<PostVO> getAll() {
+		List<PostVO> list = new ArrayList<PostVO>();
+		PostVO postVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -185,7 +185,7 @@ public class postDAO implements postDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				postVO = new postVO();
+				postVO = new PostVO();
 				postVO.setPost_id(rs.getInt("post_id"));
 				postVO.setEmp_id(rs.getInt("emp_id"));
 				postVO.setPost_title(rs.getString("post_title"));

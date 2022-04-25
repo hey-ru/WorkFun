@@ -2,10 +2,10 @@ package com.post_comment.model;
 
 import java.util.List;
 
-public interface post_commentDAO_interface {
-	public void insert(post_commentVO post_commentVO);
-    public void update(post_commentVO post_commentVO);
+public interface Post_CommentDAO_interface {
+	public void insert(Post_CommentVO post_commentVO);
+    public void update(Post_CommentVO post_commentVO);
 //    public void delete(Integer report_id);
-    public post_commentVO findByPrimaryKey(Integer post_comment_id);
-    public List<post_commentVO> getAll();
+    public Post_CommentVO findByPrimaryKey(Integer post_comment_id);
+    public List<Post_CommentVO> getAll();
 }

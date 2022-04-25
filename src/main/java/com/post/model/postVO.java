@@ -2,7 +2,7 @@ package com.post.model;
 
 import java.sql.Timestamp;
 
-public class postVO implements java.io.Serializable{
+public class PostVO implements java.io.Serializable{
 	
 	/**
 	 * 

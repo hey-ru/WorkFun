@@ -1,36 +1,27 @@
 package com.post.model;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
-import com.report.model.reportVO;
-
-public class postJDBCDAO implements postDAO_interface {
+public class PostJDBCDAO implements PostDAO_interface {
 
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
 
-	private static final String INSERT_STMT = "INSERT INTO post (emp_id,post_title,post_content,post_video,post_createtime,post_updatetime,is_disable) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO post (emp_id,post_title,post_content,post_video,is_disable) VALUES (?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM post";
 	private static final String GET_ONE_STMT = "SELECT post_id,emp_id,post_title,post_content,post_video,post_createtime,post_updatetime,is_disable FROM post where post_id = ?";
-	private static final String UPDATE = "UPDATE post set emp_id=?,post_title=?,post_content=?,post_video=?,post_createtime=?,post_updatetime=?,is_disable=? where post_id = ?";
+	private static final String UPDATE = "UPDATE post set ";
 
 	@Override
-	public void insert(postVO postVO) {
+	public void insert(PostVO postVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -43,9 +34,7 @@ public class postJDBCDAO implements postDAO_interface {
 			pstmt.setString(2, postVO.getPost_title());
 			pstmt.setString(3, postVO.getPost_content());
 			pstmt.setBytes(4, postVO.getPost_video());
-			pstmt.setTimestamp(5, postVO.getPost_createtime());
-			pstmt.setTimestamp(6, postVO.getPost_updatetime());
-			pstmt.setInt(7, postVO.getIs_disable());
+			pstmt.setInt(5, postVO.getIs_disable());
 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -72,25 +61,70 @@ public class postJDBCDAO implements postDAO_interface {
 	}
 
 	@Override
-	public void update(postVO postVO) {
+	public void update(PostVO postVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		int count=0;
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
+			PostVO oldpost = findByPrimaryKey(postVO.getPost_id());
+			System.out.println(oldpost.getPost_id());
+			StringBuilder sb=new StringBuilder();
+			sb.append(UPDATE);
 
-			pstmt.setInt(1, postVO.getEmp_id());
-			pstmt.setString(2, postVO.getPost_title());
-			pstmt.setString(3, postVO.getPost_content());
-			pstmt.setBytes(4, postVO.getPost_video());
-			pstmt.setTimestamp(5, postVO.getPost_createtime());
-			pstmt.setTimestamp(6, postVO.getPost_updatetime());
-			pstmt.setInt(7, postVO.getIs_disable());
-			pstmt.setInt(8, postVO.getPost_id());
-
+			if(postVO.getPost_title() !=null) {
+				sb.append("post_title=?,");
+			}
+			
+			if(postVO.getPost_content() !=null) {
+				sb.append("post_content=?,");
+			}
+			
+			if(postVO.getPost_video() !=null) {
+				sb.append("post_video=?,");
+			}
+			
+			if(postVO.getIs_disable() !=null) {
+				sb.append("is_disable=?,");
+			}
+			if(postVO.getPost_updatetime() !=null) {
+			sb.append("post_updatetime=?,");
+			}
+			sb.append("post_id=?");
+			sb.append(" where post_id=?");
+			
+			pstmt = con.prepareStatement(sb.toString());
+		
+			if(postVO.getPost_title() !=null) {
+				count++;
+				pstmt.setString(count, postVO.getPost_title());
+			}
+			
+			if(postVO.getPost_content() !=null) {
+				count++;
+				pstmt.setString(count, postVO.getPost_content());
+			}
+			
+			if(postVO.getPost_video() !=null) {
+				count++;
+				pstmt.setBytes(count, postVO.getPost_video());
+			}
+			
+			if(postVO.getIs_disable() !=null) {
+				count++;
+				pstmt.setInt(count, postVO.getIs_disable());
+			}
+			
+			if(postVO.getPost_updatetime() !=null) {
+				count++;
+				pstmt.setTimestamp(count, postVO.getPost_updatetime());
+			}
+			count++;
+			pstmt.setInt(count,postVO.getPost_id());
+			count++;
+			pstmt.setInt(count,postVO.getPost_id()); 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -116,8 +150,8 @@ public class postJDBCDAO implements postDAO_interface {
 	}
 
 	@Override
-	public postVO findByPrimaryKey(Integer post_id) {
-		postVO postVO = null;
+	public PostVO findByPrimaryKey(Integer post_id) {
+		PostVO postVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -133,7 +167,7 @@ public class postJDBCDAO implements postDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				postVO = new postVO();
+				postVO = new PostVO();
 				postVO.setPost_id(rs.getInt("post_id"));
 				postVO.setEmp_id(rs.getInt("emp_id"));
 				postVO.setPost_title(rs.getString("post_title"));
@@ -176,9 +210,9 @@ public class postJDBCDAO implements postDAO_interface {
 	}
 
 	@Override
-	public List<postVO> getAll() {
-		List<postVO> list = new ArrayList<postVO>();
-		postVO postVO = null;
+	public List<PostVO> getAll() {
+		List<PostVO> list = new ArrayList<PostVO>();
+		PostVO postVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -190,7 +224,7 @@ public class postJDBCDAO implements postDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				postVO = new postVO();
+				postVO = new PostVO();
 				postVO.setPost_id(rs.getInt("post_id"));
 				postVO.setEmp_id(rs.getInt("emp_id"));
 				postVO.setPost_title(rs.getString("post_title"));
@@ -232,21 +266,19 @@ public class postJDBCDAO implements postDAO_interface {
 		return list;
 	}
 
-	public static void main(String[] args) throws Exception {
-		postJDBCDAO dao = new postJDBCDAO();
-		postVO postVO = new postVO();
-		Long datetime = System.currentTimeMillis();
-		Timestamp timestamp = new Timestamp(datetime);
-		FileInputStream in = new FileInputStream("C:\\Users\\Tibame_T14\\Desktop\\tomcat2.gif");
-		byte[] buf = new byte[in.available()];
-		in.read(buf);
+//	public static void main(String[] args) throws Exception {
+//		postJDBCDAO dao = new postJDBCDAO();
+//		postVO postVO = new postVO();
+//		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//		FileInputStream in = new FileInputStream("C:\\Users\\Tibame_T14\\Desktop\\tomcat2.gif");
+//		byte[] buf = new byte[in.available()];
+//		in.read(buf);
 
 //		Insert
 //      postVO.setEmp_id(1009);
 //		postVO.setPost_title("誰要一起吃披薩");
 //		postVO.setPost_content("小港國王下詔：徵求3位一起share披薩歡樂餐");
 //		postVO.setPost_video(null);
-//		postVO.setPost_createtime(timestamp);
 //		postVO.setPost_updatetime(null);
 //		postVO.setIs_disable(0);
 //		dao.insert(postVO);
@@ -256,14 +288,12 @@ public class postJDBCDAO implements postDAO_interface {
 // 		Update-------------------------------------------------------
 //		postVO postVO2 = new postVO();
 //		postVO2.setPost_id(1001);
-//		postVO2.setEmp_id(1009);
-//		postVO2.setPost_title("Oh我的天");
+//		postVO2.setPost_title("Test動態Update");
+//		postVO2.setIs_disable(1);
+//		postVO2.setPost_updatetime(timestamp);
+//		dao.update(postVO2);
 //		postVO2.setPost_content("機車被拖吊啦!!!");
 //		postVO2.setPost_video(null);
-//		postVO2.setPost_createtime(timestamp);
-//		postVO2.setPost_updatetime(null);
-//		postVO2.setIs_disable(0);
-//		dao.update(postVO2);
 //		
 //		in.close();
 
@@ -277,16 +307,16 @@ public class postJDBCDAO implements postDAO_interface {
 //		System.out.println(postVO3.getIs_disable());
 //		System.out.println(postVO3.getPost_video());
 		// -selectALL-------------------------------
-		List<postVO> list = dao.getAll();
-		for (postVO po : list) {
-			System.out.println(po.getPost_id());
-			System.out.println(po.getEmp_id());
-			System.out.println(po.getPost_title());
-			System.out.println(po.getPost_content());
-			System.out.println(po.getPost_createtime());
-			System.out.println(po.getPost_updatetime());
-			System.out.println(po.getIs_disable());
-			System.out.println(po.getPost_video());
-		}
-	}
+//		List<postVO> list = dao.getAll();
+//		for (postVO po : list) {
+//			System.out.println(po.getPost_id());
+//			System.out.println(po.getEmp_id());
+//			System.out.println(po.getPost_title());
+//			System.out.println(po.getPost_content());
+//			System.out.println(po.getPost_createtime());
+//			System.out.println(po.getPost_updatetime());
+//			System.out.println(po.getIs_disable());
+//			System.out.println(po.getPost_video());
+//		}
+//	}
 }
