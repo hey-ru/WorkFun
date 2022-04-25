@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.shop.model.*"%>
 
+<%
+  ShopVO shopVO = (ShopVO) request.getAttribute("shopVO");
+%>
 
 <html>
 <head>
@@ -46,23 +49,23 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>員工資料新增 - addEmp.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
 <h3>資料新增:</h3>
 
-<%-- 錯誤表列 --%>
-<%-- <c:if test="${not empty errorMsgs}"> --%>
-<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
-<!-- 	<ul> -->
-<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
-<%-- 			<li style="color:red">${message.value}</li> --%>
-<%-- 		</c:forEach> --%>
-<!-- 	</ul> -->
-<%-- </c:if> --%>
+<!-- 錯誤表列 -->
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message.value}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 
-<FORM METHOD="post" enctype="multipart/form-data" ACTION="/shop/ShopServlet" name="form1">
+<FORM METHOD="post" enctype="multipart/form-data" ACTION="ShopServlet.do" name="form1">
 <table>
 	<tr>
 		<td>店家名稱:</td>
@@ -138,7 +141,3 @@
 <input type="submit" value="送出新增"></FORM>
 </body>
 
-
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>

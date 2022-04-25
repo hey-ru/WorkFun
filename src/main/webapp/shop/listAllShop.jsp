@@ -95,7 +95,7 @@
 			<td>${shopVO.tel}</td>
 			<td><a href="${shopVO.website}">link</a></td>
 			<td>${shopVO.min_amt}</td>
-			<td><img src="data:image/jpg;base64,${shopVO.shop_img1}" style="max-width: 100%;"></td>
+			<td>${shopVO.shop_img1}</td>
 			<td><img src="data:image/jpg;base64,${shopVO.shop_img2}" style="max-width: 100%;"></td>
 			<td><img src="data:image/jpg;base64,${shopVO.shop_img3}" style="max-width: 100%;"></td>
 <!-- 			<td> -->
