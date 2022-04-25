@@ -7,7 +7,7 @@ public class SecondHandService {
 	private SecondHandDAO_interface dao;
 
 	public SecondHandService() {
-		dao = new SecondHandJDBCDAO();
+		dao = new SecondHandDAO();
 	}
 
 	public SecondHandVO addSecondHand(Integer saler, String name, Integer bottom_price, Integer top_price, Timestamp start_time, Timestamp end_time, String img1, String img2, String img3) {
@@ -48,11 +48,11 @@ public class SecondHandService {
 		return secondHandVO;
 	}
 
-	public SecondHandVO getById(Integer second_hand_id) {
+	public SecondHandVO getOneById(Integer second_hand_id) {
 		return dao.getById(second_hand_id);
 	}
 	
-	public List<SecondHandVO> getByName(String name){
+	public List<SecondHandVO> getALLByName(String name){
 		return dao.getByName(name);
 	}
 

@@ -11,6 +11,10 @@ List<SecondHandVO> list = secondHandSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
 
+<%-- <% SecondHandVO secondHand = new SecondHandVO(); --%>
+// secondHand.s
+<%-- %>> --%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -200,15 +204,23 @@ pageContext.setAttribute("list", list);
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1">
 							<%@ include file="page1.file"%>
-							<!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
-							<!-- 								<select class="form-control" id="exampleFormControlSelect1" -->
-							<!-- 									style="border: gray solid 2px;"> -->
-							<!-- 									<option>選擇類型</option> -->
-							<!-- 									<option>PTCG</option> -->
-							<!-- 									<option>惡魔果實</option> -->
-							<!-- 									<option>獵人</option> -->
-							<!-- 								</select> -->
-							<!-- 							</div> -->
+							<div class="form-group col-2" style="display: inline-block;">
+								<jsp:useBean id="secondHandSvc1" scope="page"
+									class="com.secondHand.model.SecondHandService" />
+								<select class="form-control" id="exampleFormControlSelect1"
+									style="border: gray solid 2px;" name="is_deal">
+									<c:forEach var="secondHandVO" items="${secondHandSvc1.all}">
+										<option value="${secondHandVO.is_deal}"
+											${(param.deptno==deptVO.deptno)? 'selected':'' }>${deptVO.deptno}
+									</c:forEach>
+
+
+									<option>選擇類型</option>
+									<option>競標中</option>
+									<option>已成交</option>
+									<option>顯示全部</option>
+								</select>
+							</div>
 							<div class="form-group col-3" style="display: inline-block">
 								<input type="text" class="form-control"
 									id="exampleFormControlInput1" placeholder="輸入關鍵字"
@@ -227,10 +239,9 @@ pageContext.setAttribute("list", list);
 						begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 							<div class="portfolio-wrap">
-								<img src="data:image/png;base64, ${secondHandVO.img1}" class="img-fluid"
-								alt"" style="max-height: 100%; max-width: 100%; width: auto;
-								height: auto; position: absolute; top: 0; bottom: 0; left: 0;
-								right: 0; margin: auto;">
+								<img src="data:image/png;base64, ${secondHandVO.img1}"
+									class="img-fluid"
+									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
 								<div class="portfolio-info">
 									<h4>${secondHandVO.name}</h4>
 									<p>[競標截止時間 ${secondHandVO.end_time}]</p>
@@ -244,135 +255,6 @@ pageContext.setAttribute("list", list);
 							</div>
 						</div>
 					</c:forEach>
-					<!-- 					<div class="col-lg-4 col-md-6 portfolio-item filter-card"> -->
-					<!-- 						<div class="portfolio-wrap"> -->
-					<!-- 							<img src="img/水水獺.jpeg" class="img-fluid" -->
-					<!-- 								alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;"> -->
-					<!-- 							<div class="portfolio-info"> -->
-					<!-- 								<h4>水水獺</h4> -->
-					<!-- 								<p>[競標截止時間 110/5/20 11:30AM ]</p> -->
-					<!-- 								<div class="portfolio-links"> -->
-					<!-- 									<a href="../groupbuy/buy.html" -->
-					<!-- 										class="portfolio-details-lightbox" -->
-					<!-- 										data-glightbox="type: external" title="加入此團"><i -->
-					<!-- 										class="bx bx-link"></i></a> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="col-lg-4 col-md-6 portfolio-item filter-card"> -->
-					<!-- 						<div class="portfolio-wrap"> -->
-					<!-- 							<img src="img/火球鼠.jpeg" class="img-fluid" -->
-					<!-- 								alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;"> -->
-					<!-- 							<div class="portfolio-info"> -->
-					<!-- 								<h4>火球鼠</h4> -->
-					<!-- 								<p>[競標截止時間 110/5/20 11:30AM ]</p> -->
-					<!-- 								<div class="portfolio-links"> -->
-					<!-- 									<a href="../groupbuy/buy.html" -->
-					<!-- 										class="portfolio-details-lightbox" -->
-					<!-- 										data-glightbox="type: external" title="加入此團"><i -->
-					<!-- 										class="bx bx-link"></i></a> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-
-					<!-- 					<div class="col-lg-4 col-md-6 portfolio-item filter-card"> -->
-					<!-- 						<div class="portfolio-wrap"> -->
-					<!-- 							<img src="img/橡膠果實_1.png" class="img-fluid" -->
-					<!-- 								alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;"> -->
-					<!-- 							<div class="portfolio-info"> -->
-					<!-- 								<h4>橡膠果實</h4> -->
-					<!-- 								<p>[競標截止時間 110/5/20 11:30AM ]</p> -->
-					<!-- 								<div class="portfolio-links"> -->
-					<!-- 									<a href="../groupbuy/buy.html" -->
-					<!-- 										class="portfolio-details-lightbox" -->
-					<!-- 										data-glightbox="type: external" title="加入此團"> <i -->
-					<!-- 										class="bx bx-link"></i></a> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="col-lg-4 col-md-6 portfolio-item filter-card"> -->
-					<!-- 						<div class="portfolio-wrap"> -->
-					<!-- 							<img src="img/一坪的海岸線_1.jpeg" class="img-fluid" -->
-					<!-- 								alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;"> -->
-					<!-- 							<div class="portfolio-info"> -->
-					<!-- 								<h4>一坪的海岸線</h4> -->
-					<!-- 								<p>[競標截止時間 110/5/20 11:30AM ]</p> -->
-					<!-- 								<div class="portfolio-links"> -->
-					<!-- 									<a href="../groupbuy/buy.html" -->
-					<!-- 										class="portfolio-details-lightbox" -->
-					<!-- 										data-glightbox="type: external" title="加入此團"><i -->
-					<!-- 										class="bx bx-link"></i></a> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="col-lg-4 col-md-6 portfolio-item filter-card"> -->
-					<!-- 						<div class="portfolio-wrap"> -->
-					<!-- 							<img src="img/貪婪之島_1.jpg" class="img-fluid" -->
-					<!-- 								alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;"> -->
-					<!-- 							<div class="portfolio-info"> -->
-					<!-- 								<h4>貪婪之島</h4> -->
-					<!-- 								<p>[競標截止時間 110/5/20 11:30AM ]</p> -->
-					<!-- 								<div class="portfolio-links"> -->
-					<!-- 									<a href="../groupbuy/buy.html" -->
-					<!-- 										class="portfolio-details-lightbox" -->
-					<!-- 										data-glightbox="type: external" title="加入此團"><i -->
-					<!-- 										class="bx bx-link"></i></a> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="col-lg-4 col-md-6 portfolio-item filter-card"> -->
-					<!-- 						<div class="portfolio-wrap"> -->
-					<!-- 							<img src="" class="img-fluid" -->
-					<!-- 								alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;"> -->
-					<!-- 							<div class="portfolio-info"> -->
-					<!-- 								<h4></h4> -->
-					<!-- 								<p>[競標截止時間 110/5/20 11:30AM ]</p> -->
-					<!-- 								<div class="portfolio-links"> -->
-					<!-- 									<a href="../groupbuy/buy.html" -->
-					<!-- 										class="portfolio-details-lightbox" -->
-					<!-- 										data-glightbox="type: external" title="加入此團"> <i -->
-					<!-- 										class="bx bx-link"></i></a> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="col-lg-4 col-md-6 portfolio-item filter-card"> -->
-					<!-- 						<div class="portfolio-wrap"> -->
-					<!-- 							<img src="" class="img-fluid" -->
-					<!-- 								alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;"> -->
-					<!-- 							<div class="portfolio-info"> -->
-					<!-- 								<h4></h4> -->
-					<!-- 								<p>[競標截止時間 110/5/20 11:30AM ]</p> -->
-					<!-- 								<div class="portfolio-links"> -->
-					<!-- 									<a href="../groupbuy/buy.html" -->
-					<!-- 										class="portfolio-details-lightbox" -->
-					<!-- 										data-glightbox="type: external" title="加入此團"><i -->
-					<!-- 										class="bx bx-link"></i></a> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-					<!-- 					<div class="col-lg-4 col-md-6 portfolio-item filter-card"> -->
-					<!-- 						<div class="portfolio-wrap"> -->
-					<!-- 							<img src="" class="img-fluid" -->
-					<!-- 								alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;"> -->
-					<!-- 							<div class="portfolio-info"> -->
-					<!-- 								<h4></h4> -->
-					<!-- 								<p>[競標截止時間 110/5/20 11:30AM ]</p> -->
-					<!-- 								<div class="portfolio-links"> -->
-					<!-- 									<a href="../groupbuy/buy.html" -->
-					<!-- 										class="portfolio-details-lightbox" -->
-					<!-- 										data-glightbox="type: external" title="加入此團"><i -->
-					<!-- 										class="bx bx-link"></i></a> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
 				</div>
 				<%@ include file="page2.file"%>
 		</section>
