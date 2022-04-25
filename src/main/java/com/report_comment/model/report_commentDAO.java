@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class report_commentDAO implements report_commentDAO_interface {
+public class Report_CommentDAO implements Report_CommentDAO_interface {
 	
 	private static DataSource ds = null;
 	static {
@@ -29,7 +29,7 @@ public class report_commentDAO implements report_commentDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT report_comment_id,report_id,comment,createtime,report_comment_image FROM report_comment where report_comment_id = ?";
 	private static final String UPDATE = "UPDATE report_comment set report_id=?,comment=?,createtime=?,report_comment_image=? where report_comment_id = ?";
 	@Override
-	public void insert(report_commentVO report_commentVO) {
+	public void insert(Report_CommentVO report_commentVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -68,7 +68,7 @@ public class report_commentDAO implements report_commentDAO_interface {
 	}
 		
 	@Override
-	public void update(report_commentVO report_commentVO) {
+	public void update(Report_CommentVO report_commentVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -108,8 +108,8 @@ public class report_commentDAO implements report_commentDAO_interface {
 	}
 		
 	@Override
-	public report_commentVO findByPrimaryKey(Integer report_comment_id) {
-		report_commentVO report_commentVO = null;
+	public Report_CommentVO findByPrimaryKey(Integer report_comment_id) {
+		Report_CommentVO report_commentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -123,7 +123,7 @@ public class report_commentDAO implements report_commentDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				report_commentVO = new report_commentVO();
+				report_commentVO = new Report_CommentVO();
 				report_commentVO.setReport_comment_id(rs.getInt("report_comment_id"));
 				report_commentVO.setReport_id(rs.getInt("report_id"));
 				report_commentVO.setComment(rs.getString("comment"));
@@ -159,9 +159,9 @@ public class report_commentDAO implements report_commentDAO_interface {
 		return report_commentVO;
 	}
 	@Override
-	public List<report_commentVO> getAll() {
-		List<report_commentVO> list = new ArrayList<report_commentVO>();
-		report_commentVO report_commentVO = null;
+	public List<Report_CommentVO> getAll() {
+		List<Report_CommentVO> list = new ArrayList<Report_CommentVO>();
+		Report_CommentVO report_commentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -171,7 +171,7 @@ public class report_commentDAO implements report_commentDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				report_commentVO = new report_commentVO();
+				report_commentVO = new Report_CommentVO();
 				report_commentVO.setReport_comment_id(rs.getInt("report_comment_id"));
 				report_commentVO.setReport_id(rs.getInt("report_id"));
 				report_commentVO.setComment(rs.getString("comment"));

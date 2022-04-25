@@ -2,7 +2,7 @@ package com.report_comment.model;
 
 import java.sql.Timestamp;
 
-public class report_commentVO implements java.io.Serializable{
+public class Report_CommentVO implements java.io.Serializable{
 
 	/**
 	 * 

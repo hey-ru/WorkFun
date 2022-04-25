@@ -1,8 +1,9 @@
 package com.report.model;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 
-public class reportVO implements java.io.Serializable{
+public class ReportVO implements java.io.Serializable{
 	/**
 	 * 
 	 */
@@ -17,6 +18,14 @@ public class reportVO implements java.io.Serializable{
 	private Integer status;
 	private byte[] report_image;
 	private Integer report_type;
+	private String title;
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public Integer getReport_id() {
 		return report_id;
 	}
@@ -35,6 +44,7 @@ public class reportVO implements java.io.Serializable{
 	public void setHandler(Integer handler) {
 		this.handler = handler;
 	}
+	
 	public Timestamp getStarttime() {
 		return starttime;
 	}
@@ -76,6 +86,13 @@ public class reportVO implements java.io.Serializable{
 	}
 	public void setReport_type(Integer report_type) {
 		this.report_type = report_type;
+	}
+	@Override
+	public String toString() {
+		return "ReportVO [report_id=" + report_id + ", reporter=" + reporter + ", handler=" + handler + ", starttime="
+				+ starttime + ", updatetime=" + updatetime + ", endtime=" + endtime + ", content=" + content
+				+ ", status=" + status + ", report_image=" + Arrays.toString(report_image) + ", report_type="
+				+ report_type + ", title=" + title + "]";
 	}
 
 }

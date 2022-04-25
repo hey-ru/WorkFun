@@ -1,19 +1,18 @@
 package com.report.model;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class reportDAO implements reportDAO_interface {
+public class ReportDAO implements ReportDAO_interface {
 
 	private static DataSource ds = null;
 	static {
@@ -31,7 +30,7 @@ public class reportDAO implements reportDAO_interface {
 	private static final String UPDATE = "UPDATE report set reporter=?,handler=?,starttime=?,updatetime=?,endtime=?,content=?,status=?,report_image=?,report_type=? where report_id = ?";
 
 	@Override
-	public void insert(reportVO reportVO) {
+	public void insert(ReportVO reportVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -44,7 +43,7 @@ public class reportDAO implements reportDAO_interface {
 			pstmt.setTimestamp(4, reportVO.getUpdatetime());
 			pstmt.setTimestamp(5, reportVO.getEndtime());
 			pstmt.setString(6, reportVO.getContent());
-			pstmt.setInt(7, reportVO.getStatus());
+			pstmt.setInt(7, 0);
 			pstmt.setBytes(8, reportVO.getReport_image());
 			pstmt.setInt(9, reportVO.getReport_type());
 
@@ -74,7 +73,7 @@ public class reportDAO implements reportDAO_interface {
 	}
 
 	@Override
-	public void update(reportVO reportVO) {
+	public void update(ReportVO reportVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -119,8 +118,8 @@ public class reportDAO implements reportDAO_interface {
 	}
 
 	@Override
-	public reportVO findByPrimaryKey(Integer report_id) {
-		reportVO reportVO = null;
+	public ReportVO findByPrimaryKey(Integer report_id) {
+		ReportVO reportVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -134,7 +133,7 @@ public class reportDAO implements reportDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				reportVO = new reportVO();
+				reportVO = new ReportVO();
 				reportVO.setReport_id(rs.getInt("report_id"));
 				reportVO.setReporter(rs.getInt("reporter"));
 				reportVO.setHandler(rs.getInt("handler"));
@@ -176,9 +175,9 @@ public class reportDAO implements reportDAO_interface {
 	}
 
 	@Override
-	public List<reportVO> getAll() {
-		List<reportVO> list = new ArrayList<reportVO>();
-		reportVO reportVO = null;
+	public List<ReportVO> getAll() {
+		List<ReportVO> list = new ArrayList<ReportVO>();
+		ReportVO reportVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -189,7 +188,7 @@ public class reportDAO implements reportDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				reportVO = new reportVO();
+				reportVO = new ReportVO();
 				reportVO.setReport_id(rs.getInt("report_id"));
 				reportVO.setReporter(rs.getInt("reporter"));
 				reportVO.setHandler(rs.getInt("handler"));
@@ -229,6 +228,12 @@ public class reportDAO implements reportDAO_interface {
 		}
 		return list;
 
+	}
+
+	@Override
+	public List<ReportVO> find(Integer handler, Integer status, Integer report_type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
  
