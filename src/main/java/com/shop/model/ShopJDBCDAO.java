@@ -16,9 +16,10 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 //	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "INSERT INTO shop (shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop order by shop_id";
+	private static final String GET_ALL_STMT = "SELECT * FROM shop order by shop_id";
 	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? where shop_id = ?";
 	private static final String GET_ONE_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop where shop_id = ?";
+	private static final String GET_BY_SETWHERE = "SELECT * FROM shop";
 
 	@Override
 	public void insert(ShopVO shopVO) {
@@ -248,34 +249,167 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 		return list;
 	}
 
+	public List<ShopVO> findByShopName(String shop_name) {
+
+		List<ShopVO> list = new ArrayList<ShopVO>();
+		ShopVO shopVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			String str = GET_BY_SETWHERE + " where shop_name like ? ";
+			pstmt = con.prepareStatement(str);
+
+			pstmt.setString(1, "%" + shop_name + "%");
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				shopVO = new ShopVO();
+				shopVO.setShop_id(rs.getInt("shop_id"));
+				shopVO.setShop_name(rs.getString("shop_name"));
+				shopVO.setShop_type(rs.getInt("shop_type"));
+				shopVO.setAddress(rs.getString("address"));
+				shopVO.setTel(rs.getString("tel"));
+				shopVO.setWebsite(rs.getString("website"));
+				shopVO.setMin_amt(rs.getInt("min_amt"));
+				shopVO.setShop_img1(rs.getBytes("shop_img1"));
+				shopVO.setShop_img2(rs.getBytes("shop_img2"));
+				shopVO.setShop_img3(rs.getBytes("shop_img3"));
+				list.add(shopVO);
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	public List<ShopVO> findByShopType(Integer shop_type) {
+
+		List<ShopVO> list = new ArrayList<ShopVO>();
+		ShopVO shopVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			String str = GET_BY_SETWHERE + " where shop_type = ? ";
+			pstmt = con.prepareStatement(str);
+
+			pstmt.setInt(1, shop_type);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				shopVO = new ShopVO();
+				shopVO.setShop_id(rs.getInt("shop_id"));
+				shopVO.setShop_name(rs.getString("shop_name"));
+				shopVO.setShop_type(rs.getInt("shop_type"));
+				shopVO.setAddress(rs.getString("address"));
+				shopVO.setTel(rs.getString("tel"));
+				shopVO.setWebsite(rs.getString("website"));
+				shopVO.setMin_amt(rs.getInt("min_amt"));
+				shopVO.setShop_img1(rs.getBytes("shop_img1"));
+				shopVO.setShop_img2(rs.getBytes("shop_img2"));
+				shopVO.setShop_img3(rs.getBytes("shop_img3"));
+				list.add(shopVO);
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
 	public static void main(String[] args) {
 
 		ShopJDBCDAO dao = new ShopJDBCDAO();
 
 		// 新增
-		ShopVO shopVO1 = new ShopVO();
-		shopVO1.setShop_name("大同町");
-		shopVO1.setShop_type(2);
-		shopVO1.setAddress("320桃園市中壢區大同路70號");
-		shopVO1.setTel("03-4224695");
-		shopVO1.setWebsite(
-				"https://www.facebook.com/%E5%A4%A7%E5%90%8C%E7%94%BA-%E5%B9%B3%E5%83%B9%E6%97%A5%E5%BC%8F%E8%B1%AC%E6%8E%92%E7%82%B8%E9%9B%9E%E5%A1%8A%E4%B8%BC%E9%A3%AF-%E5%B0%88%E8%B3%A3-2019007434995879/");
-		shopVO1.setMin_amt(0);
-		byte[] vo1_img1 = null;
-		byte[] vo1_img2 = null;
-		byte[] vo1_img3 = null;
-		try {
-			vo1_img1 = getPictureByteArray("C:\\images\\FC_Barcelona.png");
-			vo1_img2 = getPictureByteArray("C:\\images\\FC_Bayern.png");
-			vo1_img3 = getPictureByteArray("C:\\images\\FC_Real_Madrid.png");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		shopVO1.setShop_img1(vo1_img1);
-		shopVO1.setShop_img2(vo1_img2);
-		shopVO1.setShop_img3(vo1_img3);
-		dao.insert(shopVO1);
-//
+//		ShopVO shopVO1 = new ShopVO();
+//		shopVO1.setShop_name("大同町");
+//		shopVO1.setShop_type(2);
+//		shopVO1.setAddress("320桃園市中壢區大同路70號");
+//		shopVO1.setTel("03-4224695");
+//		shopVO1.setWebsite(
+//				"https://www.facebook.com/%E5%A4%A7%E5%90%8C%E7%94%BA-%E5%B9%B3%E5%83%B9%E6%97%A5%E5%BC%8F%E8%B1%AC%E6%8E%92%E7%82%B8%E9%9B%9E%E5%A1%8A%E4%B8%BC%E9%A3%AF-%E5%B0%88%E8%B3%A3-2019007434995879/");
+//		shopVO1.setMin_amt(0);
+//		byte[] vo1_img1 = null;
+//		byte[] vo1_img2 = null;
+//		byte[] vo1_img3 = null;
+//		try {
+//			vo1_img1 = getPictureByteArray("C:\\images\\FC_Barcelona.png");
+//			vo1_img2 = getPictureByteArray("C:\\images\\FC_Bayern.png");
+//			vo1_img3 = getPictureByteArray("C:\\images\\FC_Real_Madrid.png");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		shopVO1.setShop_img1(vo1_img1);
+//		shopVO1.setShop_img2(vo1_img2);
+//		shopVO1.setShop_img3(vo1_img3);
+//		dao.insert(shopVO1);
+
 		// 修改
 //		ShopVO shopVO2 = new ShopVO();
 //		shopVO2.setShop_id(102);
@@ -290,8 +424,8 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 //		byte[] vo2_img3 = null;
 //		try {
 //			vo2_img1 = getPictureByteArray("C:\\images\\boss.jpg");
-//			//vo2_img2 = getPictureByteArray("C:\\images\\boss.jpg");
-//			//vo2_img3 = getPictureByteArray("C:\\images\\drink2-2.jpg");
+//			// vo2_img2 = getPictureByteArray("C:\\images\\boss.jpg");
+//			// vo2_img3 = getPictureByteArray("C:\\images\\drink2-2.jpg");
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
@@ -299,10 +433,11 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 //		shopVO2.setShop_img2(vo2_img2);
 //		shopVO2.setShop_img3(vo2_img3);
 //		dao.update(shopVO2);
-//
-//		// 查詢
-		ShopVO shopVO3 = dao.findByPrimaryKey(101);
-		System.out.println(shopVO3.toString());
+
+		// 查詢
+//		ShopVO shopVO3 = dao.findByPrimaryKey(101);
+//		System.out.println(shopVO3.toString());
+		
 //		System.out.print(shopVO3.getShop_id() + ",");
 //		System.out.print(shopVO3.getShop_name() + ",");
 //		System.out.print(shopVO3.getShop_type() + ",");
@@ -315,12 +450,28 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 //		System.out.println(shopVO3.getShop_img3());
 //		System.out.println("---------------------");
 //
-//		// 查詢
-		List<ShopVO> list = dao.getAll();
-		for (ShopVO aShop : list) {
-			System.out.print(aShop.toString());
-			System.out.println();
+		
+		// 查詢
+//		List<ShopVO> listShopName = dao.findByShopName("可");
+//		for (ShopVO aShopByName : listShopName) {
+//			System.out.print(aShopByName.toString());
+//			System.out.println();
+//		}
+		
+		// 查詢
+//		List<ShopVO> listShopType = dao.findByShopType(0);
+//		for (ShopVO aShopByType : listShopType) {
+//			System.out.print(aShopByType.toString());
+//			System.out.println();
+//		}
 
+		// 查詢
+//		List<ShopVO> list = dao.getAll();
+//		for (ShopVO aShop : list) {
+//			System.out.print(aShop.toString());
+//			System.out.println();
+
+		
 //			System.out.print(aShop.getShop_id() + ",");
 //			System.out.print(aShop.getShop_name() + ",");
 //			System.out.print(aShop.getShop_type() + ",");
@@ -332,9 +483,10 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 //			System.out.print(aShop.getShop_img2() + ",");
 //			System.out.println(aShop.getShop_img3());
 //			System.out.println();
-		}
+//		}
+		
+		
 	}
-
 
 	public static byte[] getPictureByteArray(String path) throws IOException {
 		FileInputStream fis = new FileInputStream(path);

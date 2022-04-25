@@ -1,18 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.emp.model.*"%>
+<%@ page import="com.shop.model.*"%>
 
-<%
-  EmpVO empVO = (EmpVO) request.getAttribute("empVO");
-%>
-<%= empVO == null %>--${empVO.deptno}-- <!-- line 100 -->
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>­û¤u¸ê®Æ·s¼W - addEmp.jsp</title>
+<title>å“¡å·¥è³‡æ–™ä¿®æ”¹ - update_emp_input.jsp</title>
 
 <style>
   table#table-1 {
+    width: 450px;
 	background-color: #CCCCFF;
     border: 2px solid black;
     text-align: center;
@@ -30,7 +28,6 @@
 
 <style>
   table {
-	width: 450px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -48,154 +45,100 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>­û¤u¸ê®Æ·s¼W - addEmp.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">¦^­º­¶</a></h4>
+		 <h3>å“¡å·¥è³‡æ–™æ–°å¢ - addEmp.jsp</h3></td><td>
+		 <h4><a href="select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ·s¼W:</h3>
+<h3>è³‡æ–™æ–°å¢:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message.value}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
 
-<FORM METHOD="post" ACTION="emp.do" name="form1">
+<FORM METHOD="post" enctype="multipart/form-data" ACTION="/shop/ShopServlet" name="form1">
 <table>
 	<tr>
-		<td>­û¤u©m¦W:</td>
-		<td><input type="TEXT" name="ename" size="45" 
-			 value="<%= (empVO==null)? "§d¥Ã§Ó" : empVO.getEname()%>" /></td>
+		<td>åº—å®¶åç¨±:</td>
+		<td><input type="TEXT" name="shop_name" size="45" 
+			 value="${param.shop_name}"/></td><td>${errorMsgs.shop_name}</td>
 	</tr>
 	<tr>
-		<td>Â¾¦ì:</td>
-		<td><input type="TEXT" name="job" size="45"
-			 value="<%= (empVO==null)? "MANAGER" : empVO.getJob()%>" /></td>
+		<td>åº—å®¶é¡å‹:</td>
+		<td><input type="TEXT" name="shop_type" size="45"
+			 value="${param.shop_type}"/></td><td>${errorMsgs.shop_type}</td>
+	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>é›‡ç”¨æ—¥æœŸ:</td> -->
+<%-- 		<td><input name="hiredate" id="f_date1" type="text"/></td><td>${errorMsgs.hiredate}</td> --%>
+<!-- 	</tr> -->
+	<tr>
+		<td>åœ°å€:</td>
+		<td><input type="TEXT" name="address" size="45"
+			 value="${param.address}"/></td><td>${errorMsgs.address}</td>
 	</tr>
 	<tr>
-		<td>¶±¥Î¤é´Á:</td>
-		<td><input name="hiredate" id="f_date1" type="text"></td>
+		<td>é›»è©±:</td>
+		<td><input type="TEXT" name="tel" size="45"
+			 value="${param.tel}"/></td><td>${errorMsgs.tel}</td>
 	</tr>
 	<tr>
-		<td>Á~¤ô:</td>
-		<td><input type="TEXT" name="sal" size="45"
-			 value="<%= (empVO==null)? "10000" : empVO.getSal()%>" /></td>
+		<td>ç¶²ç«™:</td>
+		<td><input type="TEXT" name="website" size="45"
+			 value="${param.website}"/></td><td>${errorMsgs.website}</td>
 	</tr>
 	<tr>
-		<td>¼úª÷:</td>
-		<td><input type="TEXT" name="comm" size="45"
-			 value="<%= (empVO==null)? "100" : empVO.getComm()%>" /></td>
+		<td>ä½æ¶ˆ:</td>
+		<td><input type="TEXT" name="min_amt" size="45"
+			 value="${param.min_amt}"/></td><td>${errorMsgs.min_amt}</td>
 	</tr>
+	<tr>
+		<td>åœ–ç‰‡:</td>
+		<td><input type="FILE" name="shop_img1" size="45" oninput="pic1.src=window.URL.createObjectURL(this.files[0])"
+			 value="${param.shop_img1}"/></td><td>${errorMsgs.shop_img1}
+			 </td>
+	</tr>
+	<tr>
+		<td>åœ–ç‰‡:</td>
+		<td><input type="FILE" name="shop_img2" size="45" oninput="pic2.src=window.URL.createObjectURL(this.files[0])"
+			 value="${param.shop_img2}"/>
+			 </td><td>${errorMsgs.shop_img2}</td>
+	</tr>
+	<tr>
+		<td>åœ–ç‰‡:</td>
+		<td><input type="FILE" name="shop_img3" size="45" oninput="pic3.src=window.URL.createObjectURL(this.files[0])"
+			 value="${param.shop_img3}"/>
+			 </td><td>${errorMsgs.shop_img3}</td>
+	</tr>
+	
+	
 
-	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" />
-	<tr>
-		<td>³¡ªù:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="deptno">
-			<c:forEach var="deptVO" items="${deptSvc.all}">
-				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname}
-			</c:forEach>
-		</select></td>
-	</tr>
+<%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
+<!-- 	<tr> -->
+<!-- 		<td>éƒ¨é–€:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="deptno"> -->
+<%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
+<%-- 				<option value="${deptVO.deptno}" ${(param.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname} --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
 
 </table>
+<img id="pic1" style="width:100px;">
+<img id="pic2" style="width:100px;">
+<img id="pic3" style="width:100px;">
 <br>
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="°e¥X·s¼W"></FORM>
+<input type="submit" value="é€å‡ºæ–°å¢"></FORM>
 </body>
 
 
-
-<!-- =========================================¥H¤U¬° datetimepicker ¤§¬ÛÃö³]©w========================================== -->
-
-<% 
-  java.sql.Date hiredate = null;
-  try {
-	    hiredate = empVO.getHiredate();
-   } catch (Exception e) {
-	    hiredate = new java.sql.Date(System.currentTimeMillis());
-   }
-%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
-</style>
-
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
-	       step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=hiredate%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-           //startDate:	            '2017/07/10',  // °_©l¤é
-           //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-           //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
-        });
-        
-        
-   
-        // ----------------------------------------------------------¥H¤U¥Î¨Ó±Æ©wµLªk¿ï¾Üªº¤é´Á-----------------------------------------------------------
-
-        //      1.¥H¤U¬°¬Y¤@¤Ñ¤§«eªº¤é´ÁµLªk¿ï¾Ü
-        //      var somedate1 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-
-        
-        //      2.¥H¤U¬°¬Y¤@¤Ñ¤§«áªº¤é´ÁµLªk¿ï¾Ü
-        //      var somedate2 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-
-
-        //      3.¥H¤U¬°¨â­Ó¤é´Á¤§¥~ªº¤é´ÁµLªk¿ï¾Ü (¤]¥i«ö»İ­n´«¦¨¨ä¥L¤é´Á)
-        //      var somedate1 = new Date('2017-06-15');
-        //      var somedate2 = new Date('2017-06-25');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //		             ||
-        //		            date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-        
-</script>
-</html>

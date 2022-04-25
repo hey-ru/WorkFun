@@ -22,9 +22,10 @@ public class ShopDAO implements ShopDAO_interface {
 	}
 
 	private static final String INSERT_STMT = "INSERT INTO shop (shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop order by shop_id";
+	private static final String GET_ALL_STMT = "SELECT * FROM shop order by shop_id";
 	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? where shop_id = ?";
 	private static final String GET_ONE_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop where shop_id = ?";
+	private static final String GET_BY_SETWHERE = "SELECT * FROM shop";
 
 	@Override
 	public void insert(ShopVO shopVO) {
@@ -51,8 +52,7 @@ public class ShopDAO implements ShopDAO_interface {
 
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -99,8 +99,7 @@ public class ShopDAO implements ShopDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -154,8 +153,7 @@ public class ShopDAO implements ShopDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -213,11 +211,9 @@ public class ShopDAO implements ShopDAO_interface {
 				list.add(shopVO);
 			}
 
-
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -244,4 +240,131 @@ public class ShopDAO implements ShopDAO_interface {
 		}
 		return list;
 	}
+
+	@Override
+	public List<ShopVO> findByShopName(String shop_name) {
+
+		List<ShopVO> list = new ArrayList<ShopVO>();
+		ShopVO shopVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			String str = GET_BY_SETWHERE + " where shop_name like ? ";
+			pstmt = con.prepareStatement(str);
+
+			pstmt.setString(1, "%" + shop_name + "%");
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				shopVO = new ShopVO();
+				shopVO.setShop_id(rs.getInt("shop_id"));
+				shopVO.setShop_name(rs.getString("shop_name"));
+				shopVO.setShop_type(rs.getInt("shop_type"));
+				shopVO.setAddress(rs.getString("address"));
+				shopVO.setTel(rs.getString("tel"));
+				shopVO.setWebsite(rs.getString("website"));
+				shopVO.setMin_amt(rs.getInt("min_amt"));
+				shopVO.setShop_img1(rs.getBytes("shop_img1"));
+				shopVO.setShop_img2(rs.getBytes("shop_img2"));
+				shopVO.setShop_img3(rs.getBytes("shop_img3"));
+				list.add(shopVO);
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	public List<ShopVO> findByShopType(Integer shop_type) {
+
+		List<ShopVO> list = new ArrayList<ShopVO>();
+		ShopVO shopVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			String str = GET_BY_SETWHERE + " where shop_type = ? ";
+			pstmt = con.prepareStatement(str);
+
+			pstmt.setInt(1, shop_type);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				shopVO = new ShopVO();
+				shopVO.setShop_id(rs.getInt("shop_id"));
+				shopVO.setShop_name(rs.getString("shop_name"));
+				shopVO.setShop_type(rs.getInt("shop_type"));
+				shopVO.setAddress(rs.getString("address"));
+				shopVO.setTel(rs.getString("tel"));
+				shopVO.setWebsite(rs.getString("website"));
+				shopVO.setMin_amt(rs.getInt("min_amt"));
+				shopVO.setShop_img1(rs.getBytes("shop_img1"));
+				shopVO.setShop_img2(rs.getBytes("shop_img2"));
+				shopVO.setShop_img3(rs.getBytes("shop_img3"));
+				list.add(shopVO);
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
 }

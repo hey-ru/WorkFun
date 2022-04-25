@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>Shop: Home</title>
+<title>IBM Shop: Home</title>
 
 <style>
   table#table-1 {
@@ -30,31 +30,31 @@
 <body bgcolor='white'>
 
 <table id="table-1">
-   <tr><td><h3>Shop: Home</h3><h4>( MVC )</h4></td></tr>
+   <tr><td><h3>IBM Shop: Home</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for IBM Emp: Home</p>
+<p>This is the Home page for IBM Shop: Home</p>
 
 <h3>資料查詢:</h3>
 	
 <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-	    <c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message.value}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
 
 <ul>
-  <li><a href='listAllShop.jsp'>List</a> all Emps.  <br><br></li>
+  <li><a href='listAllShop.jsp'>List</a> all Shops.  <br><br></li>
   
   
   <li>
     <FORM METHOD="post" ACTION="emp.do" >
-        <b>輸入餐廳編號 (如101):</b>
-        <input type="text" name="shoo_id">
+        <b>輸入店家編號 (如101):</b>
+        <input type="text" name="shop_id"><font color=red>${errorMsgs.empno}</font>
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
     </FORM>
@@ -63,11 +63,11 @@
   <jsp:useBean id="shopSvc" scope="page" class="com.shop.model.ShopService" />
    
   <li>
-     <FORM METHOD="post" ACTION="emp.do" >
-       <b>選擇員工編號:</b>
-       <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.empno}
+     <FORM METHOD="post" ACTION="/shop/ShopServlet" >
+       <b>選擇店家編號:</b>
+       <select size="1" name="shop_id">
+         <c:forEach var="shopVO" items="${shopSvc.all}" > 
+          <option value="${shopVO.shop_id}">${shopVO.shop_id}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -76,11 +76,11 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="emp.do" >
-       <b>選擇員工姓名:</b>
-       <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.ename}
+     <FORM METHOD="post" ACTION="/shop/ShopServlet" >
+       <b>選擇店家姓名:</b>
+       <select size="1" name="shop_id">
+         <c:forEach var="shopVO" items="${shopSvc.all}" > 
+          <option value="${shopVO.shop_id}">${shopVO.shop_name}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -90,10 +90,10 @@
 </ul>
 
 
-<h3>員工管理</h3>
+<h3>店家管理</h3>
 
 <ul>
-  <li><a href='addEmp.jsp'>Add</a> a new Emp.</li>
+  <li><a href='addShop.jsp'>Add</a> a new Shop.</li>
 </ul>
 
 </body>

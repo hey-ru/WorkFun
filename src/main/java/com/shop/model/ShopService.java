@@ -55,4 +55,12 @@ public class ShopService {
 	public List<ShopVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<ShopVO> getShopByName(String shop_name) {
+		return dao.findByShopName(shop_name);
+	}
+	
+	public List<ShopVO> getShopByType(Integer shop_type) {
+		return dao.findByShopType(shop_type);
+	}
 }

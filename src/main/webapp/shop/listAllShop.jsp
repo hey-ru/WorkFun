@@ -78,6 +78,9 @@
 		<th>tel</th>
 		<th>website</th>
 		<th>min_amt</th>
+		<th>照片</th>
+		<th>照片</th>
+		<th>照片</th>
 <!-- 		<th>修改</th> -->
 <!-- 		<th>刪除</th> -->
 	</tr>
@@ -92,6 +95,9 @@
 			<td>${shopVO.tel}</td>
 			<td><a href="${shopVO.website}">link</a></td>
 			<td>${shopVO.min_amt}</td>
+			<td><img src="data:image/jpg;base64,${shopVO.shop_img1}" style="max-width: 100%;"></td>
+			<td><img src="data:image/jpg;base64,${shopVO.shop_img2}" style="max-width: 100%;"></td>
+			<td><img src="data:image/jpg;base64,${shopVO.shop_img3}" style="max-width: 100%;"></td>
 <!-- 			<td> -->
 <%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;"> --%>
 <!-- 			     <input type="submit" value="修改"> -->
