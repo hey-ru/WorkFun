@@ -3,7 +3,7 @@
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-  EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+  //EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %>
 
 <html>
@@ -46,32 +46,56 @@
 </head>
 <body bgcolor='white'>
 
-<h4>此頁暫練習採用 Script 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>員工資料 - ListOneEmp.jsp</h3>
+		 <h3>店家資料 - ListOneShop.jsp</h3>
 		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
 <table>
 	<tr>
-		<th>員工編號</th>
-		<th>員工姓名</th>
-		<th>職位</th>
-		<th>雇用日期</th>
-		<th>薪水</th>
-		<th>獎金</th>
-		<th>部門</th>
+		<th>shop_id</th>
+			<th>shop_name</th>
+			<th>shop_type</th>
+			<th>address</th>
+			<th>tel</th>
+			<th>website</th>
+			<th>min_amt</th>
+			<!-- 		<th>照片</th> -->
+			<!-- 		<th>照片</th> -->
+			<!-- 		<th>照片</th> -->
+			<th>菜單</th>
+			<!-- 		<th>修改</th> -->
+			<!-- 		<th>刪除</th> -->
 	</tr>
 	<tr>
-		<td><%=empVO.getEmpno()%></td>
-		<td><%=empVO.getEname()%></td>
-		<td><%=empVO.getJob()%></td>
-		<td><%=empVO.getHiredate()%></td>
-		<td><%=empVO.getSal()%></td>
-		<td><%=empVO.getComm()%></td>
-		<td><%=empVO.getDeptno()%></td>
+				<td>${shopVO.shop_id}</td>
+				<td>${shopVO.shop_name}</td>
+				<td>${shopVO.shop_type}</td>
+				<td>${shopVO.address}</td>
+				<td>${shopVO.tel}</td>
+				<td><a href="${shopVO.website}">link</a></td>
+				<td>${shopVO.min_amt}</td>
+				<%-- 			<td>${shopVO.shop_img1}</td> --%>
+				<%-- 			<td><img src="data:image/jpg;base64,${shopVO.shop_img2}" style="max-width: 100%;"></td> --%>
+				<%-- 			<td><img src="data:image/jpg;base64,${shopVO.shop_img3}" style="max-width: 100%;"></td> --%>
+				<td>
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/menu.do">
+						<input type="submit" value="查看菜單" style="margin-bottom: 0px;"> 
+						<input type="hidden" name="shop_id" value="${shopVO.shop_id}"> 
+						<input type="hidden" name="action" value="getmenu">
+					</FORM>
+				</td>
+				<td>
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/shop/ShopServlet"
+						style="margin-bottom: 0px;">
+						<input type="submit" value="修改"> 
+						<input type="hidden" name="shop_id" value="${shopVO.shop_id}"> 
+						<input type="hidden" name="action" value="getOne_For_Update">
+					</FORM>
+				</td>
 	</tr>
 </table>
 

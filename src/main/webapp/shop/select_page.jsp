@@ -38,21 +38,21 @@
 <h3>資料查詢:</h3>
 	
 <%-- 錯誤表列 --%>
-<%-- <c:if test="${not empty errorMsgs}"> --%>
-<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
-<!-- 	<ul> -->
-<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
-<%-- 			<li style="color:red">${message.value}</li> --%>
-<%-- 		</c:forEach> --%>
-<!-- 	</ul> -->
-<%-- </c:if> --%>
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message.value}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 
 <ul>
   <li><a href='listAllShop.jsp'>List</a> all Shops.  <br><br></li>
   
   
   <li>
-    <FORM METHOD="post" ACTION="emp.do" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/shop/ShopServlet" >
         <b>輸入店家編號 (如101):</b>
         <input type="text" name="shop_id"><font color=red>${errorMsgs.empno}</font>
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -63,7 +63,7 @@
   <jsp:useBean id="shopSvc" scope="page" class="com.shop.model.ShopService" />
    
   <li>
-     <FORM METHOD="post" ACTION="/shop/ShopServlet" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/shop/ShopServlet" >
        <b>選擇店家編號:</b>
        <select size="1" name="shop_id">
          <c:forEach var="shopVO" items="${shopSvc.all}" > 
@@ -76,7 +76,7 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="/shop/ShopServlet" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/shop/ShopServlet" >
        <b>選擇店家姓名:</b>
        <select size="1" name="shop_id">
          <c:forEach var="shopVO" items="${shopSvc.all}" > 
