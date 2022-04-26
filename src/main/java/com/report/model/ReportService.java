@@ -1,6 +1,5 @@
 package com.report.model;
 
-import java.awt.Image;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -8,19 +7,22 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
-public class ReportService {
+public class ReportService{
 	private ReportDAO_interface dao;
 	
 	public ReportService() {
 		dao = new ReportJDBCDAO();
 	}
+	
 	public byte[] Image(Part part) throws IOException {
 		InputStream ins= part.getInputStream();
 		byte[] b = new byte[ins.available()];
+		ins.read(b);
 		
 		return b;
 	}
 	
+
 	public ReportVO addReport(Integer reporter, Integer handler, String content,
 			Integer status, byte[] report_image, Integer report_type , String title) {
 
