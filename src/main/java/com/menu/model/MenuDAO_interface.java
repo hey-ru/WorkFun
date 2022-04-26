@@ -1,5 +1,6 @@
 package com.menu.model;
 
+import java.io.File;
 import java.util.*;
 
 public interface MenuDAO_interface {
@@ -11,6 +12,12 @@ public interface MenuDAO_interface {
      
      public List<MenuVO> getAll(); //後台 查詢各店家菜單
      
-     public MenuVO findByPrimaryKey(Integer menu_id);
+     public MenuVO findByPrimaryKey(Integer menu_id); 
+     
+     
+     //讀取csv檔
+//     public List<MenuVO> loadAllMenu(File csvFile);
+
+     
 }
 

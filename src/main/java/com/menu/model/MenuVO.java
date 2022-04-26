@@ -1,6 +1,7 @@
 package com.menu.model;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class MenuVO implements java.io.Serializable {
 	
@@ -32,6 +33,27 @@ public class MenuVO implements java.io.Serializable {
 	public String toString() {
 		return "MenuVO [menu_id=" + menu_id + ", shop_id=" + shop_id + ", item=" + item + ", price=" + price
 				+ ", is_item=" + is_item + ", menu_upd=" + menu_upd + "]";
+	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(is_item, item, menu_id, menu_upd, price, shop_id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MenuVO other = (MenuVO) obj;
+		return Objects.equals(is_item, other.is_item) && Objects.equals(item, other.item)
+				&& Objects.equals(menu_id, other.menu_id) && Objects.equals(menu_upd, other.menu_upd)
+				&& Objects.equals(price, other.price) && Objects.equals(shop_id, other.shop_id);
 	}
 
 	public Integer getMenu_id() {
@@ -70,6 +92,8 @@ public class MenuVO implements java.io.Serializable {
 	public void setMenu_upd(Timestamp menu_upd) {
 		this.menu_upd = menu_upd;
 	}
+
+
 
 
 }

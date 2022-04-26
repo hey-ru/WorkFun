@@ -1,6 +1,7 @@
 package com.menu.model;
 
 import java.util.*;
+import java.io.*;
 import java.sql.*;
 
 public class MenuJDBCDAO implements MenuDAO_interface {
@@ -236,6 +237,8 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		return list;
 	}
 
+	
+	// 查詢一筆菜單項目
 	@Override
 	public MenuVO findByPrimaryKey(Integer menu_id) {
 		MenuVO menuVO = null;
@@ -295,5 +298,59 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		}
 		return menuVO;
 	}
+	
+
+	
+	//import CSV檔
+
+//	@Override
+//	public List<MenuVO> loadAllMenu(File csvFile) {
+//		
+//			String line = "";
+//			String cvsSplitBy = ",";
+//
+//			try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+//
+//				if (csvFile.length() == 0) {
+//					throw new RuntimeException("CSV file is empty");
+//				}
+//
+//				List<MenuVO> allMenu = new ArrayList<MenuVO>();
+//
+//				while ((line = br.readLine()) != null) {
+//					String[] csvLine = line.split(cvsSplitBy);
+//					MenuVO menuVO = createUserEntity(csvLine);
+//					allMenu.add(menuVO);
+//				}
+//
+//				return allMenu;
+//
+//			} catch (FileNotFoundException e) {
+//				throw new RuntimeException("CSV file was not found", e);
+//			} catch (IOException e) {
+//				throw new RuntimeException(e);
+//			}
+//		}
+	
+//讀取的CSV字串轉換
+//		private static MenuVO createUserEntity(String[] csvLine) {
+//
+//			try {
+//				String item = csvLine[0].trim();
+//				String price = csvLine[1].trim();
+//
+//				MenuVO menu = new MenuVO();
+//
+//				menu.setItem(item);
+//				menu.setPrice(price);
+//
+//				return menu;
+//
+//			} catch (Exception e) {
+//				throw new RuntimeException("incorrect data in CSV file", e);
+//			}
+//		}
+
+
 
 }

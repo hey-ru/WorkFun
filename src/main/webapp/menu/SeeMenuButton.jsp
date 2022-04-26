@@ -9,7 +9,7 @@
 <body>
 
 <div>
-<form ACTION="menu.do" METHOD="post">
+<form METHOD="post" ACTION="selectmenubyshop" >
 
 	<input id="menubtn" type="submit" name="action" value="查看菜單" onclick="callServlet();" />
 
@@ -22,15 +22,15 @@ function callservlet() {
 
     var servletname=document.seemenu.action.value;
 
-    if(servletname== "")
+    if(servletname== "SelectMenuByShopServlet")
         {
         alert("NO value..");
         return false;
         }
     else
         {
-        alert("value"+servletname);
-        document.location.href="menu.do";
+        alert("value"+SelectMenuByShopServlet);
+        document.location.href="selectmenubyshop";
         return false;
         }
 }

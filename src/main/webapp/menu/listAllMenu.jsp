@@ -51,7 +51,6 @@
 </head>
 <body bgcolor='white'>
 
-<h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
 		 <h3>所有菜單資料 - listMenu.jsp</h3>
@@ -85,13 +84,8 @@
 			<td>${menuVO.menu_id}</td>
 			<td>${menuVO.item}</td>
 			<td>${menuVO.price}</td>
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/menu.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="編輯">
-			     <input type="hidden" name="menu_id"  value="${menuVO.menu_id}">
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-			</td>
-
+			<td>${menuVO.is_item}</td>
+			
 		</tr>
 	</c:forEach>
 </table>

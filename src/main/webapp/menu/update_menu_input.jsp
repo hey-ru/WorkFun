@@ -3,7 +3,7 @@
 <%@ page import="com.menu.model.*"%>
 
 <%
-  MenuVO menuVO = (MenuVO) request.getAttribute("menuVO"); //SelectMenuByShopServlet.java (Concroller) 存入req的menuVO物件 (包括幫忙取出的menuVO, 也包括輸入資料錯誤時的menuVO物件)
+  MenuVO menuVO = (MenuVO) request.getAttribute("menuVO"); //listMenuByShop.java (Concroller) 存入req的menuVO物件 (包括幫忙取出的menuVO, 也包括輸入資料錯誤時的menuVO物件)
 %>
 
 <html>
@@ -48,50 +48,55 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>菜單資料修改 - update_menu_input.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/selectMenu_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h3>菜單內容修改 - update_menu_input.jsp</h3>
+		 <h4><a href=selectMenu_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
 <h3>資料修改:</h3>
 
 <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
 
-<FORM METHOD="post" ACTION="menu.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop" name="form1">
 <table>
 	<tr>
-		<td>菜單編號:<font color=red><b>*</b></font></td>
-		<td><%=menuVO.getMenu_id()%></td>
+		<td>菜單編號:</td>
+		<td>${param.menu_id}</td>
 	</tr>
 	<tr>
 		<td>品項:</td>
-		<td><input type="TEXT" name="item" size="45" value="<%=menuVO.getItem()%>" /></td>
+		<td><input type="TEXT" name="item" size="45" 
+			value="${param.item}" /></td><td>${errorMsgs.item}</td>
 	</tr>
 	<tr>
 		<td>價格:</td>
-		<td><input type="TEXT" name="price" size="45"	value="<%=menuVO.getPrice()%>" /></td>
+		<td><input type="TEXT" name="price" size="45"	
+			value="${param.price}" /></td><td>${errorMsgs.price}</td>
 	</tr>
 	<tr>
-		<td>項目顯示:</td>
-		<td><input type="TEXT" name="is_item" size="45"	value="<%=menuVO.getIs_item()%>" /></td>
+		<td>項目狀態:</td>
+		<td><input type="TEXT" name="is_item" size="45"	
+			value="${param.is_item}" /></td><td>${errorMsgs.is_item}</td>
 	</tr>
 
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="menu_id" value="<%=menuVO.getMenu_id()%>">
+<input type="hidden" name="menu_id" value="${param.menu_id}">
+<input type="hidden" name="shop_id" value="${param.shop_id}">
+<input type="hidden" name="is_item" value="${param.is_item}">
 <input type="submit" value="送出修改"></FORM>
+
+
 </body>
-
-
 
 <script>
      
