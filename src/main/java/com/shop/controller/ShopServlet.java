@@ -26,8 +26,8 @@ public class ShopServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		res.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = res.getWriter();
+//		res.setContentType("text/html; charset=UTF-8");
+//		PrintWriter out = res.getWriter();
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -225,26 +225,26 @@ public class ShopServlet extends HttpServlet {
 				
 				String address = req.getParameter("address").trim();
 				//String addressReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
-				String addressReg ="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,30}$";
+				String addressReg ="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]*$";
 				if ((address.trim().length() != 0) && !(address.trim().matches(addressReg))) { 
 					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_");
 	            }
 				
 				String tel = req.getParameter("tel");
-				String telReg = "^[(0-9)]{1,30}$";
-				if (tel == null || tel.trim().length() == 0) {
-					errorMsgs.put("tel","電話:請至少留一個電話或手機號碼");
-				} else if(!tel.trim().matches(telReg)) { 
-					errorMsgs.put("tel","電話:請再確認一下號碼");
-	            }
+//				String telReg = "^[(0-9)]{9,11}$";
+//				if (tel == null || tel.trim().length() == 0) {
+//					errorMsgs.put("tel","電話:請至少留一個電話或手機號碼");
+//				} else if(!tel.trim().matches(telReg)) { 
+//					errorMsgs.put("tel","電話:請再確認一下號碼");
+//	            }
 				
 				String website = req.getParameter("website");
 				
-				Integer min_amt = null;
-				String min_amtstr = req.getParameter("min_amt");
+				Integer min_amt = 0;
+				String min_amtstr = req.getParameter("min_amt").trim();
 				if(min_amtstr.trim().length() != 0) {
 					try {
-						min_amt = Integer.valueOf(min_amtstr.trim());
+						min_amt = Integer.valueOf(min_amtstr);
 					} catch (NumberFormatException e) {
 						errorMsgs.put("min_amt","外送低消請填數字");
 					}
@@ -254,28 +254,23 @@ public class ShopServlet extends HttpServlet {
 				byte[] shop_img2 = null;
 				byte[] shop_img3 = null;
 				
-//				Part pic1 = req.getPart("shop_img1");
-//				String filename1 = getFileNameFromPart(pic1);
-//					if (filename1!= null && pic1.getContentType()!=null) {
-//						shop_img1 = getByteArrayFromPart(pic1);
-//					}
-//				
-//		        Part pic2 = req.getPart("shop_img2");
-//				String filename2 = getFileNameFromPart(pic2);
-//					if (filename2!= null && pic2.getContentType()!=null) {
-//						shop_img2 = getByteArrayFromPart(pic2);
-//					}
-//				
-//				Part pic3 = req.getPart("shop_img3");
-//				String filename3 = getFileNameFromPart(pic3);
-//					if (filename3!= null && pic3.getContentType()!=null) {
-//						shop_img3 = getByteArrayFromPart(pic3);
-//					}
+				Part pic1 = req.getPart("shop_img1");
+				String filename1 = getFileNameFromPart(pic1);
+					if (filename1!= null && pic1.getContentType()!=null) {
+						shop_img1 = getByteArrayFromPart(pic1);
+					}
 				
+		        Part pic2 = req.getPart("shop_img2");
+				String filename2 = getFileNameFromPart(pic2);
+					if (filename2!= null && pic2.getContentType()!=null) {
+						shop_img2 = getByteArrayFromPart(pic2);
+					}
 				
-//				shop_img1 = new byte[req.getPart("shop_img1").getInputStream().available()];
-//				shop_img2 = new byte[req.getPart("shop_img2").getInputStream().available()];
-//				shop_img3 = new byte[req.getPart("shop_img3").getInputStream().available()];
+				Part pic3 = req.getPart("shop_img3");
+				String filename3 = getFileNameFromPart(pic3);
+					if (filename3!= null && pic3.getContentType()!=null) {
+						shop_img3 = getByteArrayFromPart(pic3);
+					}
 							
 
 				ShopVO shopVO = new ShopVO();
