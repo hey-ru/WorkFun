@@ -96,7 +96,7 @@ th, td {
 				<td><img src="<%=request.getContextPath()%>/shop/DBGifReader?shop_id=${shopVO.shop_id}&pic=shop_img2" style="max-width: 100%;"></td>
 				<td><img src="<%=request.getContextPath()%>/shop/DBGifReader?shop_id=${shopVO.shop_id}&pic=shop_img3" style="max-width: 100%;"></td>
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/menu.do">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop">
 						<input type="submit" value="查看菜單" style="margin-bottom: 0px;"> 
 						<input type="hidden" name="shop_id" value="${shopVO.shop_id}"> 
 						<input type="hidden" name="action" value="getmenu">

@@ -130,79 +130,102 @@ public class ShopServlet extends HttpServlet {
 		}
 		
 		
-//		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
-//			
-//			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//		
-////			try {
-//				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-//				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
-//				
-//				String shop_name = req.getParameter("shop_name");
-//				String shop_nameReg = "^(\u4e00-\u9fa5)(/u0800-/u4e00)(a-zA-Z0-9_)$";
-//				if (shop_name == null || shop_name.trim().length() == 0) {
-//					errorMsgs.put("shop_name","店家名稱: 請勿空白");
-//				} else if(!shop_name.trim().matches(shop_nameReg)) {
-//					errorMsgs.put("shop_name","店家: 只能是中、日、英文字母、數字和_");
-//	            }
-//				
-//				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());
-//				//(0: 飲料, 1: 中式 2: 異國, 3: 小吃, 4: 素食 5:其他 )
-//				
-//				String address = req.getParameter("address").trim();
-//				String addressReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_-)]$";
-//				if ((address.trim().length() != 0) && !(address.trim().matches(addressReg))) { 
-//					errorMsgs.put("address","店家: 只能是中、英文字母、數字和_-");
-//	            }
-//				
-//				String tel = req.getParameter("tel");
-//				String telReg = "^([0-9]{3}-?[0-9]{8}|[0-9]{4}-?[0-9]{7})$";
+		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+			
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+//			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
+				
+				String shop_name = req.getParameter("shop_name");
+				String shop_nameReg ="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]*$";
+				if (shop_name == null || shop_name.trim().length() == 0) {
+					errorMsgs.put("shop_name","店家名稱: 請勿空白");
+				} else if(!shop_name.trim().matches(shop_nameReg)) {
+					errorMsgs.put("shop_name","店家: 只能是中、英文字母、數字和_");
+	            }
+				
+				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());
+				//(0: 飲料, 1: 中式 2: 異國, 3: 小吃, 4: 素食 5:其他 )
+				
+				String address = req.getParameter("address").trim();
+				//String addressReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
+				String addressReg ="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]*$";
+				if ((address.trim().length() != 0) && !(address.trim().matches(addressReg))) { 
+					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_");
+	            }
+				
+				String tel = req.getParameter("tel");
+//				String telReg = "^[(0-9)]{9,11}$";
 //				if (tel == null || tel.trim().length() == 0) {
 //					errorMsgs.put("tel","電話:請至少留一個電話或手機號碼");
 //				} else if(!tel.trim().matches(telReg)) { 
 //					errorMsgs.put("tel","電話:請再確認一下號碼");
 //	            }
-//				
-//				String website = req.getParameter("website");
-//				
-//				Integer min_amt = null;
-//				try {
-//					min_amt = Integer.valueOf(req.getParameter("min_amt").trim());
-//				} catch (NumberFormatException e) {
-//					min_amt = 0;
-//					errorMsgs.put("min_amt","外送低消金額請填數字.");
-//				}
-//				
-//				
-//				
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/shop/update_shop_input.jsp");
-//					failureView.forward(req, res);
-//					return; //程式中斷
-//				}
-//				
-//				/***************************2.開始修改資料*****************************************/
-//				ShopService shopSvc = new ShopService();
-////				ShopVO shopVO = shopSvc.updateShop(shop_id, shop_name, shop_type, address, tel, website,
-////						min_amt, shop_img1, shop_img2, shop_img3);
-////				
-//				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-//				//req.setAttribute("shopVO", shopVO); // 資料庫update成功後,正確的的empVO物件,存入req
-//				String url = "/shop/listOneShop.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-//				successView.forward(req, res);
-//
-////				/***************************其他可能的錯誤處理*************************************/
-////			} catch (Exception e) {
-////				errorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
-////				RequestDispatcher failureView = req
-////						.getRequestDispatcher("/emp/update_emp_input.jsp");
-////				failureView.forward(req, res);
-////			}
-//		}
+				
+				String website = req.getParameter("website");
+				
+				Integer min_amt = 0;
+				String min_amtstr = req.getParameter("min_amt").trim();
+				if(min_amtstr.trim().length() != 0) {
+					try {
+						min_amt = Integer.valueOf(min_amtstr);
+					} catch (NumberFormatException e) {
+						errorMsgs.put("min_amt","外送低消請填數字");
+					}
+				}
+				
+				byte[] shop_img1 = null;
+				byte[] shop_img2 = null;
+				byte[] shop_img3 = null;
+				
+				Part pic1 = req.getPart("shop_img1");
+				String filename1 = getFileNameFromPart(pic1);
+					if (filename1!= null && pic1.getContentType()!=null) {
+						shop_img1 = getByteArrayFromPart(pic1);
+					}
+				
+		        Part pic2 = req.getPart("shop_img2");
+				String filename2 = getFileNameFromPart(pic2);
+					if (filename2!= null && pic2.getContentType()!=null) {
+						shop_img2 = getByteArrayFromPart(pic2);
+					}
+				
+				Part pic3 = req.getPart("shop_img3");
+				String filename3 = getFileNameFromPart(pic3);
+					if (filename3!= null && pic3.getContentType()!=null) {
+						shop_img3 = getByteArrayFromPart(pic3);
+					}
+							
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/shop/update_shop_input.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+				}
+				
+				/***************************2.開始修改資料*****************************************/
+				ShopService shopSvc = new ShopService();
+				ShopVO shopVO = shopSvc.updateShop(shop_id, shop_name, shop_type, address, tel, website,
+						min_amt, shop_img1, shop_img2, shop_img3);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				//req.setAttribute("shopVO", shopVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				String url = "/shop/listOneShop.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				successView.forward(req, res);
+
+//				/***************************其他可能的錯誤處理*************************************/
+//			} catch (Exception e) {
+//				errorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/emp/update_emp_input.jsp");
+//				failureView.forward(req, res);
+//			}
+		}
 
         if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			
