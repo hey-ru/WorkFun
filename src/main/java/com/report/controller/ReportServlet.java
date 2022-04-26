@@ -1,9 +1,6 @@
 package com.report.controller;
 
-import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,17 +18,23 @@ import javax.servlet.http.Part;
 import com.report.model.ReportService;
 import com.report.model.ReportVO;
 
-@WebServlet("/report/ReportServlet")
+@WebServlet("/reportServlet")
+@MultipartConfig
+(
+	 fileSizeThreshold   = 1024 * 1024 * 10,
+		        maxFileSize         = 1024 * 1024 * 50,
+		        maxRequestSize      = 1024 * 1024 * 100
+)
 public class ReportServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-	System.out.println("post");
+		System.out.println(action);
+
 	if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
 		List<String> errorMsgs = new LinkedList<String>();
@@ -93,9 +97,9 @@ public class ReportServlet extends HttpServlet{
 		failureView.forward(req, res);
 	}
 }
+//-----------------------------------------------------------------------	
 	
 	if ("getOne".equals(action)) { // 來自listAllReport.jsp的請求
-
 		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
@@ -106,7 +110,11 @@ public class ReportServlet extends HttpServlet{
 			/***************************2.開始查詢資料****************************************/
 			ReportService repSvc = new ReportService();
 			ReportVO repVO = repSvc.getOneReport(report_id);
-							
+//			String str = new String (repVO.getReport_image());
+//			OutputStream out = res.getOutputStream();
+//			BufferedOutputStream bos = new BufferedOutputStream(out);
+//			bos.write(repVO.getReport_image());
+				System.out.println(repVO);
 			/***************************3.查詢完成,準備轉交(Send the Success view)************/
 //			String param = "?report_id="  +repVO.getReport_id()+
 //					       "&title="  +repVO.getTitle()+
@@ -136,7 +144,7 @@ public class ReportServlet extends HttpServlet{
 	}
 	
 	  if ("insert".equals(action)) { // 來自addReport.jsp的請求  
-			
+
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -152,8 +160,6 @@ public class ReportServlet extends HttpServlet{
 //					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字");
 //	            }
 				Integer status = Integer.valueOf(req.getParameter("status").trim());
-				byte[] report_image=null;
-				System.out.println(report_image);
 				Integer report_type = Integer.valueOf(req.getParameter("report_type").trim());
 				
 				String title = req.getParameter("title");
@@ -163,7 +169,6 @@ public class ReportServlet extends HttpServlet{
 //				} else if(!title.trim().matches(titleReg)) { //以下練習正則(規)表示式(regular-expression)
 //					errorMsgs.put("title","標題: 只能是中、英文字母、數字");
 //	            }
-				System.out.println(title);
 				// Send the use back to the form, if there were errors
 //				if (!errorMsgs.isEmpty()) {
 //					RequestDispatcher failureView = req
@@ -173,26 +178,21 @@ public class ReportServlet extends HttpServlet{
 //				}
 //				System.out.println(errorMsgs);
 				/***************************2.開始新增資料***************************************/
-//				EmpService empSvc = new EmpService();
-//				empSvc.addEmp(ename, job, hiredate, sal, comm, deptno);
-				//Collection<Part> parts = req.getParts();
-				
 				ReportService repSvc= new ReportService();
-				repSvc.addReport(reporter, handler, content,
-						status, report_image, report_type , title);
-//				
-//				for(Part part :parts) {
-//					
-//					ReportVO reportVO = repSvc.addReport(reporter,handler,content,
-//							status,report_image,report_type ,title);
+				Part part = req.getPart("report_image");
+//				repSvc.addReport(reporter, handler, content,
+//						status, report_image, report_type , title);			
+//				for(Part part :parts) {					
+				byte[]report_image = repSvc.Image(part);
+				System.out.println(report_image);
+					ReportVO reportVO = repSvc.addReport(reporter,handler,content,
+							status,report_image,report_type ,title);
 //				}
-				
+//				System.out.println(part);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/report/listAllReport.jsp";
-				System.out.println(url);
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
-				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.put("Exception",e.getMessage());
