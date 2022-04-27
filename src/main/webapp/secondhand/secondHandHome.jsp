@@ -11,11 +11,6 @@ List<SecondHandVO> list = secondHandSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
 
-<%-- <% SecondHandVO secondHand = new SecondHandVO(); --%>
-// secondHand.s
-<%-- %>> --%>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -216,6 +211,9 @@ pageContext.setAttribute("list", list);
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1">
+							<%
+							int rowsPerPage = 9;
+							%>
 							<%@ include file="/design/page1.file"%>
 							<div class="form-group col-2" style="display: inline-block;">
 								<jsp:useBean id="secondHandSvc1" scope="page"
