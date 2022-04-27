@@ -86,14 +86,11 @@ public class DepJDBCDAO implements DepDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
-			DepVO oldDep = findByPrimaryKey(newDep.getDepId());
+	
 
 			if (newDep.getDepName() != null) {
 				pstmt.setString(1, newDep.getDepName());
-			} else {
-				pstmt.setString(1, oldDep.getDepName());
-
-			}
+			} 
 
 			pstmt.setInt(2, newDep.getDepId());
 
@@ -245,8 +242,8 @@ public class DepJDBCDAO implements DepDAO_interface {
 		return depVO;
 	}
 
-	public Set<DepVO> getAll() {
-		Set<DepVO> set = new HashSet<DepVO>();
+	public List<DepVO> getAll() {
+		List<DepVO> list = new ArrayList<DepVO>();
 		DepVO depVO = null;
 
 		Connection con = null;
@@ -268,7 +265,7 @@ public class DepJDBCDAO implements DepDAO_interface {
 				depVO.setDepId(rs.getInt("dep_id"));
 				depVO.setDepName(rs.getString("dep_name"));
 
-				set.add(depVO); // Store the row in the list
+				list.add(depVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
@@ -302,7 +299,7 @@ public class DepJDBCDAO implements DepDAO_interface {
 				}
 			}
 		}
-		return set;
+		return list;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -319,14 +316,14 @@ public class DepJDBCDAO implements DepDAO_interface {
 
 
 //		
-//		DepVO depVO2 = new DepVO();
-//		depVO2.setDepId(10);
-//		
+		DepVO depVO2 = new DepVO();
+		depVO2.setDepId(10);
+		depVO2.setDepName("資訊");
 //		depVO2.setDepName("資訊");
-//
-//	System.out.println("成功");
-//	
-//		dao.update(depVO2);
+
+	System.out.println("成功");
+	
+		dao.update(depVO2);
 
 		
 		
@@ -352,7 +349,7 @@ public class DepJDBCDAO implements DepDAO_interface {
 		
 		
 		
-//		Set<DepVO> set = dao.getAll();
+//		List<DepVO> list = dao.getAll();
 //		for (DepVO aEmp : set) {
 //			System.out.print(aEmp.getDepId() + ",");
 //			System.out.print(aEmp.getDepName() + ",");

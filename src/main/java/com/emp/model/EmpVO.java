@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 import com.core.Core;
 
-public class EmpVO extends Core{
+public class EmpVO {
 	private Integer empId;
 	private Integer depId;
 	private String empName;
