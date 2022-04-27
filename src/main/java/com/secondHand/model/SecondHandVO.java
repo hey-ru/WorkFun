@@ -20,8 +20,8 @@ public class SecondHandVO implements java.io.Serializable {
 	private Integer is_deal;
 	private byte[] img1;
 //	private String img1;
-	private String img2;
-	private String img3;
+	private byte[] img2;
+	private byte[] img3;
 	private Timestamp create_time;
 	private Timestamp update_time;
 
@@ -121,19 +121,19 @@ public class SecondHandVO implements java.io.Serializable {
 //		this.img1 = img1;
 //	}
 
-	public String getImg2() {
+	public byte[] getImg2() {
 		return img2;
 	}
 
-	public void setImg2(String img2) {
+	public void setImg2(byte[] img2) {
 		this.img2 = img2;
 	}
 
-	public String getImg3() {
+	public byte[] getImg3() {
 		return img3;
 	}
 
-	public void setImg3(String img3) {
+	public void setImg3(byte[] img3) {
 		this.img3 = img3;
 	}
 

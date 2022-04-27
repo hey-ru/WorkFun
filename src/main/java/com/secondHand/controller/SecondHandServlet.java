@@ -199,7 +199,7 @@ public class SecondHandServlet extends HttpServlet {
 //			}
 //		}
 
-		if ("insert".equals(action)) { // 來自createSecondHand.jsp的請求
+		if ("insert".equals(action)) { // 來自addSecondHand.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -273,28 +273,27 @@ public class SecondHandServlet extends HttpServlet {
 
 				byte[] img1 = null;
 
-				Part pic1 = req.getPart("img1");
-				String filename1 = getFileNameFromPart(pic1);
-				if (filename1 != null && pic1.getContentType() != null) {
-					img1 = getByteArrayFromPart(pic1);
-				}
+//				Part pic1 = req.getPart("img1");
+//				String filename1 = getFileNameFromPart(pic1);
+//				if (filename1 != null && pic1.getContentType() != null) {
+//					img1 = getByteArrayFromPart(pic1);
+//				}
 
 //				String img2 = req.getParameter("img2");
 //				String img3 = req.getParameter("img3");
 
-				String img2 = null;
-				String img3 = null;
+				byte[] img2 = null;
+				byte[] img3 = null;
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/createSecondHand.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/addSecondHand.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				SecondHandService secondHandService = new SecondHandService();
-//				secondHandService.addSecondHand(saler, name, bottom_price, top_price, start_time, end_time, img1, img2, img3);
 				secondHandService.addSecondHand(saler, name, bottom_price, top_price, start_time, end_time, img1, img2, img3);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -305,8 +304,9 @@ public class SecondHandServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.put("Exception", e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/createSecondHand.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/addSecondHand.jsp");
 				failureView.forward(req, res);
+				System.out.println("error");
 			}
 		}
 

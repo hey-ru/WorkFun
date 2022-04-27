@@ -55,7 +55,7 @@
 						<div class="dropdown">
 							<button class="dropbtn">揪團訂餐</button>
 							<div class="dropdown-content">
-								<a href="./gbhome.html">瀏覽揪團</a> <a href="./shoplist.html">我要揪團</a>
+								<a href="../shop/listAllShop.jsp">瀏覽揪團</a> <a href="./shoplist.html">我要揪團</a>
 								<a href="#">查詢揪團</a> <a href="#">查詢參團</a>
 
 							</div>
@@ -66,7 +66,7 @@
 							<button class="dropbtn">二手競標</button>
 							<div class="dropdown-content">
 								<a href="secondHandHome.jsp">競標首頁</a> <a
-									href="createSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
+									href="addSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
 							</div>
 						</div>
 					</li>
@@ -346,14 +346,14 @@
  	       theme: '',              //theme: 'dark',
 	       timepicker:true,       //timepicker:true,
 	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d H:i',         //format:'Y-m-d H:i:s',
+	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
 		   value: '<%=start_time%>', // value:   new Date(),
         });
         $('#f_date2').datetimepicker({
   	       theme: '',              //theme: 'dark',
  	       timepicker:true,       //timepicker:true,
  	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d H:i',         //format:'Y-m-d H:i:s',
+ 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: '<%=end_time%>', // value:   new Date(),
 	});
 </script>
