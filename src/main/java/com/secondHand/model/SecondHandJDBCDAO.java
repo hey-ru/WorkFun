@@ -23,10 +23,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "INSERT INTO second_hand (saler,name,bottom_price,top_price,start_time,end_time,img1,img2,img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//	private static final String INSERT_STMT = "INSERT INTO second_hand (saler,name,bottom_price,top_price,start_time,end_time) VALUES (?, ?, ?, ?, ?, ?)";
-//	private static final String DELETE = "DELETE FROM second_hand where second_hand_id = ?";
 //	private static final String UPDATE = "UPDATE second_hand set bid_winner=?, deal_price=?, name=?, bottom_price=?, top_price=?, start_time=?, end_time=?, is_deal=?, img1=?, img2=?, img3=? where second_hand_id = ?";
-	private static final String UPDATE = "UPDATE second_hand set ";
+	private static final String UPDATE = "UPDATE second_hand set ";//StringBuilder
 	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
 	private static final String GET_BY_IS_DEAL = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where is_deal like \"%\"?\"%\"";

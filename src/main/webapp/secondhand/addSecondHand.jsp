@@ -176,7 +176,7 @@
 							<h5 class="card-title">新增二手商品</h5>
 							
 							<!-- General Form Elements -->
-							<form METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1" enctype="multipart/form/data">
+							<form METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1" enctype="multipart/form-data">
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">拍賣人id</label>
 									<div class="col-sm-10">
@@ -225,27 +225,30 @@
 									<label for="inputNumber" class="col-sm-2 col-form-label">File
 										Upload</label>
 									<div class="col-sm-10">
-										<input class="form-control" type=file
+										<input class="form-control" type=file name="img1"
 											oninput="pic1.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile0"> <img id="pic1" />
+											id="formFile0" value="${param.img1}"> <img id="pic1" style="width:500px"/>
+											<br>${errorMsgs.img1}
 									</div>
 								</div>
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">File
 										Upload</label>
 									<div class="col-sm-10">
-										<input class="form-control" type=file
+										<input class="form-control" type=file name="img2"
 											oninput="pic2.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile1"> <img id="pic2" />
+											id="formFile1" value="${param.img2}"> <img id="pic2" style="width:500px"/>
+											<br>${errorMsgs.img2}
 									</div>
 								</div>
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">File
 										Upload</label>
 									<div class="col-sm-10">
-										<input class="form-control" type=file
+										<input class="form-control" type=file name="img3"
 											oninput="pic3.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile2"> <img id="pic3" />
+											id="formFile2" value="${param.img3}"> <img id="pic3" style="width:500px"/>
+											<br>${errorMsgs.img3}
 									</div>
 								</div>
 								<div class="row mb-3">

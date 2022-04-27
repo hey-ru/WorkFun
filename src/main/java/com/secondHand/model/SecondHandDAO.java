@@ -51,9 +51,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 			pstmt.setInt(4, secondHandVO.getTop_price());
 			pstmt.setTimestamp(5, secondHandVO.getStart_time());
 			pstmt.setTimestamp(6, secondHandVO.getEnd_time());
-			pstmt.setString(7, secondHandVO.getImg1());
-			pstmt.setString(8, secondHandVO.getImg2());
-			pstmt.setString(9, secondHandVO.getImg3());
+			pstmt.setBytes(7, secondHandVO.getImg1());
+			pstmt.setBytes(8, secondHandVO.getImg2());
+			pstmt.setBytes(9, secondHandVO.getImg3());
 
 			pstmt.executeUpdate();
 
@@ -205,15 +205,15 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 			}
 			if (newSecondHandVO.getImg1() != null) {
 				count++;
-				pstmt.setString(count, newSecondHandVO.getImg1());
+				pstmt.setBytes(count, newSecondHandVO.getImg1());
 			}
 			if (newSecondHandVO.getImg2() != null) {
 				count++;
-				pstmt.setString(count, newSecondHandVO.getImg2());
+				pstmt.setBytes(count, newSecondHandVO.getImg2());
 			}
 			if (newSecondHandVO.getImg3() != null) {
 				count++;
-				pstmt.setString(count, newSecondHandVO.getImg3());
+				pstmt.setBytes(count, newSecondHandVO.getImg3());
 			}
 			count++;
 			pstmt.setInt(count, newSecondHandVO.getsecond_hand_id());
@@ -270,9 +270,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getString("img1"));
-				secondHandVO.setImg2(rs.getString("img2"));
-				secondHandVO.setImg3(rs.getString("img3"));
+				secondHandVO.setImg1(rs.getBytes("img1"));
+				secondHandVO.setImg2(rs.getBytes("img2"));
+				secondHandVO.setImg3(rs.getBytes("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
 				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
 			}
@@ -317,9 +317,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getString("img1"));
-				secondHandVO.setImg2(rs.getString("img2"));
-				secondHandVO.setImg3(rs.getString("img3"));
+				secondHandVO.setImg1(rs.getBytes("img1"));
+				secondHandVO.setImg2(rs.getBytes("img2"));
+				secondHandVO.setImg3(rs.getBytes("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
 				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
 				list.add(secondHandVO);
@@ -378,9 +378,9 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getString("img1"));
-				secondHandVO.setImg2(rs.getString("img2"));
-				secondHandVO.setImg3(rs.getString("img3"));
+				secondHandVO.setImg1(rs.getBytes("img1"));
+				secondHandVO.setImg2(rs.getBytes("img2"));
+				secondHandVO.setImg3(rs.getBytes("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
 				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
 				list.add(secondHandVO);
@@ -464,20 +464,23 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 //		dao.insert(secondHandVO1);
 
 		// 修改
-		SecondHandVO secondHandVO2 = new SecondHandVO();
-		secondHandVO2.setsecond_hand_id(1008);
+//		SecondHandVO secondHandVO2 = new SecondHandVO();
+//		secondHandVO2.setsecond_hand_id(1008);
 //		secondHandVO2.setBid_winner(null);
 //		secondHandVO2.setDeal_price(null);
-		secondHandVO2.setName("燒燒果實");
-		secondHandVO2.setBottom_price(10000000);
-		secondHandVO2.setTop_price(99999999);
-		secondHandVO2.setStart_time(java.sql.Timestamp.valueOf("2022-09-01 10:30:00"));
-		secondHandVO2.setEnd_time(java.sql.Timestamp.valueOf("2022-09-20 18:30:00"));
+//		secondHandVO2.setName("燒燒果實");
+//		secondHandVO2.setBottom_price(10000000);
+//		secondHandVO2.setTop_price(99999999);
+//		secondHandVO2.setStart_time(java.sql.Timestamp.valueOf("2022-09-01 10:30:00"));
+//		secondHandVO2.setEnd_time(java.sql.Timestamp.valueOf("2022-09-20 18:30:00"));
 //		secondHandVO2.setIs_deal(1);
-		secondHandVO2.setImg1(new String(base64encoded.array()));
-		secondHandVO2.setImg2(new String(base64encoded1.array()));
-//		secondHandVO2.setImg3(new String(base64encoded2.array()));
-		dao.update(secondHandVO2);
+//		secondHandVO2.setImg1(buffer);
+//		secondHandVO2.setImg2(buffer1);
+//		secondHandVO2.setImg3(buffer2);
+////		secondHandVO2.setImg1(new String(base64encoded.array()));
+////		secondHandVO2.setImg2(new String(base64encoded1.array()));
+////		secondHandVO2.setImg3(new String(base64encoded2.array()));
+//		dao.update(secondHandVO2);
 
 		// 查詢 by id
 //		SecondHandVO secondHandVO3 = dao.getById(1004);
