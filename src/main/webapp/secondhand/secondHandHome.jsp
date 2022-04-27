@@ -222,15 +222,9 @@ pageContext.setAttribute("list", list);
 									class="com.secondHand.model.SecondHandService" />
 								<select class="form-control" id="exampleFormControlSelect1"
 									style="border: gray solid 2px;" name="is_deal">
-									<c:forEach var="secondHandVO" items="${secondHandSvc1.all}">
-										<option value="${secondHandVO.is_deal}"
-											${(param.deptno==deptVO.deptno)? 'selected':'' }>${deptVO.deptno}
-									</c:forEach>
-
-
 									<option>選擇類型</option>
-									<option>競標中</option>
-									<option>已成交</option>
+									<option value="is_deal = 0">競標中</option>
+									<option value="is_deal = 1">已成交</option>
 									<option>顯示全部</option>
 								</select>
 							</div>
@@ -253,8 +247,12 @@ pageContext.setAttribute("list", list);
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 							<div class="portfolio-wrap">
 								<%-- 下面是base64寫法 --%>
-								<img src="data:image/png;base64, ${secondHandVO.img1}"
-									<%-- 上面是base64寫法 --%>
+								<%-- <img src="data:image/png;base64, ${secondHandVO.img1}" --%>
+								<%-- 上面是base64寫法 --%>
+								<img
+									src="
+									<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}
+									"
 									class="img-fluid"
 									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
 								<div class="portfolio-info">

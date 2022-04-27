@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.secondHand.model.SecondHandService;
+import com.secondHand.model.SecondHandVO;
 
 @WebServlet("/secondhand/SecondHandServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
@@ -204,7 +205,7 @@ public class SecondHandServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
 				// 下面之後要刪掉
@@ -273,17 +274,39 @@ public class SecondHandServlet extends HttpServlet {
 
 				byte[] img1 = null;
 
-//				Part pic1 = req.getPart("img1");
-//				String filename1 = getFileNameFromPart(pic1);
-//				if (filename1 != null && pic1.getContentType() != null) {
-//					img1 = getByteArrayFromPart(pic1);
-//				}
+				Part pic1 = req.getPart("img1");
+//				img1= getByteArrayFromPart(pic1);
+				String filename1 = getFileNameFromPart(pic1);
+				if (filename1 != null && pic1.getContentType() != null) {
+					img1 = getByteArrayFromPart(pic1);
+				}
+				System.out.println(1);
 
-//				String img2 = req.getParameter("img2");
-//				String img3 = req.getParameter("img3");
-
+//				String img2 = req.getParameter("img2");//base64
 				byte[] img2 = null;
+				
+				Part pic2 = req.getPart("img2");
+				String filename2 = getFileNameFromPart(pic2);
+				if (filename2 != null && pic2.getContentType() != null) {
+					img2 = getByteArrayFromPart(pic2);
+				}
+				System.out.println(2);
+				
+//				String img3 = req.getParameter("img3");//base63
 				byte[] img3 = null;
+				
+				Part pic3 = req.getPart("img3");
+				String filename3 = getFileNameFromPart(pic3);
+				if (filename3 != null && pic3.getContentType() != null) {
+					img3 = getByteArrayFromPart(pic3);
+				}
+				System.out.println(3);
+				
+				SecondHandVO secondHandVO = new SecondHandVO();
+				secondHandVO.setImg1(img1);
+				secondHandVO.setImg2(img2);
+				secondHandVO.setImg3(img3);
+
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -302,12 +325,12 @@ public class SecondHandServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.put("Exception", e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/addSecondHand.jsp");
-				failureView.forward(req, res);
-				System.out.println("error");
-			}
+//			} catch (Exception e) {
+//				errorMsgs.put("Exception", e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/addSecondHand.jsp");
+//				failureView.forward(req, res);
+//				System.out.println("error");
+//			}
 		}
 
 //		if ("delete".equals(action)) { // 來自listAllEmp.jsp
