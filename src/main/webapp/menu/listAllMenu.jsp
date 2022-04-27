@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.menu.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
     MenuService menuService = new MenuService();
@@ -77,7 +76,7 @@
 		
 	
 	</tr>
-	<%@ include file="page1.file" %> 
+	<%@ include file="/design/page1.file"%> 
 	<c:forEach var="menuVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
@@ -89,7 +88,7 @@
 		</tr>
 	</c:forEach>
 </table>
-<%@ include file="page2.file" %>
+<%@ include file="/design/page2.file"%>
 
 </body>
 </html>

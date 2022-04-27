@@ -3,13 +3,23 @@ package com.menu.model;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
+
 public class MenuVO implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	
 	private Integer menu_id;
+	
+	@CsvBindByName(column = "shop_id")
 	private Integer shop_id;
+	
+	@CsvBindByName(column = "item")
 	private String item;
+	
+	@CsvBindByName(column = "price")
 	private Integer price;
 	private Integer is_item;
 	private Timestamp menu_upd;

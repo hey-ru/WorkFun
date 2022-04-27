@@ -63,7 +63,6 @@ public class SelectMenuByShopServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer menu_id = Integer.valueOf(req.getParameter("menu_id"));
 
@@ -84,11 +83,6 @@ public class SelectMenuByShopServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception", "無法取得要修改的資料:" + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/menu/selectMenu.jsp");
-//				failureView.forward(req, res);
-//			}
 		}
 
 		// 成功轉交後跳頁修改
@@ -97,7 +91,6 @@ public class SelectMenuByShopServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				//菜單編號
 				Integer menu_id = Integer.valueOf(req.getParameter("menu_id").trim());
@@ -138,22 +131,20 @@ public class SelectMenuByShopServlet extends HttpServlet {
 				MenuService menuService = new MenuService();
 				//執行修改指定的menu_id物件
 				MenuVO menuVO = menuService.updateMenuItem(menu_id, item, price, is_item, shop_id);
-				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面
-				List<MenuVO> menuList = menuService.getByShopId(shop_id);
+				
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("menuVO", menuVO); // 資料庫update成功後,正確的的menuVO物件,存入req
+				
+				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面
+				List<MenuVO> menuList = menuService.getByShopId(shop_id);
 				req.setAttribute("menuList", menuList);
+				
 				String url = "/menu/listMenuByShop.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception", "修改資料失敗:" + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/menu/update_menu_input.jsp");
-//				failureView.forward(req, res);
-//			}
 		}
 
 	}

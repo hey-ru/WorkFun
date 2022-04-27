@@ -12,13 +12,13 @@ public class MenuService {
 	}
 
 	
-	public MenuVO addMenuItem(Integer shop_id, String item, Integer price) {
+	public MenuVO addMenuItem(String item, Integer price, Integer shop_id) {
 
 		MenuVO menuVO = new MenuVO();
 
-		menuVO.setShop_id(shop_id);
 		menuVO.setItem(item);
 		menuVO.setPrice(price);
+		menuVO.setShop_id(shop_id);
 
 		dao.insert(menuVO);
 
