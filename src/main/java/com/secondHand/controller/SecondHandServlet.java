@@ -1,34 +1,36 @@
 package com.secondHand.controller;
 
+import java.io.File;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.secondHand.model.SecondHandService;
 
-@WebServlet("/secondHand")
-public class SecondHandServlet extends HttpServlet{
+@WebServlet("/secondhand/SecondHandServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+public class SecondHandServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
-		
+		System.out.println(action);
+
 //		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 //
 //			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -90,8 +92,7 @@ public class SecondHandServlet extends HttpServlet{
 //				failureView.forward(req, res);
 //			}
 //		}
-		
-		
+
 //		if ("getOne_For_Update".equals(action)) { // 來自secondHandHome.jsp的請求
 //
 //			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -125,8 +126,7 @@ public class SecondHandServlet extends HttpServlet{
 //				failureView.forward(req, res);
 //			}
 //		}
-		
-		
+
 //		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 //			
 //			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -199,21 +199,34 @@ public class SecondHandServlet extends HttpServlet{
 //			}
 //		}
 
-        if ("insert".equals(action)) { // 來自createSecondHand.jsp的請求  
-			
-			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+		if ("insert".equals(action)) { // 來自createSecondHand.jsp的請求
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+
+				// 下面之後要刪掉
+
+				Integer saler = null;
+				try {
+					saler = Integer.valueOf(req.getParameter("saler").trim());
+				} catch (Exception e) {
+					errorMsgs.put("saler", "請填入暫時的拍賣者id");
+				}
+				System.out.println(saler);
+				// 上面之後要刪掉
+
 				String name = req.getParameter("name");
 				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (name == null || name.trim().length() == 0) {
-					errorMsgs.put("name","商品名稱請勿空白");
-				} else if(!name.trim().matches(nameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("name","商品名稱只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
-	            }
-				
+					errorMsgs.put("name", "商品名稱請勿空白");
+				} else if (!name.trim().matches(nameReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("name", "商品名稱只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
+				}
+				System.out.println(name);
+
 				Integer bottom_price = null;
 				try {
 					bottom_price = Integer.valueOf(req.getParameter("bottom_price").trim());
@@ -221,75 +234,82 @@ public class SecondHandServlet extends HttpServlet{
 					errorMsgs.put("bottom_price", "請填入數字");
 				}
 				if (bottom_price < 0) {
-					errorMsgs.put("bottom_price","請輸入大於0的數字");
+					errorMsgs.put("bottom_price", "請輸入大於0的數字");
 				}
-				if(bottom_price > 100000000) {
-					errorMsgs.put("bottom_price","請輸入小於50,000,000的數字");
+				if (bottom_price > 100000000) {
+					errorMsgs.put("bottom_price", "請輸入小於50,000,000的數字");
 				}
-				
+				System.out.println(bottom_price);
+
 				Integer top_price = null;
 				try {
 					top_price = Integer.valueOf(req.getParameter("top_price").trim());
 				} catch (Exception e) {
-					errorMsgs.put("top_price","請填入數字");
+					errorMsgs.put("top_price", "請填入數字");
 				}
 				if (top_price <= bottom_price) {
-					errorMsgs.put("bottom_price","請輸入大於起標價格的數字");
+					errorMsgs.put("bottom_price", "請輸入大於起標價格的數字");
 				}
 				if (top_price > 100000000) {
-					errorMsgs.put("bottom_price","請輸入小於100,000,000的數字");
+					errorMsgs.put("bottom_price", "請輸入小於100,000,000的數字");
 				}
-				
-				java.sql.Date hiredate = null;
+				System.out.println(top_price);
+
+				java.sql.Timestamp start_time = null;
 				try {
-					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+					start_time = java.sql.Timestamp.valueOf(req.getParameter("start_time").trim());
 				} catch (IllegalArgumentException e) {
-					errorMsgs.put("hiredate","請輸入日期");
+					errorMsgs.put("start_time", "請輸入開始競標日期時間");
 				}
-				
-				Double sal = null;
+				System.out.println(start_time);
+
+				java.sql.Timestamp end_time = null;
 				try {
-					sal = Double.valueOf(req.getParameter("sal").trim());
-				} catch (NumberFormatException e) {
-					errorMsgs.put("sal","薪水請填數字");
+					end_time = java.sql.Timestamp.valueOf(req.getParameter("end_time").trim());
+				} catch (IllegalArgumentException e) {
+					errorMsgs.put("end_time", "請輸入開始競標日期時間");
 				}
-				
-				Double comm = null;
-				try {
-					comm = Double.valueOf(req.getParameter("comm").trim());
-				} catch (NumberFormatException e) {
-					errorMsgs.put("comm","獎金請填數字");
+				System.out.println(end_time);
+
+				byte[] img1 = null;
+
+				Part pic1 = req.getPart("img1");
+				String filename1 = getFileNameFromPart(pic1);
+				if (filename1 != null && pic1.getContentType() != null) {
+					img1 = getByteArrayFromPart(pic1);
 				}
-				
-				Integer deptno = Integer.valueOf(req.getParameter("deptno").trim());
+
+//				String img2 = req.getParameter("img2");
+//				String img3 = req.getParameter("img3");
+
+				String img2 = null;
+				String img3 = null;
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/addEmp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/createSecondHand.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				
-				/***************************2.開始新增資料***************************************/
+
+				/*************************** 2.開始新增資料 ***************************************/
 				SecondHandService secondHandService = new SecondHandService();
-				secondHandService.addSecondHand(deptno, nameReg, bottom_price, top_price, null, null, name, nameReg, action);
-				
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/emp/listAllEmp.jsp";
+//				secondHandService.addSecondHand(saler, name, bottom_price, top_price, start_time, end_time, img1, img2, img3);
+				secondHandService.addSecondHand(saler, name, bottom_price, top_price, start_time, end_time, img1, img2, img3);
+
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				String url = "/secondhand/secondHandHome.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);				
-				
-				/***************************其他可能的錯誤處理**********************************/
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				errorMsgs.put("Exception",e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/addEmp.jsp");
+				errorMsgs.put("Exception", e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/createSecondHand.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		
-		
+
 //		if ("delete".equals(action)) { // 來自listAllEmp.jsp
 //
 //			List<String> errorMsgs = new LinkedList<String>();
@@ -318,5 +338,24 @@ public class SecondHandServlet extends HttpServlet{
 //				failureView.forward(req, res);
 //			}
 //		}
+	}
+
+	public String getFileNameFromPart(Part part) {
+		String header = part.getHeader("content-disposition");
+		// System.out.println("header=" + header); // 測試用
+		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+		// System.out.println("filename=" + filename); // 測試用
+		if (filename.length() == 0) {
+			return null;
+		}
+		return filename;
+	}
+
+	public static byte[] getByteArrayFromPart(Part part) throws IOException {
+		InputStream fis = part.getInputStream();
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		fis.close();
+		return buffer;
 	}
 }

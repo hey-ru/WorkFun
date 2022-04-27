@@ -2,6 +2,7 @@ package com.secondHand.model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +27,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 	private static final String UPDATE = "UPDATE second_hand set ";
 	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
+	private static final String GET_BY_IS_DEAL = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where is_deal like \"%\"?\"%\"";
 	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand order by second_hand_id";
 
 	@Override
@@ -45,20 +47,28 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			pstmt.setInt(4, secondHandVO.getTop_price());
 			pstmt.setTimestamp(5, secondHandVO.getStart_time());
 			pstmt.setTimestamp(6, secondHandVO.getEnd_time());
-			pstmt.setString(7, secondHandVO.getImg1());
+			pstmt.setBytes(7, secondHandVO.getImg1());
+//			pstmt.setString(7, secondHandVO.getImg1());
 			pstmt.setString(8, secondHandVO.getImg2());
 			pstmt.setString(9, secondHandVO.getImg3());
 
 			pstmt.executeUpdate();
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
 			}
 			if (con != null) {
@@ -203,8 +213,12 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			}
 			if (newSecondHandVO.getImg1() != null) {
 				count++;
-				pstmt.setString(count, newSecondHandVO.getImg1());
+				pstmt.setBytes(count, newSecondHandVO.getImg1());
 			}
+//			if (newSecondHandVO.getImg1() != null) {
+//				count++;
+//				pstmt.setString(count, newSecondHandVO.getImg1());
+//			}
 			if (newSecondHandVO.getImg2() != null) {
 				count++;
 				pstmt.setString(count, newSecondHandVO.getImg2());
@@ -221,14 +235,21 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			pstmt.executeUpdate();
 			System.out.println("update " + (count - 2) + " data!");
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
 			}
 			if (con != null) {
@@ -239,6 +260,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 				}
 			}
 		}
+
 	}
 
 	@Override
@@ -270,20 +292,44 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getString("img1"));
+				secondHandVO.setImg1(rs.getBytes("img1"));
+//				secondHandVO.setImg1(rs.getString("img1"));
 				secondHandVO.setImg2(rs.getString("img2"));
 				secondHandVO.setImg3(rs.getString("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
 				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
-			try {
-				con.close();
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 		return secondHandVO;
@@ -318,7 +364,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getString("img1"));
+				secondHandVO.setImg1(rs.getBytes("img1"));
+//				secondHandVO.setImg1(rs.getString("img1"));
 				secondHandVO.setImg2(rs.getString("img2"));
 				secondHandVO.setImg3(rs.getString("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
@@ -326,14 +373,21 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 				list.add(secondHandVO);
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
 			}
 			if (pstmt != null) {
@@ -381,7 +435,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
 				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
 				secondHandVO.setIs_deal(rs.getInt("is_deal"));
-				secondHandVO.setImg1(rs.getString("img1"));
+				secondHandVO.setImg1(rs.getBytes("img1"));
+//				secondHandVO.setImg1(rs.getString("img1"));
 				secondHandVO.setImg2(rs.getString("img2"));
 				secondHandVO.setImg3(rs.getString("img3"));
 				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
@@ -389,14 +444,21 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 				list.add(secondHandVO);
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
 			}
 			if (pstmt != null) {
@@ -416,6 +478,16 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		}
 		return list;
 	}
+	
+	//for img
+	public static byte[] getPictureByteArray(String path) throws IOException {
+		FileInputStream fis = new FileInputStream(path);
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		fis.close();
+		return buffer;
+	}
+	
 
 	public static void main(String[] args) throws Exception {
 
@@ -424,12 +496,16 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		String fileName = "/Users/ryan/Coding/CGA101/secondHand_pic/木木梟.jpeg";
 		File file = new File(fileName);
 		FileInputStream fis = new FileInputStream(file);
-		byte[] buffer = new byte[(int) file.length()];
+		byte[] buffer = new byte[fis.available()];
 		fis.read(buffer);
 		fis.close();
-
-		ByteBuffer src = ByteBuffer.wrap(buffer);
-		ByteBuffer base64encoded = Base64.getEncoder().encode(src);
+//
+//		ByteBuffer bb = ByteBuffer.wrap(buffer);
+//		ByteBuffer base64encoded = Base64.getEncoder().encode(bb);
+		
+		
+		
+		
 
 //		String fileName1 = "/Users/ryan/Coding/CGA101/secondHand_pic/火紅眼_2.jpg";
 //		File file1 = new File(fileName1);
@@ -455,20 +531,21 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		// 新增
 //		SecondHandVO secondHandVO1 = new SecondHandVO();
 //		secondHandVO1.setSaler(1015);
-//		secondHandVO1.setName("埼玉的頭髮");
+//		secondHandVO1.setName("測試");
 //		secondHandVO1.setBottom_price(10);
 //		secondHandVO1.setTop_price(100);
 //		secondHandVO1.setStart_time(java.sql.Timestamp.valueOf("2022-04-01 00:00:00"));
 //		secondHandVO1.setEnd_time(java.sql.Timestamp.valueOf("2022-04-01 00:30:00"));
-////		secondHandVO1.setImg1(buffer);//原本的
+//		secondHandVO1.setImg1(buffer);//原本的
+//		secondHandVO1.setImg1(getPictureByteArray(fileName));//老師的
 //		secondHandVO1.setImg1(new String(base64encoded.array()));
 //		secondHandVO1.setImg2(null);
 //		secondHandVO1.setImg3(null);
 //		dao.insert(secondHandVO1);
 
 		// 修改
-		SecondHandVO secondHandVO2 = new SecondHandVO();
-		secondHandVO2.setsecond_hand_id(1004);
+//		SecondHandVO secondHandVO2 = new SecondHandVO();
+//		secondHandVO2.setsecond_hand_id(1004);
 //		secondHandVO2.setBid_winner(null);
 //		secondHandVO2.setDeal_price(null);
 //		secondHandVO2.setName(null);
@@ -477,10 +554,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //		secondHandVO2.setStart_time(java.sql.Timestamp.valueOf(unll));
 //		secondHandVO2.setEnd_time(java.sql.Timestamp.valueOf("2022-03-20 18:30:00"));
 //		secondHandVO2.setIs_deal(1);
-		secondHandVO2.setImg1(new String(base64encoded.array()));
+//		secondHandVO2.setImg1(new String(base64encoded.array()));
 //		secondHandVO2.setImg2(new String(base64encoded1.array()));
 //		secondHandVO2.setImg3(new String(base64encoded2.array()));
-		dao.update(secondHandVO2);
+//		dao.update(secondHandVO2);
 
 		// 查詢 by id
 //		SecondHandVO secondHandVO3 = dao.getById(1004);
@@ -540,4 +617,5 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //			System.out.println(listSecondHandVO.getUpdate_time());
 //		}
 	}
+	
 }

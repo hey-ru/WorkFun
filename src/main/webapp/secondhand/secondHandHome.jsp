@@ -26,8 +26,8 @@ pageContext.setAttribute("list", list);
 <title>:: WorkFun ::</title>
 
 <!-- Favicons -->
-<link href="../assets/img/wf.png" rel="icon">
-<link href="../assets/img/wf.png" rel=" apple-touch-icon">
+<link href="${pageContext.request.contextPath}/assets/img/wf.png" rel="icon">
+<link href="${pageContext.request.contextPath}/assets/img/wf.png" rel=" apple-touch-icon">
 
 <!-- Google Fonts -->
 <link
@@ -35,20 +35,20 @@ pageContext.setAttribute("list", list);
 	rel="stylesheet">
 
 <!-- Vendor CSS Files -->
-<link href="../assets/vendor/aos/aos.css" rel="stylesheet">
-<link href="../assets/vendor/bootstrap/css/bootstrap.min.css"
+<link href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css"
+<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css"
 	rel="stylesheet">
-<link href="../assets/vendor/boxicons/css/boxicons.min.css"
+<link href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css"
 	rel="stylesheet">
-<link href="../assets/vendor/glightbox/css/glightbox.min.css"
+<link href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css"
 	rel="stylesheet">
-<link href="../assets/vendor/swiper/swiper-bundle.min.css"
+<link href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css"
 	rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="../assets/css/style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
 
 <style>
 .portfolio-wrap {
@@ -66,8 +66,8 @@ pageContext.setAttribute("list", list);
 	<header id="header" class="fixed-top">
 		<div
 			class="container-fluid d-flex justify-content-between align-items-center">
-			<a href="../home/Home.html" class="logo"><img
-				src="../assets/img/workfun.gif" alt="" class="img-fluid"
+			<a href="${pageContext.request.contextPath}/home/Home.html" class="logo"><img
+				src="${pageContext.request.contextPath}/assets/img/workfun.gif" alt="" class="img-fluid"
 				style="width: 250px;"></a>
 
 			<nav id="navbar" class="navbar order-last order-lg-0">
@@ -77,8 +77,8 @@ pageContext.setAttribute("list", list);
 						<div class="dropdown">
 							<button class="dropbtn">揪團訂餐</button>
 							<div class="dropdown-content">
-								<a href="../old_groupBuy/gbhome.html">瀏覽揪團</a> <a
-									href="../old_groupBuy/shoplist.html">我要揪團</a> <a href="#">查詢揪團</a>
+								<a href="${pageContext.request.contextPath}/old_groupBuy/gbhome.html">瀏覽揪團</a> <a
+									href="${pageContext.request.contextPath}/old_groupBuy/shoplist.html">我要揪團</a> <a href="#">查詢揪團</a>
 							</div>
 						</div>
 					</li>
@@ -86,8 +86,8 @@ pageContext.setAttribute("list", list);
 						<div class="dropdown">
 							<button class="dropbtn">二手競標</button>
 							<div class="dropdown-content">
-								<a href="./secondHandHome.jsp">競標首頁</a> <a
-									href="./createSecondHand.html">新增競標</a> <a href="#">購買記錄</a>
+								<a href="secondHandHome.jsp">競標首頁</a> <a
+									href="createSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
 							</div>
 						</div>
 					</li>
@@ -145,7 +145,7 @@ pageContext.setAttribute("list", list);
 						<li class="nav-item dropdown pe-3"><a
 							class="nav-link nav-profile d-flex align-items-center pe-0 ; width:2px"
 							href="#" data-bs-toggle="dropdown"> <img
-								src="../assets/img/wu.jpeg" alt="Profile" class="rounded-circle"
+								src="${pageContext.request.contextPath}/assets/img/wu.jpeg" alt="Profile" class="rounded-circle"
 								style="width: 50px;">
 						</a> <!-- End Profile Iamge Icon -->
 
@@ -203,7 +203,7 @@ pageContext.setAttribute("list", list);
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1">
-							<%@ include file="page1.file"%>
+							<%@ include file="/design/page1.file"%>
 							<div class="form-group col-2" style="display: inline-block;">
 								<jsp:useBean id="secondHandSvc1" scope="page"
 									class="com.secondHand.model.SecondHandService" />
@@ -246,7 +246,7 @@ pageContext.setAttribute("list", list);
 									<h4>${secondHandVO.name}</h4>
 									<p>[競標截止時間 ${secondHandVO.end_time}]</p>
 									<div class="portfolio-links">
-										<a href="../groupbuy/buy.html"
+										<a href="${pageContext.request.contextPath}/groupbuy/buy.html"
 											class="portfolio-details-lightbox"
 											data-glightbox="type: external" title="參與競標"> <i
 											class="bx bx-link"></i></a>
@@ -256,7 +256,8 @@ pageContext.setAttribute("list", list);
 						</div>
 					</c:forEach>
 				</div>
-				<%@ include file="page2.file"%>
+				
+				<%@ include file="/design/page2.file"%>
 		</section>
 	</main>
 	<!-- End #main -->
@@ -277,23 +278,23 @@ pageContext.setAttribute("list", list);
 		class="bi bi-arrow-up-short"></i></a>
 
 	<!-- Vendor JS Files -->
-	<script src="../assets/vendor/purecounter/purecounter.js"></script>
-	<script src="../assets/vendor/aos/aos.js"></script>
-	<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
-	<script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-	<script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
-	<script src="../assets/vendor/waypoints/noframework.waypoints.js"></script>
-	<script src="../assets/vendor/php-email-form/validate.js"></script>
-	<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../assets/js/jquery/jquery.slim.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/purecounter/purecounter.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/aos/aos.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/waypoints/noframework.waypoints.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery.slim.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 		crossorigin="anonymous"></script>
 
 	<!-- Template Main JS File -->
-	<script src="../assets/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 
 </body>
 
