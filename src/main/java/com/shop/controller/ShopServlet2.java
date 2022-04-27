@@ -11,9 +11,9 @@ import javax.servlet.http.*;
 import com.shop.model.*;
 
 
-@WebServlet("/shop/ShopServlet")
+@WebServlet("/shop/ShopServlet2")
 @MultipartConfig
-public class ShopServlet extends HttpServlet {
+public class ShopServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -27,7 +27,7 @@ public class ShopServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		res.setContentType("text/html; charset=UTF-8");
-		
+		PrintWriter out = res.getWriter();
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -213,7 +213,7 @@ public class ShopServlet extends HttpServlet {
 						min_amt, shop_img1, shop_img2, shop_img3);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("shopVO", shopVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				//req.setAttribute("shopVO", shopVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/shop/listOneShop.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
@@ -378,10 +378,10 @@ public class ShopServlet extends HttpServlet {
 		return filename;
 	}
 	public static byte[] getByteArrayFromPart(Part part) throws IOException {
-		InputStream in = part.getInputStream();
-		byte[] buffer = new byte[in.available()];
-		in.read(buffer);
-		in.close();
+		InputStream fis = part.getInputStream();
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		fis.close();
 		return buffer;
 	}
 

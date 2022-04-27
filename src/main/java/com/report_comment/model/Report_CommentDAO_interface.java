@@ -7,5 +7,5 @@ public interface Report_CommentDAO_interface {
     public void update(Report_CommentVO report_commentVO);
 //    public void delete(Integer report_id);
     public Report_CommentVO findByPrimaryKey(Integer report_comment_id);
-    public List<Report_CommentVO> getAll();
+    public List<Report_CommentVO> getAll(); 
 }

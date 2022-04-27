@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.shop.model.*"%>
+<%@ page import="java.util.*"%>
 
 <%
 ShopService shopSvc = new ShopService();
@@ -78,7 +79,7 @@ th, td {
 			<th>照片</th>
 			<th>照片</th>
 			<th>菜單</th>
-			<!-- 		<th>修改</th> -->
+			<th>修改</th>
 		</tr>
 		<%@ include file="page1.file"%>
 		<c:forEach var="shopVO" items="${list}" begin="<%=pageIndex%>"
@@ -92,9 +93,11 @@ th, td {
 				<td>${shopVO.tel}</td>
 				<td><a href="${shopVO.website}">link</a></td>
 				<td>${shopVO.min_amt}</td>
-				<td><img src="<%=request.getContextPath()%>/shop/DBGifReader?shop_id=${shopVO.shop_id}&pic=shop_img1" style="max-width: 100%;"></td>
-				<td><img src="<%=request.getContextPath()%>/shop/DBGifReader?shop_id=${shopVO.shop_id}&pic=shop_img2" style="max-width: 100%;"></td>
-				<td><img src="<%=request.getContextPath()%>/shop/DBGifReader?shop_id=${shopVO.shop_id}&pic=shop_img3" style="max-width: 100%;"></td>
+				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1" style="width: 100px;"></td>
+				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img2" style="width: 100px;"></td>
+				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img3" style="width: 100px;"></td>
+				
+				
 				<td>
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop">
 						<input type="submit" value="查看菜單" style="margin-bottom: 0px;"> 

@@ -1,14 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.report.model.*"%>
+<%
+ ReportVO reportVO = (ReportVO) request.getAttribute("reportVO");
+%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>:: WorkFun ::</title>
+    <title>:: WorkFunlistOneReport ::</title>
     <!-- Favicons -->
-    <link href="../assets/img/wf.png" rel="icon" />
-    <link href="../assets/img/wf.png" rel="apple-touch-icon" />
+    <link href="${pageContext.request.contextPath}/assets/img/wf.png" rel="icon" />
+    <link href="${pageContext.request.contextPath}/assets/img/wf.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link
@@ -16,15 +23,15 @@
         rel="stylesheet" />
 
     <!-- Vendor CSS Files -->
-    <link href="../assets/vendor/aos/aos.css" rel="stylesheet" />
-    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-    <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
-    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
-    <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -33,7 +40,7 @@
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <!-- <h1 class="logo me-auto me-lg-0"><a href="">WorkFun</a></h1> -->
             <!-- 公司logo圖片 -->
-            <a href="Home.html" class="logo"><img src="../assets/img/workfun.gif" alt="" class="img-fluid"
+            <a href="Home.html" class="logo"><img src="${pageContext.request.contextPath}/assets/img/workfun.gif" alt="" class="img-fluid"
                     width="230px"></a>
 
             <nav id="navbar" class="navbar order-last order-lg-0">
@@ -141,42 +148,57 @@
     <!-- End Header -->
 
     <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-    <main style="height: 120vh; border:3px red solid; margin-top:80px;">
-        <div>
-            <input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字"
-                style="margin-left: 83%;border:3px yellow solid;">
-        </div>
-        <div
-            style="border:3px blue solid;width:900px;position:absolute; height:600px; top:50%; margin-top:-200px;margin-left: 10%;">
-            <div class="input-group mb-3" style="margin-top: 80px;">
-                <span class="input-group-text" id="basic-addon1">標題</span>
-                <input type="text" class="form-control" placeholder="Title" aria-label="Username"
-                    aria-describedby="basic-addon1">
-            </div>
+         <main style="height: 120vh; border:3px red solid; margin-top:40px;">
+                        <div
+                            style="border:3px blue solid;width:900px;position:absolute; height:630px; top:45%; margin-top:-160px;margin-left: 14%;">
+                            <div class="input-group mb-3" style="margin-top: 0px;">
+                                <span class="input-group-text" id="basic-addon1">標題</span>
+                                 <span style="border:3px lightyellow solid;">${reportVO.title}</span>
+                                    
+                            </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon2">類型</span>
-                <input type="text" class="form-control" placeholder="" aria-label="Recipient's username"
-                    aria-describedby="basic-addon2">
-            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon2">類型</span>
+                                <span>${reportVO.report_type}</span>
+                        
+                                <span class="input-group-text" id="basic-addon2">處理狀況</span>
+                               <span>${reportVO.status}</span>
+                              
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon2">回報建立時間</span>
+                               <span>${reportVO.starttime}</span>
+                                  
+                                <span class="input-group-text" id="basic-addon2">回報最新編輯時間</span>
+                              <span>${reportVO.updatetime}</span>  
+                                <span class="input-group-text" id="basic-addon2">回報結束時間</span>
+                              <span>${reportVO.endtime}</span>
+                                
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon2">回報人</span>
+                             <span>${reportVO.reporter}</span>
+                                
+                                <span class="input-group-text" id="basic-addon2">處理人</span>
+                              <span>${reportVO.handler}</span>
+                                  
+                            </div>
+                            <label for="basic-url" class="form-label">回報內容</label>
+                            <div class="input-group mb-3" style=" height:200px">
+                                <textarea class="form-control" aria-label="With textarea">${reportVO.content}</textarea>
+                            </div>
 
-            <label for="basic-url" class="form-label">回報內容</label>
-            <div class="input-group mb-3" style=" height:200px">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupFile01">回報圖片</label>                              
+                              <img src="<%=request.getContextPath()%>/reportServlet/report_id?report_image=${reportVO.report_image} width='300' height='300'">
+                            </div>
 
-                <textarea class="form-control" aria-label="With textarea"></textarea>
-            </div>
-
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupFile01">Upload</label>
-                <input type="file" class="form-control" id="inputGroupFile01">
-            </div>
-
-            <div class="input-group">
-                <span class="input-group-text">處理訊息</span>
-                <textarea class="form-control" aria-label="With textarea"></textarea>
-            </div>
-        </div>
-    </main>
+                            <div class="input-group">
+                                <span class="input-group-text">處理訊息</span>
+                                <textarea class="form-control" aria-label="With textarea">Test</textarea>
+                            </div>
+                        </div>
+                    </main>
     <!-- ======= Footer ======= -->
     <footer id="footer">
         <div class="container">
@@ -192,17 +214,17 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="../assets/vendor/purecounter/purecounter.js"></script>
-    <script src="../assets/vendor/aos/aos.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="../assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="../assets/vendor/php-email-form/validate.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/vendor/purecounter/purecounter.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/vendor/aos/aos.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
 
     <!-- Template Main JS File -->
-    <script src="../assets/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 </body>
 
 </html>

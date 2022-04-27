@@ -10,7 +10,7 @@ public class SecondHandService {
 		dao = new SecondHandJDBCDAO();
 	}
 
-	public SecondHandVO addSecondHand(Integer saler, String name, Integer bottom_price, Integer top_price, Timestamp start_time, Timestamp end_time, byte[] img1, String img2, String img3) {
+	public SecondHandVO addSecondHand(Integer saler, String name, Integer bottom_price, Integer top_price, Timestamp start_time, Timestamp end_time, byte[] img1, byte[] img2, byte[] img3) {
 
 		SecondHandVO secondHandVO = new SecondHandVO();
 
@@ -28,7 +28,7 @@ public class SecondHandService {
 		return secondHandVO;
 	}
 
-	public SecondHandVO updateSecondHand(Integer bid_winner, Integer deal_price, String name, Integer bottom_price, Integer top_price, Timestamp start_time, Timestamp end_time, Integer is_deal, byte[] img1, String img2, String img3) {
+	public SecondHandVO updateSecondHand(Integer bid_winner, Integer deal_price, String name, Integer bottom_price, Integer top_price, Timestamp start_time, Timestamp end_time, Integer is_deal, byte[] img1, byte[] img2, byte[] img3) {
 
 		SecondHandVO secondHandVO = new SecondHandVO();
 

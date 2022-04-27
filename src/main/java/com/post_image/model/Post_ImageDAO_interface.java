@@ -2,7 +2,7 @@ package com.post_image.model;
 
 import java.util.List;
 
-public interface Post_ImageDAO_interface {
+public interface Post_ImageDAO_interface { 
 	public void insert(Post_ImageVO post_imageVO);
     public void update(Post_ImageVO post_imageVO);
 //    public void delete(Integer post_image_id);

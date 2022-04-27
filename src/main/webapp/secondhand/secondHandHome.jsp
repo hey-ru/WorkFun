@@ -26,8 +26,10 @@ pageContext.setAttribute("list", list);
 <title>:: WorkFun ::</title>
 
 <!-- Favicons -->
-<link href="${pageContext.request.contextPath}/assets/img/wf.png" rel="icon">
-<link href="${pageContext.request.contextPath}/assets/img/wf.png" rel=" apple-touch-icon">
+<link href="${pageContext.request.contextPath}/assets/img/wf.png"
+	rel="icon">
+<link href="${pageContext.request.contextPath}/assets/img/wf.png"
+	rel=" apple-touch-icon">
 
 <!-- Google Fonts -->
 <link
@@ -35,20 +37,28 @@ pageContext.setAttribute("list", list);
 	rel="stylesheet">
 
 <!-- Vendor CSS Files -->
-<link href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css"
+<link
+	href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+<link
+	href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css"
+<link
+	href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css"
+<link
+	href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css"
+<link
+	href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css"
 	rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/css/style.css"
+	rel="stylesheet">
 
 <style>
 .portfolio-wrap {
@@ -66,9 +76,10 @@ pageContext.setAttribute("list", list);
 	<header id="header" class="fixed-top">
 		<div
 			class="container-fluid d-flex justify-content-between align-items-center">
-			<a href="${pageContext.request.contextPath}/home/Home.html" class="logo"><img
-				src="${pageContext.request.contextPath}/assets/img/workfun.gif" alt="" class="img-fluid"
-				style="width: 250px;"></a>
+			<a href="${pageContext.request.contextPath}/home/Home.html"
+				class="logo"><img
+				src="${pageContext.request.contextPath}/assets/img/workfun.gif"
+				alt="" class="img-fluid" style="width: 250px;"></a>
 
 			<nav id="navbar" class="navbar order-last order-lg-0">
 				<ul>
@@ -77,8 +88,10 @@ pageContext.setAttribute("list", list);
 						<div class="dropdown">
 							<button class="dropbtn">揪團訂餐</button>
 							<div class="dropdown-content">
-								<a href="${pageContext.request.contextPath}/old_groupBuy/gbhome.html">瀏覽揪團</a> <a
-									href="${pageContext.request.contextPath}/old_groupBuy/shoplist.html">我要揪團</a> <a href="#">查詢揪團</a>
+								<a href="${pageContext.request.contextPath}/listAllShop.jsp">瀏覽揪團</a>
+								<a
+									href="${pageContext.request.contextPath}/old_groupBuy/shoplist.html">我要揪團</a>
+								<a href="#">查詢揪團</a>
 							</div>
 						</div>
 					</li>
@@ -87,7 +100,7 @@ pageContext.setAttribute("list", list);
 							<button class="dropbtn">二手競標</button>
 							<div class="dropdown-content">
 								<a href="secondHandHome.jsp">競標首頁</a> <a
-									href="createSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
+									href="addSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
 							</div>
 						</div>
 					</li>
@@ -145,8 +158,8 @@ pageContext.setAttribute("list", list);
 						<li class="nav-item dropdown pe-3"><a
 							class="nav-link nav-profile d-flex align-items-center pe-0 ; width:2px"
 							href="#" data-bs-toggle="dropdown"> <img
-								src="${pageContext.request.contextPath}/assets/img/wu.jpeg" alt="Profile" class="rounded-circle"
-								style="width: 50px;">
+								src="${pageContext.request.contextPath}/assets/img/wu.jpeg"
+								alt="Profile" class="rounded-circle" style="width: 50px;">
 						</a> <!-- End Profile Iamge Icon -->
 
 							<ul
@@ -239,7 +252,9 @@ pageContext.setAttribute("list", list);
 						begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 							<div class="portfolio-wrap">
+								<%-- 下面是base64寫法 --%>
 								<img src="data:image/png;base64, ${secondHandVO.img1}"
+									<%-- 上面是base64寫法 --%>
 									class="img-fluid"
 									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
 								<div class="portfolio-info">
@@ -256,7 +271,7 @@ pageContext.setAttribute("list", list);
 						</div>
 					</c:forEach>
 				</div>
-				
+
 				<%@ include file="/design/page2.file"%>
 		</section>
 	</main>
@@ -278,16 +293,26 @@ pageContext.setAttribute("list", list);
 		class="bi bi-arrow-up-short"></i></a>
 
 	<!-- Vendor JS Files -->
-	<script src="${pageContext.request.contextPath}/assets/vendor/purecounter/purecounter.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/aos/aos.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/glightbox/js/glightbox.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/waypoints/noframework.waypoints.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery.slim.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/purecounter/purecounter.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/aos/aos.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/waypoints/noframework.waypoints.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/js/jquery/jquery.slim.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"

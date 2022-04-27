@@ -1,15 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.shop.model.*"%>
 
 <%
-  // EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java (Concroller) ¦s¤JreqªºempVOª«¥ó (¥]¬AÀ°¦£¨ú¥XªºempVO, ¤]¥]¬A¿é¤J¸ê®Æ¿ù»~®ÉªºempVOª«¥ó)
+  // EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java (Concroller) å­˜å…¥reqçš„empVOç‰©ä»¶ (åŒ…æ‹¬å¹«å¿™å–å‡ºçš„empVO, ä¹ŸåŒ…æ‹¬è¼¸å…¥è³‡æ–™éŒ¯èª¤æ™‚çš„empVOç‰©ä»¶)
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>­û¤u¸ê®Æ­×§ï - update_emp_input.jsp</title>
+<title>å“¡å·¥è³‡æ–™ä¿®æ”¹ - update_emp_input.jsp</title>
 
 <style>
   table#table-1 {
@@ -48,16 +48,16 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>©±®a¸ê®Æ­×§ï - update_shop_input.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
+		 <h3>åº—å®¶è³‡æ–™ä¿®æ”¹ - update_shop_input.jsp</h3>
+		 <h4><a href="<%=request.getContextPath()%>/shop/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ­×§ï:</h3>
+<h3>è³‡æ–™ä¿®æ”¹:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <%-- <c:if test="${not empty errorMsgs}"> --%>
-<!-- 	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font> -->
+<!-- 	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font> -->
 <!-- 	<ul> -->
 <%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
 <%-- 			<li style="color:red">${message.value}</li> --%>
@@ -65,56 +65,56 @@
 <!-- 	</ul> -->
 <%-- </c:if> --%>
 
-<FORM METHOD="post" ACTION="emp.do" name="form1">
+<FORM METHOD="post" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/shop/ShopServlet" name="form1">
 <table>
     <tr>
-		<td>©±®a½s¸¹:<font color=red><b>*</b></font></td>
+		<td>åº—å®¶ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
 		<td>${param.shop_id}</td>
 	</tr>
 	<tr>
-		<td>©±®a¦WºÙ:</td>
+		<td>åº—å®¶åç¨±:</td>
 		<td><input type="TEXT" name="shop_name" size="45" 
 			 value="${param.shop_name}"/></td><td>${errorMsgs.shop_name}</td>
 	</tr>
 	<tr>
-		<td>©±®aÃş«¬:</td>
+		<td>åº—å®¶é¡å‹:</td>
 		<td><input type="TEXT" name="shop_type" size="45"
 			 value="${param.shop_type}"/></td><td>${errorMsgs.shop_type}</td>
 	</tr>
 	<tr>
-		<td>¦a§}:</td>
+		<td>åœ°å€:</td>
 		<td><input type="TEXT" name="address" size="45"
 			 value="${param.address}"/></td><td>${errorMsgs.address}</td>
 	</tr>
 	<tr>
-		<td>¹q¸Ü:</td>
+		<td>é›»è©±:</td>
 		<td><input type="TEXT" name="tel" size="45"
 			 value="${param.tel}"/></td><td>${errorMsgs.tel}</td>
 	</tr>
 	<tr>
-		<td>ºô¯¸:</td>
+		<td>ç¶²ç«™:</td>
 		<td><input type="TEXT" name="website" size="45"
 			 value="${param.website}"/></td><td>${errorMsgs.website}</td>
 	</tr>
 	<tr>
-		<td>§C®ø:</td>
+		<td>ä½æ¶ˆ:</td>
 		<td><input type="TEXT" name="min_amt" size="45"
 			 value="${param.min_amt}"/></td><td>${errorMsgs.min_amt}</td>
 	</tr>
 	<tr>
-		<td>¹Ï¤ù:</td>
+		<td>åœ–ç‰‡:</td>
 		<td><input type="FILE" name="shop_img1" size="45" oninput="pic1.src=window.URL.createObjectURL(this.files[0])"
 			 value="${param.shop_img1}"/></td><td>${errorMsgs.shop_img1}
 			 </td>
 	</tr>
 	<tr>
-		<td>¹Ï¤ù:</td>
+		<td>åœ–ç‰‡:</td>
 		<td><input type="FILE" name="shop_img2" size="45" oninput="pic2.src=window.URL.createObjectURL(this.files[0])"
 			 value="${param.shop_img2}"/>
 			 </td><td>${errorMsgs.shop_img2}</td>
 	</tr>
 	<tr>
-		<td>¹Ï¤ù:</td>
+		<td>åœ–ç‰‡:</td>
 		<td><input type="FILE" name="shop_img3" size="45" oninput="pic3.src=window.URL.createObjectURL(this.files[0])"
 			 value="${param.shop_img3}"/>
 			 </td><td>${errorMsgs.shop_img3}</td>
@@ -128,7 +128,7 @@
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="empno" value="${param.shop_id}">
-<input type="submit" value="°e¥X­×§ï"></FORM>
+<input type="submit" value="é€å‡ºä¿®æ”¹"></FORM>
 </body>
 
 
