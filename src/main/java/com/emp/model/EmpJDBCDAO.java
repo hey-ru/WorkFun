@@ -21,15 +21,16 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
-
-	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?,?)";
-	private static final String GET_ALL_STMT = "select emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status FROM emp order by emp_id ";
+	private static final String LOGIN_STMT = "select * from emp where emp_id = ? and emp_password = ? ";
+	
+	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "select emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
 	private static final String GET_ONE_STMT = "SELECT dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp where emp_id = ?";
 	private static final String DELETE = "DELETE FROM emp where emp_id = ?";
 //	private static final String UPDATE = "UPDATE emp set dep_id=?, emp_name=?, hire_date=?, resign_date=?, phone=?, extension=?, emp_password=?, hobby=?, skill=?, emp_profile=?, mail=?, birthday=?, emp_status=? where emp_id = ? ";
 	private static final String UPDATE = "UPDATE emp set ";
 	@Override
-	public void insert(EmpVO empVO) {
+	public int insert(EmpVO empVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -52,7 +53,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			pstmt.setBytes(10, empVO.getEmpProfile());
 			pstmt.setString(11, empVO.getMail());
 			pstmt.setDate(12, empVO.getBirthday());
-			pstmt.setByte(13, empVO.getEmpStatus());
+//			pstmt.setByte(13, empVO.getEmpStatus());
 //			pstmt.setInt(14, empVO.getEmpId());
 
 			pstmt.executeUpdate();
@@ -86,7 +87,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 				}
 			}
 		}
-
+return 1;
 	}
 
 	public int update(EmpVO newemp) {
@@ -148,7 +149,7 @@ int count=0;
 			
 			
 			pstmt = con.prepareStatement(sb.toString());
-			System.out.println(sb);
+//			System.out.println(sb);
 			
 			if (newemp.getDepId() != null) {
 				count++;
@@ -258,7 +259,7 @@ int count=0;
 		return 1;
 	}
 
-	public void delete(Integer EmpId) {
+	public int delete(Integer EmpId) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -295,7 +296,7 @@ int count=0;
 				}
 			}
 		}
-
+return 1;
 	}
 
 	public EmpVO findByPrimaryKey(Integer empno) {
@@ -381,8 +382,75 @@ int count=0;
 		}
 		return empVO;
 	}
+	public EmpVO selectForLogin(Integer empId, String password) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		EmpVO empVO = null;
+		ResultSet rs = null;
+		try {
 
-	public List<EmpVO> getAll() {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(LOGIN_STMT);
+
+			pstmt.setInt(1, empId);
+			pstmt.setString(2, password);
+		
+//			pstmt.setInt(14, empVO.getEmpId());
+
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo Domain objects
+				empVO = new EmpVO();
+				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
+				empVO.setEmpId(rs.getInt("emp_id"));
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+System.out.println("成功登入");
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return empVO;
+		
+		
+		
+	}
+
+	public List<EmpVO> getAllDAO() {
 		List<EmpVO> list = new ArrayList<EmpVO>();
 		EmpVO empVO = null;
 
@@ -401,6 +469,7 @@ int count=0;
 
 			while (rs.next()) {
 
+
 				empVO = new EmpVO();
 				empVO.setEmpId(rs.getInt("emp_id"));
 				empVO.setDepId(rs.getInt("dep_id"));
@@ -410,10 +479,10 @@ int count=0;
 				empVO.setPhone(rs.getString("phone"));
 				empVO.setExtension(rs.getString("extension"));
 				empVO.setEmpPassword(rs.getString("emp_password"));
-//				empVO.setHobby(rs.getString("hobby"));
-//				empVO.setSkill(rs.getString("skill"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setSkill(rs.getString("skill"));
 				empVO.setMail(rs.getString("mail"));
-//				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setBirthday(rs.getDate("birthday"));
 				empVO.setEmpStatus(rs.getByte("emp_status"));
 //				empVO.setEmpProfile(rs.getBytes("emp_profile"));
 				list.add(empVO); // Store the row in the list
@@ -457,25 +526,136 @@ int count=0;
 
 		EmpJDBCDAO dao = new EmpJDBCDAO();
 		EmpVO empVO1 = new EmpVO();
-		FileInputStream in = new FileInputStream("/Users/lin/Downloads/tomcat.gif");
+		FileInputStream in = new FileInputStream("/Users/lin/tomcat.gif");
 		byte[] buf = new byte[in.available()];
 		in.read(buf);
-		in.close();
+		
 //		empVO1.setDepId(10);
-//		empVO1.setEmpName("back");
+//		empVO1.setEmpName("張偉航");
 //		empVO1.setHiredate(new Date(1991-1900,6,19));
 ////		empVO1.setResigndate(4, empVO.getResign_date());
-//		empVO1.setPhone("0912323234");
-//		empVO1.setExtension("043098753");
+//		empVO1.setPhone("0912323255");
+//		empVO1.setExtension("043098766");
 //		empVO1.setEmpPassword("19940619");
 //		empVO1.setHobby("playtheball2");
 //		empVO1.setSkill("sleepuntilafternoon2");
 //		empVO1.setEmpProfile(buf);
-//		empVO1.setMail("oldma123n2@gmail.com");
+//		empVO1.setMail("oldma1245@gmail.com");
 //		empVO1.setBirthday(new Date(1971-1900,3,12));
 //		empVO1.setEmpStatus((byte)1);
 //		dao.insert(empVO1);
 //		System.out.println("成功");
+		
+//		EmpVO empVO6 = new EmpVO();
+//		
+//	
+//		empVO6.setDepId(11);
+//		empVO6.setEmpName("張嘉航");
+//		empVO6.setHiredate(new Date(1991-1900,6,19));
+////		empVO1.setResigndate(4, empVO.getResign_date());
+//		empVO6.setPhone("0912343234");
+//		empVO6.setExtension("043097953");
+//		empVO6.setEmpPassword("19940619");
+//		empVO6.setHobby("playtheball2");
+//		empVO6.setSkill("sleepuntilafternoon2");
+//		empVO6.setEmpProfile(buf);
+//		empVO6.setMail("oldma133@gmail.com");
+//		empVO6.setBirthday(new Date(1971-1900,3,12));
+//		empVO6.setEmpStatus((byte)1);
+//		dao.insert(empVO6);
+//		
+//		
+//		
+//		EmpVO empVO7 = new EmpVO();
+//		
+//		
+//		empVO7.setDepId(12);
+//		empVO7.setEmpName("瑞斯叔叔");
+//		empVO7.setHiredate(new Date(1991-1900,6,19));
+////		empVO1.setResigndate(4, empVO.getResign_date());
+//		empVO7.setPhone("0912321134");
+//		empVO7.setExtension("043047753");
+//		empVO7.setEmpPassword("19940619");
+//		empVO7.setHobby("playtheball2");
+//		empVO7.setSkill("sleepuntilafternoon2");
+//		empVO7.setEmpProfile(buf);
+//		empVO7.setMail("oldma123n2sd@gmail.com");
+//		empVO7.setBirthday(new Date(1971-1900,3,12));
+//		empVO7.setEmpStatus((byte)1);
+//		dao.insert(empVO7);
+//		
+//		
+//		
+//		
+//		
+//		
+//		EmpVO empVO8 = new EmpVO();
+//		
+	
+//		empVO8.setDepId(13);
+//		empVO8.setEmpName("特哥");
+//		empVO8.setHiredate(new Date(1991-1900,6,19));
+////		empVO1.setResigndate(4, empVO.getResign_date());
+//		empVO8.setPhone("0912323634");
+//		empVO8.setExtension("043010753");
+//		empVO8.setEmpPassword("19940619");
+//		empVO8.setHobby("playtheball2");
+//		empVO8.setSkill("sleepuntilafternoon2");
+//		empVO8.setEmpProfile(buf);
+//		empVO8.setMail("oldma123n2asdq@gmail.com");
+//		empVO8.setBirthday(new Date(1971-1900,3,12));
+//		empVO8.setEmpStatus((byte)1);
+//		dao.insert(empVO8);
+		
+		
+		
+		
+		
+		
+		
+//		EmpVO empVO10 = new EmpVO();
+//		
+//		
+//		empVO10.setDepId(15);
+//		empVO10.setEmpName("大楷");
+//		empVO10.setHiredate(new Date(1991-1900,6,19));
+////		empVO1.setResigndate(4, empVO.getResign_date());
+//		empVO10.setPhone("0122323234");
+//		empVO10.setExtension("043098746");
+//		empVO10.setEmpPassword("19940619");
+//		empVO10.setHobby("playtheball2");
+//		empVO10.setSkill("sleepuntilafternoon2");
+//		empVO10.setEmpProfile(buf);
+//		empVO10.setMail("oldma123n2fgc@gmail.com");
+//		empVO10.setBirthday(new Date(1971-1900,3,12));
+//	
+//		dao.insert(empVO10);
+		
+		
+		
+		
+		
+		
+		
+//		EmpVO empVO9 = new EmpVO();
+	
+		
+	
+//		empVO9.setDepId(14);
+//		empVO9.setEmpName("尬得接接");
+//		empVO9.setHiredate(new Date(1991-1900,6,19));
+//		empVO1.setResigndate(4, empVO.getResign_date());
+//		empVO9.setPhone("0912323220");
+//		empVO9.setExtension("043098753");
+//		empVO9.setEmpPassword("19940619");
+//		empVO9.setHobby("playtheball2");
+//		empVO9.setSkill("sleepuntilafternoon2");
+//		empVO9.setEmpProfile(buf);
+//		empVO9.setMail("oldma123n2jj@gmail.com");
+//		empVO9.setBirthday(new Date(1971-1900,3,12));
+//		empVO9.setEmpStatus((byte)1);
+//		dao.insert(empVO9);
+//		in.close();
 
 //		empVO1.setEname("");
 //		empVO1.setJob("MANAGER");
@@ -487,27 +667,30 @@ int count=0;
 		// private static final String UPDATE = "UPDATE emp set dep_id=?, emp_name=?,
 		// hire_date=?, resign_date=?, phone=?, extension=?, emp_password=?, hobby=?,
 		// skill=?, emp_profile=?, mail=?, birthday=?, emp_status=?, where emp_id = ?";
-
-//		
+EmpService empser=new EmpService();		
 		EmpVO empVO2 = new EmpVO();
 		empVO2.setEmpId(1001);
 //		
-		empVO2.setDepId(10);
-		empVO2.setEmpName("張尾杭");
-//		empVO2.setHiredate(new Date(1994-1900,6,19));
+		empVO2.setDepId(12);
+		empVO2.setEmpName("張加能");
+		empVO2.setHiredate(new Date(1995-1900,6,19));
 //		empVO2.setResigndate(4, emp.getResign_date());
 		empVO2.setPhone("0987612345");
-//		empVO2.setExtension("0424991212");
-//		empVO2.setEmpPassword("19940619");
-//		empVO2.setHobby("playball");
-//		empVO2.setSkill("sleepuntilafternoon");
+		empVO2.setExtension("0424991212");
+		empVO2.setEmpPassword("19940619");
+		empVO2.setHobby("playball");
+		empVO2.setSkill("sleepuntilafternoon");
 //		empVO2.setEmpProfile(buf);
-		empVO2.setMail("asiagodtone87@gmail.com");
-//		empVO2.setBirthday(new Date(1972-1900,3,12));
-//		empVO2.setEmpStatus((byte)1);
-		System.out.println("成功");
+//		empVO2.setMail("asiagod@gmail.com");
+//		empVO2.setBirthday(new Date(1978-1900,3,12));
+//		empVO2.setEmpStatus((byte)2);
+		int x=empser.updateEmp(empVO2);
+		System.out.println(x);
+		
+//		System.out.println("成功");
 
-		dao.update(empVO2);
+//		dao.update(empVO2);
+//		dao.selectForLogin(1001, "19940619");
 
 //		
 //		dao.delete(new Integer (1000));
@@ -527,16 +710,18 @@ int count=0;
 //	fout.write(empVO3.getEmpProfile());
 //	fout.close();
 
-//		List<EmpVO> list = dao.getAll();
+//		List<EmpVO> list = dao.getAllDAO();
 //		for (EmpVO aEmp : list) {
-//			System.out.print(aEmp.getEmpId() + ",");
-//			System.out.print(aEmp.getDepId() + ",");
-//			System.out.print(aEmp.getEmpName() + ",");
-//			System.out.print(aEmp.getHiredate() + ",");
-//			System.out.print(aEmp.getPhone() + ",");
-//			System.out.print(aEmp.getExtension() + ",");
-//		
-//			System.out.println();
-//		}
+//			System.out.println(aEmp.getEmpId() + ",");
+//			System.out.println(aEmp.getDepId() + ",");
+//			System.out.println(aEmp.getEmpName() + ",");
+//			System.out.println(aEmp.getHiredate() + ",");
+//			System.out.println(aEmp.getPhone() + ",");
+//			System.out.println(aEmp.getExtension() + ",");
+	
+		
+	
+		
+		
 	}
 }

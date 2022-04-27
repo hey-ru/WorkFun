@@ -3,7 +3,9 @@ package com.emp.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class EmpVO implements java.io.Serializable{
+import com.core.Core;
+
+public class EmpVO extends Core{
 	private Integer empId;
 	private Integer depId;
 	private String empName;
@@ -102,6 +104,11 @@ public class EmpVO implements java.io.Serializable{
 	public void setEmpStatus(Byte empStatus) {
 		this.empStatus = empStatus;
 	}
+	 public com.dep.model.DepVO getDeptVO() {
+		    com.dep.model.DepService deptSvc = new com.dep.model.DepService();
+		    com.dep.model.DepVO deptVO = deptSvc.getOneDept(depId);
+		    return deptVO;
+	    }
 
 }
 
