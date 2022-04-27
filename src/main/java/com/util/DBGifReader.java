@@ -23,11 +23,12 @@ public class DBGifReader extends HttpServlet {
 
 		try {
 			Statement stmt = con.createStatement();
-			String id= req.getParameter("id").trim(); //�h���Ů�
+			String id_key= req.getParameter("id_key").trim();
+			String id= req.getParameter("id").trim();
 			String table= req.getParameter("table").trim();
 			String pic= req.getParameter("pic").trim();
 			ResultSet rs = stmt.executeQuery(
-				"select "+pic+" from "+table+" where shop_id ="+id);
+				"select "+pic+" from "+table+" where "+id_key+" ="+id);
 
 			if (rs.next()) {
 				        //InputStream in = rs.getBinaryStream("pic");

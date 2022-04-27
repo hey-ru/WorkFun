@@ -73,9 +73,9 @@
 				<td>${shopVO.tel}</td>
 				<td><a href="${shopVO.website}">link</a></td>
 				<td>${shopVO.min_amt}</td>
-				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id=${shopVO.shop_id}&table=shop&pic=shop_img1" style="width: 100px;"></td>
-				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id=${shopVO.shop_id}&table=shop&pic=shop_img2" style="width: 100px;"></td>
-				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id=${shopVO.shop_id}&table=shop&pic=shop_img3" style="width: 100px;"></td>
+				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1" style="width: 100px;"></td>
+				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img2" style="width: 100px;"></td>
+				<td><img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img3" style="width: 100px;"></td>
 				<td>
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop">
 						<input type="submit" value="¬d¬Ýµæ³æ" style="margin-bottom: 0px;"> 
