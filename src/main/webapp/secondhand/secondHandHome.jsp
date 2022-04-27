@@ -212,7 +212,7 @@ pageContext.setAttribute("list", list);
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1">
 							<%
-							int rowsPerPage = 9;
+							int itemsPerPage = 9;
 							%>
 							<%@ include file="/design/page1.file"%>
 							<div class="form-group col-2" style="display: inline-block;">
