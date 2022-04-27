@@ -14,8 +14,13 @@ import javax.sql.DataSource;
 public class DBGifReader extends HttpServlet {
 
 	Connection con;
-
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+		doPost(req, res);
+	}
+
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
 		res.setContentType("image/gif");
@@ -62,7 +67,7 @@ public class DBGifReader extends HttpServlet {
 	public void init() throws ServletException {
 		try {
 			Context ctx = new javax.naming.InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
 			con = ds.getConnection();
 		} catch (NamingException e) {
 			e.printStackTrace();

@@ -81,7 +81,7 @@ th, td {
 			<th>菜單</th>
 			<th>修改</th>
 		</tr>
-		<%@ include file="page1.file"%>
+		<%@ include file="/design/page1.file"%>
 		<c:forEach var="shopVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
@@ -99,7 +99,8 @@ th, td {
 				
 				
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop"
+						style="margin-bottom: 0px;">
 						<input type="submit" value="查看菜單" style="margin-bottom: 0px;"> 
 						<input type="hidden" name="shop_id" value="${shopVO.shop_id}"> 
 						<input type="hidden" name="action" value="getmenu">
@@ -123,7 +124,7 @@ th, td {
 			</tr>
 		</c:forEach>
 	</table>
-	<%@ include file="page2.file"%>
+	<%@ include file="/design/page2.file"%>
 
 </body>
 </html>
