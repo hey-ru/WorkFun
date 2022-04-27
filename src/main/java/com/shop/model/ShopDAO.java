@@ -15,7 +15,7 @@ public class ShopDAO implements ShopDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

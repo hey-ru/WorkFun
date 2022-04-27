@@ -99,7 +99,8 @@ th, td {
 				
 				
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop"
+						style="margin-bottom: 0px;">
 						<input type="submit" value="查看菜單" style="margin-bottom: 0px;"> 
 						<input type="hidden" name="shop_id" value="${shopVO.shop_id}"> 
 						<input type="hidden" name="action" value="getmenu">
