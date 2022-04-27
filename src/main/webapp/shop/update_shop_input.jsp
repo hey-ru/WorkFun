@@ -41,6 +41,14 @@
   th, td {
     padding: 1px;
   }
+  div{
+  width: 200px;
+  display:inline-block;
+  }
+  img{
+  max-width: 200px;
+  max-height: 150px;
+  }
 </style>
 
 </head>
@@ -104,32 +112,58 @@
 	<tr>
 		<td>圖片:</td>
 		<td><input type="FILE" name="shop_img1" size="45" oninput="pic1.src=window.URL.createObjectURL(this.files[0])"
-			 value="${param.shop_img1}"/></td><td>${errorMsgs.shop_img1}
+			 id ="shop_img1" value="${param.shop_img1}"/></td><td>${errorMsgs.shop_img1}
 			 </td>
 	</tr>
 	<tr>
 		<td>圖片:</td>
 		<td><input type="FILE" name="shop_img2" size="45" oninput="pic2.src=window.URL.createObjectURL(this.files[0])"
-			 value="${param.shop_img2}"/>
+			id ="shop_img2" value="${param.shop_img2}"/>
 			 </td><td>${errorMsgs.shop_img2}</td>
 	</tr>
 	<tr>
 		<td>圖片:</td>
 		<td><input type="FILE" name="shop_img3" size="45" oninput="pic3.src=window.URL.createObjectURL(this.files[0])"
-			 value="${param.shop_img3}"/>
+			 id ="shop_img3" value="${param.shop_img3}"/>
 			 </td><td>${errorMsgs.shop_img3}</td>
 	</tr>
+	</table>
+	<div>
+	<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img1" id="oldpic1">
+	<img id="pic1">
+	</div>
+	<div>
+	<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img2" id="oldpic2">
+	<img id="pic2">
+	</div>
+	<div>
+	<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img3" id="oldpic3">
+	<img id="pic3">
+	</div>
 
 
-</table>
-<img id="pic1" style="width:100px;">
-<img id="pic2" style="width:100px;">
-<img id="pic3" style="width:100px;">
+
+<br>
+<br>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="empno" value="${param.shop_id}">
+<input type="hidden" name="shop_id" value="${param.shop_id}">
 <input type="submit" value="送出修改"></FORM>
 </body>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	
+		$('#shop_img1').change( function() {  
+			$("#oldpic1").hide(); 
+		}); 
+		$('#shop_img2').change( function() {  
+			$("#oldpic2").hide(); 
+		});
+		$('#shop_img3').change( function() {  
+			$("#oldpic3").hide(); 
+		});
+			
 
+</script>
 
 </html>
