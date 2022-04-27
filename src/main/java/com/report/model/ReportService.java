@@ -10,7 +10,7 @@ import javax.servlet.http.Part;
 public class ReportService{
 	private ReportDAO_interface dao;
 	
-	public ReportService() {
+	public ReportService() { 
 		dao = new ReportJDBCDAO();
 	}
 	

@@ -1,6 +1,6 @@
-package com.post_like.model;
+package com.post_keep.model;
 
-public class Post_LikeVO {
+public class Post_KeepVO { 
 	private Integer post_id;
 	private Integer emp_id;
 	public Integer getPost_id() {
