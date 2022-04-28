@@ -159,10 +159,16 @@
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">類型</span>
-                                <span>${reportVO.report_type}</span>
-                        
+                                <span><c:if test="${reportVO.report_type==0}">添購新品</c:if>
+													<c:if test="${reportVO.report_type==1}">損壞報修</c:if>
+													<c:if test="${reportVO.report_type==2}">軟硬體問題</c:if>
+													<c:if test="${reportVO.report_type==3}">其他</c:if></span>
                                 <span class="input-group-text" id="basic-addon2">處理狀況</span>
-                               <span>${reportVO.status}</span>
+                               <span><c:if test="${reportVO.status==0}">已發送</c:if>
+													<c:if test="${reportVO.status==1}">處理中</c:if>
+													<c:if test="${reportVO.status==2}">待確認</c:if>
+													<c:if test="${reportVO.status==3}">取消</c:if>
+													<c:if test="${reportVO.status==4}">已完成</c:if></span>
                               
                             </div>
                             <div class="input-group mb-3">
@@ -190,7 +196,7 @@
 
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupFile01">回報圖片</label>                              
-                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id=${reportVO.report_id}id_key=report_id&table=report&pic=report_image" width='300' height='300'>
+                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${reportVO.report_id}&table=report&pic=report_image" style="width:100px; height:100px;">
                             </div>
 
                             <div class="input-group">

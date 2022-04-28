@@ -150,10 +150,6 @@ pageContext.setAttribute("list", list);
 						</div>
 					</li>
 				</ul>
-				<!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a> -->
-				<!-- <a href="#" class="instagram"><i class="bi bi-bell"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-person-fill"></i></i></a> -->
 			</div>
 		</div>
 	</header>
@@ -200,6 +196,7 @@ pageContext.setAttribute("list", list);
 													<input type="submit"value="送出">
 											</FORM>
 								</div>
+								
 							</div>
 						</div>
 
@@ -242,18 +239,26 @@ pageContext.setAttribute("list", list);
 											</tr>
 										</thead>
 										<thead>
-<%@ include file="/design/page1.file"%>
-<%@ include file="/design/page2.file"%>
+
 											<c:forEach var="reportVO" items="${list}">
 												<tr class="odd">
 													<td>${reportVO.title}</td>
-													<td class="sorting_1">${reportVO.report_type}</td>
+													<td class="sorting_1"><c:if test="${reportVO.report_type==0}">添購新品</c:if>
+													<c:if test="${reportVO.report_type==1}">損壞報修</c:if>
+													<c:if test="${reportVO.report_type==2}">軟硬體問題</c:if>
+													<c:if test="${reportVO.report_type==3}">其他</c:if></td>
 													<td>${reportVO.starttime}</td>
 													<td>${reportVO.reporter}</td>
 													<td>${reportVO.handler}</td>
-													<td>${reportVO.status}</td>
-													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne"><button
-																type="button" value="getOneReport" class="btn btn-info">查閱此回報</button></a></td>
+													<td><c:if test="${reportVO.status==0}">已發送</c:if>
+													<c:if test="${reportVO.status==1}">處理中</c:if>
+													<c:if test="${reportVO.status==2}">待確認</c:if>
+													<c:if test="${reportVO.status==3}">取消</c:if>
+													<c:if test="${reportVO.status==4}">已完成</c:if></td>
+													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne">
+													<button type="button" value="getOneReport" class="btn btn-info">查閱此回報</button></a></td>
+													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forUpdate">
+													<button type="button" value="getOne_forUpdate" class="btn btn-info">更新此回報</button></a></td>
 												</tr>
 											</c:forEach>
 
