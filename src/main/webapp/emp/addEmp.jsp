@@ -18,14 +18,14 @@
 <title>WorkFunBack</title>
 
 <!-- Custom fonts for this template-->
-<link href="assets/css/fontawesome-free/css/all.min.css"
+<link href="<%=request.getContextPath()%>/assets/css/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css" rel="stylesheet">
 
 
 
@@ -93,10 +93,9 @@
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
-						<a class="collapse-item" href="addEmp.jsp">新增帳號</a> <a
-							class="collapse-item" href="listAllEmp.jsp">顯示帳號</a> <a
-							class="collapse-item" href="listAllEmp.jsp">查詢帳號</a> <a
-							class="collapse-item" href="cards.html">刪除帳號</a>
+					   <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/emp/listAllEmp.jsp">全部員工帳號</a>
+        
 					</div>
 				</div></li>
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
@@ -311,7 +310,7 @@
 								data-table="order-table" placeholder="請輸入關鍵字"
 								style="margin-left: 78%; border: 3px yellow solid;">
 						</div>
-						<FORM METHOD="post" ACTION="emp.do" name="form1"
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
 							<div
 								style="border: 3px blue solid; width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
@@ -321,8 +320,7 @@
 										class="form-control" aria-label="Username"
 										aria-describedby="basic-addon1">${errorMsgs.empName}
 								</div>
-								<jsp:useBean id="deptSvc" scope="page"
-									class="com.dep.model.DepService" />
+							
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="basic-addon2">部門</span> <select
 										size="1" name="depId" class="input-group-text"
@@ -368,7 +366,7 @@
 										aria-describedby="basic-addon2">
 								</div>
 								<div class="input-group mb-3">
-									<span class="input-group-text" id="basic-addon2">生日</span> <input
+									<span class="input-group-text" id="f_date2">生日</span> <input
 										type="TEXT" name="birthday" size="45"
 										value="${param.birthday}" class="form-control"
 										aria-label="Recipient's username"
@@ -415,14 +413,14 @@
 </a>
 
 <!-- Bootstrap core JavaScript-->
-<script src="assets/js/jquery/jquery.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/jquery/jquery.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="assets/js/jquery-easing/jquery.easing.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="assets/js/sb-admin-2.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/sb-admin-2.min.js"></script>
 
 
 </body>
@@ -431,6 +429,15 @@
   java.sql.Date hiredate = null;
   try {
 	    hiredate = java.sql.Date.valueOf(request.getParameter("hiredate").trim());
+   } catch (Exception e) {
+	    hiredate = new java.sql.Date(System.currentTimeMillis());
+   }
+%>
+
+<% 
+  java.sql.Date birthday = null;
+  try {
+	    hiredate = java.sql.Date.valueOf(request.getParameter("birthday").trim());
    } catch (Exception e) {
 	    hiredate = new java.sql.Date(System.currentTimeMillis());
    }
@@ -461,6 +468,18 @@
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
+        
+        $('#f_date2').datetimepicker({
+  	       theme: '',              //theme: 'dark',
+ 	       timepicker:false,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+ 		   value: '<%=birthday%>', // value:   new Date(),
+            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+            //startDate:	            '2017/07/10',  // 起始日
+            //minDate:               '-1970-01-01', // 去除今日(不含)之前
+            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+         });
         
         
    

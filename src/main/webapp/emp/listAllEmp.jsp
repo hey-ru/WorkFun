@@ -29,7 +29,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css" rel="stylesheet">
 
 
     <!-- <link href="assets1/css/bootstrap.css" rel="stylesheet" /> 此行變化幅度不大 可註解掉再修-->
@@ -41,8 +41,8 @@
 
     <!-- Google Fonts-->
 
-    <!-- TABLE STYLES-->
-    <link href="<%=request.getContextPath()%>/assets4table/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <!-- TABLE STYLES--><%-- 
+    <link href="<%=request.getContextPath()%>/assets4table/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" /> --%>
 
 
 
@@ -96,8 +96,9 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="addEmp.jsp">新增員工帳號</a>
-                        <a class="collapse-item" href="listAllEmp.jsp">全部員工帳號</a>
+                 <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/emp/listAllEmp.jsp">全部員工帳號</a>
+        
                     </div>
                 </div>
             </li>
@@ -318,7 +319,7 @@
                     <div id="page-inner">
 
 
-  <FORM METHOD="post" ACTION="emp.do" >
+  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" >
         <b>輸入員工編號 :</b>
         <input type="text" name="empId" value="${param.empId}"><font color=red>${errorMsgs.empId}</font>
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -376,13 +377,13 @@
 										
 			
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="empId"  value="${empVO.empId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="empId"  value="${empVO.empId}">
 			     <input type="hidden" name="action" value="delete"></FORM>
@@ -423,7 +424,7 @@
 
 
 
-                <script src="<%=request.getContextPath()%>/assets4table/js/jquery-1.10.2.js"></script>
+        <%--         <script src="<%=request.getContextPath()%>/assets4table/js/jquery-1.10.2.js"></script>
                 <!-- Bootstrap Js -->
                 <script src="<%=request.getContextPath()%>/assets4table/js/bootstrap.min.js"></script>
                 <!-- Metis Menu Js -->
@@ -431,12 +432,12 @@
                 <!-- DATA TABLE SCRIPTS -->
                 <script src="<%=request.getContextPath()%>/assets4table/js/dataTables/jquery.dataTables.js"></script>
                 <script src="<%=request.getContextPath()%>/assets4table/js/dataTables/dataTables.bootstrap.js"></script>
-                <script>
-                    $(document).ready(function () {
+                <script> --%>
+               <!--      $(document).ready(function () {
                         $('#dataTables-example').dataTable();
                     });
-                </script>
-                <script src="<%=request.getContextPath()%>/assets4table/js/custom-scripts.js"></script>
+                </script> -->
+                <%-- <script src="<%=request.getContextPath()%>/assets4table/js/custom-scripts.js"></script> --%>
 </body>
 
 </html>
