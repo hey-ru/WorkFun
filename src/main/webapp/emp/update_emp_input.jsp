@@ -77,8 +77,10 @@
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
-		      <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
-                        <a class="collapse-item" href="<%=request.getContextPath()%>/emp/listAllEmp.jsp">全部員工帳號</a>
+						<a class="collapse-item" href="buttons.html">新增帳號</a> <a
+							class="collapse-item" href="cards.html">修改帳號</a> <a
+							class="collapse-item" href="cards.html">查詢帳號</a> <a
+							class="collapse-item" href="cards.html">刪除帳號</a>
 					</div>
 				</div></li>
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
@@ -298,12 +300,22 @@
 							<div
 								style="border: 3px blue solid; width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
 								<div class="input-group mb-3" style="margin-top: 0px;">
-								<input type="hidden" name="empId" value="${param.empId}"> 
 									<span class="input-group-text" id="xx">員工姓名</span> <input
 										type="TEXT" name="empName" size="45" value="${param.empName}"
 										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1">${errorMsgs.empName}${errorMsgs.hiredate}${errorMsgs.phone}${errorMsgs.extension}${errorMsgs.mail}${errorMsgs.birthday}
+										aria-describedby="basic-addon1">${errorMsgs.empName}
 								</div>
+								<div class="input-group mb-3">
+									<label class="input-group-text" for="inputGroupFile01">大頭照</label>
+									<img style="width:200px;length:200px"
+												src="
+									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${param.empId}
+									"
+												class="img-fluid"
+											>
+									<input type="file" name="empProfile" size="45"
+										value="${param.empProfile}" class="form-control"
+										id="inputGroupFile01">
 								</div>
 								<jsp:useBean id="deptSvc" scope="page"
 									class="com.dep.model.DepService" />
@@ -353,31 +365,20 @@
 								</div>
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="basic-addon2">生日</span> <input
-										type="TEXT" name="birthday" size="45" id="f_date2"
+										type="TEXT" name="birthday" size="45"
 										value="${param.birthday}" class="form-control"
 										aria-label="Recipient's username"
-										aria-describedby="basic-addon2">
+										aria-describedby="basic-addon2" id="f_date2">
 
 								</div>
 
 
-								<div class="input-group mb-3">
-									<label class="input-group-text" for="inputGroupFile01">大頭照</label>
-									<img style="width:200px;length:200px"
-												src="
-									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
-									"
-												class="img-fluid"
-											>
-									<input type="file" name="empProfile" size="45"
-										value="${param.empProfile}" class="form-control"
-										id="inputGroupFile01">
-								</div>
+								
 
 
 								<div class="input-group mb-3">
 
-									<input type="hidden" name="action" value="update"> <input
+									<input type="hidden" name="action" value="insert"> <input
 										type="submit" value="修改" class="input-group-text"
 										id="basic-addon2">
 								</div>
@@ -442,6 +443,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
 <style>
   .xdsoft_datetimepicker .xdsoft_datepicker {
            width:  300px;   /* width:  300px; */
@@ -528,5 +530,4 @@
         //      }});
         
 </script>
-
 </html>

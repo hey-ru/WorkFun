@@ -357,29 +357,34 @@
 		
 	</tr>
 	<%@ include file="page1.file" %> 
-	<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="empVOSearch" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
-			<td>${empVO.empId}</td>
-			<td>${empVO.empName}</td>
-			<td>${empVO.depId}-[${empVO.deptVO.depName}]</td>
-			
-			<td>${empVO.hiredate}</td>
-				<td>${empVO.resigndate}</td>
-			<td>${empVO.phone}</td>
-			<td>${empVO.extension}</td> 
-				<td>${empVO.hobby}</td>
+			<td>${empVOSearch.empId}</td>
+			<td>${empVOSearch.empName}</td>
+			<td>${empVOSearch.depId}-[${empVOSearch.deptVO.depName}]</td>
+
+			<td>${empVOSearch.hiredate}</td>
+				<td>${empVOSearch.resigndate}</td>
+			<td>${empVOSearch.phone}</td>
+			<td>${empVOSearch.extension}</td> 
+				<td>${empVOSearch.hobby}</td>
 				
-						<td>${empVO.skill}</td>
-							<td>${empVO.empProfile}</td>
-								<td>${empVO.mail}</td>
-									<td>${empVO.birthday}</td>
+						<td>${empVOSearch.skill}</td>
+							<td><img style="width:200px;length:200px"
+												src="
+									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVOSearch.empId}
+									"
+												class="img-fluid"
+											></td>
+								<td>${empVOSearch.mail}</td>
+									<td>${empVOSearch.birthday}</td>
 										
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
-			     <input type="hidden" name="empId"  value="${empVO.empId}">
+			     <input type="hidden" name="empId"  value="${empVOSearch.empId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>

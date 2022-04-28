@@ -372,6 +372,21 @@ public class EmpServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+
+		if ("logout".equals(action)) { // 來自listAllEmp.jsp
+
+			  HttpSession session = req.getSession();
+		      session.removeAttribute("empVO");)
+	
+		
+				/***************************1.接收請求參數***************************************/
+			
+				
+		
+				
+				/***************************其他可能的錯誤處理**********************************/
+		
+		}
 		
 		
 		
@@ -424,7 +439,7 @@ public class EmpServlet extends HttpServlet {
 							  errorMsgs.put("login","帳號密碼輸入錯誤");
 							   String url = "/login/login.jsp";
 							   
-								RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+								RequestDispatcher successView = req.getRequestDispatcher(url); 
 								successView.forward(req, res);	
 								
 							return;

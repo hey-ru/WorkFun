@@ -346,7 +346,12 @@
 				<td>${empVO.hobby}</td>
 				
 						<td>${empVO.skill}</td>
-							<td>${empVO.empProfile}</td>
+							<td><img style="width:200px;length:200px"
+												src="
+									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
+									"
+												class="img-fluid"
+											></td>
 								<td>${empVO.mail}</td>
 									<td>${empVO.birthday}</td>
 										

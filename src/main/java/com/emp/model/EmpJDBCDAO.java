@@ -24,7 +24,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	private static final String LOGIN_STMT = "select * from emp where emp_id = ? and emp_password = ? ";
 	
 	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "select emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
+	private static final String GET_ALL_STMT = "select emp_id,dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
 	private static final String GET_ONE_STMT = "SELECT dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp where emp_id = ?";
 	private static final String DELETE = "DELETE FROM emp where emp_id = ?";
 //	private static final String UPDATE = "UPDATE emp set dep_id=?, emp_name=?, hire_date=?, resign_date=?, phone=?, extension=?, emp_password=?, hobby=?, skill=?, emp_profile=?, mail=?, birthday=?, emp_status=? where emp_id = ? ";
@@ -475,7 +475,8 @@ return empVO;
 				empVO.setDepId(rs.getInt("dep_id"));
 				empVO.setEmpName(rs.getString("emp_name"));
 				empVO.setHiredate(rs.getDate("hire_date"));
-
+//				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
 				empVO.setPhone(rs.getString("phone"));
 				empVO.setExtension(rs.getString("extension"));
 				empVO.setEmpPassword(rs.getString("emp_password"));
@@ -484,9 +485,10 @@ return empVO;
 				empVO.setMail(rs.getString("mail"));
 				empVO.setBirthday(rs.getDate("birthday"));
 				empVO.setEmpStatus(rs.getByte("emp_status"));
-//				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
 				list.add(empVO); // Store the row in the list
 			}
+
 
 			// Handle any driver errors
 
@@ -710,18 +712,19 @@ EmpService empser=new EmpService();
 //	fout.write(empVO3.getEmpProfile());
 //	fout.close();
 
-//		List<EmpVO> list = dao.getAllDAO();
-//		for (EmpVO aEmp : list) {
-//			System.out.println(aEmp.getEmpId() + ",");
-//			System.out.println(aEmp.getDepId() + ",");
-//			System.out.println(aEmp.getEmpName() + ",");
-//			System.out.println(aEmp.getHiredate() + ",");
-//			System.out.println(aEmp.getPhone() + ",");
-//			System.out.println(aEmp.getExtension() + ",");
+		List<EmpVO> list = dao.getAllDAO();
+		for (EmpVO aEmp : list) {
+			System.out.println(aEmp.getEmpId() + ",");
+			System.out.println(aEmp.getDepId() + ",");
+			System.out.println(aEmp.getEmpName() + ",");
+			System.out.println(aEmp.getHiredate() + ",");
+			System.out.println(aEmp.getPhone() + ",");
+			System.out.println(aEmp.getExtension() + ",");
+			System.out.println(aEmp.getResigndate() + ",");
 	
 		
 	
 		
-		
+		}
 	}
 }
