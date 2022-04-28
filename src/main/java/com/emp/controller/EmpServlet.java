@@ -374,17 +374,14 @@ public class EmpServlet extends HttpServlet {
 		}
 
 		if ("logout".equals(action)) { // 來自listAllEmp.jsp
-
-			  HttpSession session = req.getSession();
-		      session.removeAttribute("empVO");)
-	
-		
-				/***************************1.接收請求參數***************************************/
 			
-				
-		
-				
-				/***************************其他可能的錯誤處理**********************************/
+			  HttpSession session = req.getSession();
+		      session.removeAttribute("empVO"); 
+		      
+String url = "/login/login.jsp";
+RequestDispatcher successView = req.getRequestDispatcher(url); 
+successView.forward(req, res);	
+return;
 		
 		}
 		

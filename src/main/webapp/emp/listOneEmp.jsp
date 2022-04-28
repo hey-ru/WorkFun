@@ -357,13 +357,13 @@
 										
 			
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="empId"  value="${empVO.empId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="empId"  value="${empVO.empId}">
 			     <input type="hidden" name="action" value="delete"></FORM>

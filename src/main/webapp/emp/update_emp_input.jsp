@@ -307,7 +307,7 @@
 								</div>
 								<div class="input-group mb-3">
 									<label class="input-group-text" for="inputGroupFile01">大頭照</label>
-									<img style="width:200px;length:200px"
+									<img style="width:200px;height:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${param.empId}
 									"
@@ -377,8 +377,8 @@
 
 
 								<div class="input-group mb-3">
-
-									<input type="hidden" name="action" value="insert"> <input
+	<input type="hidden" name="empId" value="${param.empId}"> 
+									<input type="hidden" name="action" value="update"> <input
 										type="submit" value="修改" class="input-group-text"
 										id="basic-addon2">
 								</div>

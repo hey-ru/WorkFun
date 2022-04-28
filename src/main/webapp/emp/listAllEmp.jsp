@@ -44,7 +44,14 @@
     <!-- TABLE STYLES--><%-- 
     <link href="<%=request.getContextPath()%>/assets4table/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" /> --%>
 
+<style>
+th, td{
+width:200px;
+height:200px;
+}
 
+
+</style>
 
 
 
@@ -371,7 +378,7 @@
 				<td>${empVOSearch.hobby}</td>
 				
 						<td>${empVOSearch.skill}</td>
-							<td><img style="width:200px;length:200px"
+							<td><img style="width:200px;height:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVOSearch.empId}
 									"

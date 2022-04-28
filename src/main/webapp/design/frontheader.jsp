@@ -15,7 +15,7 @@
                             <button class="dropbtn">揪團訂餐</button>
                             <div class="dropdown-content">
                                 <a href="#"> 主頁 </a>
-                                <a href="<%=request.getContextPath()%>/shop/listAllShop">查詢店家</a>
+                                <a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">查詢店家</a>
                                 <a href="#">查詢揪團</a>
                                 <a href="#">查詢參團</a>
                             </div>
@@ -90,7 +90,8 @@
 
                             <a class="nav-link nav-profile d-flex align-items-center pe-0 ; width:2px" href="#"
                                 data-bs-toggle="dropdown">
-                                <img src="<%=request.getContextPath()%>/assets/img/wu.jpeg" alt="Profile" class="rounded-circle"
+                                <img src="
+									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}" alt="Profile" class="rounded-circle"
                                     style="width: 50px;">
                             </a><!-- End Profile Iamge Icon -->
 
@@ -105,7 +106,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="<%=request.getContextPath()%>/emp/empfront.jsp">
+                                    <a class="dropdown-item d-flex align-items-center" href="<%=request.getContextPath()%>/emp/frontProfile.jsp">
                                         <i class="bi bi-person"></i>
                                         <span>My Profile</span>
                                     </a>
@@ -123,7 +124,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <a class="dropdown-item d-flex align-items-center" href="<%=request.getContextPath()%>/empServlet?action=logout">
                                         <i class="bi bi-box-arrow-right"></i>
                                         <span>Sign Out</span>
                                     </a>
