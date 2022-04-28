@@ -31,7 +31,7 @@
         <!-- final css -->
             <style>
                     html {
-                        --header-height: 70px;
+                        --header-height: 80px;
                         --footer-height: 50px;
                     }
 
