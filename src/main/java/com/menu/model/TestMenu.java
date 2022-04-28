@@ -10,7 +10,7 @@ public class TestMenu {
 	public static void main(String[] args) throws IOException {
 
 		MenuJDBCDAO dao = new MenuJDBCDAO();
-
+		
 		// 新增
 //	MenuVO menuVO1 = new MenuVO();
 //	menuVO1.setShop_id(102);

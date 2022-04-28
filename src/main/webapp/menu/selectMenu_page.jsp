@@ -90,7 +90,7 @@ h4 {
 		
 <!-- 上傳菜單csv檔 -->
 			<form method="post" enctype="multipart/form-data"
-				action="<%=request.getContextPath()%>/menu/csvuploadservlet">
+				action="<%=request.getContextPath()%>/menu/uploadcsvservlet">
 
 				<input type="file" name="csvfile" accept=".csv" value="${param.shop_id}"> 
 				<input type="hidden" name="action" value="uploadcsv"> 

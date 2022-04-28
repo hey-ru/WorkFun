@@ -26,6 +26,7 @@ public class SelectMenuByShopServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		System.out.println(action);
 
 		// 以店家搜尋菜單
 		if ("getmenu".equals(action)) { // 來自selectMenu_page.jsp的請求
@@ -33,7 +34,6 @@ public class SelectMenuByShopServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
 
@@ -44,17 +44,11 @@ public class SelectMenuByShopServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				// 資料庫取出的menuVO物件集合,存入req
 				req.setAttribute("menuList", menuList);
+				
 				String url = "/menu/listMenuByShop.jsp";
 				// 成功轉交
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 ************************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception", "無法取得資料:" + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/menu/selectMenu_page.jsp");
-//				failureView.forward(req, res);
-//			}
 		}
 
 		// 修改菜單品項
@@ -81,9 +75,8 @@ public class SelectMenuByShopServlet extends HttpServlet {
 				// 成功轉交
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 **********************************/
 		}
+		
 
 		// 成功轉交後跳頁修改
 		if ("update".equals(action)) { // 來自update_menu_input.jsp的請求
@@ -132,8 +125,6 @@ public class SelectMenuByShopServlet extends HttpServlet {
 				//執行修改指定的menu_id物件
 				MenuVO menuVO = menuService.updateMenuItem(menu_id, item, price, is_item, shop_id);
 				
-
-				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("menuVO", menuVO); // 資料庫update成功後,正確的的menuVO物件,存入req
 				
 				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面
@@ -143,9 +134,9 @@ public class SelectMenuByShopServlet extends HttpServlet {
 				String url = "/menu/listMenuByShop.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 *************************************/
 		}
+		
+
 
 	}
 

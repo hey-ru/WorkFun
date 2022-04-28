@@ -57,8 +57,7 @@ th, td {
 		<td>
 			<h3>所有店家菜單 - ListMenuByShop.jsp</h3>
 			<h4>
-				<a href="selectMenu_page.jsp"><img src="images/back1.gif"
-					width="100" height="32" border="0">回首頁</a>
+				<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">回店家列表</a>
 			</h4>
 		</td>
 	</tr>
@@ -75,13 +74,15 @@ th, td {
 </c:if>
 
 
-<!-- 新增菜單傳送門 -->
-<!-- <a href='addMenu.jsp'>Add Menu</a> -->
+<!-- 新增菜單請求 -->
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/addmenubyshop"
+					style="margin-bottom: 0px;">
+		<input type="submit" value="新增本店菜單"> 
+					<input type="hidden" name="shop_id" value="${param.shop_id}"> 
+					<input type="hidden" name="action" value="getShop_For_AddMenu">
+	</FORM>
 
-
-
-
-<!-- 以下是該店家現有的菜單項目 -->
+<!-- 以下是查詢完成後該店家現有的菜單項目, 含修改功能-->
 <table>
 	<tr>
 		<th>編號</th>
@@ -96,14 +97,17 @@ th, td {
 			<td><c:out value="${menu.menu_id}" /></td>
 			<td><c:out value="${menu.item}" /></td>
 			<td><c:out value="${menu.price}" /></td>
-			<td><c:out value="${menu.is_item}" /></td>
+			<td>
+			<c:if test="${menu.is_item==1}"> <c:out value="上架"/> </c:if>
+			<c:if test="${menu.is_item==0}"> <c:out value="下架"/> </c:if>
+			</td>
 			<td>
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop"
 					style="margin-bottom: 0px;">
-					<input type="submit" value="編輯"> <input type="hidden"
-						name="menu_id" value="${menu.menu_id}"> <input
-						type="hidden" name="action" value="getMenuItem_For_Update">
+					<input type="submit" value="編輯"> 
+					<input type="hidden" name="menu_id" value="${menu.menu_id}"> 
+					<input type="hidden" name="action" value="getMenuItem_For_Update">
 				</FORM>
 			</td>
 		</tr>

@@ -14,6 +14,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO menu (shop_id,item,price) VALUES (?, ?, ?)";
 	// 前台 修改店家單品項目
 	private static final String UPDATE = "UPDATE menu set shop_id=?, item=?, price=?, is_item=? where menu_id = ?";
+	private static final String UPDATEALL = "UPDATE menu set is_item=?";
 	// 前台 查詢一間店家菜單
 	private static final String GET_ByShopId = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ?";
 	// 後台 查詢各店家菜單
@@ -21,6 +22,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 	
 	//查詢一筆菜單項目
 	private static final String GET_ONE_STMT = " SELECT menu_id, shop_id, item, price, is_item, menu_upd FROM menu where menu_id = ?";
+
 
 	// 前台 新增店家單品項目
 	@Override
@@ -236,7 +238,6 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		}
 		return list;
 	}
-
 	
 	// 查詢一筆菜單項目
 	@Override
@@ -299,58 +300,5 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		return menuVO;
 	}
 	
-
-	
-	//import CSV檔
-
-//	@Override
-//	public List<MenuVO> loadAllMenu(File csvFile) {
-//		
-//			String line = "";
-//			String cvsSplitBy = ",";
-//
-//			try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-//
-//				if (csvFile.length() == 0) {
-//					throw new RuntimeException("CSV file is empty");
-//				}
-//
-//				List<MenuVO> allMenu = new ArrayList<MenuVO>();
-//
-//				while ((line = br.readLine()) != null) {
-//					String[] csvLine = line.split(cvsSplitBy);
-//					MenuVO menuVO = createUserEntity(csvLine);
-//					allMenu.add(menuVO);
-//				}
-//
-//				return allMenu;
-//
-//			} catch (FileNotFoundException e) {
-//				throw new RuntimeException("CSV file was not found", e);
-//			} catch (IOException e) {
-//				throw new RuntimeException(e);
-//			}
-//		}
-	
-//讀取的CSV字串轉換
-//		private static MenuVO createUserEntity(String[] csvLine) {
-//
-//			try {
-//				String item = csvLine[0].trim();
-//				String price = csvLine[1].trim();
-//
-//				MenuVO menu = new MenuVO();
-//
-//				menu.setItem(item);
-//				menu.setPrice(price);
-//
-//				return menu;
-//
-//			} catch (Exception e) {
-//				throw new RuntimeException("incorrect data in CSV file", e);
-//			}
-//		}
-
-
 
 }

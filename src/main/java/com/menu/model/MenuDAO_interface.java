@@ -1,6 +1,5 @@
 package com.menu.model;
 
-import java.io.File;
 import java.util.*;
 
 public interface MenuDAO_interface {

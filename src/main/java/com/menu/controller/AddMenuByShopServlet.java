@@ -26,14 +26,37 @@ public class AddMenuByShopServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
-	
+		System.out.println(action);
+		
 		// 在該店家新增菜單
-		if ("insert".equals(action)) { // 來自listmenubyshop.jsp的請求
+		if ("getShop_For_AddMenu".equals(action)) { // 來自listMenuByShop.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
+			Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
+			System.out.println(shop_id);
+
+			/*************************** 2.開始查詢資料 *****************************************/
+			MenuService menuService = new MenuService();
+			List<MenuVO> menuList = menuService.getByShopId(shop_id);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			// 資料庫取出的menuVO物件集合,存入req
+			req.setAttribute("shop_id", shop_id);
+			String url = "/menu/addMenu.jsp";
+			
+			// 成功轉交
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);	
+		}
+		
+		
+		if ("insert".equals(action)) { // 來自listmenubyshop.jsp的請求
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				//品項
 				String item = req.getParameter("item");
@@ -53,7 +76,8 @@ public class AddMenuByShopServlet extends HttpServlet {
 				
 				// 店家編號FK shop_id
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
-
+				System.out.println(shop_id);
+				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/menu/addMenu.jsp");
@@ -69,14 +93,11 @@ public class AddMenuByShopServlet extends HttpServlet {
 				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面
 				List<MenuVO> menuList = menuService.getByShopId(shop_id);
 				req.setAttribute("menuList", menuList);
-				
+				req.setAttribute("shop_id", shop_id);
 				
 				String url = "/menu/listMenuByShop.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 *************************************/
-
 		}
 
 	}

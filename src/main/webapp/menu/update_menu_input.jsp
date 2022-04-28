@@ -49,7 +49,9 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>菜單內容修改 - update_menu_input.jsp</h3>
-		 <h4><a href=selectMenu_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4>
+		 <a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">回店家列表</a>
+		 </h4>
 	</td></tr>
 </table>
 
@@ -73,10 +75,17 @@
 			value="${param.price}" /></td><td>${errorMsgs.price}</td>
 	</tr>
 	<tr>
-		<td>項目狀態:</td>
-		<td><input type="TEXT" name="is_item" size="45"	
-			value="${param.is_item}" /></td><td>${errorMsgs.is_item}</td>
-	</tr>
+<!-- 		<td>項目狀態:</td> -->
+<!-- 		<td><input type="TEXT" name="is_item" size="45"	 -->
+<%-- 			value="${param.is_item}" /></td><td>${errorMsgs.is_item}</td> --%>
+			
+<td><label>項目狀態:</label></td>
+<td>
+<label><input type="radio" name="is_item" value="${param.is_item}" ${(param.is_item=="1")? 'checked':'' }> 上架 </label>
+<label><input type="radio" name="is_item" value="${param.is_item}" ${(param.is_item=="0")? 'checked':'' }> 下架 </label>
+</td>		
+		
+</tr>
 
 </table>
 <br>

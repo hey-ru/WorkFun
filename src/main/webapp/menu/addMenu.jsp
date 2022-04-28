@@ -52,7 +52,9 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>菜單新增 - addShop.jsp</h3>
-		 <h4><a href=selectMenu_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4>
+		 <a href="<%=request.getContextPath()%>/menu/listMenuByShop.jsp">回店家菜單列表</a>
+		 </h4>
 	</td></tr>
 </table>
 
@@ -62,8 +64,8 @@
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/addmenubyshop">
 <table>
 	<tr>
-		<td>菜單編號:</td>
-		<td>${param.menu_id}</td>
+		<td>店家編號:</td>
+		<td>${param.shop_id}</td>
 	</tr>
 	<tr>
 		<td>品項:</td>
@@ -76,19 +78,20 @@
 			value="${param.price}" /></td><td>${errorMsgs.price}</td>
 	</tr>
 	
-	<jsp:useBean id="shopservice" scope="page" class="com.shop.model.ShopService" />
-	<tr>
-		<td>店家:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="shop_id">
-			<c:forEach var="shopVO" items="${shopservice.all}">
-				<option value="${shopVO.shop_id}" ${(param.shop_id==shopVO.shop_id)? 'selected':'' } >${shopVO.shop_name}
-			</c:forEach>
-		</select></td>
-	</tr>
+<%-- 	<jsp:useBean id="shopservice" scope="page" class="com.shop.model.ShopService" /> --%>
+<!-- 	<tr> -->
+<!-- 		<td>店家:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="shop_id"> -->
+<%-- 			<c:forEach var="shopVO" items="${shopservice.all}"> --%>
+<%-- 				<option value="${shopVO.shop_id}" ${(param.shop_id==shopVO.shop_id)? 'selected':'' } >${shopVO.shop_name} --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
 
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
+<input type="hidden" name="shop_id" value="${param.shop_id}">
 <input type="submit" value="送出新增"></FORM>
 
 

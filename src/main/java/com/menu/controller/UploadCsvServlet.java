@@ -22,9 +22,9 @@ import javax.servlet.http.Part;
 import com.menu.model.MenuService;
 import com.opencsv.CSVReader;
 
-@WebServlet("/menu/csvuploadservlet")
+@WebServlet("/menu/csvuploadcsvservlet")
 @MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
-public class CsvUploadServlet extends HttpServlet {
+public class UploadCsvServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,7 +80,7 @@ public class CsvUploadServlet extends HttpServlet {
 				
 				//新增資料庫測試
 				//讀取後新增至資料庫
-				String sql = "INSERT INTO menu (item, price, shop_id) VALUES (?, ?, ?)";
+				String sql = "INSERT INTO menutest (item, price, shop_id) VALUES (?, ?, ?)";
 				PreparedStatement statement = conn.prepareStatement(sql);
 				statement.setString(1, strArr[0]);
 				statement.setString(2, strArr[1]);
