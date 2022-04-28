@@ -94,7 +94,7 @@ public class EmpServlet extends HttpServlet {
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			try {
+			
 				/***************************1.接收請求參數****************************************/
 				Integer empId = Integer.valueOf(req.getParameter("empId"));
 				
@@ -120,12 +120,7 @@ public class EmpServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
-				errorMsgs.put("無法取得要修改的資料",e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/listAllEmp.jsp");
-				failureView.forward(req, res);
-			}
+			 
 		}
 		
 		
@@ -138,6 +133,7 @@ public class EmpServlet extends HttpServlet {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer empId = Integer.valueOf(req.getParameter("empId").trim());
 				String empName = req.getParameter("empName");
+				String empPassword = req.getParameter("empPassword");
 				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (empName == null || empName.trim().length() == 0) {
 					errorMsgs.put("empName","員工姓名: 請勿空白");
@@ -147,15 +143,20 @@ public class EmpServlet extends HttpServlet {
 				Integer depId = Integer.valueOf(req.getParameter("depId").trim());
 
 				java.sql.Date hiredate = null;
-				
-				if (req.getParameter("hiredate").trim() == null || req.getParameter("hiredate").trim().trim().length() == 0) {
-					errorMsgs.put("extension","雇用日期請勿空白");
-				}
 				try {
 					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
 				} catch (IllegalArgumentException e) {
-					errorMsgs.put("hiredate","請輸入雇用日期");
+					errorMsgs.put("hiredate","請輸入日期");
 				}
+				
+//				if (req.getParameter("hiredate").trim() == null || req.getParameter("hiredate").trim().trim().length() == 0) {
+//					errorMsgs.put("hiredate","雇用日期請勿空白");
+//				}
+//				try {
+//					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+//				} catch (IllegalArgumentException e) {
+//					errorMsgs.put("hiredate","請輸入雇用日期");
+//				}
 				
 				
 				String phone = req.getParameter("phone").trim();
@@ -183,6 +184,16 @@ public class EmpServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("birthday","請輸入生日");
 				}
+				EmpService empSvc = new EmpService();
+
+				Part empProfile=req.getPart("empProfile");
+				
+		String fileName=empSvc.getFileNameFromPart(empProfile);
+		
+				
+				
+				
+				byte[] headimg=empSvc.getByteArrayFromPart(empProfile);
 				
 				EmpVO oldempVO = new EmpVO();
 				oldempVO.setEmpId(empId);
@@ -193,8 +204,17 @@ public class EmpServlet extends HttpServlet {
 				oldempVO.setExtension(extension);
 				oldempVO.setHobby(hobby);
 				oldempVO.setSkill(skill);
+				if(empPassword != null ) {
+					oldempVO.setEmpPassword(empPassword);
+				}
+				if (fileName == null || fileName.trim().length() == 0) {
 				
-//				oldempVO.setEmpProfile(empProfile);
+				}
+				else {
+					oldempVO.setEmpProfile(headimg);
+				}
+				
+			
 				oldempVO.setMail(mail);
 				oldempVO.setBirthday(birthday);
 				// Send the use back to the form, if there were errors
@@ -206,12 +226,12 @@ public class EmpServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				EmpService empSvc = new EmpService();
+				
 				empSvc.updateEmp(oldempVO);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 //				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/emp/select_page.jsp";
+				String url = "/emp/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -365,8 +385,7 @@ public class EmpServlet extends HttpServlet {
 //				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					String empIds = (req.getParameter("empId"));
-					 System.out.println(empIds+"before");
-					 System.out.println(empIds.trim().length());
+				
 					if (empIds == null || empIds.trim().length() == 0) {
 						errorMsgs.put("empId","帳號請勿空白");
 					}

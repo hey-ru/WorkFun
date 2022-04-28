@@ -233,7 +233,12 @@
 									<h5 class="card-title">About</h5>
 									<p class="small fst-italic">${empVO.empId}</p>
 
-									<h5 class="card-title">${empVO.empProfile}</h5>
+									<h5 class="card-title"><img style="width:200px;length:200px"
+												src="
+									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
+									"
+												class="img-fluid"
+											></h5>
 
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label ">${empVO.empName}</div>
@@ -268,7 +273,7 @@
 
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">Email</div>
-										<div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+										<div class="col-lg-9 col-md-8">${errorMsgs.empId}${errorMsgs.empName}${errorMsgs.depId}${errorMsgs.hiredate}${errorMsgs.phone}${errorMsgs.extension}</div>
 									</div>
 
 								</div>
@@ -276,20 +281,41 @@
 								<div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
 									<!-- Profile Edit Form -->
-									<form>
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
+							enctype="multipart/form-data">
 										<div class="row mb-3">
 											<label for="profileImage"
 												class="col-md-4 col-lg-3 col-form-label">Profile
-												Image</label> <img
+												Image</label> <img style="width:200px;length:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
 									"
 												class="img-fluid"
+												
 											>
+											<div class="row mb-3">
+											<label for="about" class="col-md-4 col-lg-3 col-form-label">編號</label>
+											<div class="col-md-8 col-lg-9">
+												<input type="hidden" name="empId" size="45"
+													value="${empVO.empId}" class="form-control"
+													aria-label="Recipient's username"
+													aria-describedby="basic-addon2">
+													<input
+										type="hidden" name="hiredate" size="45" id="f_date2"
+										value="${empVO.hiredate}" class="form-control"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2">
+										
+											</div>
+										</div>
+
+
+
 
 											<div class="col-md-8 col-lg-9">
+											
 												<input type="file" name="empProfile" size="45"
-													value="${empVO.empProfile}" class="form-control"
+												 class="form-control"
 													id="inputGroupFile01">
 												<div class="pt-2">
 													<a href="#" class="btn btn-primary btn-sm"
@@ -342,7 +368,7 @@
 											<div class="col-md-8 col-lg-9">
 												<input type="TEXT" name="extension" size="45"
 													value="${empVO.extension}" class="form-control"
-													placeholder="" aria-label="Recipient's username"
+													 aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
 											</div>
 										</div>
@@ -351,7 +377,7 @@
 											<label for="Job" class="col-md-4 col-lg-3 col-form-label">興趣</label>
 											<div class="col-md-8 col-lg-9">
 												<input type="TEXT" name="hobby" size="45"
-													value="${empVO.hobby}" class="form-control" placeholder=""
+													value="${empVO.hobby}" class="form-control" 
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
 											</div>

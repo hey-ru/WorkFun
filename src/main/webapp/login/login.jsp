@@ -54,7 +54,7 @@
 										aria-describedby="basic-addon1">
                                         </div>${errorMsgs.empId}
                                       <input
-										type="TEXT" name="empPassword" size="45" value="${param.empPassword}"
+										type="text" name="empPassword" size="45" value="${param.empPassword}"
 										class="form-control" aria-label="Username"
 										aria-describedby="basic-addon1">${errorMsgs.empPassword}
                                         <div class="form-group">

@@ -77,10 +77,8 @@
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
-						<a class="collapse-item" href="buttons.html">新增帳號</a> <a
-							class="collapse-item" href="cards.html">修改帳號</a> <a
-							class="collapse-item" href="cards.html">查詢帳號</a> <a
-							class="collapse-item" href="cards.html">刪除帳號</a>
+		      <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/emp/listAllEmp.jsp">全部員工帳號</a>
 					</div>
 				</div></li>
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
@@ -300,10 +298,12 @@
 							<div
 								style="border: 3px blue solid; width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
 								<div class="input-group mb-3" style="margin-top: 0px;">
+								<input type="hidden" name="empId" value="${param.empId}"> 
 									<span class="input-group-text" id="xx">員工姓名</span> <input
 										type="TEXT" name="empName" size="45" value="${param.empName}"
 										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1">${errorMsgs.empName}
+										aria-describedby="basic-addon1">${errorMsgs.empName}${errorMsgs.hiredate}${errorMsgs.phone}${errorMsgs.extension}${errorMsgs.mail}${errorMsgs.birthday}
+								</div>
 								</div>
 								<jsp:useBean id="deptSvc" scope="page"
 									class="com.dep.model.DepService" />
@@ -353,7 +353,7 @@
 								</div>
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="basic-addon2">生日</span> <input
-										type="TEXT" name="birthday" size="45"
+										type="TEXT" name="birthday" size="45" id="f_date2"
 										value="${param.birthday}" class="form-control"
 										aria-label="Recipient's username"
 										aria-describedby="basic-addon2">
@@ -363,6 +363,12 @@
 
 								<div class="input-group mb-3">
 									<label class="input-group-text" for="inputGroupFile01">大頭照</label>
+									<img style="width:200px;length:200px"
+												src="
+									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
+									"
+												class="img-fluid"
+											>
 									<input type="file" name="empProfile" size="45"
 										value="${param.empProfile}" class="form-control"
 										id="inputGroupFile01">
@@ -371,7 +377,7 @@
 
 								<div class="input-group mb-3">
 
-									<input type="hidden" name="action" value="insert"> <input
+									<input type="hidden" name="action" value="update"> <input
 										type="submit" value="修改" class="input-group-text"
 										id="basic-addon2">
 								</div>
@@ -415,5 +421,112 @@
 
 
 </body>
+
+<% 
+  java.sql.Date hiredate = null;
+  try {
+	    hiredate = java.sql.Date.valueOf(request.getParameter("hiredate").trim());
+   } catch (Exception e) {
+	    hiredate = new java.sql.Date(System.currentTimeMillis());
+   }
+%>
+
+<% 
+  java.sql.Date birthday = null;
+  try {
+	    hiredate = java.sql.Date.valueOf(request.getParameter("birthday").trim());
+   } catch (Exception e) {
+	    hiredate = new java.sql.Date(System.currentTimeMillis());
+   }
+%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<style>
+  .xdsoft_datetimepicker .xdsoft_datepicker {
+           width:  300px;   /* width:  300px; */
+  }
+  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+           height: 151px;   /* height:  151px; */
+  }
+</style>
+
+<script>
+        $.datetimepicker.setLocale('zh');
+        $('#f_date1').datetimepicker({
+ 	       theme: '',              //theme: 'dark',
+	       timepicker:false,       //timepicker:true,
+	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+		   value: '<%=hiredate%>', // value:   new Date(),
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
+        
+        $('#f_date2').datetimepicker({
+  	       theme: '',              //theme: 'dark',
+ 	       timepicker:false,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+ 		   value: '<%=birthday%>', // value:   new Date(),
+            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+            //startDate:	            '2017/07/10',  // 起始日
+            //minDate:               '-1970-01-01', // 去除今日(不含)之前
+            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+         });
+        
+        
+   
+        // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
+
+        //      1.以下為某一天之前的日期無法選擇
+        //      var somedate1 = new Date('2017-06-15');
+        //      $('#f_date1').datetimepicker({
+        //          beforeShowDay: function(date) {
+        //        	  if (  date.getYear() <  somedate1.getYear() || 
+        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+        //              ) {
+        //                   return [false, ""]
+        //              }
+        //              return [true, ""];
+        //      }});
+
+        
+        //      2.以下為某一天之後的日期無法選擇
+        //      var somedate2 = new Date('2017-06-15');
+        //      $('#f_date1').datetimepicker({
+        //          beforeShowDay: function(date) {
+        //        	  if (  date.getYear() >  somedate2.getYear() || 
+        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+        //              ) {
+        //                   return [false, ""]
+        //              }
+        //              return [true, ""];
+        //      }});
+
+
+        //      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
+        //      var somedate1 = new Date('2017-06-15');
+        //      var somedate2 = new Date('2017-06-25');
+        //      $('#f_date1').datetimepicker({
+        //          beforeShowDay: function(date) {
+        //        	  if (  date.getYear() <  somedate1.getYear() || 
+        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+        //		             ||
+        //		            date.getYear() >  somedate2.getYear() || 
+        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+        //              ) {
+        //                   return [false, ""]
+        //              }
+        //              return [true, ""];
+        //      }});
+        
+</script>
 
 </html>
