@@ -63,3 +63,4 @@ public class EquipmentService {
 		return dao.getALL();
 	}
 }
+

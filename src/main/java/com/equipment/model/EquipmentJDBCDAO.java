@@ -15,10 +15,10 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	String passwd = "cga101-03";
 
 	private static final String INSERT = "INSERT INTO equipment (eq_name,price,eq_status,introduction,spec) VALUES (?,?,?,?,?)";
-	private static final String UPDATE = "UPDATE equipment set eq_name_id=?, price=?, eq_status=?, introduction=?, spec=?";
+	private static final String UPDATE = "UPDATE equipment set ";
 	private static final String DELETE_BY_EQID = "DELETE FROM equipment where equipment_id = ?";
 	private static final String DELETE_BY_EQNAME = "DELETE FROM equipment where eq_name = ?";
-	private static final String GET_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_name = ?";
+	private static final String GET_ALL_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_name like ?";
 	private static final String GET_BY_EQUIPMENTID = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where equipment_id = ?";
 	private static final String GET_BY_EQSTATUS = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_status = ?";
 	private static final String GET_ALL = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment";
@@ -69,48 +69,115 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	}
 
 	@Override
-	public void update(EquipmentVO equipmentVO) {
+	public int update(EquipmentVO newequipment) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		int count = 0;
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
-			;
-			pstmt.setString(1, equipmentVO.getEqName());
-			pstmt.setInt(2, equipmentVO.getPrice());
-			pstmt.setInt(3, equipmentVO.getEqStatus());
-			pstmt.setString(4, equipmentVO.getIntroduction());
-			pstmt.setString(51, equipmentVO.getSpec());
+			EquipmentVO oldEquipment = getByEqId(newequipment.getEqId());
+			System.out.println(oldEquipment.getEqId());
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(UPDATE);
+
+//			if (newequipment.getEquipmentId() != null) {
+//				sb.append("equipment_id=?, ");
+//			}
+			if (newequipment.getEqName() != null) {
+				sb.append("eq_name=?, ");
+			}
+			if (newequipment.getPrice() != null) {
+				sb.append("price=?, ");
+			}
+			if (newequipment.getEqStatus() != null) {
+				sb.append("eq_status=?, ");
+			}
+			if (newequipment.getIntroduction() != null) {
+				sb.append("introduction=?, ");
+			}
+			if (newequipment.getSpec() != null) {
+				sb.append("spec=?, ");
+			}
+
+			sb.append("equipment_id=? ");
+			sb.append("where equipment_id =? ");
+
+			pstmt = con.prepareStatement(sb.toString());
+
+//			if (newequipment.getEquipmentId() != null) {
+//				count++;
+//				pstmt.setInt(count, newequipment.getEquipmentId());
+//			}
+
+			if (newequipment.getEqName() != null) {
+				count++;
+				pstmt.setString(count, newequipment.getEqName());
+			}
+
+			if (newequipment.getPrice() != null) {
+				count++;
+				pstmt.setInt(count, newequipment.getPrice());
+			}
+
+			if (newequipment.getEqStatus() != null) {
+				count++;
+				pstmt.setInt(count, newequipment.getEqStatus());
+			}
+
+			if (newequipment.getIntroduction() != null) {
+				count++;
+				pstmt.setString(count, newequipment.getIntroduction());
+			}
+
+			if (newequipment.getSpec() != null) {
+				count++;
+				pstmt.setString(count, newequipment.getSpec());
+			}
+
+			count++;
+			pstmt.setInt(count, newequipment.getEquipmentId());
+			count++;
+			pstmt.setInt(count, newequipment.getEquipmentId());
 
 			pstmt.executeUpdate();
+			System.out.println(count);
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
 		}
+		return 1;
 	}
 
 	@Override
@@ -195,8 +262,9 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	}
 
 	@Override
-	public EquipmentVO getByEqName(String eqName) {
+	public List<EquipmentVO> getAllByEqName(String eqName) {
 
+		List<EquipmentVO> list = new ArrayList<EquipmentVO>();
 		EquipmentVO equipmentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -206,14 +274,13 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_BY_EQNAME);
+			pstmt = con.prepareStatement(GET_ALL_BY_EQNAME);
 
-			pstmt.setString(1, eqName);
+			pstmt.setString(1, "%" + eqName + "%");
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-
 				equipmentVO = new EquipmentVO();
 				equipmentVO.setEquipmentId(rs.getInt("equipment_id"));
 				equipmentVO.setEqName(rs.getString("eq_name"));
@@ -221,6 +288,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 				equipmentVO.setEqStatus(rs.getInt("eq_status"));
 				equipmentVO.setIntroduction(rs.getString("introduction"));
 				equipmentVO.setSpec(rs.getString("spec"));
+				list.add(equipmentVO);
 			}
 
 			// Handle any driver errors
@@ -253,7 +321,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 				}
 			}
 		}
-		return equipmentVO;
+		return list;
 	}
 
 	@Override
@@ -319,7 +387,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 
 	@Override
 	public EquipmentVO getByEqId(Integer equipmentId) {
-		
+
 		EquipmentVO equipmentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -378,7 +446,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		}
 		return equipmentVO;
 	}
-	
+
 	@Override
 	public EquipmentVO getByEqStatus(Integer eqStatus) {
 		EquipmentVO equipmentVO = null;
@@ -439,7 +507,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		}
 		return equipmentVO;
 	}
-	
+
 	public static void main(String[] args) {
 		EquipmentJDBCDAO dao = new EquipmentJDBCDAO();
 
@@ -453,13 +521,16 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 //		dao.insert(equipmentVO1);
 
 		// 修改
-//		EquipmentVO equipmentVO2 = new EquipmentVO();
-//		equipmentVO2.setEqName("PSP PRO");
-//		equipmentVO2.setPrice(Integer.valueOf(3301));
-//		equipmentVO2.setEqStatus(2);
+
+		EquipmentVO equipmentVO2 = new EquipmentVO();
+		equipmentVO2.setEquipmentId(115);
+
+		equipmentVO2.setEqName("PSPPRO");
+		equipmentVO2.setPrice(Integer.valueOf(3));
+		equipmentVO2.setEqStatus(1);
 //		equipmentVO2.setIntroduction("1.新的PSP重量約189克(原為280克) 厚度18.6mm(原為23.0mm)");
 //		equipmentVO2.setSpec("●(480×272，1677萬色");
-//		dao.insert(equipmentVO2);
+		dao.update(equipmentVO2);
 
 		// 刪除 by eqID
 //		dao.deleteByEqID(102);
@@ -467,48 +538,42 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		// 刪除 by eqName
 //		dao.deleteByEqName("PSP");
 
-		// 查詢 by EqName
-		EquipmentVO equipmentVO3 = dao.getByEqName("PSP");
-		System.out.print(equipmentVO3.getEquipmentId() + ", ");
-		System.out.print(equipmentVO3.getEqName() + ", ");
-		System.out.print(equipmentVO3.getPrice() + ", ");
-		System.out.print(equipmentVO3.getEqStatus() + ", ");
-		System.out.print(equipmentVO3.getIntroduction() + ", ");
-		System.out.println(equipmentVO3.getSpec() + ", ");
-		System.out.println("-------------------------------------");
-		
-		// 查詢 by EQUIPMENTID
-		EquipmentVO equipmentVO4 = dao.getByEqId(104);
-		System.out.print(equipmentVO4.getEquipmentId() + ", ");
-		System.out.print(equipmentVO4.getEqName() + ", ");
-		System.out.print(equipmentVO4.getPrice() + ", ");
-		System.out.print(equipmentVO4.getEqStatus() + ", ");
-		System.out.print(equipmentVO4.getIntroduction() + ", ");
-		System.out.println(equipmentVO4.getSpec() + ", ");
-		System.out.println("-------------------------------------");
+		// 查詢 All by EqName
+//		List<EquipmentVO> list = dao.getAllByEqName("s");
+//		for (EquipmentVO aEquipment : list) {
+//			System.out.println(aEquipment.toString());
+//		}
 
 		// 查詢 by EQUIPMENTID
-		EquipmentVO equipmentVO5 = dao.getByEqStatus(3);
-		System.out.print(equipmentVO5.getEquipmentId() + ", ");
-		System.out.print(equipmentVO5.getEqName() + ", ");
-		System.out.print(equipmentVO5.getPrice() + ", ");
-		System.out.print(equipmentVO5.getEqStatus() + ", ");
-		System.out.print(equipmentVO5.getIntroduction() + ", ");
-		System.out.println(equipmentVO5.getSpec() + ", ");
-		System.out.println("-------------------------------------");
-		
+//		EquipmentVO equipmentVO4 = dao.getByEqId(104);
+//		System.out.print(equipmentVO4.getEquipmentId() + ", ");
+//		System.out.print(equipmentVO4.getEqName() + ", ");
+//		System.out.print(equipmentVO4.getPrice() + ", ");
+//		System.out.print(equipmentVO4.getEqStatus() + ", ");
+//		System.out.print(equipmentVO4.getIntroduction() + ", ");
+//		System.out.println(equipmentVO4.getSpec() + ", ");
+//		System.out.println("-------------------------------------");
+
+		// 查詢 by EQUIPMENTID
+//		EquipmentVO equipmentVO5 = dao.getByEqStatus(3);
+//		System.out.print(equipmentVO5.getEquipmentId() + ", ");
+//		System.out.print(equipmentVO5.getEqName() + ", ");
+//		System.out.print(equipmentVO5.getPrice() + ", ");
+//		System.out.print(equipmentVO5.getEqStatus() + ", ");
+//		System.out.print(equipmentVO5.getIntroduction() + ", ");
+//		System.out.println(equipmentVO5.getSpec() + ", ");
+//		System.out.println("-------------------------------------");
+
 		// 查詢 ALL
-		List<EquipmentVO> list = dao.getALL();
-		for (EquipmentVO aEquipment : list) {
-			System.out.print(equipmentVO3.getEquipmentId() + ", ");
-			System.out.print(equipmentVO3.getEqName() + ", ");
-			System.out.print(equipmentVO3.getPrice() + ", ");
-			System.out.print(equipmentVO3.getEqStatus() + ", ");
-			System.out.print(equipmentVO3.getIntroduction() + ", ");
-			System.out.println(equipmentVO3.getSpec() + ", ");
-			System.out.println();
-		}
+//		List<EquipmentVO> list = dao.getALL();
+//		for (EquipmentVO aEquipment : list) {
+//			System.out.print(aEquipment.getEquipmentId() + ", ");
+//			System.out.print(aEquipment.getEqName() + ", ");
+//			System.out.print(aEquipment.getPrice() + ", ");
+//			System.out.print(aEquipment.getEqStatus() + ", ");
+//			System.out.print(aEquipment.getIntroduction() + ", ");
+//			System.out.println(aEquipment.getSpec() + ", ");
+//			System.out.println();
+//		}
 	}
-
-
 }

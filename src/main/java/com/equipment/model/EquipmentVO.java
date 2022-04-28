@@ -9,6 +9,10 @@ public class EquipmentVO implements Serializable {
 	private Integer eqStatus;
 	private String introduction;
 	private String spec;
+	
+	public Integer getEqId() {
+		return equipmentId;
+	}
 
 	@Override
 	public String toString() {
