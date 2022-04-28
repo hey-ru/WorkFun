@@ -178,238 +178,89 @@
     <main id="main" style="height: 140vh;">
 
         <!-- ======= 查詢參團table ======= -->
-        <section>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6><strong>查詢店家</strong></h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
-                            <div class="row">
-                                <div class="col-10" style="height: 60px;display: inline-block;">
-                                    <form class="my-1">
-                                        <div class="form-group col-2" style="display : inline-block;">
-                                            <select class="form-control" id="exampleFormControlSelect1"
-                                                style="border: gray solid 2px;">
-                                                <option selected>選擇店家類型</option>
-                                                <option value="1">飲料</option>
-                                                <option value="2">中式</option>
-                                                <option value="3">異國</option>
-                                                <option value="4">小吃</option>
-                                                <option value="5">素食</option>
-                                                <option value="6">其他</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-3" style="display : inline-block">
-                                            <input type="text" class="form-control" id="exampleFormControlInput1"
-                                                placeholder="輸入店名" style="border: gray solid 2px;">
-                                        </div>
-                                        <button type="submit" class="btn btn-dark mb-2 mt-1 col"
-                                            style="display : inline-block;">搜尋</button>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6><strong>查詢店家</strong></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
-                                    </form>
-                                </div>
-                                <div class="col-2" style="left: 0;">
-                                    <a href="owner_1_createShop.html"><button type="button"
-                                            class="btn btn-warning btn-lg">新增店家</button></a>
-                                </div>
+                        <div class="row">
+                            <div class="col-10" style="height: 60px;display: inline-block;">
+                                <form class="my-1">
+                                    <div class="form-group col-2" style="display : inline-block;">
+                                        <select class="form-control" id="exampleFormControlSelect1"
+                                            style="border: gray solid 2px;">
+                                            <option selected>選擇店家類型</option>
+                                            <option value="1">飲料</option>
+                                            <option value="2">中式</option>
+                                            <option value="3">異國</option>
+                                            <option value="4">小吃</option>
+                                            <option value="5">素食</option>
+                                            <option value="6">其他</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-3" style="display : inline-block">
+                                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                                            placeholder="輸入店名" style="border: gray solid 2px;">
+                                    </div>
+                                    <button type="submit" class="btn btn-dark mb-2 mt-1 col"
+                                        style="display : inline-block;">搜尋</button>
+
+                                </form>
                             </div>
-
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered dataTable" id="dataTable" width="100%"
-                                        cellspacing="0" role="grid" aria-describedby="dataTable_info"
-                                        style="width: 100%;">
-                                        <thead>
-                                            <tr role=" row">
-                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
-                                                    rowspan="1" colspan="1" aria-sort="ascending"
-                                                    aria-label="Name: activate to sort column descending"
-                                                    style="width: 50px;">
-                                                    店家名稱</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                    colspan="1" aria-label="Position: activate to sort column ascending"
-                                                    style="width: 20px;">店家類型</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                    colspan="1" aria-label="Position: activate to sort column ascending"
-                                                    style="width: 150px;">店家地址</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                    colspan="1" aria-label="Office: activate to sort column ascending"
-                                                    style="width: 50px;">店家電話</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                    colspan="1" aria-label="Age: activate to sort column ascending"
-                                                    style="width: 30px;">店家網站</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                    colspan="1" aria-label="Office: activate to sort column ascending"
-                                                    style="width: 50px;">低消金額</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                    colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                    style="width: 60px;"></th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
-                                                    colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                    style="width: 60px;"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="odd">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="sorting_1">大同町</td>
-                                                <td>中式</td>
-                                                <td>320桃園市中壢區忠孝路201-2號</td>
-                                                <td>03-4224695</td>
-                                                <td><a href="#">website</a></td>
-                                                <td></td>
-                                                <td><a href="owner_1_createShop.html"><button type="button"
-                                                            class="btn btn-success btn-sm">查看菜單</button></a></td>
-                                                <td><a href="#"><button type="button"
-                                                            class="btn btn-dark btn-sm">我要揪團</button></a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="col-2" style="left: 0;">
+                                <a href="owner_1_createShop.html"><button type="button"
+                                        class="btn btn-warning btn-lg">新增店家</button></a>
                             </div>
-
-                            <div class="col-12">
-                                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-                                                class="page-link">Previous</a>
-                                        </li>
-                                        <li class="paginate_button page-item active"><a href="#"
-                                                aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-                                                class="page-link">1</a></li>
-                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
-                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
-                                        <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
-                                        <li class="paginate_button page-item next" id="dataTable_next"><a href="#"
-                                                aria-controls="dataTable" data-dt-idx="7" tabindex="0"
-                                                class="page-link">Next</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
                         </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered dataTable" id="dataTable" width="100%"
+                                    cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                    <thead>
+                                        <tr role=" row">
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
+                                                rowspan="1" colspan="1" aria-sort="ascending"
+                                                aria-label="Name: activate to sort column descending"
+                                                style="width: 50px;">
+                                                店家名稱</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 20px;">店家類型</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 150px;">店家地址</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Office: activate to sort column ascending"
+                                                style="width: 50px;">店家電話</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Age: activate to sort column ascending"
+                                                style="width: 30px;">店家網站</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Office: activate to sort column ascending"
+                                                style="width: 50px;">低消金額</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Salary: activate to sort column ascending"
+                                                style="width: 60px;"></th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Salary: activate to sort column ascending"
+                                                style="width: 60px;"></th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
+
     </main>
     <!-- ======= Footer ======= -->
     <footer id="footer">

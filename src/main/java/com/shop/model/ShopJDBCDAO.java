@@ -1,25 +1,29 @@
 package com.shop.model;
 
 import java.util.*;
+
+import com.menu.model.MenuVO;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 
 public class ShopJDBCDAO implements ShopDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/dbcga101g3?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "1qaz2wsx";
 //	String driver = "com.mysql.cj.jdbc.Driver";
-//	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
-//	String userid = "cga101-03";
-//	String passwd = "cga101-03";
+//	String url = "jdbc:mysql://localhost:3306/dbcga101g3?serverTimezone=Asia/Taipei";
+//	String userid = "root";
+//	String passwd = "1qaz2wsx";
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
+	String userid = "cga101-03";
+	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "INSERT INTO shop (shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM shop order by shop_id";
 	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? where shop_id = ?";
 	private static final String GET_ONE_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop where shop_id = ?";
 	private static final String GET_BY_SETWHERE = "SELECT * FROM shop";
+	private static final String GET_Menus_ByShop_id_STMT = "SELECT * FROM menu where shop_id = ? order by menu_id";
 
 	@Override
 	public void insert(ShopVO shopVO) {
@@ -381,6 +385,67 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public Set<MenuVO> getMenusByShopid(Integer shop_id) {
+		Set<MenuVO> set = new LinkedHashSet<MenuVO>();
+		MenuVO menuVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+	
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_Menus_ByShop_id_STMT);
+			pstmt.setInt(1, shop_id);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				menuVO = new MenuVO();
+				menuVO.setMenu_id(rs.getInt(1));
+				menuVO.setShop_id(rs.getInt(2));
+				menuVO.setItem(rs.getString(3));
+				menuVO.setPrice(rs.getInt(4));
+				menuVO.setIs_item(rs.getInt(5));
+				menuVO.setMenu_upd(rs.getTimestamp(6));
+				set.add(menuVO); 
+			}
+			// Handle any driver errors
+					} catch (ClassNotFoundException e) {
+						throw new RuntimeException("Couldn't load database driver. "
+								+ e.getMessage());
+						// Handle any SQL errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. "
+								+ se.getMessage());
+					} finally {
+						if (rs != null) {
+							try {
+								rs.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+					return set;
+				}
 
 	public static void main(String[] args) {
 
@@ -485,7 +550,12 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 //			System.out.println();
 //		}
 		
-		
+		// 查詢某家電店的菜單
+				Set<MenuVO> set = dao.getMenusByShopid(101);
+				for (MenuVO aMenu : set) {
+					System.out.println(aMenu.toString());
+				}
+				System.out.println("完成");
 	}
 
 	public static byte[] getPictureByteArray(String path) throws IOException {
@@ -495,4 +565,6 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 		fis.close();
 		return buffer;
 	}
+
+	
 }

@@ -2,6 +2,8 @@ package com.shop.model;
 
 import java.util.*;
 
+import com.menu.model.MenuVO;
+
 public interface ShopDAO_interface {
 
 	public void insert(ShopVO shopVO);
@@ -15,4 +17,6 @@ public interface ShopDAO_interface {
 	public List<ShopVO> findByShopType(Integer shop_type);
 
 	public List<ShopVO> getAll();
+	
+	public Set<MenuVO> getMenusByShopid(Integer shop_id);
 }

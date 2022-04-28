@@ -8,6 +8,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.menu.model.MenuVO;
+
 public class ShopDAO implements ShopDAO_interface {
 
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
@@ -26,7 +28,8 @@ public class ShopDAO implements ShopDAO_interface {
 	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? where shop_id = ?";
 	private static final String GET_ONE_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop where shop_id = ?";
 	private static final String GET_BY_SETWHERE = "SELECT * FROM shop";
-
+	private static final String GET_Menus_ByShop_id_STMT = "SELECT * FROM menu where shop_id = ? order by menu_id";
+	
 	@Override
 	public void insert(ShopVO shopVO) {
 
@@ -367,4 +370,61 @@ public class ShopDAO implements ShopDAO_interface {
 		return list;
 	}
 
-}
+	@Override
+	public Set<MenuVO> getMenusByShopid(Integer shop_id) {
+		Set<MenuVO> set = new LinkedHashSet<MenuVO>();
+		MenuVO menuVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Menus_ByShop_id_STMT);
+			pstmt.setInt(1, shop_id);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				menuVO = new MenuVO();
+				menuVO.setMenu_id(rs.getInt(1));
+				menuVO.setShop_id(rs.getInt(2));
+				menuVO.setItem(rs.getString(3));
+				menuVO.setPrice(rs.getInt(4));
+				menuVO.setIs_item(rs.getInt(5));
+				menuVO.setMenu_upd(rs.getTimestamp(6));
+				set.add(menuVO); 
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
+	}
+

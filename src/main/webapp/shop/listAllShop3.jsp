@@ -9,40 +9,14 @@
 ShopService shopSvc = new ShopService();
 List<ShopVO> list = shopSvc.getAll();
 pageContext.setAttribute("list", list);
+int itemsPerPage = 10;
 %>
         <!DOCTYPE html>
         <html lang="zh-TW">
 
         <head>
             <%@ include file="/design/frontmetacss.jsp" %>
-                <style>
-                    html {
-                        --header-height: 96px;
-                        --footer-height: 62px;
-                    }
 
-                    html,
-                    body {
-                        height: 100%
-                    }
-
-                    header {
-                        position: sticky;
-                        top: 0;
-                        height: var(--header-height);
-                    }
-
-                    .wrapper {
-                        min-height: calc(100% - var(--footer-height));
-                    }
-
-                    footer {
-                        height: var(--footer-height);
-                        weight: 100%vw;
-                        position: sticky;
-                        bottom: 0;
-                    }
-                </style>
 
         </head>
 
@@ -50,7 +24,8 @@ pageContext.setAttribute("list", list);
             <div class="wrapper">
                 <!-- ======= Header ======= -->
                 <%@ include file="/design/frontheader.jsp" %>
-              
+
+                    <!-- ======= 內容開始 ======= -->
 <table>
 		<tr>
 			<th>shop_id</th>
@@ -67,6 +42,7 @@ pageContext.setAttribute("list", list);
 			<th>修改</th>
 		</tr>
 		<%@ include file="/design/page1.file"%>
+		
 		<c:forEach var="shopVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
@@ -112,19 +88,14 @@ pageContext.setAttribute("list", list);
 	<%@ include file="/design/page2.file"%>
 
 
+                    <!-- ======= 內容結束 ======= -->
 
+            </div>
+            <!-- ======= Footer ======= -->
+            <%@ include file="/design/frontfooter.jsp" %>
+                <!-- ======= js ======= -->
+                <%@ include file="/design/frontjs.jsp" %>
 
-
-
-
-
-
-                    </div>
-                    <!-- ======= Footer ======= -->
-                    <%@ include file="/design/frontfooter.jsp" %>
-                        <!-- ======= js ======= -->
-                        <%@ include file="/design/frontjs.jsp" %>
-         
         </body>
 
         </html>

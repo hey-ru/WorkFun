@@ -140,11 +140,11 @@ public class ShopServlet extends HttpServlet {
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
 				
 				String shop_name = req.getParameter("shop_name");
-				String shop_nameReg ="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]*$";
+				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
 				if (shop_name == null || shop_name.trim().length() == 0) {
 					errorMsgs.put("shop_name","店家名稱: 請勿空白");
 				} else if(!shop_name.trim().matches(shop_nameReg)) {
-					errorMsgs.put("shop_name","店家: 只能是中、英文字母、數字和_");
+					errorMsgs.put("shop_name","店家: 只能是中、日、英文字母、數字、_、-和()");
 	            }
 				
 				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());
@@ -152,18 +152,18 @@ public class ShopServlet extends HttpServlet {
 				
 				String address = req.getParameter("address").trim();
 				//String addressReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
-				String addressReg ="^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]*$";
+				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$";
 				if ((address.trim().length() != 0) && !(address.trim().matches(addressReg))) { 
-					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_");
+					errorMsgs.put("address","地址: 只能是中、英文字母、數字、-和_");
 	            }
 				
 				String tel = req.getParameter("tel");
-//				String telReg = "^[(0-9)]{9,11}$";
-//				if (tel == null || tel.trim().length() == 0) {
-//					errorMsgs.put("tel","電話:請至少留一個電話或手機號碼");
-//				} else if(!tel.trim().matches(telReg)) { 
-//					errorMsgs.put("tel","電話:請再確認一下號碼");
-//	            }
+				String telReg = "(\\d{2,3}-?|\\(\\d{2,3}\\)-?)\\d{3,4}-?\\d{4}|09\\d{2}-?(\\d{6}|-\\d{3}-\\d{3})";
+				if (tel == null || tel.trim().length() == 0) {
+					errorMsgs.put("tel","電話:請至少留一個電話或手機號碼");
+				} else if(!tel.trim().matches(telReg)) { 
+					errorMsgs.put("tel","電話:請再確認一下號碼");
+	            }
 				
 				String website = req.getParameter("website");
 				
@@ -177,9 +177,12 @@ public class ShopServlet extends HttpServlet {
 					}
 				}
 				
-				byte[] shop_img1 = null;
-				byte[] shop_img2 = null;
-				byte[] shop_img3 = null;
+				
+				ShopVO oldshopVO = new ShopService().getOneShop(shop_id);
+							
+				byte[] shop_img1 = oldshopVO.getShop_img1();
+				byte[] shop_img2 = oldshopVO.getShop_img2();
+				byte[] shop_img3 = oldshopVO.getShop_img3();
 				
 				Part pic1 = req.getPart("shop_img1");
 				String filename1 = getFileNameFromPart(pic1);
