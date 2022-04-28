@@ -29,7 +29,8 @@ import com.emp.model.EmpVO;
 					, 
 		urlPatterns = { 
 				"/emp/*",
-				"/home/*"
+				"/home/*",
+				"/secondhand/*"
 				
 		})
 public class LoginFilter extends HttpFilter implements Filter {
