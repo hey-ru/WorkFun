@@ -10,7 +10,7 @@ import javax.servlet.http.Part;
 public class ReportService{
 	private ReportDAO_interface dao;
 	
-	public ReportService() { 
+	public ReportService() {
 		dao = new ReportJDBCDAO();
 	}
 	
@@ -40,19 +40,19 @@ public class ReportService{
 		return reportVO;
 	}
 	
-	public ReportVO updateReport(Integer handler, String content,Timestamp updatetime,Timestamp endtime,
-			Integer status, byte[] report_image, Integer report_type , String title) {
+	public ReportVO updateReport(String title , Integer report_type,
+			Integer reporter,Integer handler, String content,
+			byte[] report_image ,Integer report_id) {
 
 		ReportVO reportVO = new ReportVO();
-
+		
+		reportVO.setTitle(title);
+		reportVO.setReport_type(report_type);
+		reportVO.setReporter(reporter);
 		reportVO.setHandler(handler);
 		reportVO.setContent(content);
-		reportVO.setUpdatetime(updatetime);
-		reportVO.setEndtime(endtime);
-		reportVO.setStatus(status);
 		reportVO.setReport_image(report_image);
-		reportVO.setReport_type(report_type);
-		reportVO.setTitle(title);
+		reportVO.setReport_id(report_id);
 		dao.update(reportVO);
 
 		return reportVO;

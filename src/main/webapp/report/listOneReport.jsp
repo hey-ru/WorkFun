@@ -190,7 +190,7 @@
 
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupFile01">回報圖片</label>                              
-                              <img src="<%=request.getContextPath()%>/reportServlet/report_id?report_image=${reportVO.report_image} width='300' height='300'">
+                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id=${reportVO.report_id}id_key=report_id&table=report&pic=report_image" width='300' height='300'>
                             </div>
 
                             <div class="input-group">

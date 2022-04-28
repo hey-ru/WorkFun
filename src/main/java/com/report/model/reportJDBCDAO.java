@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO report (reporter,handler,content,status,report_image,report_type,title) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM report";
 	private static final String GET_ONE_STMT = "SELECT * FROM report where report_id = ?";
-	private static final String UPDATE = "UPDATE report set ";
+	private static final String UPDATE = "UPDATE report set title=?,report_type=?,reporter=?,handler=?,content=?,report_image=? where report_id= ?";
 	private static final String GET_KEYWORD = "SELECT * FROM report";
 
 	@Override
@@ -68,103 +69,100 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	public void update(ReportVO reportVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int count = 0;
+//		int count = 0;
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 
-			ReportVO oldreport = findByPrimaryKey(reportVO.getReport_id());
-			System.out.println(oldreport.getReport_id());
-			StringBuilder sb = new StringBuilder();
-			sb.append(UPDATE);
-
-			if (reportVO.getHandler() != null) {
-				sb.append("handler=?, ");
-			}
-			if (reportVO.getUpdatetime() != null) {
-				sb.append("updatetime=?,");
-			}
-			if (reportVO.getEndtime() != null) {
-				sb.append("endtime=?, ");
-			}
-			if (reportVO.getContent() != null) {
-				sb.append("content=?, ");
-			}
-			if (reportVO.getStatus() != null) {
-				sb.append("status=?, ");
-			}
-			if (reportVO.getReport_image() != null) {
-				sb.append("report_image=?, ");
-			}
-			if (reportVO.getReport_type() != null) {
-				sb.append("report_type=?, ");
-			}
-			if (reportVO.getTitle() != null) {
-				sb.append("titile=?, ");
-			}
-			sb.append("report_id =?");
-			sb.append(" where report_id=?");
-
-			pstmt = con.prepareStatement(sb.toString());
-
-			if (reportVO.getHandler() != null) {
-				count++;
-				pstmt.setInt(count, reportVO.getHandler());
-			}
-
-			if (reportVO.getUpdatetime() != null) {
-				count++;
-				pstmt.setTimestamp(count, reportVO.getUpdatetime());
-			}
-			if (reportVO.getEndtime() != null) {
-				count++;
-				pstmt.setTimestamp(count, reportVO.getEndtime());
-			}
-
-			if (reportVO.getContent() != null) {
-				count++;
-				pstmt.setString(count, reportVO.getContent());
-			}
-
-			if (reportVO.getStatus() != null) {
-				count++;
-				pstmt.setInt(count, reportVO.getStatus());
-			}
-
-			if (reportVO.getReport_image() != null) {
-				count++;
-				pstmt.setBytes(count, reportVO.getReport_image());
-			}
-
-			if (reportVO.getReport_type() != null) {
-				count++;
-				pstmt.setInt(count, reportVO.getReport_type());
-			}
-			
-			if (reportVO.getTitle() != null) {
-				count++;
-				pstmt.setString(count,reportVO.getTitle());
-			}
-
-			count++;
-			pstmt.setInt(count, reportVO.getReport_id());
-			count++;
-			pstmt.setInt(count, reportVO.getReport_id());
-
-//			pstmt = con.prepareStatement(UPDATE);
+//			ReportVO oldreport = findByPrimaryKey(reportVO.getReport_id());
+//			System.out.println(oldreport.getReport_id());
+//			StringBuilder sb = new StringBuilder();
+//			sb.append(UPDATE);
 //
-//			pstmt.setInt(1, reportVO.getReporter());
-//			pstmt.setInt(2, reportVO.getHandler());
-//			pstmt.setTimestamp(3, reportVO.getStarttime());
-//			pstmt.setTimestamp(4, reportVO.getUpdatetime());
-//			pstmt.setTimestamp(5, reportVO.getEndtime());
-//			pstmt.setString(6, reportVO.getContent());
-//			pstmt.setInt(7, reportVO.getStatus());
-//			pstmt.setBytes(8, reportVO.getReport_image());
-//			pstmt.setInt(9, reportVO.getReport_type());
-//			pstmt.setInt(10, reportVO.getReport_id());
+//			if (reportVO.getHandler() != null) {
+//				sb.append("handler=?, ");
+//			}
+//			if (reportVO.getUpdatetime() != null) {
+//				sb.append("updatetime=?,");
+//			}
+//			if (reportVO.getEndtime() != null) {
+//				sb.append("endtime=?, ");
+//			}
+//			if (reportVO.getContent() != null) {
+//				sb.append("content=?, ");
+//			}
+//			if (reportVO.getStatus() != null) {
+//				sb.append("status=?, ");
+//			}
+//			if (reportVO.getReport_image() != null) {
+//				sb.append("report_image=?, ");
+//			}
+//			if (reportVO.getReport_type() != null) {
+//				sb.append("report_type=?, ");
+//			}
+//			if (reportVO.getTitle() != null) {
+//				sb.append("title=?, ");
+//			}
+//			sb.append("report_id =?");
+//			sb.append(" where report_id=?");
+//
+//			pstmt = con.prepareStatement(sb.toString());
+//
+//			if (reportVO.getHandler() != null) {
+//				count++;
+//				pstmt.setInt(count, reportVO.getHandler());
+//			}
+//
+//			if (reportVO.getUpdatetime() != null) {
+//				count++;
+//				pstmt.setTimestamp(count, reportVO.getUpdatetime());
+//			}
+//			if (reportVO.getEndtime() != null) {
+//				count++;
+//				pstmt.setTimestamp(count, reportVO.getEndtime());
+//			}
+//
+//			if (reportVO.getContent() != null) {
+//				count++;
+//				pstmt.setString(count, reportVO.getContent());
+//			}
+//
+//			if (reportVO.getStatus() != null) {
+//				count++;
+//				pstmt.setInt(count, reportVO.getStatus());
+//			}
+//
+//			if (reportVO.getReport_image() != null) {
+//				count++;
+//				pstmt.setBytes(count, reportVO.getReport_image());
+//			}
+//
+//			if (reportVO.getReport_type() != null) {
+//				count++;
+//				pstmt.setInt(count, reportVO.getReport_type());
+//			}
 //			
+//			if (reportVO.getTitle() != null) {
+//				count++;
+//				pstmt.setString(count,reportVO.getTitle());
+//			}
+//
+//			count++;
+//			pstmt.setInt(count, reportVO.getReport_id());
+//			count++;
+//			pstmt.setInt(count, reportVO.getReport_id());
+
+			pstmt = con.prepareStatement(UPDATE);
+			
+			pstmt.setString(1, reportVO.getTitle());
+			pstmt.setInt(2, reportVO.getReport_type());
+			pstmt.setInt(3, reportVO.getReporter());
+			pstmt.setInt(4, reportVO.getHandler());
+			pstmt.setString(5, reportVO.getContent());
+			pstmt.setBytes(6, reportVO.getReport_image());
+			pstmt.setInt(7, reportVO.getReport_id());
+		
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors
@@ -422,15 +420,15 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 
 	}
 
-	public static void main(String[] args) throws Exception {
+//	public static void main(String[] args) throws Exception {
 		
-		 ReportService repSvc = new ReportService();
-		    List<ReportVO> list = repSvc.getAll();
-		    for(ReportVO rep : list) {
-				System.out.println(rep);
-
-		    }
-//		reportJDBCDAO dao = new reportJDBCDAO();
+//		 ReportService repSvc = new ReportService();
+//		    List<ReportVO> list = repSvc.getAll();
+//		    for(ReportVO rep : list) {
+//				System.out.println(rep);
+//
+//		    }
+//		ReportJDBCDAO dao = new ReportJDBCDAO();
 //		reportVO repVO = new reportVO();
 //
 //		Long datetime = System.currentTimeMillis();
@@ -453,23 +451,20 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 //		in.close();
 
 // 		Update-------------------------------------------------------
-//		reportVO reportVO2 = new reportVO();
-//		repVO.setReport_id(1005);
+//		ReportVO repVO = new ReportVO();
+//		repVO.setTitle("測試更新");
 //		repVO.setReporter(1005);
 //		repVO.setHandler(1020);
 //		repVO.setStarttime(timestamp);
 //		repVO.setUpdatetime(timestamp);
 //		repVO.setEndtime(null);
-//		repVO.setContent("");
-//		repVO.setStatus(0);
+//		repVO.setContent("Test");
+//		repVO.setStatus(1);
 //		repVO.setReport_image(null);
 //		repVO.setReport_type(2);
+//		repVO.setReport_id(1001);
 //		dao.update(repVO);
 
-//		reportVO2.setReport_id(1007);
-//		reportVO2.setContent("Test");
-//		reportVO2.setUpdatetime(timestamp);
-//		dao.update(reportVO2);
 //		in.close();
 
 //-select------------------------------------------
@@ -516,6 +511,6 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 //			System.out.println(rep1.getReport_image());
 //			System.out.println(rep1.getReport_id());
 //		}
-	}
-}
+//	}
 //}
+}

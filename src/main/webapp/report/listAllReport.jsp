@@ -242,7 +242,8 @@ pageContext.setAttribute("list", list);
 											</tr>
 										</thead>
 										<thead>
-
+<%@ include file="/design/page1.file"%>
+<%@ include file="/design/page2.file"%>
 											<c:forEach var="reportVO" items="${list}">
 												<tr class="odd">
 													<td>${reportVO.title}</td>
