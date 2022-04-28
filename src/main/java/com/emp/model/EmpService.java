@@ -30,6 +30,13 @@ public class EmpService {
 		return b;
 	}
 
+	public EmpVO login(Integer empId, String password ) {
+		EmpVO empVO=dao.selectForLogin(empId, password);
+		return empVO;
+		
+		
+	}
+	
 	public int updateEmp(EmpVO empVO) {
 
 		

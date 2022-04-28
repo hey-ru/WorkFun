@@ -1,9 +1,9 @@
 package com.emp.model;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
-import com.core.Core;
+
+
 
 public class EmpVO {
 	private Integer empId;

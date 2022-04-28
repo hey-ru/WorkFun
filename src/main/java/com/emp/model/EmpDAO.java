@@ -22,12 +22,6 @@ import com.util.*;
 public class EmpDAO implements EmpDAO_interface {
 	
 	
-	
-	
-	
-	
-	
-	
 	private static final String LOGIN_STMT = "select * from emp where emp_id = ? and emp_password = ? ";
 	
 	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
@@ -394,7 +388,7 @@ return empVO;
 				empVO.setMail(rs.getString("mail"));
 				empVO.setBirthday(rs.getDate("birthday"));
 				empVO.setEmpStatus(rs.getByte("emp_status"));
-System.out.println("成功登入");
+
 			}
 
 		} catch (SQLException se) {
