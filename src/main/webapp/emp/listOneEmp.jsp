@@ -346,7 +346,7 @@
 				<td>${empVO.hobby}</td>
 				
 						<td>${empVO.skill}</td>
-							<td><img style="width:200px;length:200px"
+							<td><img style="width:50px;"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
 									"

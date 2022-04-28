@@ -445,8 +445,14 @@ return;
 					  else {
 						  HttpSession session = req.getSession();
 					      session.setAttribute("empVO", empVO);   //*工作1: 才在session內做已經登入過的標識
+					      String location=(String)session.getAttribute("location");
+					      if (location != null) {
+					           session.removeAttribute("location");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+					           res.sendRedirect(location);            
+					           return;
+					         }
 					      
-					      String url = "/home/home.jsp";
+					      String url = "/emp/backmain.jsp";
 							RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 							successView.forward(req, res);	
 							System.out.println(empVO);
@@ -457,7 +463,78 @@ return;
 		
 		
 		
-		
+		   if ("frontLogin".equals(action)) { // 來自addEmp.jsp的請求  
+				
+				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+
+//				try {
+					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+					String empIds = (req.getParameter("empId"));
+				
+					if (empIds == null || empIds.trim().length() == 0) {
+						errorMsgs.put("empId","帳號請勿空白");
+					}
+				
+					
+					
+
+
+					
+					
+					
+					
+					String empPassword = req.getParameter("empPassword").trim();
+					if (empPassword == null || empPassword.trim().length() == 0) {
+						errorMsgs.put("empPassword","密碼請勿空白");
+					}
+					
+					
+				
+
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/login/login.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+					
+					/***************************2.開始檢查帳號密碼***************************************/
+					Integer empId=Integer.valueOf(empIds);
+					EmpService empSvc = new EmpService();
+					 
+					EmpVO empVO=empSvc.login(empId,empPassword);
+					  if (empVO == null) {
+						
+							  errorMsgs.put("login","帳號密碼輸入錯誤");
+							   String url = "/login/login.jsp";
+							   
+								RequestDispatcher successView = req.getRequestDispatcher(url); 
+								successView.forward(req, res);	
+								
+							return;
+					  }
+					
+					  else {
+						  HttpSession session = req.getSession();
+					      session.setAttribute("empVO", empVO);   //*工作1: 才在session內做已經登入過的標識
+					      String location=(String)session.getAttribute("location");
+					      if (location != null) {
+					           session.removeAttribute("location");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+					           res.sendRedirect(location);            
+					           return;
+					         }
+					      
+					      String url = "/home/home.jsp";
+							RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+							successView.forward(req, res);	
+							System.out.println(empVO);
+							return;
+					  }
+	
+			}
+		   
 		
 		
 		
