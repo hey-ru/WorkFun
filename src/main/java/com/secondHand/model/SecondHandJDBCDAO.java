@@ -543,14 +543,15 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 	public static void main(String[] args) throws Exception {
 
-		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();
-
-		String fileName = "/Users/ryan/Coding/CGA101/secondHand_pic/木木梟.jpeg";
-		File file = new File(fileName);
-		FileInputStream fis = new FileInputStream(file);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
+//		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();
+//
+//		String fileName = "/Users/ryan/Coding/CGA101/secondHand_pic/木木梟.jpeg";
+//		File file = new File(fileName);
+//		FileInputStream fis = new FileInputStream(file);
+//		byte[] buffer = new byte[fis.available()];
+//		fis.read(buffer);
+//		fis.close();
+		
 //
 //		ByteBuffer bb = ByteBuffer.wrap(buffer);//base64
 //		ByteBuffer base64encoded = Base64.getEncoder().encode(bb);//base64

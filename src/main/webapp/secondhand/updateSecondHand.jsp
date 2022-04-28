@@ -65,8 +65,8 @@
 						<div class="dropdown">
 							<button class="dropbtn">二手競標</button>
 							<div class="dropdown-content">
-								<a href="<%=request.getContextPath()%>/secondhand/secondHandHome.jsp">競標首頁</a> <a
-									href="<%=request.getContextPath()%>/secondhand/addSecondHand.jsp">新增競標</a> <a href="#">修改競標(我沒有用)</a>
+								<a href="<%=request.getContextPath()%>/secondHandHome.jsp">競標首頁</a> <a
+									href="<%=request.getContextPath()%>/addSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
 							</div>
 						</div>
 					</li>
@@ -177,6 +177,7 @@
 							
 							<!-- General Form Elements -->
 							<form METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1" enctype="multipart/form-data">
+								<input name="second_hand_id" type="hidden" class="form-control" value="${param.second_hand_id}">
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">拍賣人id</label>
 									<div class="col-sm-10">
@@ -254,7 +255,7 @@
 								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label">Submit Button</label>
 									<div class="col-sm-10">
-										<input type="hidden" name="action" value="insert"> <input
+										<input type="hidden" name="action" value="update"> <input
 											type="submit" class="btn btn-primary" value="Submit Form">
 									</div>
 								</div>

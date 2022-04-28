@@ -67,8 +67,8 @@
                         <div class="dropdown">
                         <button class="dropbtn">二手競標</button>
 							<div class="dropdown-content">
-								<a href="secondHandHome.jsp">競標首頁</a> <a
-									href="addSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
+								<a href="<%=request.getContextPath()%>/secondhand/secondHandHome.jsp">競標首頁</a> <a
+									href="<%=request.getContextPath()%>/secondhand/addSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
                             </div>
                         </div>
                     </li>

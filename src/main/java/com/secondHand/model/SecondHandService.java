@@ -28,7 +28,7 @@ public class SecondHandService {
 		return secondHandVO;
 	}
 
-	public SecondHandVO updateSecondHand(Integer bid_winner, Integer deal_price, String name, Integer bottom_price, Integer top_price, Timestamp start_time, Timestamp end_time, Integer is_deal, byte[] img1, byte[] img2, byte[] img3) {
+	public SecondHandVO updateSecondHand(Integer bid_winner, Integer deal_price, String name, Integer bottom_price, Integer top_price, Timestamp start_time, Timestamp end_time, Integer is_deal, byte[] img1, byte[] img2, byte[] img3, Integer second_hand_id) {
 
 		SecondHandVO secondHandVO = new SecondHandVO();
 
@@ -43,6 +43,7 @@ public class SecondHandService {
 		secondHandVO.setImg1(img1);
 		secondHandVO.setImg2(img2);
 		secondHandVO.setImg3(img3);
+		secondHandVO.setsecond_hand_id(second_hand_id);
 		dao.update(secondHandVO);
 
 		return secondHandVO;

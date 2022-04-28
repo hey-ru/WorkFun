@@ -94,8 +94,8 @@ pageContext.setAttribute("list", list);
 						<div class="dropdown">
 							<button class="dropbtn">二手競標</button>
 							<div class="dropdown-content">
-								<a href="secondHandHome.jsp">競標首頁</a> <a
-									href="addSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
+								<a href="<%=request.getContextPath()%>/secondhand/secondHandHome.jsp">競標首頁</a> <a
+									href="<%=request.getContextPath()%>/secondhand/addSecondHand.jsp">新增競標</a> <a href="#">修改競標(我沒有用)</a>
 							</div>
 						</div>
 					</li>
@@ -257,10 +257,19 @@ pageContext.setAttribute("list", list);
 									<h4>${secondHandVO.name}</h4>
 									<p>[競標截止時間 ${secondHandVO.end_time}]</p>
 									<div class="portfolio-links">
-										<a href="${pageContext.request.contextPath}/groupbuy/buy.html"
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet"
+											style="margin-bottom: 0px;">
+											<input type="submit" value="修改"> <input type="hidden"
+												name="second_hand_id" value="${secondHandVO.second_hand_id}"> <input
+												type="hidden" name="action" value="getOneForUpdate">
+										</FORM>
+										<a
+											href="${pageContext.request.contextPath}/secondhand/updateSecondHand.jsp"
 											class="portfolio-details-lightbox"
 											data-glightbox="type: external" title="參與競標"> <i
-											class="bx bx-link"></i></a>
+											class="bx bx-link"></i>工事中
+										</a>
 									</div>
 								</div>
 							</div>
