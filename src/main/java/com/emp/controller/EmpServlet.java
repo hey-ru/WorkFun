@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 
 import com.emp.model.*;
 @MultipartConfig
-@WebServlet("/emp/emp.do")
+@WebServlet("/empServlet")
 public class EmpServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -134,7 +134,7 @@ public class EmpServlet extends HttpServlet {
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 		
-			try {
+		
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer empId = Integer.valueOf(req.getParameter("empId").trim());
 				String empName = req.getParameter("empName");
@@ -183,6 +183,7 @@ public class EmpServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("birthday","請輸入生日");
 				}
+				
 				EmpVO oldempVO = new EmpVO();
 				oldempVO.setEmpId(empId);
 				oldempVO.setEmpName(empName);
@@ -215,14 +216,7 @@ public class EmpServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
-			} catch (Exception e) {
-				errorMsgs.put("修改資料失敗",e.getMessage());
 			
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/update_emp_input.jsp");
-				failureView.forward(req, res);
-				
-			}
 		}
 
         if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
@@ -358,5 +352,92 @@ public class EmpServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		
+		
+		
+		
+		   if ("login".equals(action)) { // 來自addEmp.jsp的請求  
+				
+				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+
+//				try {
+					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+					String empIds = (req.getParameter("empId"));
+					 System.out.println(empIds+"before");
+					 System.out.println(empIds.trim().length());
+					if (empIds == null || empIds.trim().length() == 0) {
+						errorMsgs.put("empId","帳號請勿空白");
+					}
+				
+					
+					
+
+
+					
+					
+					
+					
+					String empPassword = req.getParameter("empPassword").trim();
+					if (empPassword == null || empPassword.trim().length() == 0) {
+						errorMsgs.put("empPassword","密碼請勿空白");
+					}
+					
+					
+				
+
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/login/login.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+					
+					/***************************2.開始檢查帳號密碼***************************************/
+					Integer empId=Integer.valueOf(empIds);
+					EmpService empSvc = new EmpService();
+					 
+					EmpVO empVO=empSvc.login(empId,empPassword);
+					  if (empVO == null) {
+						
+							  errorMsgs.put("login","帳號密碼輸入錯誤");
+							   String url = "/login/login.jsp";
+							   
+								RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+								successView.forward(req, res);	
+								
+							return;
+					  }
+					
+					  else {
+						  HttpSession session = req.getSession();
+					      session.setAttribute("empVO", empVO);   //*工作1: 才在session內做已經登入過的標識
+					      
+					      String url = "/home/home.jsp";
+							RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+							successView.forward(req, res);	
+							System.out.println(empVO);
+							return;
+					  }
+	
+			}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
