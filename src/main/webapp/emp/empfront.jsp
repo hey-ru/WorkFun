@@ -305,11 +305,14 @@
 										value="${empVO.hiredate}" class="form-control"
 										aria-label="Recipient's username"
 										aria-describedby="basic-addon2">
+											<input
+										type="hidden" name="where" size="45" id="f_date2"
+										value="<%=request.getContextPath()%>/emp/" class="form-control"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2">
 										
 											</div>
 										</div>
-
-
 
 
 											<div class="col-md-8 col-lg-9">

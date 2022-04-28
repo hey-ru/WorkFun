@@ -65,11 +65,10 @@
                     </li>
                     <li>
                         <div class="dropdown">
-                            <button class="dropbtn">二手競標</button>
-                            <div class="dropdown-content">
-                                <a href="#">Link 1</a>
-                                <a href="#">Link 2</a>
-                                <a href="#">Link 3</a>
+                        <button class="dropbtn">二手競標</button>
+							<div class="dropdown-content">
+								<a href="secondHandHome.jsp">競標首頁</a> <a
+									href="addSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
                             </div>
                         </div>
                     </li>
