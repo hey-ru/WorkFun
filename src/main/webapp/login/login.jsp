@@ -22,7 +22,12 @@
 
     <!-- Custom styles for this template-->
     <link href="<%=request.getContextPath()%>/assets4login/css/sb-admin-2.min.css" rel="stylesheet">
- 
+ 	<style>
+ 	.bg-login-image {
+    background: url(<%=request.getContextPath()%>/assets4login/img/dog.jpeg);
+    
+}
+ 	</style>
 </head>
 
 <body class="bg-gradient-primary">
@@ -65,15 +70,15 @@
                                             </div>
                                         </div>
                                        <input
-										type="submit" value="登入" class="input-group-text"
-										id="basic-addon2">
+										type="submit" value="登入" class="input-group-text bg-info"
+										id="basic-addon2" style="width:345px; color:white; justify-content: center;">
                                         <hr>
                                         ${errorMsgs.login}
                                         <a href="" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
                                         
-                                        <input type="hidden" name="action" value="frontlogin"> 
+                                        <input type="hidden" name="action" value="frontLogin"> 
                                     </FORM>
                                     <hr>
                                     <div class="text-center">
