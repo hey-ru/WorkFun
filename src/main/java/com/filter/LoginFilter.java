@@ -28,6 +28,14 @@ import com.emp.model.EmpVO;
 		}
 					, 
 		urlPatterns = { 
+				"/booking/*",
+				"/equipment/*",
+				"/report/*",
+				"/post/*",
+				"/menu/*",
+				"/shop/*",
+				"/groupbuy/*",
+				"/groupbuylist/*",
 				"/emp/*",
 				"/home/*",
 				"/secondhand/*"

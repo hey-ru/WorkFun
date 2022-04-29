@@ -65,7 +65,7 @@ public class EmpServlet extends HttpServlet {
 				EmpService empSvc = new EmpService();
 				EmpVO empVO = empSvc.getOneEmp(empId,con);
 				if (empVO == null) {
-					errorMsgs.put("empno","查無資料");
+					errorMsgs.put("login","查無帳號");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
