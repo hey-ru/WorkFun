@@ -3,6 +3,7 @@ package com.emp.model;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.List;
 
 import javax.servlet.http.Part;
@@ -22,6 +23,14 @@ public class EmpService {
 
 		return empVO;
 	}
+
+	public EmpVO addEmp(EmpVO empVO,Connection oneConnection) {
+
+	
+		dao.insert(empVO,oneConnection);
+
+		return empVO;
+	}
 	
 	public byte[] uploadImage(Part part) throws IOException {
 		InputStream ins= part.getInputStream();
@@ -30,7 +39,14 @@ public class EmpService {
 		return b;
 	}
 
+
 	public EmpVO login(Integer empId, String password ) {
+		EmpVO empVO=dao.selectForLogin(empId, password);
+		return empVO;
+		
+		
+	}
+	public EmpVO login(Integer empId, String password,Connection oneConnection ) {
 		EmpVO empVO=dao.selectForLogin(empId, password);
 		return empVO;
 		
@@ -45,16 +61,33 @@ public class EmpService {
 
 		return 1;
 	}
+public int updateEmp(EmpVO empVO,Connection oneConnection) {
+
+		
+		dao.update(empVO);
+
+
+		return 1;
+	}
 
 	public void deleteEmp(Integer empno) {
+		dao.delete(empno);
+	}
+	public void deleteEmp(Integer empno,Connection oneConnection) {
 		dao.delete(empno);
 	}
 
 	public EmpVO getOneEmp(Integer empno) {
 		return dao.findByPrimaryKey(empno);
 	}
+	public EmpVO getOneEmp(Integer empno,Connection connection) {
+		return dao.findByPrimaryKey(empno);
+	}
 
 	public List<EmpVO> getAll() {
+		return dao.getAllDAO();
+	}
+	public List<EmpVO> getAll(Connection oneConnection) {
 		return dao.getAllDAO();
 	}
 	
@@ -74,6 +107,7 @@ public class EmpService {
 		}
 		return filename;
 	}
+	
 	public  byte[] getByteArrayFromPart(Part part) throws IOException {
 		InputStream in = part.getInputStream();
 		byte[] buffer = new byte[in.available()];

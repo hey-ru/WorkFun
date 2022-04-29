@@ -322,6 +322,66 @@
 										</c:forEach>
 </tr>
 									</table>
+									                         <table class="table table-striped table-bordered table-hover"
+                                                id="dataTables-example">
+                                               <tr>
+		<th>員工編號</th>
+		<th>員工姓名</th>
+		<th>部門</th>
+		<th>雇用日期</th>
+		<th>離職日期</th>
+		<th>手機</th>
+		<th>分機</th>
+		<th>興趣</th>
+		<th>專長</th>
+		<th>頭貼</th>
+		<th>信箱</th>
+		<th>生日</th>
+		<th></th>
+		<th></th>
+		
+		
+	</tr>
+	
+	
+		
+		<tr>
+			<td>${empVO.empId}</td>
+			<td>${empVO.empName}</td>
+			<td>${empVO.depId}-[${empVO.deptVO.depName}]</td>
+			
+			<td>${empVO.hiredate}</td>
+				<td>${empVO.resigndate}</td>
+			<td>${empVO.phone}</td>
+			<td>${empVO.extension}</td> 
+				<td>${empVO.hobby}</td>
+				
+						<td>${empVO.skill}</td>
+							<td><img style="width:50px;"
+												src="
+									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
+									"
+												class="img-fluid"
+											></td>
+								<td>${empVO.mail}</td>
+									<td>${empVO.birthday}</td>
+										
+			
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
+			     <input type="submit" value="修改">
+			     <input type="hidden" name="empId"  value="${empVO.empId}">
+			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
+			     <input type="submit" value="刪除">
+			     <input type="hidden" name="empId"  value="${empVO.empId}">
+			     <input type="hidden" name="action" value="delete"></FORM>
+			</td>
+		</tr>
+	
+</table>
 									</div>
 									
 									

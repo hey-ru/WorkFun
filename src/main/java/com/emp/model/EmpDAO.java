@@ -90,6 +90,64 @@ public class EmpDAO implements EmpDAO_interface {
 return 1;
 	}
 
+	public int insert(EmpVO empVO,Connection oneConnection) {
+
+
+		Connection con=oneConnection;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setInt(1, empVO.getDepId());
+			pstmt.setString(2, empVO.getEmpName());
+			pstmt.setDate(3, empVO.getHiredate());
+			pstmt.setDate(4, empVO.getResigndate());
+			pstmt.setString(5, empVO.getPhone());
+			pstmt.setString(6, empVO.getExtension());
+			pstmt.setString(7, empVO.getEmpPassword());
+			pstmt.setString(8, empVO.getHobby());
+			pstmt.setString(9, empVO.getSkill());
+			pstmt.setBytes(10, empVO.getEmpProfile());
+			pstmt.setString(11, empVO.getMail());
+			pstmt.setDate(12, empVO.getBirthday());
+//			pstmt.setByte(13, empVO.getEmpStatus());
+//			pstmt.setInt(14, empVO.getEmpId());
+
+			pstmt.executeUpdate();
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			if (rs.next()) {
+//				employee_id = rs.getInt(1);
+//				System.out.println(rowCount + " row inserted; order ID: " + employee_id);
+//			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return 1;
+	}
 	public int update(EmpVO newemp) {
 
 		Connection con = null;
@@ -243,13 +301,164 @@ int count=0;
 					se.printStackTrace(System.err);
 				}
 			}
-			if (con != null) {
+			
+		}
+return 1;
+	}
+	public int update(EmpVO newemp,Connection oneConnection) {
+
+		Connection con = oneConnection;
+		PreparedStatement pstmt = null;
+
+int count=0;
+		try {
+
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(UPDATE);
+			
+			
+//			pstmt = con.prepareStatement(UPDATE);
+			EmpVO oldemp = findByPrimaryKey(newemp.getEmpId());
+			System.out.println(oldemp.getEmpId());
+		StringBuilder sb=new StringBuilder();
+			sb.append(UPDATE);
+			if (newemp.getDepId() != null) {
+				sb.append("dep_id=?, ");
+			}
+			if (newemp.getEmpName() != null) {
+				sb.append("emp_name=?, ");
+			}
+			if (newemp.getHiredate() != null) {
+				sb.append("hire_date=?, ");
+			}
+			if (newemp.getResigndate() != null) {
+				sb.append("resign_date=?, ");
+			}
+			if (newemp.getPhone() != null) {
+				sb.append("phone=?, ");
+			}
+			if (newemp.getExtension() != null) {
+				sb.append("extension=?, ");
+			}
+			if (newemp.getEmpPassword() != null) {
+				sb.append("emp_password=?, ");
+			}
+			if (newemp.getHobby() != null) {
+				sb.append("hobby=?, ");
+			}
+			if (newemp.getSkill() != null) {
+				sb.append("skill=?, ");
+			}
+			if (newemp.getEmpProfile() != null) {
+				sb.append("emp_profile=?, ");
+			}
+			if (newemp.getMail() != null) {
+				sb.append("mail=?, ");
+			}
+			if (newemp.getBirthday() != null) {
+				sb.append("birthday=?, ");
+			}
+			if (newemp.getEmpStatus() != null) {
+				sb.append("emp_status=?, ");
+			}
+	
+				sb.append("emp_id=? ");
+			
+			sb.append("where emp_id = ? ");
+			
+			
+			pstmt = con.prepareStatement(sb.toString());
+//			System.out.println(sb);
+			
+			if (newemp.getDepId() != null) {
+				count++;
+				pstmt.setInt(count, newemp.getDepId());
+			} 
+			
+			if (newemp.getEmpName() != null) {
+				count++;
+				pstmt.setString(count, newemp.getEmpName());
+			} 
+			
+			if (newemp.getHiredate() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getHiredate());
+			} 
+			
+			if (newemp.getResigndate() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getResigndate());
+			} 
+			
+			if (newemp.getPhone() != null) {
+				count++;
+				pstmt.setString(count, newemp.getPhone());
+			}
+		
+			if (newemp.getExtension() != null) {
+				count++;
+				pstmt.setString(count, newemp.getExtension());
+			} 
+			
+			if (newemp.getEmpPassword() != null) {
+				count++;
+				pstmt.setString(count, newemp.getEmpPassword());
+			} 
+			
+			if (newemp.getHobby() != null) {
+				count++;
+				pstmt.setString(count, newemp.getHobby());
+			} 
+			if (newemp.getSkill() != null) {
+				count++;
+				pstmt.setString(count, newemp.getSkill());
+			} 
+			
+			if (newemp.getEmpProfile() != null) {
+				count++;
+				pstmt.setBytes(count, newemp.getEmpProfile());
+			} 
+			
+			if (newemp.getMail() != null) {
+				count++;
+				pstmt.setString(count, newemp.getMail());
+			} 
+			
+			if (newemp.getBirthday() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getBirthday());
+			} 
+			if (newemp.getEmpStatus() != null) {
+				count++;
+				pstmt.setInt(count, newemp.getEmpStatus());
+			} 
+			
+		
+			
+			count++;
+			pstmt.setInt(count, newemp.getEmpId()); 
+			count++;
+			pstmt.setInt(count, newemp.getEmpId()); 
+			
+
+			pstmt.executeUpdate();
+			System.out.println(count);
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
 				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
 			}
+			
 		}
 return 1;
 	}
@@ -287,6 +496,36 @@ return 1;
 					e.printStackTrace(System.err);
 				}
 			}
+		}
+return 1;
+	}
+	public int delete(Integer EmpId,Connection oneConnection) {
+
+		Connection con =oneConnection;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(DELETE);
+			
+
+			pstmt.setInt(1, EmpId);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
 		}
 return 1;
 	}
@@ -351,7 +590,117 @@ return 1;
 		}
 return empVO;
 	}
+	public EmpVO findByPrimaryKey(Integer empno,Connection oneConnection) {
+
+		EmpVO empVO = null;
+		Connection con = oneConnection;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			
+
+			pstmt.setInt(1, empno);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo Domain objects
+				empVO = new EmpVO();
+				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
+				empVO.setEmpId(empno);
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
+		}
+return empVO;
+	}
 	public EmpVO selectForLogin(Integer empId, String password) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		EmpVO empVO = null;
+		ResultSet rs = null;
+		try {
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(LOGIN_STMT);
+		
+			
+
+			pstmt.setInt(1, empId);
+			pstmt.setString(2, password);
+		
+//			pstmt.setInt(14, empVO.getEmpId());
+
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo Domain objects
+				empVO = new EmpVO();
+				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
+				empVO.setEmpId(rs.getInt("emp_id"));
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
+		}
+return empVO;
+	}
+	public EmpVO selectForLogin(Integer empId, String password,Connection oneConnection) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		EmpVO empVO = null;
@@ -474,6 +823,64 @@ return empVO;
 					e.printStackTrace(System.err);
 				}
 			}
+		}
+return list;
+	}
+
+	public List<EmpVO> getAllDAO(Connection oneConnection) {
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		EmpVO empVO = null;
+
+		Connection con = oneConnection;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
+			// FROM emp order by emp_id";
+
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(GET_ALL_STMT);
+		
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+
+				empVO = new EmpVO();
+				empVO.setEmpId(rs.getInt("emp_id"));
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+//				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));				
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				list.add(empVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
 		}
 return list;
 	}

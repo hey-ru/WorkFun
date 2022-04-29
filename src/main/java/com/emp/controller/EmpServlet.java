@@ -1,7 +1,7 @@
 package com.emp.controller;
 
 import java.io.*;
-
+import java.sql.Connection;
 import java.util.*;
 
 import javax.servlet.*;
@@ -21,6 +21,8 @@ public class EmpServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
+		ServletContext context=getServletContext();
+	Connection con=(Connection)context.getAttribute("con");
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
@@ -61,7 +63,7 @@ public class EmpServlet extends HttpServlet {
 				
 				/***************************2.開始查詢資料*****************************************/
 				EmpService empSvc = new EmpService();
-				EmpVO empVO = empSvc.getOneEmp(empId);
+				EmpVO empVO = empSvc.getOneEmp(empId,con);
 				if (empVO == null) {
 					errorMsgs.put("empno","查無資料");
 				}
@@ -100,7 +102,7 @@ public class EmpServlet extends HttpServlet {
 				
 				/***************************2.開始查詢資料****************************************/
 				EmpService empSvc = new EmpService();
-				EmpVO empVO = empSvc.getOneEmp(empId);
+				EmpVO empVO = empSvc.getOneEmp(empId,con);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				String param = "?empId="  +empVO.getEmpId()+
@@ -227,7 +229,7 @@ public class EmpServlet extends HttpServlet {
 				
 				/***************************2.開始修改資料*****************************************/
 				
-				empSvc.updateEmp(oldempVO);
+				empSvc.updateEmp(oldempVO,con);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 //				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -327,7 +329,7 @@ public class EmpServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				
-				empSvc.addEmp(empVO);
+				empSvc.addEmp(empVO,con);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/emp/listAllEmp.jsp";
@@ -357,7 +359,7 @@ public class EmpServlet extends HttpServlet {
 				
 				/***************************2.開始刪除資料***************************************/
 				EmpService empSvc = new EmpService();
-				empSvc.deleteEmp(empId);
+				empSvc.deleteEmp(empId,con);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
 				String url = "/emp/listAllEmp.jsp";
@@ -430,7 +432,7 @@ return;
 					Integer empId=Integer.valueOf(empIds);
 					EmpService empSvc = new EmpService();
 					 
-					EmpVO empVO=empSvc.login(empId,empPassword);
+					EmpVO empVO=empSvc.login(empId,empPassword,con);
 					  if (empVO == null) {
 						
 							  errorMsgs.put("login","帳號密碼輸入錯誤");
@@ -504,7 +506,7 @@ return;
 					Integer empId=Integer.valueOf(empIds);
 					EmpService empSvc = new EmpService();
 					 
-					EmpVO empVO=empSvc.login(empId,empPassword);
+					EmpVO empVO=empSvc.login(empId,empPassword,con);
 					  if (empVO == null) {
 						
 							  errorMsgs.put("login","帳號密碼輸入錯誤");

@@ -98,8 +98,8 @@
                                 style="position: absolute; inset: 0px 0px auto auto; margin: 15px; transform: translate3d(-16px, 54px, 0px);"
                                 data-popper-placement="bottom-end">
                                 <li class="dropdown-header">
-                                    <h6>Peter Wu</h6>
-                                    <span>Java Consultant</span>
+                                    <h6>${empVO.empName }</h6>
+                                    <span></span><!-- 可輸入 -->
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
