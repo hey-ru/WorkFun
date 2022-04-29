@@ -7,15 +7,16 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.util.Introspection;
 
 import com.equipment.model.EquipmentService;
 import com.equipment.model.EquipmentVO;
 
+@WebServlet("/equipment/equipment.do")
 public class EquipmentServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
