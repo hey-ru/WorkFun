@@ -1,8 +1,13 @@
 package com.report.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -12,10 +17,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 import com.report.model.ReportService;
 import com.report.model.ReportVO;
+import com.shop.model.ShopService;
+import com.shop.model.ShopVO;
 
 @WebServlet("/reportServlet")
 @MultipartConfig
@@ -165,13 +175,20 @@ public class ReportServlet extends HttpServlet{
 			
 				String content = req.getParameter("content");
 			
+
+				ReportVO oldreportVO = new ReportService().getOneReport(report_id);
+							
+				byte[] report_image = oldreportVO.getReport_image();
 				
-				ReportService repSvc = new ReportService();
 				Part part = req.getPart("report_image");
-				byte[]report_image = repSvc.Image(part);
+				
 		
+				String filename1 = getFileNameFromPart(part);
+					if (filename1!= null && part.getContentType()!=null) {
+						report_image = getByteArrayFromPart(part);
+					}
 				
-				
+					ReportService repSvc = new ReportService();
 //				String titleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
 //				if (title == null || title.trim().length() == 0) {
 //					errorMsgs.put("title","標題: 請勿空白");
@@ -210,6 +227,63 @@ public class ReportServlet extends HttpServlet{
 				failureView.forward(req, res);
 			}
 		}
+	
+	if ("listQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+		List<String> errorMsgs = new LinkedList<String>();
+		// Store this set in the request scope, in case we need to
+		// send the ErrorPage view.
+		req.setAttribute("errorMsgs", errorMsgs);
 
+		try {
+			
+			/***************************1.將輸入資料轉為Map**********************************/ 
+			//採用Map<String,String[]> getParameterMap()的方法 
+			//注意:an immutable java.util.Map 
+			//Map<String, String[]> map = req.getParameterMap();
+			HttpSession session = req.getSession();
+			Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+			
+			// 以下的 if 區塊只對第一次執行時有效
+			if (req.getParameter("whichPage") == null){
+				Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+				session.setAttribute("map",map1);
+				map = map1;
+			} 
+			
+			/***************************2.開始複合查詢***************************************/
+			ReportService repSvc = new ReportService();
+			List<ReportVO> list  = repSvc.getAll(map);
+			
+			/***************************3.查詢完成,準備轉交(Send the Success view)************/
+			req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+			RequestDispatcher successView = req.getRequestDispatcher("/report/queryList.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+			successView.forward(req, res);
+			
+			/***************************其他可能的錯誤處理**********************************/
+		} catch (Exception e) {
+			errorMsgs.add(e.getMessage());
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/report/listAllReport.jsp");
+			failureView.forward(req, res);
+		}
+	}
+	
 }
+	public String getFileNameFromPart(Part part) {
+		String header = part.getHeader("content-disposition");
+		//System.out.println("header=" + header); // 測試用
+		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+		//System.out.println("filename=" + filename); // 測試用
+		if (filename.length() == 0) {
+			return null;
+		}
+		return filename;
+	}
+	public static byte[] getByteArrayFromPart(Part part) throws IOException {
+		InputStream in = part.getInputStream();
+		byte[] buffer = new byte[in.available()];
+		in.read(buffer);
+		in.close();
+		return buffer;
+	}
 }

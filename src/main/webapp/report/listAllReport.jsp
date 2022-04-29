@@ -17,30 +17,8 @@ int itemsPerPage = 10;
 <head>
 <meta charset="UTF-8">
 <title>所有回報資料 listAllReport</title>
+<%@ include file="/design/frontmetacss.jsp"%>
 
-<!-- Favicons -->
-<link href="${pageContext.request.contextPath}/assets/img/wf.png" rel="icon" />
-<link href="${pageContext.request.contextPath}/assets/img/wf.png" rel="apple-touch-icon" />
-
-<!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-	rel="stylesheet" />
-
-<!-- Vendor CSS Files -->
-<link href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css"
-	rel="stylesheet" />
-<!--     <link href="${pageContext.request.contextPath}/assets/vendor/boxicsdfdsfdsfons/css/boxicons.min.css" rel="stylesheet" /> -->
-<link href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css"
-	rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css"
-	rel="stylesheet" />
-
-<!-- Template Main CSS File -->
-<link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet" />
 <style>
  *{
       box-sizing: border-box;  /*預設值content-box*/
@@ -56,107 +34,7 @@ int itemsPerPage = 10;
 
 <body>
 	<!-- ======= Header ======= -->
-	<header id="header" class="fixed-top">
-		<div
-			class="container-fluid d-flex justify-content-between align-items-center">
-			<!-- <h1 class="logo me-auto me-lg-0"><a href="">WorkFun</a></h1> -->
-			<!-- 公司logo圖片 -->
-			<a href="Home.html" class="logo"><img
-				src="${pageContext.request.contextPath}/assets/img/workfun.gif" alt="" class="img-fluid"
-				width="230px"></a>
-
-			<nav id="navbar" class="navbar order-last order-lg-0">
-				<ul>
-					<!-- 修改跳頁 -->
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">揪團訂餐</button>
-							<div class="dropdown-content">
-								<a href="#">我要揪團</a> <a href="#">查詢揪團</a> <a href="#">查詢參團</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">二手競標</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">問題回報</button>
-							<div class="dropdown-content">
-								<a href="/CGA101G3/report/addReport.jsp">新增回報</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">硬體預約</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">塗鴉牆</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<i class="bi bi-list mobile-nav-toggle"></i>
-			</nav>
-			<!-- .navbar -->
-
-			<div class="navbar">
-				<ul>
-					<li>
-						<div>
-							<a href=""><i class="bi bi-chat-dots"
-								style="font-size: 25px; color: black"></i></a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a href=""><i class="bi bi-chat"
-								style="font-size: 25px; color: black"></i></a>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">
-								<i class="bi bi-bell" style="font-size: 25px"></i>
-							</button>
-							<div class="dropdown-content nav-item-right">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">
-								<i class="bi bi-person" style="font-size: 25px"></i>
-							</button>
-							<div class="dropdown-content nav-item-right">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</header>
+	<%@ include file="/design/frontheader.jsp"%>
 	<!-- End Header -->
 
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
@@ -177,19 +55,31 @@ int itemsPerPage = 10;
 							class="dataTables_wrapper dt-bootstrap4">
 
 							<div class="row">
-								<div class="col-10" style="height: 60px; display: inline-block;">
-						
-										<div class="form-group col-2" style="display: inline-block;">
-											<select class="form-control" id="exampleFormControlSelect1"
-												style="border: gray solid 2px;">
-												<option>選擇類型</option>
-												<option>添購新品</option>
-												<option>損壞報修</option>
-												<option>軟硬體問題</option>
-												<option>其他</option>
-											</select>
-										</div>
-							</div>
+								<%-- 萬用複合查詢-以下欄位-可隨意增減 --%>
+<ul>  
+  <li>   
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reportServlet" name="form1">
+     
+       <b>選擇類型:</b>
+       <select size="1" name="report_type" >
+          <option value="">
+         <c:forEach var="reportVO" items="${list}" > 
+          <option value="${reportVO.report_type}">
+         </c:forEach>   
+       </select>
+           
+        <b>選擇回報狀態:</b>
+       <select size="1" name="status" >
+          <option value="">
+         <c:forEach var="reportVO" items="${list}" > 
+          <option value="${reportVO.status}">
+         </c:forEach>   
+       </select>	        
+        <input type="submit" value="送出">
+        <input type="hidden" name="action" value="listQuery">
+     </FORM>
+  </li>
+</ul>
 						</div>
 
 						<div class="row">
@@ -267,38 +157,11 @@ int itemsPerPage = 10;
 		</div>
 	</main>
 	<!-- ======= Footer ======= -->
-	<footer id="footer">
-		<div class="container">
-			<div class="copyright">
-				&copy; Copyright <strong><span>WorkFun</span></strong>. All Rights
-				Reserved
-			</div>
-		</div>
-	</footer>
+	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- End  Footer -->
 
-	<div id="preloader"></div>
-	<a href="#"
-		class="back-to-top d-flex align-items-center justify-content-center"><i
-		class="bi bi-arrow-up-short"></i></a>
-
 	<!-- Vendor JS Files -->
-	<script src="${pageContext.request.contextPath}/assets/vendor/purecounter/purecounter.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/aos/aos.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/glightbox/js/glightbox.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/waypoints/noframework.waypoints.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-			integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-			crossorigin="anonymous"></script>
-
-	<!-- Template Main JS File -->
-	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-
+	<%@ include file="/design/frontjs.jsp"%>
 
 </body>
 </html>
