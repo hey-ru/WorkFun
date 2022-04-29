@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.report.model.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	ReportVO reportVO = (ReportVO) request.getAttribute("reportVO");
 %>
@@ -206,7 +207,7 @@
 					<img src="${reportVO.report_image}"> <label
 						class="input-group-text" for="inputGroupFile01">Upload</label> 
 						<input type="file" value="${param.report_image}" name="report_image"
-						accept="image/*"> 
+						accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:150px; width:150px" id="pic" /> 
 						<input type="file" style="display: none;" name="report_image" value="update">
 				</div>
 

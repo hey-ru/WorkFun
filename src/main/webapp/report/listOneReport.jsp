@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.report.model.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
  ReportVO reportVO = (ReportVO) request.getAttribute("reportVO");
 %>
@@ -173,12 +174,12 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">回報建立時間</span>
-                               <span>${reportVO.starttime}</span>
+                               <span><fmt:formatDate value="${reportVO.starttime}" pattern="yyyy-MM-dd HH:mm "/></span>
                                   
                                 <span class="input-group-text" id="basic-addon2">回報最新編輯時間</span>
-                              <span>${reportVO.updatetime}</span>  
+                              <span><fmt:formatDate value="${reportVO.updatetime}" pattern="yyyy-MM-dd HH:mm "/></span>  
                                 <span class="input-group-text" id="basic-addon2">回報結束時間</span>
-                              <span>${reportVO.endtime}</span>
+                              <span><fmt:formatDate value="${reportVO.endtime}" pattern="yyyy-MM-dd HH:mm "/></span>
                                 
                             </div>
                             <div class="input-group mb-3">

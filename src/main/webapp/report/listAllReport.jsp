@@ -3,10 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.report.model.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <%
 ReportService repSvc = new ReportService();
 List<ReportVO> list = repSvc.getAll();
 pageContext.setAttribute("list", list);
+int itemsPerPage = 10;
 %>
 
 <!DOCTYPE html>
@@ -41,6 +44,7 @@ pageContext.setAttribute("list", list);
 <style>
  *{
       box-sizing: border-box;  /*預設值content-box*/
+
       }
 #findreporter{
 	display: inline-block;
@@ -185,18 +189,6 @@ pageContext.setAttribute("list", list);
 												<option>其他</option>
 											</select>
 										</div>
-										<div id="findrepoter" style="display: inline-block;">
-											<FORM METHOD="post" ACTION="/CGA101G3/report">
-												<b>選擇員工編號:</b> <select size="1" name="report_id">
-													<c:forEach var="repVO" items="${list}">
-														<option value="${repVO.reporter}">${repVO.reporter}
-													</c:forEach>
-												</select> 
-												<input type="hidden" name="action"value="getOne_For_Display"> 
-													<input type="submit"value="送出">
-											</FORM>
-								</div>
-								
 							</div>
 						</div>
 
@@ -239,15 +231,16 @@ pageContext.setAttribute("list", list);
 											</tr>
 										</thead>
 										<thead>
-
-											<c:forEach var="reportVO" items="${list}">
+								<%@ include file="/design/page1.file"%>
+											<c:forEach var="reportVO" items="${list}" begin="<%=pageIndex%>"
+										end="<%=pageIndex+rowsPerPage-1%>">
 												<tr class="odd">
 													<td>${reportVO.title}</td>
 													<td class="sorting_1"><c:if test="${reportVO.report_type==0}">添購新品</c:if>
 													<c:if test="${reportVO.report_type==1}">損壞報修</c:if>
 													<c:if test="${reportVO.report_type==2}">軟硬體問題</c:if>
 													<c:if test="${reportVO.report_type==3}">其他</c:if></td>
-													<td>${reportVO.starttime}</td>
+													<td><fmt:formatDate value="${reportVO.starttime}" pattern="yyyy-MM-dd HH:mm "/></td>
 													<td>${reportVO.reporter}</td>
 													<td>${reportVO.handler}</td>
 													<td><c:if test="${reportVO.status==0}">已發送</c:if>
@@ -264,43 +257,9 @@ pageContext.setAttribute("list", list);
 
 										</thead>
 									</table>
-								
+								<%@ include file="/design/page2.file"%>
 							</div>
 						</div>
-
-						<div class="col-12">
-							<div class="dataTables_paginate paging_simple_numbers"
-								id="dataTable_paginate">
-								<ul class="pagination justify-content-center">
-									<li class="paginate_button page-item previous disabled"
-										id="dataTable_previous"><a href="#"
-										aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-										class="page-link">Previous</a></li>
-									<li class="paginate_button page-item active"><a href="#"
-										aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-										class="page-link">1</a></li>
-									<li class="paginate_button page-item "><a href="#"
-										aria-controls="dataTable" data-dt-idx="2" tabindex="0"
-										class="page-link">2</a></li>
-									<li class="paginate_button page-item "><a href="#"
-										aria-controls="dataTable" data-dt-idx="3" tabindex="0"
-										class="page-link">3</a></li>
-									<li class="paginate_button page-item "><a href="#"
-										aria-controls="dataTable" data-dt-idx="4" tabindex="0"
-										class="page-link">4</a></li>
-									<li class="paginate_button page-item "><a href="#"
-										aria-controls="dataTable" data-dt-idx="5" tabindex="0"
-										class="page-link">5</a></li>
-									<li class="paginate_button page-item "><a href="#"
-										aria-controls="dataTable" data-dt-idx="6" tabindex="0"
-										class="page-link">6</a></li>
-									<li class="paginate_button page-item next" id="dataTable_next"><a
-										href="#" aria-controls="dataTable" data-dt-idx="7"
-										tabindex="0" class="page-link">Next</a></li>
-								</ul>
-							</div>
-						</div>
-
 					</div>
 				</div>
 			</div>
@@ -333,10 +292,9 @@ pageContext.setAttribute("list", list);
 	<script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+			integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+			crossorigin="anonymous"></script>
 
 	<!-- Template Main JS File -->
 	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>

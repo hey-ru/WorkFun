@@ -74,29 +74,29 @@ public class ReportServlet extends HttpServlet{
 				Integer reporter = Integer.valueOf(req.getParameter("reporter").trim());
 				Integer handler = Integer.valueOf(req.getParameter("handler").trim());
 				String content = req.getParameter("content");
-//				String contentReg = "^[(\u4e00-\u9fa5_a-zA-Z0-9)]$";
-//				if (content == null || content.trim().length() == 0) {
-//					errorMsgs.put("content","回報內容: 請勿空白");
-//				} else if(!content.trim().matches(contentReg)) { //以下練習正則(規)表示式(regular-expression)
-//					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字");
-//	            }
+				String contentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_)]*$";
+				if (content == null || content.trim().length() == 0) {
+					errorMsgs.put("content","回報內容: 請勿空白");
+				} else if(!content.trim().matches(contentReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字");
+	            }
 				Integer status = Integer.valueOf(req.getParameter("status").trim());
 				Integer report_type = Integer.valueOf(req.getParameter("report_type").trim());
 				
 				String title = req.getParameter("title");
-//				String titleReg = "^[(\u4e00-\u9fa5_a-zA-Z0-9)]$";
-//				if (title == null || title.trim().length() == 0) {
-//					errorMsgs.put("title","標題: 請勿空白");
-//				} else if(!title.trim().matches(titleReg)) { //以下練習正則(規)表示式(regular-expression)
-//					errorMsgs.put("title","標題: 只能是中、英文字母、數字");
-//	            }
+				String titleReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_)]*$";
+				if (title == null || title.trim().length() == 0) {
+					errorMsgs.put("title","標題: 請勿空白");
+				} else if(!title.trim().matches(titleReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("title","標題: 只能是中、英文字母、數字");
+	            }
 				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/report/addReport.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/report/addReport.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 //				System.out.println(errorMsgs);
 				/***************************2.開始新增資料***************************************/
 				ReportService repSvc= new ReportService();
@@ -105,7 +105,6 @@ public class ReportServlet extends HttpServlet{
 //						status, report_image, report_type , title);			
 //				for(Part part :parts) {					
 				byte[]report_image = repSvc.Image(part);
-				System.out.println(report_image);
 					ReportVO reportVO = repSvc.addReport(reporter,handler,content,
 							status,report_image,report_type ,title);
 //				}
@@ -155,22 +154,22 @@ public class ReportServlet extends HttpServlet{
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
-				System.out.println(report_id);
+			
 				Integer handler = Integer.valueOf(req.getParameter("handler").trim());
 
 				Integer reporter = Integer.valueOf(req.getParameter("reporter").trim());
 		
 				Integer report_type = Integer.valueOf(req.getParameter("report_type").trim());
-				System.out.println(report_type);
+			
 				String title = req.getParameter("title");
-				System.out.println(title);
+			
 				String content = req.getParameter("content");
-				System.out.println(content);
+			
 				
 				ReportService repSvc = new ReportService();
 				Part part = req.getPart("report_image");
 				byte[]report_image = repSvc.Image(part);
-				System.out.println(report_image);
+		
 				
 				
 //				String titleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
