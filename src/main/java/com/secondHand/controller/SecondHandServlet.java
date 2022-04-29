@@ -4,8 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.secondHand.model.SecondHandService;
@@ -390,35 +397,55 @@ public class SecondHandServlet extends HttpServlet {
 //				System.out.println("error");
 //			}
 		}
-
-//		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
-//			req.setAttribute("errorMsgs", errorMsgs);
-//	
+		
+		if ("listSecondHandsByName".equals(action)) { // 來自secondHandHome.jsp的名字模糊查詢請求
+			
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
 //			try {
-//				/***************************1.接收請求參數***************************************/
-//				Integer empno = Integer.valueOf(req.getParameter("empno"));
-//				
-//				/***************************2.開始刪除資料***************************************/
-//				EmpService empSvc = new EmpService();
-//				empSvc.deleteEmp(empno);
-//				
-//				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-//				String url = "/emp/listAllEmp.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-//				successView.forward(req, res);
-//				
-//				/***************************其他可能的錯誤處理**********************************/
+				
+				/*************************** 1.接收請求參數 ****************************************/
+				String name = new String(req.getParameter("name"));
+				System.out.println(name);
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/secondHandHome.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				SecondHandService secondHandService = new SecondHandService();
+				List<SecondHandVO> list = secondHandService.getALLByName(name);
+				for (SecondHandVO secondHandVO : list) {
+					System.out.println(secondHandVO.toString());
+				}
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/secondHandHome.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("list", list);    // 資料庫取出的list物件,存入request
+
+				String url = "/secondhand/listBySecondHandName.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
 //			} catch (Exception e) {
-//				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/listAllEmp.jsp");
+//				errorMsgs.put("Exception", e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/addSecondHand.jsp");
 //				failureView.forward(req, res);
+//				System.out.println("error");
 //			}
-//		}
+		}
+
 	}
 
 	public String getFileNameFromPart(Part part) {

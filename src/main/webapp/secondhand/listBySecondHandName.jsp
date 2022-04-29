@@ -6,8 +6,7 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-SecondHandService secondHandSvc = new SecondHandService();
-List<SecondHandVO> list = secondHandSvc.getAll();
+List<SecondHandVO> list = (List<SecondHandVO>) request.getAttribute("list");
 pageContext.setAttribute("list", list);
 %>
 
@@ -213,7 +212,7 @@ pageContext.setAttribute("list", list);
 				<div class="row" style="justify-content: end;">
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
-						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1">
+						<form class="my-1">
 							<%
 							int itemsPerPage = 9;
 							%>
@@ -231,13 +230,13 @@ pageContext.setAttribute("list", list);
 							</div>
 							<div class="form-group col-3" style="display: inline-block">
 								<input type="text" class="form-control"
-									id="exampleFormControlInput1" placeholder="輸入名稱"
-									style="border: gray solid 2px;" name="name" value="${param.name}">
+									id="exampleFormControlInput1" placeholder="輸入關鍵字"
+									style="border: gray solid 2px;" name="name">
 							</div>
-							<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-							<input type="hidden" name="action" value="listSecondHandsByName">
 							<input type="submit" class="btn btn-primary mb-2 mt-1 col"
 								style="display: inline-block;" value="搜尋"></input>
+								<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
+								<input type="hidden" name="action" value="listSecondHandsByName">
 
 						</form>
 					</div>

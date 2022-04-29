@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.sql.Timestamp;
 
 import com.emp.model.EmpVO;
@@ -530,6 +531,67 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		}
 		return list;
 	}
+	
+//	@Override
+//	public List<SecondHandVO> getAll(Map<String, String[]> map) {
+//		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
+//		SecondHandVO secondHandVO = null;
+//	
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//	
+//		try {
+//			
+//			con = ds.getConnection();
+//			String finalSQL = "select * from emp2 "
+//		          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
+//		          + "order by empno";
+//			pstmt = con.prepareStatement(finalSQL);
+//			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+//			rs = pstmt.executeQuery();
+//	
+//			while (rs.next()) {
+//				empVO = new EmpVO();
+//				empVO.setEmpno(rs.getInt("empno"));
+//				empVO.setEname(rs.getString("ename"));
+//				empVO.setJob(rs.getString("job"));
+//				empVO.setHiredate(rs.getDate("hiredate"));
+//				empVO.setSal(rs.getDouble("sal"));
+//				empVO.setComm(rs.getDouble("comm"));
+//				empVO.setDeptno(rs.getInt("deptno"));
+//				list.add(empVO); // Store the row in the List
+//			}
+//	
+//			// Handle any SQL errors
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//		} finally {
+//			if (rs != null) {
+//				try {
+//					rs.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//		return list;
+//	}
 	
 	//for img
 	public static byte[] getPictureByteArray(String path) throws IOException {

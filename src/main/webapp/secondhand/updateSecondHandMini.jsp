@@ -40,130 +40,6 @@
 
 <body>
 
-	<!-- ======= Header ======= -->
-	<header id="header" class="fixed-top">
-		<div
-			class="container-fluid d-flex justify-content-between align-items-center">
-			<a href="${pageContext.request.contextPath}/home/Home.html" class="logo"><img
-				src="${pageContext.request.contextPath}/assets/img/workfun.gif" alt="" class="img-fluid"
-				style="width: 250px;"></a>
-
-			<nav id="navbar" class="navbar order-last order-lg-0">
-				<ul>
-					<!-- 修改跳頁 -->
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">揪團訂餐</button>
-							<div class="dropdown-content">
-								<a href="../shop/listAllShop.jsp">瀏覽揪團</a> <a href="./shoplist.html">我要揪團</a>
-								<a href="#">查詢揪團</a> <a href="#">查詢參團</a>
-
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">二手競標</button>
-							<div class="dropdown-content">
-								<a href="<%=request.getContextPath()%>/secondHandHome.jsp">競標首頁</a> <a
-									href="<%=request.getContextPath()%>/addSecondHand.jsp">新增競標</a> <a href="#">購買記錄</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">問題回報</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">器材預約</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">塗鴉牆</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<i class="bi bi-list mobile-nav-toggle"></i>
-
-				<nav class="navbar navbar-light bg-light"
-					style="margin-left: 120px;"></nav>
-
-				<!-- 左邊icon -->
-				<div class="navbar">
-					<ul>
-						<li><a href=""> <i class="bi bi-chat-dots"
-								style="font-size: 25px; color: black;"></i>
-						</a></li>
-						<li><a href=""><i class="bi bi-chat"
-								style="font-size: 25px; color: black;"></i></a></li>
-						<li>
-							<div class="dropdown">
-								<i class="bi bi-bell" style="font-size: 25px"></i>
-								<div class="dropdown-content nav-item-right">
-									<a href="#">訊息一</a> <a href="#">訊息二</a> <a href="#">訊息三</a>
-								</div>
-							</div>
-						</li>
-
-						<!-- 個人頁面dropdown -->
-						<li class="nav-item dropdown pe-3"><a
-							class="nav-link nav-profile d-flex align-items-center pe-0 ; width:2px"
-							href="#" data-bs-toggle="dropdown"> <img
-								src="${pageContext.request.contextPath}/assets/img/wu.jpeg" alt="Profile" class="rounded-circle"
-								style="width: 50px;">
-						</a> <!-- End Profile Iamge Icon -->
-
-							<ul
-								class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile show"
-								style="position: absolute; inset: 0px 0px auto auto; margin: 15px; transform: translate3d(-16px, 54px, 0px);"
-								data-popper-placement="bottom-end">
-								<li class="dropdown-header">
-									<h6>Peter Wu</h6> <span>Java Consultant</span>
-								</li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="#"> <i class="bi bi-person"></i> <span>My
-											Profile</span>
-								</a></li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="#"> <i class="bi bi-gear"></i> <span>Account
-											Settings</span>
-								</a></li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="#"> <i class="bi bi-box-arrow-right"></i> <span>Sign
-											Out</span>
-								</a></li>
-							</ul></li>
-						<!-- End Profile Nav -->
-					</ul>
-				</div>
-		</div>
-	</header>
-
-	<!-- End Header -->
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
 	<main id="main" class="main">
 
@@ -173,7 +49,7 @@
 
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">修改二手商品</h5>
+							<h5 class="card-title">新增二手商品</h5>
 							
 							<!-- General Form Elements -->
 							<form METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1" enctype="multipart/form-data">
@@ -270,16 +146,6 @@
 		</section>
 	</main>
 	<!-- End of Main  -->
-	<!-- ======= Footer ======= -->
-	<footer id="footer">
-		<div class="container">
-			<div class="copyright">
-				&copy; Copyright <strong><span>WorkFun</span></strong>. All Rights
-				Reserved
-			</div>
-		</div>
-	</footer>
-	<!-- End  Footer -->
 
 	<div id="preloader"></div>
 	<a href="#"
@@ -341,6 +207,15 @@
 
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
 	height: 151px; /* height:  151px; */
+}
+
+#main {
+	margin-top: 0px;
+}
+
+.section {
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 </style>
 

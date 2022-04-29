@@ -2,6 +2,7 @@ package com.secondHand.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class SecondHandService {
 	private SecondHandDAO_interface dao;
@@ -60,4 +61,8 @@ public class SecondHandService {
 	public List<SecondHandVO> getAll() {
 		return dao.getAll();
 	}
+	
+//	public List<SecondHandVO> getAll(Map<String, String[]> map) {
+//		return dao.getAll(map);
+//	}
 }
