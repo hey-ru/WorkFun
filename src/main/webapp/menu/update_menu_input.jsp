@@ -75,15 +75,23 @@
 			value="${param.price}" /></td><td>${errorMsgs.price}</td>
 	</tr>
 	<tr>
-<!-- 		<td>項目狀態:</td> -->
-<!-- 		<td><input type="TEXT" name="is_item" size="45"	 -->
-<%-- 			value="${param.is_item}" /></td><td>${errorMsgs.is_item}</td> --%>
 			
 <td><label>項目狀態:</label></td>
 <td>
-<label><input type="radio" name="is_item" value="${param.is_item}" ${(param.is_item=="1")? 'checked':'' }> 上架 </label>
-<label><input type="radio" name="is_item" value="${param.is_item}" ${(param.is_item=="0")? 'checked':'' }> 下架 </label>
-</td>		
+<label><input type="radio" name="is_item" value="1" ${(param.is_item=="1")? 'checked':'' }> 上架 </label>
+<label><input type="radio" name="is_item" value="0" ${(param.is_item=="0")? 'checked':'' }> 下架 </label>
+</td>	
+
+<!-- <td>啟用狀態:<font color=red><b>*</b></font></td> -->
+<!--    <td><select size="1" name="empStatus"> -->
+<%--      <option value="啟用" ${(param.empStatus=="啟用")? 'selected':'' } >啟用</option> --%>
+<%--      <option value="未啟用" ${(param.empStatus=="未啟用")? 'selected':'' }>未啟用</option> --%>
+<%--      <option value="離職" ${(param.empStatus=="離職")? 'selected':'' }>離職</option> --%>
+<%--           <option selected="selected">${param.empStatus}</option> --%>
+<!--    </select></td>     -->
+<!--    </tr> -->
+
+	
 		
 </tr>
 

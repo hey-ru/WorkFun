@@ -33,22 +33,18 @@ public class AddMenuByShopServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
+			/*************************** 1.取得店家參數, 以對該店家新增菜單***********************/
 			Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
-			System.out.println(shop_id);
+			System.out.println("增加菜單的店家id: " + shop_id);
 
-			/*************************** 2.開始查詢資料 *****************************************/
-			MenuService menuService = new MenuService();
-			List<MenuVO> menuList = menuService.getByShopId(shop_id);
-
-			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			// 資料庫取出的menuVO物件集合,存入req
+			/*************************** 2.轉交給新增畫面 *****************************************/
 			req.setAttribute("shop_id", shop_id);
 			String url = "/menu/addMenu.jsp";
 			
-			// 成功轉交
 			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);	
+			successView.forward(req, res);
+			System.out.println("跳至新增畫面");
 		}
 		
 		
@@ -88,9 +84,10 @@ public class AddMenuByShopServlet extends HttpServlet {
 				/*************************** 2.開始新增資料 *****************************************/
 				MenuService menuService = new MenuService();
 				menuService.addMenuItem(item, price, shop_id);
+				System.out.println("新增的值: " + item +  price + shop_id);
 				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
-				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面
+				//再取得一次店家菜單物件集合回應,以顯示於店家菜單畫面
 				List<MenuVO> menuList = menuService.getByShopId(shop_id);
 				req.setAttribute("menuList", menuList);
 				req.setAttribute("shop_id", shop_id);
@@ -98,6 +95,7 @@ public class AddMenuByShopServlet extends HttpServlet {
 				String url = "/menu/listMenuByShop.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 				successView.forward(req, res);
+				System.out.println(shop_id + "店家菜單新增成功!");
 		}
 
 	}

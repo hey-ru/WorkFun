@@ -77,16 +77,16 @@ h4 {
 					type="hidden" name="shop_id" value="{shopVO.shop_id}"> <input
 					type="hidden" name="action" value="getmenu">
 			</FORM>
-
-
-
-
-
+			
+			<h3>下架菜單查詢:</h3>
+			<FORM METHOD="post"
+				ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop">
+				<b>輸入店家編號 (如101):</b> <input type="submit" value="查看菜單"> <input
+					type="hidden" name="shop_id" value="101"> <input
+					type="hidden" name="action" value="getmenu_disable">
+			</FORM>
 
 			<h3>菜單管理</h3> 
-<!-- 新增菜單傳送門 --> 
-			<a href='addMenu.jsp'>新增店家的菜單</a> 
-			<br> <br>
 		
 <!-- 上傳菜單csv檔 -->
 			<form method="post" enctype="multipart/form-data"

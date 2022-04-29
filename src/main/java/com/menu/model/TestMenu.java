@@ -3,6 +3,8 @@ package com.menu.model;
 import java.io.IOException;
 import java.util.List;
 
+import org.jvnet.staxex.util.MtomStreamWriter;
+
 import com.mysql.cj.xdevapi.AbstractFilterParams;
 
 public class TestMenu {
@@ -11,6 +13,10 @@ public class TestMenu {
 
 		MenuJDBCDAO dao = new MenuJDBCDAO();
 		
+		MenuVO m3 = new MenuVO();
+		m3.setMenu_id(1004);
+		dao.updatestatus(m3);
+
 		// 新增
 //	MenuVO menuVO1 = new MenuVO();
 //	menuVO1.setShop_id(102);
@@ -26,7 +32,7 @@ public class TestMenu {
 //	menuVO2.setPrice(40);
 //	menuVO2.setIs_item(1);
 //	dao.update(menuVO2);
-		
+
 //		dao.findByPrimaryKey(1084).toString();
 
 		// 查詢
@@ -37,7 +43,7 @@ public class TestMenu {
 //		}
 
 		// 查詢
-//		List<MenuVO> shoplist = dao.getByShopId(114);
+//		List<MenuVO> shoplist = dao.getByShopId(101);
 //		for (MenuVO slist : shoplist) {
 //			System.out.println(slist.toString());
 //			System.out.println();
@@ -45,8 +51,8 @@ public class TestMenu {
 
 		// [Service測試]
 		MenuService ms = new MenuService();
-		
-		System.out.println(ms.getOneMenuItem(1084));
+
+//		System.out.println(ms.getOneMenuItem(1084));
 
 //		List<MenuVO> mlist = ms.getByShopId(101);
 //		for(MenuVO slist : mlist) {
@@ -60,5 +66,7 @@ public class TestMenu {
 
 //		System.out.println(ms.addMenuItem(114, "小菜", 30));
 //		System.out.println(ms.updateMenuItem(1111, 114, "小菜", 40,1));
+//		System.out.println(ms.updateStatus(1051));
+
 	}
 }

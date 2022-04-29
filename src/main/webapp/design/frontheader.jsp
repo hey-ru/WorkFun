@@ -4,7 +4,7 @@
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
         <div class="container-fluid d-flex justify-content-between align-items-center">
-            <a href="<%=request.getContextPath()%>/home/home.jsp" class="logo"><img src="<%=request.getContextPath()%>/home/img/workfun.gif" alt="" class="img-fluid"
+            <a href="<%=request.getContextPath()%>/home/home.jsp" class="logo"><img src="<%=request.getContextPath()%>/assets/img/workfun.gif" alt="" class="img-fluid"
                     style="width: 250px;"></a>
 
             <nav id="navbar" class="navbar order-last order-lg-0">

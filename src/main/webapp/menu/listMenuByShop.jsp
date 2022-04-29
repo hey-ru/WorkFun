@@ -5,115 +5,135 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"); 
+ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList");
+int itemsPerPage = 10; //設定每頁頁數
 %>
-
 
 <html>
 <head>
-<title>店家的菜單資料 - listMenuByShop.jsp</title>
-
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
-table {
-	width: 600px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table, th, td {
-	border: 1px solid #CCCCFF;
-}
-
-th, td {
-	padding: 5px;
-	text-align: center;
-}
-</style>
+<%@ include file="/design/frontmetacss.jsp"%>
 
 </head>
 
-<table id="table-1">
-	<tr>
-		<td>
-			<h3>所有店家菜單 - ListMenuByShop.jsp</h3>
-			<h4>
-				<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">回店家列表</a>
-			</h4>
-		</td>
-	</tr>
-</table>
+<body>
+	<div class="wrapper">
+		<!-- ======= Header ======= -->
+		<%@ include file="/design/frontheader.jsp"%>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color: red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color: red">${message.key}:${message.value}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+		<!-- ====================== 內容開始 ====================== -->
+		<main id="main" style="height: 300vh;">
+
+			<!-- ======= 查詢菜單table ======= -->
+			<section>
+				<!-- DataTales Example -->
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6>
+							<strong>查詢店家菜單</strong>
+						</h6>
+						<div>
+							<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">回店家列表</a>
+							<!-- 新增菜單請求 -->
+							<div class="col-2" style="left: 0;">
+<%-- 								<a href=${pageContext.request.contextPath}/menu/addMenu.jsp?shop_id=${param.shop_id}'> --%>
+<!-- 									<button type="button" class="btn btn-warning btn-lg">新增本店菜單</button> -->
+<!-- 								</a> -->
+								
+								<FORM METHOD="post"
+									ACTION="<%=request.getContextPath()%>/menu/addmenubyshop"
+									style="margin-bottom: 0px;">
+									<input type="submit" value="新增本店菜單"> <input
+										type="hidden" name="shop_id" value="${param.shop_id}">
+									<input type="hidden" name="action" value="getShop_For_AddMenu">
+								</FORM>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<div id="dataTable_wrapper"
+									class="dataTables_wrapper dt-bootstrap4">
+
+									<div class="row">
+										<div class="col-sm-12">
+											<table class="table table-bordered dataTable" id="dataTable"
+												width="100%" cellspacing="0" role="grid"
+												aria-describedby="dataTable_info" style="width: 100%">
+												<thead>
+													<tr role=" row">
+														<th class="sorting sorting_asc" tabindex="0"
+															aria-controls="dataTable" rowspan="1" colspan="1"
+															aria-sort="ascending"
+															aria-label="Name: activate to sort column descending"
+															style="width: 50px;">編號</th>
+														<th class="sorting" tabindex="0" aria-controls="dataTable"
+															rowspan="1" colspan="1"
+															aria-label="Position: activate to sort column ascending"
+															style="width: 50px;">品項</th>
+														<th class="sorting" tabindex="0" aria-controls="dataTable"
+															rowspan="1" colspan="1"
+															aria-label="Position: activate to sort column ascending"
+															style="width: 50px;">價格</th>
+														<th class="sorting" tabindex="0" aria-controls="dataTable"
+															rowspan="1" colspan="1"
+															aria-label="Office: activate to sort column ascending"
+															style="width: 50px;">狀態</th>
+														<th class="sorting" tabindex="0" aria-controls="dataTable"
+															rowspan="1" colspan="1"
+															aria-label="Office: activate to sort column ascending"
+															style="width: 50px;"></th>
+													</tr>
+												</thead>
 
 
-<!-- 新增菜單請求 -->
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/addmenubyshop"
-					style="margin-bottom: 0px;">
-		<input type="submit" value="新增本店菜單"> 
-					<input type="hidden" name="shop_id" value="${param.shop_id}"> 
-					<input type="hidden" name="action" value="getShop_For_AddMenu">
-	</FORM>
-
-<!-- 以下是查詢完成後該店家現有的菜單項目, 含修改功能-->
-<table>
-	<tr>
-		<th>編號</th>
-		<th>品項</th>
-		<th>價格</th>
-		<th>狀態</th>
-		<th></th>
-	</tr>
-
-	<c:forEach var="menu" items="${menuList}">		
-		<tr>
-			<td><c:out value="${menu.menu_id}" /></td>
-			<td><c:out value="${menu.item}" /></td>
-			<td><c:out value="${menu.price}" /></td>
-			<td>
-			<c:if test="${menu.is_item==1}"> <c:out value="上架"/> </c:if>
-			<c:if test="${menu.is_item==0}"> <c:out value="下架"/> </c:if>
-			</td>
-			<td>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop"
-					style="margin-bottom: 0px;">
-					<input type="submit" value="編輯"> 
-					<input type="hidden" name="menu_id" value="${menu.menu_id}"> 
-					<input type="hidden" name="action" value="getMenuItem_For_Update">
-				</FORM>
-			</td>
-		</tr>
-	</c:forEach>
-</table>
+												<%-- 				<%@ include file="/design/page1.file"%> --%>
+												<%-- 					<c:forEach var="menu" items="${menuList}" begin="<%=pageIndex%>" --%>
+												<%-- 										end="<%=pageIndex+rowsPerPage-1%>"> --%>
 
 
+												<c:forEach var="menu" items="${menuList}">
+
+
+													<tr>
+														<td><c:out value="${menu.menu_id}" /></td>
+														<td><c:out value="${menu.item}" /></td>
+														<td><c:out value="${menu.price}" /></td>
+														<td><c:if test="${menu.is_item==1}">
+																<c:out value="上架" />
+															</c:if> <c:if test="${menu.is_item==0}">
+																<c:out value="下架" />
+															</c:if></td>
+														<td>
+															<FORM METHOD="post"
+																ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop"
+																style="margin-bottom: 0px;">
+																<input type="submit" value="編輯"> <input
+																	type="hidden" name="menu_id" value="${menu.menu_id}">
+																<input type="hidden" name="action"
+																	value="getMenuItem_For_Update">
+															</FORM>
+														</td>
+													</tr>
+												</c:forEach>
+											</table>
+
+
+											<%-- <%@ include file="/design/page2.file"%> --%>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</section>
+		</main>
+		<!-- ======= 內容結束 ======= -->
+
+	</div>
+	<!-- ======= Footer ======= -->
+	<%@ include file="/design/frontfooter.jsp"%>
+	<!-- ======= js ======= -->
+	<%@ include file="/design/frontjs.jsp"%>
 </body>
+
 </html>
