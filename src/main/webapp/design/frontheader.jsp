@@ -34,9 +34,8 @@
                         <div class="dropdown">
                             <button class="dropbtn">問題回報</button>
                             <div class="dropdown-content">
-                                <a href="#">Link 1</a>
-                                <a href="#">Link 2</a>
-                                <a href="#">Link 3</a>
+                                <a href="<%=request.getContextPath()%>/report/listAllReport.jsp">回報首頁</a>
+                                <a href="<%=request.getContextPath()%>/report/addReport.jsp">新增回報</a>
                             </div>
                         </div>
                     </li>
@@ -44,7 +43,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">器材預約</button>
                             <div class="dropdown-content">
-                                <a href="#">Link 1</a>
+                                <a href="<%=request.getContextPath()%>/equipment/eq_select_page.jsp">器材首頁</a>
                                 <a href="#">Link 2</a>
                                 <a href="#">Link 3</a>
                             </div>
