@@ -17,5 +17,10 @@ public class PermissionMappingVO implements java.io.Serializable{
 	public void setPermissionId(Integer permissionId) {
 		this.permissionId = permissionId;
 	}
-	
+	public com.permission.model.PermissionVO getPermissionVO(){
+		com.permission.model.PermissionService pmSvc=new com.permission.model.PermissionService();
+		 com.permission.model.PermissionVO pmVO=pmSvc.getOnePermission(permissionId);
+		 return pmVO;
+		
+	}
 }

@@ -41,7 +41,7 @@ public class EmpService {
 
 		
 		dao.update(empVO);
-	EmpVO empempVO1=dao.findByPrimaryKey(empVO.getEmpId());
+
 
 		return 1;
 	}

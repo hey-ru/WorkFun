@@ -7,6 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import static com.util.ConnectionPool.getConectPool;
+
 //import org.graalvm.compiler.core.common.alloc.Trace;
 
 import java.io.FileInputStream;
@@ -16,11 +18,8 @@ import java.io.OutputStream;
 import java.sql.*;
 import java.sql.Date;
 
-public class PermissionJDBCDAO implements PermissionDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
-	String userid = "cga101-03";
-	String passwd = "cga101-03";
+public class PermissionDAO implements PermissionDAO_interface {
+
 
 	private static final String INSERT_STMT = "INSERT INTO permission (permission_name) VALUES (?) ";
 	private static final String GET_ALL_STMT = "select permission_id,permission_name FROM permission order by permission_id ";
@@ -36,9 +35,9 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
+			
 
 			
 			pstmt.setString(1, permissionVO.getPermissionName());
@@ -55,9 +54,6 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -83,17 +79,14 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-			PermissionVO oldPermission = findByPrimaryKey(newPermission.getPermissionId());
+			
+	
 
 			if (newPermission.getPermissionName() != null) {
 				pstmt.setString(1, newPermission.getPermissionName());
-			} else {
-				pstmt.setString(1, oldPermission.getPermissionName());
-
-			}
+			} 
 
 			pstmt.setInt(2, newPermission.getPermissionId());
 
@@ -104,9 +97,6 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			try {
 				con.close();
@@ -140,9 +130,10 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(DELETE);
+			
+		
 
 			pstmt.setInt(1, permissionId);
 
@@ -151,10 +142,8 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -181,8 +170,7 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, permissionId);
@@ -257,9 +245,9 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
 			// FROM emp order by emp_id";
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+	
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -276,9 +264,6 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 		} catch (SQLException se) {
 //			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
@@ -307,7 +292,7 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 
 	public static void main(String[] args) throws IOException {
 
-		PermissionJDBCDAO dao = new PermissionJDBCDAO();
+		PermissionDAO dao = new PermissionDAO();
 		PermissionVO permissionVO1 = new PermissionVO();
 
 //		permissionVO1.setPermissionId(10);
@@ -365,14 +350,16 @@ public class PermissionJDBCDAO implements PermissionDAO_interface {
 //	fout.write(PermissionVO3.getEmpProfile());
 //	fout.close();
 
-		List<PermissionVO> list = dao.getAllDAO();
-		for (PermissionVO aEmp : list) {
-			System.out.print(aEmp.getPermissionId() + ",");
-			System.out.print(aEmp.getPermissionName() + ",");
-			
-		
-			System.out.println();
-		}
+//		List<PermissionVO> list = dao.getAll();
+//		for (PermissionVO aEmp : list) {
+//			System.out.print(aEmp.getEmpId() + ",");
+//			System.out.print(aEmp.getDepId() + ",");
+//			System.out.print(aEmp.getEmpName() + ",");
+//			System.out.print(aEmp.getHiredate() + ",");
+//			System.out.print(aEmp.getPhone() + ",");
+//			System.out.print(aEmp.getExtension() + ",");
+//		
+//			System.out.println();
+//		}
 	}
-
 }

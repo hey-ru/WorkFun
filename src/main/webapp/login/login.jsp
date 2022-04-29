@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="<%=request.getContextPath()%>/assets4login/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -22,7 +22,7 @@
 
     <!-- Custom styles for this template-->
     <link href="<%=request.getContextPath()%>/assets4login/css/sb-admin-2.min.css" rel="stylesheet">
-
+ 
 </head>
 
 <body class="bg-gradient-primary">
@@ -73,7 +73,7 @@
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
                                         
-                                        <input type="hidden" name="action" value="login"> 
+                                        <input type="hidden" name="action" value="frontlogin"> 
                                     </FORM>
                                     <hr>
                                     <div class="text-center">
