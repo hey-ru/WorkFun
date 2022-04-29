@@ -16,7 +16,12 @@ int itemsPerPage = 10;
 
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
-
+    <style>
+        table {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,12 +48,12 @@ int itemsPerPage = 10;
 										<select class="form-control" id="exampleFormControlSelect1"
 											style="border: gray solid 2px;">
 											<option selected>選擇店家類型</option>
-											<option value="1">飲料</option>
-											<option value="2">中式</option>
-											<option value="3">異國</option>
-											<option value="4">小吃</option>
-											<option value="5">素食</option>
-											<option value="6">其他</option>
+											<option value="0">飲料</option>
+											<option value="1">中式</option>
+											<option value="2">異國</option>
+											<option value="3">小吃</option>
+											<option value="4">素食</option>
+											<option value="5">其他</option>
 										</select>
 									</div>
 									<div class="form-group col-3" style="display: inline-block">
@@ -82,7 +87,7 @@ int itemsPerPage = 10;
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Position: activate to sort column ascending"
-											style="width: 20px;">店家類型</th>
+											style="width: 50px;">店家類型</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Position: activate to sort column ascending"
@@ -102,11 +107,23 @@ int itemsPerPage = 10;
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
-											style="width: 60px;"></th>
+											style="width: 60px;">照片1</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
-											style="width: 60px;"></th>
+											style="width: 60px;">照片2</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1"
+											aria-label="Salary: activate to sort column ascending"
+											style="width: 60px;">照片3</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1"
+											aria-label="Salary: activate to sort column ascending"
+											style="width: 60px;">菜單</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1"
+											aria-label="Salary: activate to sort column ascending"
+											style="width: 60px;">修改</th>
 									</tr>
 
 
@@ -118,7 +135,7 @@ int itemsPerPage = 10;
 
 
 										<tr>
-											<td>${shopVO.shop_id}</td>
+<%-- 											<td>${shopVO.shop_id}</td> --%>
 											<td>${shopVO.shop_name}</td>
 											<td>${shopVO.shop_type}</td>
 											<td>${shopVO.address}</td>
