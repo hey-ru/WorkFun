@@ -66,7 +66,7 @@ int itemsPerPage = 10;
 
 								</form>
 							</div>
-							<div class="col-2" style="left: 0;">
+							<div class="col-2 mt-2" style="left: 0;">
 								<a  href='${pageContext.request.contextPath}/shop/addShop.jsp'><button type="button"
 										class="btn btn-warning btn-lg">新增店家</button></a>
 							</div>
