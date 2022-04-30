@@ -113,6 +113,8 @@
 <!-- 	</tr> -->
 
 </table>
+<img id ="pics" style="width:100px;">
+
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>

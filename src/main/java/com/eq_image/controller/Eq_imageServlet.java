@@ -1,91 +1,54 @@
-package com.eq_image.controller;
-//package com.eq_image.controller;
+//package com.eq_image.model;
 //
-//import java.io.File;
 //import java.io.FileInputStream;
-//import java.io.IOException;
-//import java.io.InputStream;
-//import java.util.LinkedHashMap;
-//import java.util.Map;
+//import java.io.FileNotFoundException;
+//import java.util.List;
 //
-//import javax.servlet.RequestDispatcher;
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.MultipartConfig;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.Part;
+//public class EqImageService {
+//	private EqImageDAO_interface dao;
 //
-//import com.eq_image.model.EqImageService;
-//import com.eq_image.model.EqImageVO;
-//import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
-//import com.mysql.cj.x.protobuf.MysqlxCrud.Insert;
-//
-//@MultipartConfig
-//public class Eq_imageServlet extends HttpServlet {
-//
-//	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		doPost(req, res);
+//	public EqImageService() {
+//		dao = new EqImageJDBCDAO();
 //	}
 //
-//	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+//	public EqImageVO addEqImage(Integer equipmentId, byte[] eqImage) {
 //
-//		req.setCharacterEncoding("UTF-8");
-//		String action = req.getParameter("action");
-//		res.setContentType("text/html; charser=UTF-8");
-//System.out.println(action);
-//		if ("Insert".equals(action)) {
+//		EqImageVO eqImageVO = new EqImageVO();
+//		eqImageVO.setEquipmentId(equipmentId);
+//		eqImageVO.setEqImage(eqImage);
+//		dao.insert(eqImageVO);
 //
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-//			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-//
-//			byte[] image = null;
-//			Part pics = req.getPart("image");
-//			String filename = getFileNameFromPart(pics);
-//			if (filename != null && pics.getContentType() != null) {
-//				image = getByteArrayFromPart(pics);
-//			}
-//
-//			EqImageVO eqImageVO = new EqImageVO();
-//			eqImageVO.setEqImage(image);
-//
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/addEquipment.jsp");
-//				failureView.forward(req, res);
-//				return;
-//			}
-//
-//			/*************************** 2.開始新增資料 ***************************************/
-//			EqImageService eqImageSvc = new EqImageService();
-//			eqImageSvc.addEqImage(image);
-//
-//			/***************************3.新增完成,準備轉交(Send the Success view)***********/
-//			
-//			String url = "equipment/listAllEquipment.jsp";
-//			RequestDispatcher successView = req.getRequestDispatcher(url);
-//			successView.forward(req, res);
-//		}
+//		return eqImageVO;
 //	}
 //
-//	// 取出上傳檔案名稱
-//	public String getFileNameFromPart(Part part) {
-//		String header = part.getHeader("content-disposition");
-//		System.out.println("header=" + header); // 測試用
-//		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-//		System.out.println("filename=" + filename);// 測試用
-//		if (filename.length() == 0) {
-//			return null;
-//		}
-//		return filename;
+//	public EqImageVO updateEqImage(byte[] eqImage) {
+//		
+//		EqImageVO eqImageVO = new EqImageVO();
+//		eqImageVO.setEqImage(eqImage);
+//		dao.update(eqImageVO);
+//		
+//		return eqImageVO;
 //	}
 //
-//	public static byte[] getByteArrayFromPart(Part part) throws IOException {
-//		InputStream in = part.getInputStream();
-//		byte[] buffer = new byte[in.available()];
-//		in.read(buffer);
-//		in.close();
-//		return buffer;
+//	public void deleteByEqImageId(Integer imageId) {
+//		dao.deleteByEqImageId(imageId);
 //	}
+//	
+//	public EqImageVO getByImageId(Integer imageId) {
+//		return dao.getByImageId(imageId);
+//	}
+//
+//	public List<EqImageVO> getAll(){
+//		return dao.getAll(); 
+//	}
+////	public static void main(String[] args) throws Exception {
+////		FileInputStream fis = new FileInputStream("C:\\Users\\Tibame_T14\\Desktop\\照片\\圖片1.jpg");
+////		byte[] buffer = new byte[fis.available()];
+////		fis.read(buffer);
+////		fis.close();
+////		EqImageService equipImageSvc = new EqImageService();
+////		
+////		byte[] image1 =buffer;
+////		equipImageSvc.addEqImage(128, image1);
+////	}
 //}
