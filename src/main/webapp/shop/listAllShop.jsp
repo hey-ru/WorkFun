@@ -17,10 +17,19 @@ int itemsPerPage = 10;
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
     <style>
-        table {
-            vertical-align: middle;
+        th{
+        vertical-align: middle;
             text-align: center;
+        height:50px;
         }
+        td{
+        vertical-align: middle;
+            text-align: center;
+        height:130px;
+        }
+        .table-responsive {
+    	overflow-x: visible;
+}
     </style>
 </head>
 
@@ -67,7 +76,7 @@ int itemsPerPage = 10;
 								</form>
 							</div>
 							<div class="col-2 mt-2" style="left: 0;">
-								<a  href='${pageContext.request.contextPath}/shop/addShop.jsp'><button type="button"
+								<a  href='${pageContext.request.contextPath}/shop/addShopMenu.jsp'><button type="button"
 										class="btn btn-warning btn-lg">新增店家</button></a>
 							</div>
 						</div>
@@ -83,23 +92,23 @@ int itemsPerPage = 10;
 											aria-controls="dataTable" rowspan="1" colspan="1"
 											aria-sort="ascending"
 											aria-label="Name: activate to sort column descending"
-											style="width: 50px;">店家名稱</th>
+											style="width: 100px;">名稱</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Position: activate to sort column ascending"
-											style="width: 50px;">店家類型</th>
+											style="width: 60px;">類型</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Position: activate to sort column ascending"
-											style="width: 150px;">店家地址</th>
+											style="width: 160px;">店家地址</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Office: activate to sort column ascending"
-											style="width: 50px;">店家電話</th>
+											style="width: 80px;">店家電話</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Age: activate to sort column ascending"
-											style="width: 30px;">店家網站</th>
+											style="width: 50px;">店家網站</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Office: activate to sort column ascending"
@@ -107,23 +116,23 @@ int itemsPerPage = 10;
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
-											style="width: 60px;">照片1</th>
+											style="width: 50px;">照片1</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
-											style="width: 60px;">照片2</th>
+											style="width: 50px;">照片2</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
-											style="width: 60px;">照片3</th>
+											style="width: 50px;">照片3</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
-											style="width: 60px;">菜單</th>
+											style="width: 50px;">菜單</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
-											style="width: 60px;">修改</th>
+											style="width: 50px;">修改</th>
 									</tr>
 
 
@@ -165,13 +174,13 @@ int itemsPerPage = 10;
 											<td>${shopVO.min_amt}</td>
 											<td><img
 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1"
-												style="width: 100px;"></td>
+												style="max-height: 100%;"></td>
 											<td><img
 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img2"
-												style="width: 100px;"></td>
+												style="max-height: 100%;"></td>
 											<td><img
 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img3"
-												style="width: 100px;"></td>
+												style="max-height: 100%;"></td>
 
 
 											<td>
@@ -206,7 +215,9 @@ int itemsPerPage = 10;
 										</tr>
 									</c:forEach>
 								</table>
+								
 										<%@ include file="/design/page2.file"%>
+								
 							</div>
 						</div>
 
