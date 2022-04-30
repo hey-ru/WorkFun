@@ -12,7 +12,6 @@ import com.shop.model.*;
 
 
 @WebServlet("/groupbuy/GroupBuyServlet")
-@MultipartConfig
 public class GroupBuyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -24,7 +23,6 @@ public class GroupBuyServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		res.setContentType("text/html; charset=UTF-8");
 		

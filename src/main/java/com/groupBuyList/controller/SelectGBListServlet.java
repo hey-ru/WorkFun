@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.menu.model.MenuService;
 import com.menu.model.MenuVO;
 
-@WebServlet("/groupBuyList/groupBuyList.do")
+@WebServlet("/groupbuylist/groupBuyList.do")
 public class SelectGBListServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

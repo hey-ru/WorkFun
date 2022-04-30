@@ -7,6 +7,7 @@
     MenuService menuService = new MenuService();
     List<MenuVO> list = menuService.getAll();
     pageContext.setAttribute("list",list);
+    int itemsPerPage = 10;
 %>
 <jsp:useBean id="menus" scope="page" class="com.menu.model.MenuService" />
 
