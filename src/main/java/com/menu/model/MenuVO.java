@@ -103,7 +103,4 @@ public class MenuVO implements java.io.Serializable {
 		this.menu_upd = menu_upd;
 	}
 
-
-
-
 }

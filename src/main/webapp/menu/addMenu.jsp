@@ -4,100 +4,89 @@
 <%@ page import="com.menu.model.*"%>
 
 <%
-    MenuService menuService = new MenuService();
-    List<MenuVO> list = menuService.getAll();
-    pageContext.setAttribute("list",list);
+MenuService menuService = new MenuService();
+List<MenuVO> list = menuService.getAll();
+pageContext.setAttribute("list", list);
 %>
 
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>菜單新增 - update_menu_input.jsp</title>
-
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
-<style>
-  table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
-</style>
+<%@ include file="/design/frontmetacss.jsp"%>
 
 </head>
-<body bgcolor='white'>
 
-<table id="table-1">
-	<tr><td>
-		 <h3>菜單新增 - addShop.jsp</h3>
-		 <h4>
-		 <a href="<%=request.getContextPath()%>/menu/listMenuByShop.jsp">回店家菜單列表</a>
-		 </h4>
-	</td></tr>
-</table>
+<body>
 
+	<%@ include file="/design/frontheader.jsp"%>
 
+	<!-- ====================== 內容開始 ====================== -->
+	<main id="main" class="main" style="height: 50vh;">
+		<div class="card shadow mb-4">
+			<!-- ============== Card Header ============== -->
+			<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="row">
+					<div class="col-11" style="height: 20px; display: inline-block;">
+						<h5>
+							<strong>新增店家菜單</strong>
+						</h5>
+					</div>
+					<div class="col-1" style="height: 20px; display: inline-block;">
+						<a href="<%=request.getContextPath()%>/menu/listMenuByShop.jsp"><strong>回上頁</strong></a>
+					</div>
+				</div>
+			</div>
+			<!-- ============== Card Body ============== -->
+			<div class="col-lg-6">
+				<div class="card">
+					<div class="card-body">
+					
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/menu/addmenubyshop">
+							<table class="table table-hover" style="text-align: center;">
+								<tr>
+									<td>店家名稱:</td>
+									<td>${param.shop_id}</td>
+								</tr>
+								<tr>
+									<td>品項:</td>
+									<td><input type="TEXT" name="item" size="45"
+										value="${param.item}" /></td>
+									<td>${errorMsgs.item}</td>
+								</tr>
+								<tr>
+									<td>價格:</td>
+									<td><input type="TEXT" name="price" size="45"
+										value="${param.price}" /></td>
+									<td>${errorMsgs.price}</td>
+								</tr>
+							</table>
+							<br> <input type="hidden" name="action" value="insert">
+							<input type="hidden" name="shop_id" value="${param.shop_id}">
+							<input type="submit" value="送出新增">
+						</FORM>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
 
-
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/addmenubyshop">
-<table>
-	<tr>
-		<td>店家編號:</td>
-		<td>${param.shop_id}</td>
-	</tr>
-	<tr>
-		<td>品項:</td>
-		<td><input type="TEXT" name="item" size="45" 
-			value="${param.item}" /></td><td>${errorMsgs.item}</td>
-	</tr>
-	<tr>
-		<td>價格:</td>
-		<td><input type="TEXT" name="price" size="45"	
-			value="${param.price}" /></td><td>${errorMsgs.price}</td>
-	</tr>
-	
-<%-- 	<jsp:useBean id="shopservice" scope="page" class="com.shop.model.ShopService" /> --%>
-<!-- 	<tr> -->
-<!-- 		<td>店家:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="shop_id"> -->
-<%-- 			<c:forEach var="shopVO" items="${shopservice.all}"> --%>
-<%-- 				<option value="${shopVO.shop_id}" ${(param.shop_id==shopVO.shop_id)? 'selected':'' } >${shopVO.shop_name} --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
-
-</table>
-<br>
-<input type="hidden" name="action" value="insert">
-<input type="hidden" name="shop_id" value="${param.shop_id}">
-<input type="submit" value="送出新增"></FORM>
-
-
+	<!-- 			
+	<%-- 	<jsp:useBean id="shopservice" scope="page" class="com.shop.model.ShopService" /> --%>
+	<!-- 	<tr> -->
+	<!-- 		<td>店家:<font color=red><b>*</b></font></td> -->
+	<!-- 		<td><select size="1" name="shop_id"> -->
+	<%-- 			<c:forEach var="shopVO" items="${shopservice.all}"> --%>
+	<%-- 				<option value="${shopVO.shop_id}" ${(param.shop_id==shopVO.shop_id)? 'selected':'' } >${shopVO.shop_name} --%>
+	<%-- 			</c:forEach> --%>
+	<!-- 		</select></td> -->
+	<!-- 	</tr> -->
+				
+		
+		<!-- ======= 內容結束 ======= -->
+	<!-- ======= Footer ======= -->
+	<%@ include file="/design/frontfooter.jsp"%>
+	<!-- ======= js ======= -->
+	<%@ include file="/design/frontjs.jsp"%>
 </body>
 
-<script>
-     
-</script>
 </html>

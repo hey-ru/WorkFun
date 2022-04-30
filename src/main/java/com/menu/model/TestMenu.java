@@ -14,8 +14,8 @@ public class TestMenu {
 		MenuJDBCDAO dao = new MenuJDBCDAO();
 		
 		MenuVO m3 = new MenuVO();
-		m3.setMenu_id(1004);
-		dao.updatestatus(m3);
+//		m3.setMenu_id(1004);
+//		dao.updatestatus(m3);
 
 		// 新增
 //	MenuVO menuVO1 = new MenuVO();

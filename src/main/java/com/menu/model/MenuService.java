@@ -63,7 +63,7 @@ public class MenuService {
 	}
 	
 	//以店家搜尋該店家菜單(下架)
-		public List<MenuVO> getByShopIdDisable(Integer shop_id) {
+	public List<MenuVO> getByShopIdDisable(Integer shop_id) {
 			return dao.getByShopIdDisable(shop_id);
 		}
 
