@@ -20,9 +20,13 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 
 	private static final String INSERT = "INSERT INTO eq_image(equipment_id,eq_image) VALUES (?,?)";
 
-	private static final String GET_ONE = "SELECT image_id,equipment_id,eq_image FROM eq_image where image_id = ?";
+	private static final String UPDATE = "UPDATE eq_image set";
+
+	private static final String GET_BY_IMAGEID = "SELECT image_id,equipment_id,eq_image FROM eq_image where image_id = ?";
 
 	private static final String GET_ALL = "SELECT image_id,equipment_id,eq_image FROM eq_image";
+
+	private static final String DELETE_BY_IMAGEID = "DELETE FROM eq_image where image_id = ?";
 
 	@Override
 	public void insert(EqImageVO eqImageVO) {
@@ -67,7 +71,114 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 	}
 
 	@Override
-	public EqImageVO findByPrimaryKey(Integer imageId) {
+	public void update(EqImageVO eqImageVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			EqImageVO oldeqImage = getByImageId(eqImageVO.getEquipmentId());
+			StringBuilder sb = new StringBuilder();
+			sb.append(UPDATE);
+			if (eqImageVO.getEqImage() != null) {
+				sb.append("eq_image=?, ");
+			}
+
+			sb.append("image_id=? ");
+
+			sb.append("where image_id=? ");
+
+			pstmt = con.prepareStatement(sb.toString());
+
+			if (eqImageVO.getEqImage() != null) {
+				count++;
+				pstmt.setBytes(count, eqImageVO.getEqImage());
+			}
+			count++;
+			pstmt.setInt(count, eqImageVO.getImageId());
+			count++;
+			pstmt.setInt(count, eqImageVO.getImageId());
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+//				}
+//				if (con != null) {
+//					try {
+//						con.close();
+//					} catch (Exception e) {
+//						e.printStackTrace(System.err);
+//					}
+//				}
+		}
+	}
+
+	public static byte[] getPictureByteArray(String path) throws IOException {
+		FileInputStream fis = new FileInputStream(path);
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		fis.close();
+		return buffer;
+	}
+
+	@Override
+	public void deleteByEqImageId(Integer imageId) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(DELETE_BY_IMAGEID);
+
+			pstmt.setInt(1, imageId);
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public EqImageVO getByImageId(Integer imageId) {
 
 		EqImageVO eqImageVO = null;
 		Connection con = null;
@@ -78,7 +189,7 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE);
+			pstmt = con.prepareStatement(GET_BY_IMAGEID);
 
 			pstmt.setInt(1, imageId);
 
@@ -122,14 +233,6 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 			}
 		}
 		return eqImageVO;
-	}
-
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
-		return buffer;
 	}
 
 	@Override
@@ -196,22 +299,22 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 		EqImageJDBCDAO dao = new EqImageJDBCDAO();
 
 		// 新增
-//		EqImageVO eqImageVO1 = new EqImageVO();
-//		eqImageVO1.setEquipmentId(104);
-//		byte[] image1 = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\照片\\圖片1.jpg");
-//		eqImageVO1.setEqImage(image1);
-//		dao.insert(eqImageVO1);
+		EqImageVO eqImageVO1 = new EqImageVO();
+		eqImageVO1.setEquipmentId(128);
+		byte[] image1 = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\照片\\圖片1.jpg");
+		eqImageVO1.setEqImage(image1);
+		dao.insert(eqImageVO1);
 
 		// 查詢
 //		EqImageVO eqImageVO2 = dao.findByPrimaryKey(11);
 //		System.out.println(eqImageVO2.getImageId());
 //		System.out.println(eqImageVO2.getEquipmentId());
 //		System.out.println(eqImageVO2.getEqImage());
-	
+
 		// 查詢
-		List<EqImageVO> list = dao.getAll();
-		for(EqImageVO aeqImageVO : list) {
-			System.out.println(aeqImageVO.toString());
-		}
+//		List<EqImageVO> list = dao.getAll();
+//		for (EqImageVO aeqImageVO : list) {
+//			System.out.println(aeqImageVO.toString());
+//		}
 	}
 }

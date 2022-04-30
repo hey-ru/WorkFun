@@ -62,5 +62,9 @@ public class EquipmentService {
 	public List<EquipmentVO> getAll() {
 		return dao.getALL();
 	}
+
+	public EquipmentVO getLast() {
+		return dao.getLast();
+	}
 }
 

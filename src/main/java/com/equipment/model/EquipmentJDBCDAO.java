@@ -18,6 +18,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	private static final String UPDATE = "UPDATE equipment set ";
 	private static final String DELETE_BY_EQID = "DELETE FROM equipment where equipment_id = ?";
 	private static final String DELETE_BY_EQNAME = "DELETE FROM equipment where eq_name = ?";
+	private static final String GET_LAST = "SELECT * FROM equipment ORDER BY equipment_id DESC LIMIT 0 , 1";
 	private static final String GET_ALL_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_name like ?";
 	private static final String GET_BY_EQUIPMENTID = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where equipment_id = ?";
 	private static final String GET_BY_EQSTATUS = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_status = ?";
@@ -575,5 +576,64 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 //			System.out.println(aEquipment.getSpec() + ", ");
 //			System.out.println();
 //		}
+	}
+
+	@Override
+	public EquipmentVO getLast() {
+
+		EquipmentVO equipmentVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_LAST);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				equipmentVO = new EquipmentVO();
+				equipmentVO.setEquipmentId(rs.getInt("equipment_id"));
+				equipmentVO.setEqName(rs.getString("eq_name"));
+				equipmentVO.setPrice(rs.getInt("price"));
+				equipmentVO.setEqStatus(rs.getInt("eq_status"));
+				equipmentVO.setIntroduction(rs.getString("introduction"));
+				equipmentVO.setSpec(rs.getString("spec"));
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return equipmentVO;
 	}
 }

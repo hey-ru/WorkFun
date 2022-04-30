@@ -26,4 +26,7 @@ public interface EquipmentDAO_interface {
 
 	// 查詢全部
 	public List<EquipmentVO> getALL();
+	
+	// 最後一筆資料
+	public EquipmentVO getLast();
 }
