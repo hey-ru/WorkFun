@@ -405,12 +405,12 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 	
 			while (rs.next()) {
 				menuVO = new MenuVO();
-				menuVO.setMenu_id(rs.getInt(1));
-				menuVO.setShop_id(rs.getInt(2));
-				menuVO.setItem(rs.getString(3));
-				menuVO.setPrice(rs.getInt(4));
-				menuVO.setIs_item(rs.getInt(5));
-				menuVO.setMenu_upd(rs.getTimestamp(6));
+				menuVO.setMenu_id(rs.getInt("menu_id"));
+				menuVO.setShop_id(rs.getInt("shop_id"));
+				menuVO.setItem(rs.getString("item"));
+				menuVO.setPrice(rs.getInt("price"));
+				menuVO.setIs_item(rs.getInt("is_item"));
+				menuVO.setMenu_upd(rs.getTimestamp("menu_upd"));
 				set.add(menuVO); 
 			}
 			// Handle any driver errors

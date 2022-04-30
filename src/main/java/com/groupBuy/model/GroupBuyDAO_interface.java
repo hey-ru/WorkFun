@@ -1,6 +1,8 @@
-package com.groupBuy.model;
+package com.groupbuy.model;
 
 import java.util.*;
+
+import com.groupbuylist.model.*;
 
 
 public interface GroupBuyDAO_interface {
@@ -9,4 +11,6 @@ public interface GroupBuyDAO_interface {
      public void update(GroupBuyVO groupBuyVO);
      public GroupBuyVO findByPrimaryKey(Integer gb_id);
      public List<GroupBuyVO> getAll();
+     public Set<GroupBuyListVO> getGBListBygbid(Integer gb_id);
+     
 }

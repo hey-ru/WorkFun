@@ -1,4 +1,4 @@
-package com.groupBuyList.model;
+package com.groupbuylist.model;
 
 import java.util.*;
 import java.sql.*;

@@ -1,4 +1,4 @@
-package com.groupBuy.model;
+package com.groupbuy.model;
 
 import java.sql.Timestamp;
 

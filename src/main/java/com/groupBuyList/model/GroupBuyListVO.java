@@ -1,8 +1,8 @@
-package com.groupBuyList.model;
+package com.groupbuylist.model;
 
 import java.sql.Timestamp;
 
-import com.groupBuy.model.GroupBuyDAO_interface;
+import com.groupbuy.model.GroupBuyDAO_interface;
 
 public class GroupBuyListVO implements java.io.Serializable {
 	
@@ -136,9 +136,9 @@ public class GroupBuyListVO implements java.io.Serializable {
 	}
 	
 	   // for join gb_id from groupbuy
-    public com.groupBuy.model.GroupBuyVO getGroupBuyVO() {
-	    com.groupBuy.model.GroupBuyService gbSvc = new com.groupBuy.model.GroupBuyService();
-	    com.groupBuy.model.GroupBuyVO GroupBuyVO = gbSvc.getOneGB(gb_id);
+    public com.groupbuy.model.GroupBuyVO getGroupBuyVO() {
+	    com.groupbuy.model.GroupBuyService gbSvc = new com.groupbuy.model.GroupBuyService();
+	    com.groupbuy.model.GroupBuyVO GroupBuyVO = gbSvc.getOneGB(gb_id);
 	    return GroupBuyVO;
     }
 	

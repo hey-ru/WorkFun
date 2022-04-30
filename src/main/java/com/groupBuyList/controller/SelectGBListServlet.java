@@ -1,4 +1,4 @@
-package com.groupBuyList.controller;
+package com.groupbuylist.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
