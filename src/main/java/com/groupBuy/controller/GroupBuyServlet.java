@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 import com.shop.model.*;
 
 
-@WebServlet("/shop/ShopServlet")
+@WebServlet("/groupbuy/GroupBuyServlet")
 @MultipartConfig
 public class GroupBuyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

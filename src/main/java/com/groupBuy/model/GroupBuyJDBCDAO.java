@@ -274,7 +274,7 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 				groupBuyListVO.setItem(rs.getString("item"));
 				groupBuyListVO.setPrice(rs.getInt("price"));
 				groupBuyListVO.setQty(rs.getInt("qty"));
-				groupBuyListVO.setRemark(rs.getString("total"));
+				groupBuyListVO.setRemark(rs.getString("remark"));
 				groupBuyListVO.setIs_pay(rs.getInt("is_pay"));
 				groupBuyListVO.setIs_pickup(rs.getInt("is_pickup"));
 				groupBuyListVO.setGbList_upd(rs.getTimestamp("gbList_upd"));
