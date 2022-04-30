@@ -23,6 +23,13 @@
     <!-- Custom styles for this template-->
     <link href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css" rel="stylesheet">
 
+<style>
+.img-fluid {
+    max-width: 50px;
+    height: auto;
+}
+
+</style>
 </head>
 
 <body id="page-top">
@@ -306,7 +313,7 @@
 									</select>
 									</div>
 									
-<jsp:useBean id="permissionSvc" scope="page"
+<%-- <jsp:useBean id="permissionSvc" scope="page"
 									class="com.permission.model.PermissionService" />
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="basic-addon2">權限</span> <table
@@ -321,7 +328,7 @@
 												</tr>
 										</c:forEach>
 </tr>
-									</table>
+									</table> --%>
 									                         <table class="table table-striped table-bordered table-hover"
                                                 id="dataTables-example">
                                                <tr>
@@ -344,28 +351,14 @@
 	</tr>
 	
 	
-		
+		<jsp:useBean id="permissionSvc" scope="page"
+									class="com.permission.model.PermissionService" />
+									
 		<tr>
-			<td>${empVO.empId}</td>
-			<td>${empVO.empName}</td>
-			<td>${empVO.depId}-[${empVO.deptVO.depName}]</td>
-			
-			<td>${empVO.hiredate}</td>
-				<td>${empVO.resigndate}</td>
-			<td>${empVO.phone}</td>
-			<td>${empVO.extension}</td> 
-				<td>${empVO.hobby}</td>
-				
-						<td>${empVO.skill}</td>
-							<td><img style="width:50px;"
-												src="
-									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
-									"
-												class="img-fluid"
-											></td>
-								<td>${empVO.mail}</td>
-									<td>${empVO.birthday}</td>
-										
+				<c:forEach var="permissionVO" items="${permissionSvc.all}">
+			<td><input type="checkbox">${permissionVO.permissionName}</td>
+		
+						</c:forEach>					
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">

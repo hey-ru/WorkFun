@@ -28,14 +28,15 @@ public class ConnectionListener implements ServletContextListener {
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent sce)  { 
-    	 ServletContext context=sce.getServletContext();
-    Connection con=(Connection)context.getAttribute("con");
-    	try {
+   	 ServletContext context=sce.getServletContext();
+   Connection con=(Connection)context.getAttribute("con");
+   	try {
 			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
     	// TODO Auto-generated method stub
     }
 
@@ -56,5 +57,8 @@ public class ConnectionListener implements ServletContextListener {
     	
          // TODO Auto-generated method stub
     }
+
+    	// TODO Auto-generated method stub
+    }
 	
-}
+

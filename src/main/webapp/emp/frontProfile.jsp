@@ -16,7 +16,7 @@
                 <%@ include file="/design/frontheader.jsp" %>
 
                     <!-- ======= 內容開始 ======= -->
-	<div style="margin-left: 350px;">
+	<div style="margin-left: 350px;margin-top:90px">
 			<section class="section profile">
 
 
@@ -249,7 +249,7 @@
 
 
 										<div class="text-center">
-											<input type="hidden" name="action" value="update">
+											<input type="hidden" name="action" value="updateFront">
 											<button type="submit" class="input-group-text"
 												id="basic-addon2">Save Changes</button>
 										</div>
@@ -272,7 +272,7 @@
 													<input class="form-check-input" type="checkbox"
 														id="changesMade" checked> <label
 														class="form-check-label" for="changesMade">
-														Changes made to your account </label>
+														Changes made to your 	 </label>
 												</div>
 												<div class="form-check">
 													<input class="form-check-input" type="checkbox"

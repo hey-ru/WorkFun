@@ -165,7 +165,7 @@ int count=0;
 			System.out.println(oldemp.getEmpId());
 		StringBuilder sb=new StringBuilder();
 			sb.append(UPDATE);
-			if (newemp.getDepId() != null) {
+			if (newemp.getDepId() != null ) {
 				sb.append("dep_id=?, ");
 			}
 			if (newemp.getEmpName() != null) {
@@ -192,7 +192,7 @@ int count=0;
 			if (newemp.getSkill() != null) {
 				sb.append("skill=?, ");
 			}
-			if (newemp.getEmpProfile() != null) {
+			if (newemp.getEmpProfile() != null && newemp.getEmpProfile().length!=0) {
 				sb.append("emp_profile=?, ");
 			}
 			if (newemp.getMail() != null) {
@@ -257,7 +257,7 @@ int count=0;
 				pstmt.setString(count, newemp.getSkill());
 			} 
 			
-			if (newemp.getEmpProfile() != null) {
+			if (newemp.getEmpProfile() != null && newemp.getEmpProfile().length!=0) {
 				count++;
 				pstmt.setBytes(count, newemp.getEmpProfile());
 			} 

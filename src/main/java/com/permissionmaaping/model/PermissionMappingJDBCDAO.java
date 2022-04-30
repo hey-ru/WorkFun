@@ -359,7 +359,8 @@ permissionMappingVO = new PermissionMappingVO();
 //		
 //		dao.delete(1007,3);
 
-//		PermissionMappingVO PermissionMappingVO3 = dao.findByPrimaryKey(2);
+		List<PermissionMappingVO> list = dao.findByPrimaryKey(1001);
+		System.out.println(list);
 //		System.out.print(PermissionMappingVO3.getPermissionId());
 //		System.out.print(PermissionMappingVO3.getPermissionName() + ",");
 //		System.out.print(PermissionMappingVO3.getEmpPassword() + ",");
@@ -382,12 +383,12 @@ permissionMappingVO = new PermissionMappingVO();
 //		
 //			System.out.println();
 //		}
-		List<PermissionMappingVO> list = dao.getAll();
-		for (PermissionMappingVO aEmp : list) {
-			System.out.print(aEmp.getEmpId() + ",");
-			System.out.print(aEmp.getPermissionId() + ",");
-		
-			System.out.println();
-		}
+//		List<PermissionMappingVO> list = dao.getAll();
+//		for (PermissionMappingVO aEmp : list) {
+//			System.out.print(aEmp.getEmpId() + ",");
+//			System.out.print(aEmp.getPermissionId() + ",");
+//		
+//			System.out.println();
+//		}
 	}
 }

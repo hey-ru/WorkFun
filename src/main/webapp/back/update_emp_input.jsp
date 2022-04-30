@@ -77,10 +77,10 @@
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
-						<a class="collapse-item" href="buttons.html">新增帳號</a> <a
-							class="collapse-item" href="cards.html">修改帳號</a> <a
-							class="collapse-item" href="cards.html">查詢帳號</a> <a
-							class="collapse-item" href="cards.html">刪除帳號</a>
+					   <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/emp/listAllEmp.jsp">全部員工帳號</a>
+        
+                     
 					</div>
 				</div></li>
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
@@ -275,10 +275,9 @@
 
 
 						<!-- Nav Item - User Information -->
-						<li class="nav-item no-arrow"><a href="#"> <i
-								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-								Logout
-						</a></li>
+						<li class="nav-item no-arrow">
+					                         <a href="<%=request.getContextPath()%>/home/home.jsp"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Back Home</a></li>
 
 					</ul>
 

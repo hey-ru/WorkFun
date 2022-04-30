@@ -34,11 +34,13 @@
         <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="back.html">
-                <div class="sidebar-brand-text mx-3">
-                    <h2 class="font-weight-bold">WorkFun</h2>
-                </div>
-            </a>
+         	<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="backmain.jsp">
+				<div class="sidebar-brand-text mx-3">
+					<h2 class="font-weight-bold">WorkFun</h2>
+				</div>
+			</a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -279,8 +281,8 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item no-arrow">
-                            <a href="#"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout</a>
+                         <a href="<%=request.getContextPath()%>/home/home.jsp"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Back Home</a>
                         </li>
 
                     </ul>

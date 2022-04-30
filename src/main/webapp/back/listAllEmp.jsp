@@ -1,5 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
+<%-- 此頁練習採用 EL 的寫法取值 --%>
+	
+	<%
+	    EmpService empSvc = new EmpService();
+	    List<EmpVO> list = empSvc.getAll();
+	    pageContext.setAttribute("list",list);
+	%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +31,29 @@
     <!-- Custom styles for this template-->
     <link href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css" rel="stylesheet">
 
+
+    <!-- <link href="assets1/css/bootstrap.css" rel="stylesheet" /> 此行變化幅度不大 可註解掉再修-->
+    <!-- FontAwesome Styles-->
+
+    <!-- Morris Chart Styles-->
+
+    <!-- Custom Styles-->
+
+    <!-- Google Fonts-->
+
+    <!-- TABLE STYLES--><%-- 
+    <link href="<%=request.getContextPath()%>/assets4table/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" /> --%>
+
+<style>
+.img-fluid {
+    max-width: 50px;
+    height: auto;
+}
+
+</style>
+
+
+
 </head>
 
 <body id="page-top">
@@ -33,11 +65,13 @@
         <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="backmain.jsp">
-                <div class="sidebar-brand-text mx-3">
-                    <h2 class="font-weight-bold">WorkFun</h2>
-                </div>
-            </a>
+         	<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="backmain.jsp">
+				<div class="sidebar-brand-text mx-3">
+					<h2 class="font-weight-bold">WorkFun</h2>
+				</div>
+			</a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -70,7 +104,7 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                          <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
+                 <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
                         <a class="collapse-item" href="<%=request.getContextPath()%>/emp/listAllEmp.jsp">全部員工帳號</a>
         
                     </div>
@@ -277,8 +311,8 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item no-arrow">
-                            <a href="#"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout</a>
+                                                   <a href="<%=request.getContextPath()%>/home/home.jsp"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Back Home</a>
                         </li>
 
                     </ul>
@@ -289,7 +323,6 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- 內容放這 -->
-
 
                     <div id="page-inner">
 
@@ -331,35 +364,35 @@
 		
 		
 	</tr>
-	
-	
+	<%@ include file="page1.file" %> 
+	<c:forEach var="empVOSearch" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
-			<td>${empVO.empId}</td>
-			<td>${empVO.empName}</td>
-			<td>${empVO.depId}-[${empVO.deptVO.depName}]</td>
-			
-			<td>${empVO.hiredate}</td>
-				<td>${empVO.resigndate}</td>
-			<td>${empVO.phone}</td>
-			<td>${empVO.extension}</td> 
-				<td>${empVO.hobby}</td>
+			<td>${empVOSearch.empId}</td>
+			<td>${empVOSearch.empName}</td>
+			<td>${empVOSearch.depId}-[${empVOSearch.deptVO.depName}]</td>
+
+			<td>${empVOSearch.hiredate}</td>
+				<td>${empVOSearch.resigndate}</td>
+			<td>${empVOSearch.phone}</td>
+			<td>${empVOSearch.extension}</td> 
+				<td>${empVOSearch.hobby}</td>
 				
-						<td>${empVO.skill}</td>
-							<td><img style="width:50px;"
+						<td>${empVOSearch.skill}</td>
+							<td style="width:300px;"><img 
 												src="
-									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
+									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVOSearch.empId}
 									"
 												class="img-fluid"
 											></td>
-								<td>${empVO.mail}</td>
-									<td>${empVO.birthday}</td>
+								<td>${empVOSearch.mail}</td>
+									<td>${empVOSearch.birthday}</td>
 										
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
-			     <input type="hidden" name="empId"  value="${empVO.empId}">
+			     <input type="hidden" name="empId"  value="${empVOSearch.empId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
@@ -369,41 +402,55 @@
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 		</tr>
-	
+	</c:forEach>
 </table>
+<%@ include file="page2.file" %>
+</div>
+</div>
+</div>
+</div>
+                            <!-- /.container-fluid -->
 
-</div>
-</div>
-</div>
-</div>
+                        </div>
+                        <!-- End of Main Content -->
 
-                    <!-- /.container-fluid -->
+                    </div>
+                    <!-- End of Content Wrapper -->
 
                 </div>
-                <!-- End of Main Content -->
+                <!-- End of Page Wrapper -->
 
-            </div>
-            <!-- End of Content Wrapper -->
+                <!-- Scroll to Top Button-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
 
-        </div>
-        <!-- End of Page Wrapper -->
+                <!-- Bootstrap core JavaScript-->
+                <script src="<%=request.getContextPath()%>/assets/js/jquery/jquery.min.js"></script>
+                <script src="<%=request.getContextPath()%>/assets/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
+                <!-- Core plugin JavaScript-->
+                <script src="<%=request.getContextPath()%>/assets/js/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="<%=request.getContextPath()%>/assets/js/jquery/jquery.min.js"></script>
-        <script src="<%=request.getContextPath()%>/assets/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Core plugin JavaScript-->
-        <script src="<%=request.getContextPath()%>/assets/js/jquery-easing/jquery.easing.min.js"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script src="<%=request.getContextPath()%>/assets/js/sb-admin-2.min.js"></script>
+                <!-- Custom scripts for all pages-->
+                <script src="<%=request.getContextPath()%>/assets/js/sb-admin-2.min.js"></script>
 
 
+
+        <%--         <script src="<%=request.getContextPath()%>/assets4table/js/jquery-1.10.2.js"></script>
+                <!-- Bootstrap Js -->
+                <script src="<%=request.getContextPath()%>/assets4table/js/bootstrap.min.js"></script>
+                <!-- Metis Menu Js -->
+                <script src="<%=request.getContextPath()%>/assets4table/js/jquery.metisMenu.js"></script>
+                <!-- DATA TABLE SCRIPTS -->
+                <script src="<%=request.getContextPath()%>/assets4table/js/dataTables/jquery.dataTables.js"></script>
+                <script src="<%=request.getContextPath()%>/assets4table/js/dataTables/dataTables.bootstrap.js"></script>
+                <script> --%>
+               <!--      $(document).ready(function () {
+                        $('#dataTables-example').dataTable();
+                    });
+                </script> -->
+                <%-- <script src="<%=request.getContextPath()%>/assets4table/js/custom-scripts.js"></script> --%>
 </body>
 
 </html>
