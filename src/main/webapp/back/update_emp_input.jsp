@@ -39,7 +39,6 @@
 		<ul class="navbar-nav bg-dark sidebar sidebar-dark accordion"
 			id="accordionSidebar">
 
-			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="backmain.jsp">
@@ -77,8 +76,8 @@
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
-					   <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
-                        <a class="collapse-item" href="<%=request.getContextPath()%>/emp/listAllEmp.jsp">全部員工帳號</a>
+				    <a class="collapse-item" href="<%=request.getContextPath()%>/back/addEmp.jsp">新增員工帳號</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/back/listAllEmp.jsp">全部員工帳號</a>
         
                      
 					</div>

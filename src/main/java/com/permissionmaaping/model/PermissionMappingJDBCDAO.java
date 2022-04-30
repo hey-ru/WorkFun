@@ -7,6 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.emp.model.EmpVO;
+
 //import org.graalvm.compiler.core.common.alloc.Trace;
 
 import java.io.FileInputStream;
@@ -252,7 +254,7 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 		return list;
 	}
 
-	public List<PermissionMappingVO> getAll() {
+	public List<PermissionMappingVO> getAllDAO() {
 		List<PermissionMappingVO> list = new ArrayList<PermissionMappingVO>();
 		PermissionMappingVO permissionMappingVO = null;
 
@@ -358,9 +360,11 @@ permissionMappingVO = new PermissionMappingVO();
 
 //		
 //		dao.delete(1007,3);
-
-		List<PermissionMappingVO> list = dao.findByPrimaryKey(1001);
+//
+		List<PermissionMappingVO> list = dao.findByPrimaryKey(1067);
 		System.out.println(list);
+		System.out.println(list.size());
+		
 //		System.out.print(PermissionMappingVO3.getPermissionId());
 //		System.out.print(PermissionMappingVO3.getPermissionName() + ",");
 //		System.out.print(PermissionMappingVO3.getEmpPassword() + ",");
@@ -383,12 +387,23 @@ permissionMappingVO = new PermissionMappingVO();
 //		
 //			System.out.println();
 //		}
-//		List<PermissionMappingVO> list = dao.getAll();
+//		List<PermissionMappingVO> list = dao.getAllDAO();
 //		for (PermissionMappingVO aEmp : list) {
 //			System.out.print(aEmp.getEmpId() + ",");
 //			System.out.print(aEmp.getPermissionId() + ",");
 //		
 //			System.out.println();
 //		}
+//		PermissionMappingVO pmVO=new PermissionMappingVO();
+//		pmVO.setEmpId(1001);
+//		EmpVO empVO=pmVO.getEmpVO();
+//		System.out.println(empVO.getEmpName()+empVO.getMail());
+		
+		
+		
+		
+		
+		
+		
 	}
 }

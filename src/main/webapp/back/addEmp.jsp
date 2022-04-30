@@ -93,8 +93,8 @@
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<!-- <h6 class="collapse-header">Custom Components:</h6> -->
-					   <a class="collapse-item" href="<%=request.getContextPath()%>/emp/addEmp.jsp">新增員工帳號</a>
-                        <a class="collapse-item" href="<%=request.getContextPath()%>/emp/listAllEmp.jsp">全部員工帳號</a>
+				    <a class="collapse-item" href="<%=request.getContextPath()%>/back/addEmp.jsp">新增員工帳號</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/back/listAllEmp.jsp">全部員工帳號</a>
         
 					</div>
 				</div></li>
@@ -321,6 +321,8 @@
 										aria-describedby="basic-addon1">${errorMsgs.empName}
 								</div>
 							
+<jsp:useBean id="deptSvc" scope="page"
+									class="com.dep.model.DepService" />
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="basic-addon2">部門</span> <select
 										size="1" name="depId" class="input-group-text"
@@ -389,23 +391,25 @@
 										type="submit" value="送出新增" class="input-group-text"
 										id="basic-addon2">
 								</div>
+								</div>
 						</FORM>
+						</main>
+						</div>
 </body>
-</div>
-</main>
 
 
 
-</div>
+
+
+
 <!-- /.container-fluid -->
 
-</div>
+
 <!-- End of Main Content -->
 
-</div>
 <!-- End of Content Wrapper -->
 
-</div>
+
 <!-- End of Page Wrapper -->
 
 <a class="scroll-to-top rounded" href="#page-top"> <i

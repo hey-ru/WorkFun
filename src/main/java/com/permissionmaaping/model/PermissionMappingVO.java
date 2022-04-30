@@ -23,4 +23,9 @@ public class PermissionMappingVO implements java.io.Serializable{
 		 return pmVO;
 		
 	}
+	 public com.emp.model.EmpVO getEmpVO() {
+		    com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+		    com.emp.model.EmpVO empVO = empSvc.getOneEmp(empId);
+		    return empVO;
+	    }
 }

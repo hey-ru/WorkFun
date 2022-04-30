@@ -2,10 +2,12 @@ package com.emp.model;
 
 import java.util.*;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+import static com.util.ConnectionPool.*;
+
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.naming.NamingException;
+//import javax.sql.DataSource;
 
 //import org.graalvm.compiler.core.common.alloc.Trace;
 
@@ -15,8 +17,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.*;
 import java.sql.Date;
+import com.util.*;
 
 public class EmpJDBCDAO implements EmpDAO_interface {
+	
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
@@ -24,7 +28,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	private static final String LOGIN_STMT = "select * from emp where emp_id = ? and emp_password = ? ";
 	
 	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "select emp_id,dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
+	private static final String GET_ALL_STMT = "SELECT emp_id,dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
 	private static final String GET_ONE_STMT = "SELECT dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp where emp_id = ?";
 	private static final String DELETE = "DELETE FROM emp where emp_id = ?";
 //	private static final String UPDATE = "UPDATE emp set dep_id=?, emp_name=?, hire_date=?, resign_date=?, phone=?, extension=?, emp_password=?, hobby=?, skill=?, emp_profile=?, mail=?, birthday=?, emp_status=? where emp_id = ? ";
@@ -32,12 +36,19 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	@Override
 	public int insert(EmpVO empVO) {
 
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
-			Class.forName(driver);
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
@@ -66,11 +77,9 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 			// Handle any driver errors
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -90,14 +99,252 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 return 1;
 	}
 
+	public int insert(EmpVO empVO,Connection oneConnection) {
+
+
+		Connection con=oneConnection;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setInt(1, empVO.getDepId());
+			pstmt.setString(2, empVO.getEmpName());
+			pstmt.setDate(3, empVO.getHiredate());
+			pstmt.setDate(4, empVO.getResigndate());
+			pstmt.setString(5, empVO.getPhone());
+			pstmt.setString(6, empVO.getExtension());
+			pstmt.setString(7, empVO.getEmpPassword());
+			pstmt.setString(8, empVO.getHobby());
+			pstmt.setString(9, empVO.getSkill());
+			pstmt.setBytes(10, empVO.getEmpProfile());
+			pstmt.setString(11, empVO.getMail());
+			pstmt.setDate(12, empVO.getBirthday());
+//			pstmt.setByte(13, empVO.getEmpStatus());
+//			pstmt.setInt(14, empVO.getEmpId());
+
+			pstmt.executeUpdate();
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			if (rs.next()) {
+//				employee_id = rs.getInt(1);
+//				System.out.println(rowCount + " row inserted; order ID: " + employee_id);
+//			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return 1;
+	}
 	public int update(EmpVO newemp) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
+
 int count=0;
 		try {
-			Class.forName(driver);
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+			
+			
+//			pstmt = con.prepareStatement(UPDATE);
+			EmpVO oldemp = findByPrimaryKey(newemp.getEmpId());
+			System.out.println(oldemp.getEmpId());
+		StringBuilder sb=new StringBuilder();
+			sb.append(UPDATE);
+			if (newemp.getDepId() != null ) {
+				sb.append("dep_id=?, ");
+			}
+			if (newemp.getEmpName() != null) {
+				sb.append("emp_name=?, ");
+			}
+			if (newemp.getHiredate() != null) {
+				sb.append("hire_date=?, ");
+			}
+			if (newemp.getResigndate() != null) {
+				sb.append("resign_date=?, ");
+			}
+			if (newemp.getPhone() != null) {
+				sb.append("phone=?, ");
+			}
+			if (newemp.getExtension() != null) {
+				sb.append("extension=?, ");
+			}
+			if (newemp.getEmpPassword() != null) {
+				sb.append("emp_password=?, ");
+			}
+			if (newemp.getHobby() != null) {
+				sb.append("hobby=?, ");
+			}
+			if (newemp.getSkill() != null) {
+				sb.append("skill=?, ");
+			}
+			if (newemp.getEmpProfile() != null && newemp.getEmpProfile().length!=0) {
+				sb.append("emp_profile=?, ");
+			}
+			if (newemp.getMail() != null) {
+				sb.append("mail=?, ");
+			}
+			if (newemp.getBirthday() != null) {
+				sb.append("birthday=?, ");
+			}
+			if (newemp.getEmpStatus() != null) {
+				sb.append("emp_status=?, ");
+			}
+	
+				sb.append("emp_id=? ");
+			
+			sb.append("where emp_id = ? ");
+			
+			
+			pstmt = con.prepareStatement(sb.toString());
+//			System.out.println(sb);
+			
+			if (newemp.getDepId() != null) {
+				count++;
+				pstmt.setInt(count, newemp.getDepId());
+			} 
+			
+			if (newemp.getEmpName() != null) {
+				count++;
+				pstmt.setString(count, newemp.getEmpName());
+			} 
+			
+			if (newemp.getHiredate() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getHiredate());
+			} 
+			
+			if (newemp.getResigndate() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getResigndate());
+			} 
+			
+			if (newemp.getPhone() != null) {
+				count++;
+				pstmt.setString(count, newemp.getPhone());
+			}
+		
+			if (newemp.getExtension() != null) {
+				count++;
+				pstmt.setString(count, newemp.getExtension());
+			} 
+			
+			if (newemp.getEmpPassword() != null) {
+				count++;
+				pstmt.setString(count, newemp.getEmpPassword());
+			} 
+			
+			if (newemp.getHobby() != null) {
+				count++;
+				pstmt.setString(count, newemp.getHobby());
+			} 
+			if (newemp.getSkill() != null) {
+				count++;
+				pstmt.setString(count, newemp.getSkill());
+			} 
+			
+			if (newemp.getEmpProfile() != null && newemp.getEmpProfile().length!=0) {
+				count++;
+				pstmt.setBytes(count, newemp.getEmpProfile());
+			} 
+			
+			if (newemp.getMail() != null) {
+				count++;
+				pstmt.setString(count, newemp.getMail());
+			} 
+			
+			if (newemp.getBirthday() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getBirthday());
+			} 
+			if (newemp.getEmpStatus() != null) {
+				count++;
+				pstmt.setInt(count, newemp.getEmpStatus());
+			} 
+			
+		
+			
+			count++;
+			pstmt.setInt(count, newemp.getEmpId()); 
+			count++;
+			pstmt.setInt(count, newemp.getEmpId()); 
+			
+
+			pstmt.executeUpdate();
+			System.out.println(count);
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			
+		}
+return 1;
+	}
+	public int update(EmpVO newemp,Connection oneConnection) {
+
+		Connection con = oneConnection;
+		PreparedStatement pstmt = null;
+
+int count=0;
+		try {
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+			
+			
 //			pstmt = con.prepareStatement(UPDATE);
 			EmpVO oldemp = findByPrimaryKey(newemp.getEmpId());
 			System.out.println(oldemp.getEmpId());
@@ -228,35 +475,20 @@ int count=0;
 			// Handle any driver errors
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
 			}
-
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
+			
 		}
-		return 1;
+return 1;
 	}
 
 	public int delete(Integer EmpId) {
@@ -266,20 +498,24 @@ int count=0;
 
 		try {
 
-			Class.forName(driver);
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
+			
 
 			pstmt.setInt(1, EmpId);
 
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -298,6 +534,36 @@ int count=0;
 		}
 return 1;
 	}
+	public int delete(Integer EmpId,Connection oneConnection) {
+
+		Connection con =oneConnection;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(DELETE);
+			
+
+			pstmt.setInt(1, EmpId);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
+		}
+return 1;
+	}
 
 	public EmpVO findByPrimaryKey(Integer empno) {
 
@@ -307,9 +573,17 @@ return 1;
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
+			
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
+			
 
 			pstmt.setInt(1, empno);
 
@@ -336,51 +610,88 @@ return 1;
 
 			}
 
-			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			se.printStackTrace();
-//					"A database error occured. " + se.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
-		} catch (Exception e) {
-			// TODO: handle exception
-
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
+return empVO;
+	}
+	public EmpVO findByPrimaryKey(Integer empno,Connection oneConnection) {
 
-		finally {
+		EmpVO empVO = null;
+		Connection con = oneConnection;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			
 
 			try {
-				con.close();
-			} catch (SQLException e) {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			if (rs != null) {
-//				try {
-//					rs.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			
 
+			pstmt.setInt(1, empno);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo Domain objects
+				empVO = new EmpVO();
+				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
+				empVO.setEmpId(empno);
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
 		}
-		return empVO;
+return empVO;
 	}
 	public EmpVO selectForLogin(Integer empId, String password) {
 		Connection con = null;
@@ -389,9 +700,16 @@ return 1;
 		ResultSet rs = null;
 		try {
 
-			Class.forName(driver);
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(LOGIN_STMT);
+		
+			
 
 			pstmt.setInt(1, empId);
 			pstmt.setString(2, password);
@@ -419,15 +737,76 @@ return 1;
 				empVO.setMail(rs.getString("mail"));
 				empVO.setBirthday(rs.getDate("birthday"));
 				empVO.setEmpStatus(rs.getByte("emp_status"));
-System.out.println("成功登入");
+
 			}
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
+		}
+return empVO;
+	}
+	public EmpVO selectForLogin(Integer empId, String password,Connection oneConnection) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		EmpVO empVO = null;
+		ResultSet rs = null;
+		try {
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(LOGIN_STMT);
+		
+			
+
+			pstmt.setInt(1, empId);
+			pstmt.setString(2, password);
+		
+//			pstmt.setInt(14, empVO.getEmpId());
+
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo Domain objects
+				empVO = new EmpVO();
+				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
+				empVO.setEmpId(rs.getInt("emp_id"));
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -445,9 +824,6 @@ System.out.println("成功登入");
 			}
 		}
 return empVO;
-		
-		
-		
 	}
 
 	public List<EmpVO> getAllDAO() {
@@ -462,9 +838,16 @@ return empVO;
 			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
 			// FROM emp order by emp_id";
 
-			Class.forName(driver);
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+		
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -476,7 +859,7 @@ return empVO;
 				empVO.setEmpName(rs.getString("emp_name"));
 				empVO.setHiredate(rs.getDate("hire_date"));
 //				empVO.setResigndate(rs.getDate("resign_date"));
-				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));				
 				empVO.setPhone(rs.getString("phone"));
 				empVO.setExtension(rs.getString("extension"));
 				empVO.setEmpPassword(rs.getString("emp_password"));
@@ -489,23 +872,13 @@ return empVO;
 				list.add(empVO); // Store the row in the list
 			}
 
-
 			// Handle any driver errors
 
 		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -521,16 +894,81 @@ return empVO;
 				}
 			}
 		}
-		return list;
+return list;
+	}
+
+	public List<EmpVO> getAllDAO(Connection oneConnection) {
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		EmpVO empVO = null;
+
+		Connection con = oneConnection;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
+			// FROM emp order by emp_id";
+
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT);
+		
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+
+				empVO = new EmpVO();
+				empVO.setEmpId(rs.getInt("emp_id"));
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+//				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));				
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				list.add(empVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
+		}
+return list;
 	}
 
 	public static void main(String[] args) throws IOException {
 
-		EmpJDBCDAO dao = new EmpJDBCDAO();
-		EmpVO empVO1 = new EmpVO();
-		FileInputStream in = new FileInputStream("/Users/lin/tomcat.gif");
-		byte[] buf = new byte[in.available()];
-		in.read(buf);
+//		EmpDAO dao = new EmpDAO();
+//		EmpVO empVO1 = new EmpVO();
+//		FileInputStream in = new FileInputStream("/Users/lin/tomcat.gif");
+//		byte[] buf = new byte[in.available()];
+//		in.read(buf);
 		
 //		empVO1.setDepId(10);
 //		empVO1.setEmpName("張偉航");
@@ -669,25 +1107,27 @@ return empVO;
 		// private static final String UPDATE = "UPDATE emp set dep_id=?, emp_name=?,
 		// hire_date=?, resign_date=?, phone=?, extension=?, emp_password=?, hobby=?,
 		// skill=?, emp_profile=?, mail=?, birthday=?, emp_status=?, where emp_id = ?";
-EmpService empser=new EmpService();		
-		EmpVO empVO2 = new EmpVO();
-		empVO2.setEmpId(1001);
+//EmpService empser=new EmpService();
+//		EmpDAO empser=new EmpDAO();
+//		EmpVO empVO2 = new EmpVO();
 //		
-		empVO2.setDepId(12);
-		empVO2.setEmpName("張加能");
-		empVO2.setHiredate(new Date(1995-1900,6,19));
-//		empVO2.setResigndate(4, emp.getResign_date());
-		empVO2.setPhone("0987612345");
-		empVO2.setExtension("0424991212");
-		empVO2.setEmpPassword("19940619");
-		empVO2.setHobby("playball");
-		empVO2.setSkill("sleepuntilafternoon");
-//		empVO2.setEmpProfile(buf);
-//		empVO2.setMail("asiagod@gmail.com");
-//		empVO2.setBirthday(new Date(1978-1900,3,12));
-//		empVO2.setEmpStatus((byte)2);
-		int x=empser.updateEmp(empVO2);
-		System.out.println(x);
+//		empVO2.setEmpId(1001);
+////		
+//		empVO2.setDepId(12);
+//		empVO2.setEmpName("張加");
+//		empVO2.setHiredate(new Date(1995-1900,6,19));
+////		empVO2.setResigndate(4, emp.getResign_date());
+//		empVO2.setPhone("0987612345");
+//		empVO2.setExtension("0424991212");
+//		empVO2.setEmpPassword("19940619");
+//		empVO2.setHobby("playball");
+//		empVO2.setSkill("sleepuntilafternoon");
+////		empVO2.setEmpProfile(buf);
+////		empVO2.setMail("asiagod@gmail.com");
+////		empVO2.setBirthday(new Date(1978-1900,3,12));
+////		empVO2.setEmpStatus((byte)2);
+//		int x=empser.update(empVO2);
+//		System.out.println(x);
 		
 //		System.out.println("成功");
 
@@ -711,20 +1151,20 @@ EmpService empser=new EmpService();
 //	FileOutputStream fout=new FileOutputStream("/Users/lin/tomcat.gif");
 //	fout.write(empVO3.getEmpProfile());
 //	fout.close();
-
-		List<EmpVO> list = dao.getAllDAO();
-		for (EmpVO aEmp : list) {
-			System.out.println(aEmp.getEmpId() + ",");
-			System.out.println(aEmp.getDepId() + ",");
-			System.out.println(aEmp.getEmpName() + ",");
-			System.out.println(aEmp.getHiredate() + ",");
-			System.out.println(aEmp.getPhone() + ",");
-			System.out.println(aEmp.getExtension() + ",");
-			System.out.println(aEmp.getResigndate() + ",");
-	
+//
+//		List<EmpVO> list = dao.getAllDAO();
+//		for (EmpVO aEmp : list) {
+//			System.out.println(aEmp.getEmpId() + ",");
+//			System.out.println(aEmp.getDepId() + ",");
+//			System.out.println(aEmp.getResigndate() + ",");
+//			System.out.println(aEmp.getExtension() + ",");
+//			System.out.println(aEmp.getEmpName() + ",");
+//			System.out.println(aEmp.getHiredate() + ",");
+//			System.out.println(aEmp.getPhone() + ",");
+//			System.out.println(aEmp.getExtension() + ",");
+//	
 		
 	
-		
 		}
+		
 	}
-}

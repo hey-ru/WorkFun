@@ -245,7 +245,7 @@ public class PermissionMappingDAO implements PermissionMappingDAO_interface {
 		return list;
 	}
 
-	public List<PermissionMappingVO> getAll() {
+	public List<PermissionMappingVO> getAllDAO() {
 		List<PermissionMappingVO> list = new ArrayList<PermissionMappingVO>();
 		PermissionMappingVO permissionMappingVO = null;
 

@@ -24,12 +24,12 @@ public class EmpService {
 		return empVO;
 	}
 
-	public EmpVO addEmp(EmpVO empVO,Connection oneConnection) {
+	public void addEmp(EmpVO empVO,Connection oneConnection) {
 
 	
 		dao.insert(empVO,oneConnection);
 
-		return empVO;
+	
 	}
 	
 	public byte[] uploadImage(Part part) throws IOException {

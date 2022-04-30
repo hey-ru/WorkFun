@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.emp.model.*;
+import com.permissionmaaping.model.PermissionMappingService;
+import com.permissionmaaping.model.PermissionMappingVO;
 @MultipartConfig
 @WebServlet("/empServlet")
 public class EmpServlet extends HttpServlet {
@@ -48,7 +50,7 @@ public class EmpServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/back/backmain.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -62,7 +64,7 @@ public class EmpServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/back/backmain.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -72,19 +74,19 @@ public class EmpServlet extends HttpServlet {
 //				EmpVO empVO = empSvc.getOneEmp(empId);
 				EmpVO empVO = empSvc.getOneEmp(empId,con);
 				if (empVO == null) {
-					errorMsgs.put("login","查無帳號");
+					errorMsgs.put("empId","查無帳號");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/back/backmain.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
-				String url = "/emp/listOneEmp.jsp";
+				String url = "/back/listOneEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -92,7 +94,7 @@ public class EmpServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.put("無法取得資料",e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/select_page.jsp");
+						.getRequestDispatcher("/back/backmain.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -125,7 +127,7 @@ public class EmpServlet extends HttpServlet {
 						       "&extension="   +empVO.getExtension()+
 						       "&mail="   +empVO.getMail()+
 						       "&birthday=" +empVO.getBirthday();
-				String url = "/emp/update_emp_input.jsp"+param;
+				String url = "/back/update_emp_input.jsp"+param;
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
@@ -198,7 +200,7 @@ public class EmpServlet extends HttpServlet {
 
 				Part empProfile=req.getPart("empProfile");
 				
-		String fileName=empSvc.getFileNameFromPart(empProfile);
+		
 		
 				
 				
@@ -237,7 +239,7 @@ public class EmpServlet extends HttpServlet {
 				empSvc.updateEmp(newempVO,con);
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 //				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/emp/listAllEmp.jsp";
+				String url = "/back/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -309,7 +311,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 
 				Part empProfile=req.getPart("empProfile");
 				
-		String fileName=empSvc.getFileNameFromPart(empProfile);
+		
 		
 				
 				
@@ -337,7 +339,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/update_emp_input.jsp");
+							.getRequestDispatcher("/emp/frontProfile.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -437,7 +439,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/addEmp.jsp");
+							.getRequestDispatcher("/back/addEmp.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -447,7 +449,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 //				empSvc.addEmp(empVO);
 				empSvc.addEmp(empVO,con);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/emp/listAllEmp.jsp";
+				String url = "/back/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -455,7 +457,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 			} catch (Exception e) {
 				errorMsgs.put("Exception",e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/addEmp.jsp");
+						.getRequestDispatcher("/back/addEmp.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -486,7 +488,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/listAllEmp.jsp");
+						.getRequestDispatcher("/back/listAllEmp.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -570,7 +572,7 @@ return;
 					           return;
 					         }
 					      
-					      String url = "/emp/backmain.jsp";
+					      String url = "/back/backmain.jsp";
 							RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 							successView.forward(req, res);	
 						
@@ -622,6 +624,8 @@ return;
 					Integer empId=Integer.valueOf(empIds);
 					EmpService empSvc = new EmpService();
 					EmpVO empVO=empSvc.login(empId,empPassword,con);
+					PermissionMappingService pmSrv=new PermissionMappingService();
+					 List<PermissionMappingVO> empPm=pmSrv.getOneEmpPermissions(empId);
 //				EmpVO empVO=empSvc.login(empId,empPassword);
 					  if (empVO == null) {
 						
@@ -635,7 +639,8 @@ return;
 					  }
 					
 					  else {
-						
+					
+						  session.setAttribute("empPm", empPm); //hint 特別標記 用來取得permission
 					      session.setAttribute("empVO", empVO);   //*工作1: 才在session內做已經登入過的標識
 					      String location=(String)session.getAttribute("location");
 					      if (location != null) {
