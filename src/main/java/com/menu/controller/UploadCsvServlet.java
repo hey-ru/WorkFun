@@ -27,23 +27,21 @@ import com.opencsv.CSVReader;
 public class UploadCsvServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	}
 
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8"); // 處理中文檔名
-		PrintWriter out = response.getWriter();
-		System.out.println("ContentType=" + request.getContentType()); // 測試用
+		req.setCharacterEncoding("UTF-8"); // 處理中文檔名
+		System.out.println("ContentType=" + req.getContentType()); // 測試用
 		
-//之後動態抓取店家，並新增奇菜單		
+//之後動態抓取店家，並新增其菜單		
 //		String action = request.getParameter("action");
 //		Integer shop_id = Integer.valueOf(request.getParameter("shop_id"));
 		
 		
 		//取得上傳的CSV檔案
-		Part filePart = request.getPart("csvfile");	
+		Part filePart = req.getPart("csvfile");	
 		InputStream fileContent = filePart.getInputStream();	
 		
 		Reader in = new InputStreamReader(fileContent); 
@@ -110,11 +108,11 @@ public class UploadCsvServlet extends HttpServlet {
 				}
 			}
 			// sets the message in request scope
-			request.setAttribute("Message", message);
-			request.setAttribute("Message2", message2);
+			req.setAttribute("Message", message);
+			req.setAttribute("Message2", message2);
 
 			// forwards to the message page
-			getServletContext().getRequestDispatcher("/menu/upMessage.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/shop/addShopMenu.jsp").forward(req, res);
 		}
 
 		in.close();
