@@ -17,33 +17,21 @@ int itemsPerPage = 10; //設定每頁頁數
 
 <body>
 	<div class="wrapper">
-		
+
 		<%@ include file="/design/frontheader.jsp"%>
 
 		<!-- ====================== 內容開始 ====================== -->
-		<main id="main" style="height: 300vh;">
+		<main id="main" style="height: 500vh;">
 			<section>
-
-			
 				<div class="card shadow mb-4">
-					<!-- ======= Card Header ======= -->
-					<div class="card-header py-3">			
+					<!-- ============== Card Header ============== -->
+					<div class="card-header py-3">
 						<div class="row">
-						<div>
-						<ul class="nav nav-tabs">
-  <%-- <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">上架</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">下架</a>
-  </li>
-</ul> --%>
-						</div>
-							<div class="col-9" style="height: 60px; display: inline-block;">
+							<div class="col-9" style="height: 30px; display: inline-block;">
 								<h5>
 									<strong>查詢店家菜單</strong>
 								</h5>
-								<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">回店家列表</a>
+								<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp"><strong>回店家列表</strong></a>
 							</div>
 							<!-- 新增菜單請求 -->
 							<div class="col-3" style="left: 0;">
@@ -54,18 +42,17 @@ int itemsPerPage = 10; //設定每頁頁數
 							</div>
 						</div>
 					</div>
-					
-					
 
-					
-					<!-- ======= Card Body ======= -->
+
+
+					<!-- ============== Card Body ============== -->
 					<div class="card-body">
 						<div class="table-responsive">
 							<div id="dataTable_wrapper"
 								class="dataTables_wrapper dt-bootstrap4">
 
 								<div class="row">
-									<div class="col-sm-10">
+									<div class="col-sm-6">
 										<table class="table table-bordered dataTable" id="dataTable"
 											width="100%" cellspacing="0" role="grid"
 											aria-describedby="dataTable_info" style="width: 100%">
@@ -114,12 +101,11 @@ int itemsPerPage = 10; //設定每頁頁數
 														</c:if></td>
 													<td>
 														<FORM METHOD="post"
-															ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop"
-															style="margin-bottom: 0px;">
-															<input type="submit" value="編輯"> <input
-																type="hidden" name="menu_id" value="${menu.menu_id}">
-															<input type="hidden" name="action"
-																value="getMenuItem_For_Update">
+															ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop">
+															<input type="submit" class="btn btn-success btn-sm"
+																value="編輯"> <input type="hidden" name="menu_id"
+																value="${menu.menu_id}"> <input type="hidden"
+																name="action" value="getMenuItem_For_Update">
 														</FORM>
 													</td>
 												</tr>
@@ -131,7 +117,9 @@ int itemsPerPage = 10; //設定每頁頁數
 
 									</div>
 								</div>
+
 							</div>
+
 						</div>
 					</div>
 				</div>

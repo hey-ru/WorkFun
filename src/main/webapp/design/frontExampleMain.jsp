@@ -6,8 +6,6 @@
 
         <head>
             <%@ include file="/design/frontmetacss.jsp" %>
-
-
         </head>
 
         <body>
@@ -16,7 +14,9 @@
                 <%@ include file="/design/frontheader.jsp" %>
 
                     <!-- ======= 內容開始 ======= -->
-
+                    
+                    
+                    
 
                     <!-- ======= 內容結束 ======= -->
 

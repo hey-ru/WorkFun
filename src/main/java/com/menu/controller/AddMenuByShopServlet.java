@@ -56,11 +56,11 @@ public class AddMenuByShopServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				//品項
 				String item = req.getParameter("item");
-				String itemReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{1,20}$";
+				String itemReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]*$";
 				if (item == null || item.trim().length() == 0) {
 					errorMsgs.put("item", "品項: 請勿空白");
 				} else if (!item.trim().matches(itemReg)) { // 正則(規)表示式(regular-expression)
-					errorMsgs.put("item", "品項名稱: 只能是中、英文字母 , 且長度必需在1到20之間");
+					errorMsgs.put("item", "店家: 只能是中、英文字母、數字和_");
 				}
 				//價格
 				Integer price = null;

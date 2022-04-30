@@ -7,7 +7,7 @@ body {
 }
 
 a {
-  color: #34b7a7;
+  color: #4682b4;
   text-decoration: none;
 }
 
@@ -25,12 +25,12 @@ h5 {
 }
 
 #main {
-  margin-top: 50px;
+  margin-top: 80px;
 }
 
 @media (max-width: 992px) {
   #main {
-    margin-top: 30px;
+    margin-top: 20px;
   }
 }
 
@@ -630,7 +630,7 @@ h5 {
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .section-bg {

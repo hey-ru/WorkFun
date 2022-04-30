@@ -22,7 +22,7 @@ import javax.servlet.http.Part;
 import com.menu.model.MenuService;
 import com.opencsv.CSVReader;
 
-@WebServlet("/menu/csvuploadcsvservlet")
+@WebServlet("/menu/uploadcsvservlet")
 @MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class UploadCsvServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

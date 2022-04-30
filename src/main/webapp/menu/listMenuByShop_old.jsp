@@ -11,7 +11,7 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 
 <html>
 <head>
-<title>店家的菜單資料 - listMenuByShop.jsp</title>
+<title>店家的菜單資料</title>
 
 <style>
 table#table-1 {
