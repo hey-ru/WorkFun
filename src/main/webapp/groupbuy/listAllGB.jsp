@@ -1,13 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ page import="java.util.*"%>
-<%@ page import="com.shop.model.*"%>
-<%@ page import="java.util.*"%>
+<%@page import="com.groupbuy.model.*"%>
 
 <%
-ShopService shopSvc = new ShopService();
-List<ShopVO> list = shopSvc.getAll();
+GroupBuyService groupBuySvc = new GroupBuyService();
+List<GroupBuyVO> list = groupBuySvc.getAll();
 pageContext.setAttribute("list", list);
 int itemsPerPage = 10;
 %>
@@ -52,32 +50,32 @@ int itemsPerPage = 10;
 
 						<div class="row">
 							<div class="col-10" style="height: 60px; display: inline-block;">
-								<form class="my-1">
-									<div class="form-group col-2" style="display: inline-block;">
-										<select class="form-control" id="exampleFormControlSelect1"
-											style="border: gray solid 2px;">
-											<option selected>選擇店家類型</option>
-											<option value="0">飲料</option>
-											<option value="1">中式</option>
-											<option value="2">異國</option>
-											<option value="3">小吃</option>
-											<option value="4">素食</option>
-											<option value="5">其他</option>
-										</select>
-									</div>
-									<div class="form-group col-3" style="display: inline-block">
-										<input type="text" class="form-control"
-											id="exampleFormControlInput1" placeholder="輸入店名"
-											style="border: gray solid 2px;">
-									</div>
-									<button type="submit" class="btn btn-dark mb-2 mt-1 col"
-										style="display: inline-block;">搜尋</button>
+<!-- 								<form class="my-1"> -->
+<!-- 									<div class="form-group col-2" style="display: inline-block;"> -->
+<!-- 										<select class="form-control" id="exampleFormControlSelect1" -->
+<!-- 											style="border: gray solid 2px;"> -->
+<!-- 											<option selected>選擇店家類型</option> -->
+<!-- 											<option value="0">飲料</option> -->
+<!-- 											<option value="1">中式</option> -->
+<!-- 											<option value="2">異國</option> -->
+<!-- 											<option value="3">小吃</option> -->
+<!-- 											<option value="4">素食</option> -->
+<!-- 											<option value="5">其他</option> -->
+<!-- 										</select> -->
+<!-- 									</div> -->
+<!-- 									<div class="form-group col-3" style="display: inline-block"> -->
+<!-- 										<input type="text" class="form-control" -->
+<!-- 											id="exampleFormControlInput1" placeholder="輸入店名" -->
+<!-- 											style="border: gray solid 2px;"> -->
+<!-- 									</div> -->
+<!-- 									<button type="submit" class="btn btn-dark mb-2 mt-1 col" -->
+<!-- 										style="display: inline-block;">搜尋</button> -->
 
-								</form>
+<!-- 								</form> -->
 							</div>
 							<div class="col-2 mt-2" style="left: 0;">
-								<a  href='${pageContext.request.contextPath}/shop/addShopMenu.jsp'><button type="button"
-										class="btn btn-warning btn-lg">新增店家</button></a>
+								<a  href='${pageContext.request.contextPath}/shop/listAllShop.jsp'><button type="button"
+										class="btn btn-warning btn-lg">選擇要開團的店家</button></a>
 							</div>
 						</div>
 
@@ -133,21 +131,16 @@ int itemsPerPage = 10;
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
 											style="width: 50px;">修改</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1"
-											aria-label="Salary: activate to sort column ascending"
-											style="width: 50px;">揪團</th>
 									</tr>
-									
-									</thead>
 
 
 									<%@ include file="/design/page1.file"%>
-									<tbody>
 		
 									<c:forEach var="shopVO" items="${list}" begin="<%=pageIndex%>"
 										end="<%=pageIndex+rowsPerPage-1%>">
-										
+
+
+
 										<tr>
 <%-- 											<td>${shopVO.shop_id}</td> --%>
 											<td>${shopVO.shop_name}</td>
@@ -208,14 +201,6 @@ int itemsPerPage = 10;
 														value="getOne_For_Update">
 												</FORM>
 											</td>
-											<td>
-												<FORM METHOD="post"
-													ACTION="<%=request.getContextPath()%>/groupbuy/addGB.jsp"
-													style="margin-bottom: 0px;">
-													<input type="submit" class="btn-info btn-lg" value="我要揪團"> <input
-														type="hidden" name="shop_id" value="${shopVO.shop_id}">
-												</FORM>
-											</td>
 											<!-- 			<td> -->
 											<%-- <FORM METHOD="post"
                                                                                 ACTION="<%=request.getContextPath()%>/emp/emp.do"
@@ -227,7 +212,6 @@ int itemsPerPage = 10;
 											<!-- 			</td> -->
 										</tr>
 									</c:forEach>
-									</tbody>
 								</table>
 								
 										<%@ include file="/design/page2.file"%>
