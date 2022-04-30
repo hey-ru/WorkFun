@@ -137,7 +137,28 @@ int itemsPerPage = 10;
 										<tr>
 <%-- 											<td>${shopVO.shop_id}</td> --%>
 											<td>${shopVO.shop_name}</td>
-											<td>${shopVO.shop_type}</td>
+											<td>
+											<c:choose>
+											    <c:when test="${shopVO.shop_type == 0}">
+											       	飲料
+											    </c:when>
+											    <c:when test="${shopVO.shop_type == 1}">
+											        中式
+											    </c:when>
+											    <c:when test="${shopVO.shop_type == 2}">
+											        異國
+											    </c:when>
+											    <c:when test="${shopVO.shop_type == 3}">
+											        小吃
+											    </c:when>
+											    <c:when test="${shopVO.shop_type == 4}">
+											        素食
+											    </c:when>
+											    <c:when test="${shopVO.shop_type == 5}">
+											        其他
+											    </c:when>
+											</c:choose>
+											</td>
 											<td>${shopVO.address}</td>
 											<td>${shopVO.tel}</td>
 											<td><a href="${shopVO.website}">link</a></td>

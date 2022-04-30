@@ -19,11 +19,11 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "INSERT INTO shop (shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM shop order by shop_id";
-	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? where shop_id = ?";
+	private static final String GET_ALL_STMT = "SELECT * FROM shop ORDER BY shop_id DESC";
+	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? WHERE shop_id = ?";
 	private static final String GET_ONE_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop where shop_id = ?";
 	private static final String GET_BY_SETWHERE = "SELECT * FROM shop";
-	private static final String GET_Menus_ByShop_id_STMT = "SELECT * FROM menu where shop_id = ? order by menu_id";
+	private static final String GET_Menus_ByShop_id_STMT = "SELECT * FROM menu WHERE shop_id = ? ORDER BY menu_id";
 
 	@Override
 	public void insert(ShopVO shopVO) {
