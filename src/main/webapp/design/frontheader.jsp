@@ -14,7 +14,7 @@
                         <div class="dropdown">
                             <button class="dropbtn">揪團訂餐</button>
                             <div class="dropdown-content">
-                                <a href="#"> 主頁 </a>
+                                <a href="<%=request.getContextPath()%>/groupbuy/GBhome.jsp"> 主頁 </a>
                                 <a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">查詢店家</a>
                                 <a href="#">查詢揪團</a>
                                 <a href="#">查詢參團</a>

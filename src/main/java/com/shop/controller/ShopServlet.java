@@ -150,11 +150,17 @@ public class ShopServlet extends HttpServlet {
 				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());
 				//(0: 飲料, 1: 中式 2: 異國, 3: 小吃, 4: 素食 5:其他 )
 				
-				String address = req.getParameter("address").trim();
+				String placecode = req.getParameter("placecode").trim();
+				String city = req.getParameter("city").trim();
+				String dist = req.getParameter("dist").trim();
+				String addressend = req.getParameter("addressend").trim();
 				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$";
-				if ((address.trim().length() != 0) && !(address.trim().matches(addressReg))) { 
-					errorMsgs.put("address","地址: 只能是中、英文字母、數字、-和_");
+				if ((addressend.trim().length() != 0) && !(addressend.trim().matches(addressReg))) { 
+					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_");
 	            }
+				String addressend1 = addressend.replace(city, "");
+				String addressend2 = addressend1.replace(dist, "");				
+				String address = placecode+city+dist+addressend2;
 				
 				String tel = req.getParameter("tel");
 				String telReg = "(\\d{2,3}-?|\\(\\d{2,3}\\)-?)\\d{3,4}-?\\d{4}|09\\d{2}-?(\\d{6}|-\\d{3}-\\d{3})";

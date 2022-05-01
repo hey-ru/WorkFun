@@ -22,7 +22,8 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT * FROM groupbuy order by gb_id";
 	private static final String UPDATE = "UPDATE groupbuy set shop_id=?, shop_name=?, gb_owner=?, start_time=?, end_time=?, arr_time=?, min_amt=? where gb_id = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuy where gb_id = ?";
-	private static final String GET_GBList_Bygb_id_STMT = "SELECT * FROM groupbuylist WHERE gb_id = ?";
+	private static final String GET_GBLIST_BYGB_ID_STMT = "SELECT * FROM groupbuylist WHERE gb_id = ?";
+	private static final String GET_NOW_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_status = 1 ORDER BY end_time";
 
 	@Override
 	public void insert(GroupBuyVO groupBuyVO) {
@@ -246,6 +247,70 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<GroupBuyVO> getNowAll() {
+		List<GroupBuyVO> list = new ArrayList<GroupBuyVO>();
+		GroupBuyVO groupBuyVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_NOW_ALL_STMT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				groupBuyVO = new GroupBuyVO();
+				groupBuyVO.setGb_id(rs.getInt("gb_id"));
+				groupBuyVO.setShop_id(rs.getInt("shop_id"));
+				groupBuyVO.setShop_name(rs.getString("shop_name"));
+				groupBuyVO.setGb_owner(rs.getInt("gb_owner"));
+				groupBuyVO.setStart_time(rs.getTimestamp("start_time"));
+				groupBuyVO.setEnd_time(rs.getTimestamp("end_time"));
+				groupBuyVO.setArr_time(rs.getTimestamp("arr_time"));
+				groupBuyVO.setGb_status(rs.getInt("gb_status"));
+				groupBuyVO.setMin_amt(rs.getInt("min_amt"));
+				list.add(groupBuyVO);
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
 
 	@Override
 	public Set<GroupBuyListVO> getGBListBygbid(Integer gb_id) {
@@ -260,7 +325,7 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_GBList_Bygb_id_STMT);
+			pstmt = con.prepareStatement(GET_GBLIST_BYGB_ID_STMT);
 			pstmt.setInt(1, gb_id);
 			rs = pstmt.executeQuery();
 
@@ -354,11 +419,17 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 //		}
 		
 		// 查詢
-		Set<GroupBuyListVO> set = dao.getGBListBygbid(1001);
-		for (GroupBuyListVO aGroupBuyList : set) {
-			System.out.println(aGroupBuyList.toString());
+//		Set<GroupBuyListVO> set = dao.getGBListBygbid(1001);
+//		for (GroupBuyListVO aGroupBuyList : set) {
+//			System.out.println(aGroupBuyList.toString());
+//			System.out.println();
+//	}
+		// 查詢開團中
+		List<GroupBuyVO> list = dao.getNowAll();
+		for (GroupBuyVO aGroupBuy : list) {
+			System.out.println(aGroupBuy.toString());
 			System.out.println();
+		}
 		
-	}
 	}
 }

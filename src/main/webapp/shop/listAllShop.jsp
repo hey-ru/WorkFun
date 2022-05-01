@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%@ page import="java.util.*"%>
 <%@ page import="com.shop.model.*"%>
 <%@ page import="java.util.*"%>
 
@@ -25,10 +23,10 @@ int itemsPerPage = 10;
         td{
         vertical-align: middle;
             text-align: center;
-        height:130px;
+        height:100px;
         }
         .table-responsive {
-    	overflow-x: visible;
+    	overflow-x: ;
 }
     </style>
 </head>
@@ -39,17 +37,22 @@ int itemsPerPage = 10;
 		<%@ include file="/design/frontheader.jsp"%>
 
 		<!-- ======= 內容開始 ======= -->
-		<div class="card shadow mb-4">
-			<div class="card-header py-3">
-				<h6>
-					<strong>查詢店家</strong>
-				</h6>
-			</div>
-			<div class="card-body">
-				<div class="table-responsive">
-					<div id="dataTable_wrapper"
-						class="dataTables_wrapper dt-bootstrap4">
+	<main id="main" class="main">
+			<div class="card shadow">
 
+				<!-- ============== Card Header ============== -->
+				<div class="card-header py-3" style="background-color: #b0c4de">
+					<div class="row">
+						<div class="col-11" style="height: 20px; display: inline-block;">
+							<h5>
+								<strong>店家資訊</strong>
+							</h5>
+						</div>
+						<div class="col-1" style="height: 20px; display: inline-block;">
+							<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp"><strong>回揪團列表</strong></a>
+						</div>
+					</div>
+				</div>
 						<div class="row">
 							<div class="col-10" style="height: 60px; display: inline-block;">
 								<form class="my-1">
@@ -83,9 +86,8 @@ int itemsPerPage = 10;
 
 						<div class="row">
 							<div class="col-sm-12">
-								<table class="table table-bordered dataTable" id="dataTable"
-									width="100%" cellspacing="0" role="grid"
-									aria-describedby="dataTable_info" style="width: 100%;">
+								<table class="table table-bordered dataTable" id="dataTable" role="grid"
+									aria-describedby="dataTable_info" style="width: 100%;cellspacing:0;">
 									<thead>
 									<tr role=" row">
 										<th class="sorting sorting_asc" tabindex="0"
@@ -100,31 +102,31 @@ int itemsPerPage = 10;
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Position: activate to sort column ascending"
-											style="width: 160px;">店家地址</th>
+											style="width: 180px;">店家地址</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Office: activate to sort column ascending"
-											style="width: 80px;">店家電話</th>
+											style="width: 90px;">店家電話</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Age: activate to sort column ascending"
-											style="width: 50px;">店家網站</th>
+											style="width: 40px;">店家網站</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Office: activate to sort column ascending"
-											style="width: 50px;">低消金額</th>
+											style="width: 40px;">低消金額</th>
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
-											style="width: 50px;">照片1</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1"
-											aria-label="Salary: activate to sort column ascending"
-											style="width: 50px;">照片2</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1"
-											aria-label="Salary: activate to sort column ascending"
-											style="width: 50px;">照片3</th>
+											style="width: 50px;">照片</th>
+<!-- 										<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+<!-- 											rowspan="1" colspan="1" -->
+<!-- 											aria-label="Salary: activate to sort column ascending" -->
+<!-- 											style="width: 50px;">照片2</th> -->
+<!-- 										<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+<!-- 											rowspan="1" colspan="1" -->
+<!-- 											aria-label="Salary: activate to sort column ascending" -->
+<!-- 											style="width: 50px;">照片3</th> -->
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
@@ -180,12 +182,12 @@ int itemsPerPage = 10;
 											<td><img
 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1"
 												style="max-height: 100%;"></td>
-											<td><img
-												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img2"
-												style="max-height: 100%;"></td>
-											<td><img
-												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img3"
-												style="max-height: 100%;"></td>
+<!-- 											<td><img -->
+<%-- 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img2" --%>
+<!-- 												style="max-height: 100%;"></td> -->
+<!-- 											<td><img -->
+<%-- 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img3" --%>
+<!-- 												style="max-height: 100%;"></td> -->
 
 
 											<td>
@@ -229,16 +231,15 @@ int itemsPerPage = 10;
 									</c:forEach>
 									</tbody>
 								</table>
-								
+								<div style="display:inline-block; width:50px;"></div>
+								<div style="display:inline-block; margin-bottom:10px;">
 										<%@ include file="/design/page2.file"%>
-								
+								</div>
 							</div>
 						</div>
 
 					</div>
-				</div>
-			</div>
-		</div>
+</main>
 
 		<!-- ======= 內容結束 ======= -->
 

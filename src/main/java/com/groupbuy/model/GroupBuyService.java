@@ -3,6 +3,7 @@ package com.groupbuy.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+
 public class GroupBuyService {
 
 	private GroupBuyDAO_interface dao;
@@ -52,5 +53,9 @@ public class GroupBuyService {
 
 	public List<GroupBuyVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<GroupBuyVO> getNowAll() {
+		return dao.getNowAll();
 	}
 }
