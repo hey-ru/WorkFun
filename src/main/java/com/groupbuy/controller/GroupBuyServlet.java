@@ -56,9 +56,9 @@ public class GroupBuyServlet extends HttpServlet {
 				req.setAttribute("menuList", menuList);
 				System.out.println(menuList.toString());
 				
-				String url = "/groupbuylist/joinGB.jsp";
+				String url = "/groupbuylist/buyer_joinGB.jsp";
 				
-				// 成功轉交 joinGB.jsp
+				// 成功轉交 buyer_joinGB.jsp
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 		}
