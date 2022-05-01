@@ -20,6 +20,10 @@ pageContext.setAttribute("list", list);
 	height: 400px;
 	display: flex
 }
+.section-title h2{
+	margin-bottom:0px;
+}
+
 </style>
 </head>
 
@@ -29,7 +33,8 @@ pageContext.setAttribute("list", list);
                 <%@ include file="/design/frontheader.jsp" %>
 
                     <!-- ======= 內容開始 ======= -->
-	<main id="main">
+	<div style="height:var(--header-height);"></div>
+	<main>
 
 		<section id="portfolio" class="portfolio">
 			<div class="container" data-aos="fade-up">
@@ -37,40 +42,39 @@ pageContext.setAttribute("list", list);
                     <h2> 🍽️ 今天我想來點... </h2>
                     <p></p>
                 </div>
-
 				
 
-<!-- 				<div class="row" style="justify-content: end;"> -->
-<!-- 					<div class="col-10" -->
-<!-- 						style="height: 60px; display: inline-block; text-align: right;"> -->
-<%-- 						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1"> --%>
+				<div class="row" style="justify-content: end;">
+					<div class="col-10"
+						style="height: 60px; display: inline-block; text-align: right;">
+						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
 							<%
 							int itemsPerPage = 9;
-							%> 
-							<%@ include file="/design/page1.file"%>
-<!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
-<%-- 								<jsp:useBean id="groupBuysvc1" scope="page" --%>
-<%-- 									class="com.groupbuy.model.GroupBuyService" /> --%>
-<!-- 								<select class="form-control" id="exampleFormControlSelect1" -->
-<!-- 									style="border: gray solid 2px;" name="is_deal"> -->
-<!-- 									<option>選擇類型</option> -->
-<!-- 									<option value="is_deal = 0">競標中</option> -->
-<!-- 									<option value="is_deal = 1">已成交</option> -->
-<!-- 									<option>顯示全部</option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group col-3" style="display: inline-block"> -->
-<!-- 								<input type="text" class="form-control" -->
-<!-- 									id="exampleFormControlInput1" placeholder="輸入名稱" -->
-<%-- 									style="border: gray solid 2px;" name="name" value="${param.name}"> --%>
-<!-- 							</div> -->
-<%-- 							<input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-<!-- 							<input type="hidden" name="action" value="listSecondHandsByName"> -->
-<!-- 							<input type="submit" class="btn btn-primary mb-2 mt-1 col" -->
-<!-- 								style="display: inline-block;" value="搜尋"></input> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+							%>  
+							<%@ include file="/design/page1.file"%> 
+							<div class="form-group col-2" style="display: inline-block;">
+								<jsp:useBean id="groupBuysvc1" scope="page"
+ 									class="com.groupbuy.model.GroupBuyService" /> 
+								<select class="form-control" id="exampleFormControlSelect1"
+									style="border: gray solid 2px;" name="is_deal">
+									<option>選擇類型</option>
+									<option value="is_deal = 0">競標中</option>
+									<option value="is_deal = 1">已成交</option>
+									<option>顯示全部</option>
+								</select>
+							</div>
+							<div class="form-group col-3" style="display: inline-block">
+								<input type="text" class="form-control"
+									id="exampleFormControlInput1" placeholder="輸入名稱"
+									style="border: gray solid 2px;" name="name" value="${param.name}">
+							</div>
+							<input type="hidden" name="action" value="listSecondHands_ByCompositeQuery">
+							<input type="hidden" name="action" value="listSecondHandsByName">
+							<input type="submit" class="btn btn-primary mb-2 mt-1 col"
+								style="display: inline-block;" value="搜尋"></input>
+						</form>
+					</div>
+				</div>
 
 				<div class="row portfolio-container" data-aos="fade-up"
 					data-aos-delay="200">
