@@ -109,6 +109,13 @@ public class EmpVO {
 		    com.dep.model.DepVO deptVO = deptSvc.getOneDept(depId);
 		    return deptVO;
 	    }
+	 @Override
+		public String toString() {
+			String text = String.format(
+					"empId: %s,  empName: %s",
+					empId, empName );
+				return text;
+		}
 	
 
 }

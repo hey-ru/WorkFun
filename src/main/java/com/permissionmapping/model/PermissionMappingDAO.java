@@ -1,4 +1,4 @@
-package com.permissionmaaping.model;
+package com.permissionmapping.model;
 
 import java.util.*;
 
@@ -7,9 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.emp.model.EmpVO;
-
-//import org.graalvm.compiler.core.common.alloc.Trace;
+import static com.util.ConnectionPool.getConectPool;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,11 +16,8 @@ import java.io.OutputStream;
 import java.sql.*;
 import java.sql.Date;
 
-public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
-	String userid = "cga101-03";
-	String passwd = "cga101-03";
+public class PermissionMappingDAO implements PermissionMappingDAO_interface {
+
 
 	private static final String INSERT_STMT = "INSERT INTO permission_mapping (emp_id,permission_id) VALUES (?,?) ";
 	private static final String GET_ALL_STMT = "select emp_id,permission_id FROM permission_mapping order by emp_id ";
@@ -38,8 +33,7 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			
@@ -58,9 +52,7 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -75,7 +67,8 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
-			}
+			
+		}
 		}
 
 	}
@@ -143,9 +136,9 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(DELETE);
+			
 
 			pstmt.setInt(1, empId);
 
@@ -156,10 +149,8 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		} 
+		 finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -178,17 +169,17 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 
 	}
 
-	public List<PermissionMappingVO> findByPrimaryKey(Integer empId) {
-		List<PermissionMappingVO> list = new ArrayList<PermissionMappingVO>();
+	public List<Integer> findByPrimaryKey(Integer empId) {
+		List<Integer> list = new ArrayList<Integer>();
 		PermissionMappingVO permissionMappingVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
+			
 
 			pstmt.setInt(1, empId);
 
@@ -196,12 +187,8 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 
 			while (rs.next()) {
 
-				permissionMappingVO = new PermissionMappingVO();
-								
-								permissionMappingVO.setEmpId(rs.getInt("emp_id"));
-								permissionMappingVO.setPermissionId(rs.getInt("permission_id"));
 
-								list.add(permissionMappingVO); // Store the row in the list
+								list.add(rs.getInt("permission_id")); // Store the row in the list
 							}
 			
 			
@@ -266,9 +253,10 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
 			// FROM emp order by emp_id";
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+			
+	
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -286,10 +274,7 @@ permissionMappingVO = new PermissionMappingVO();
 		} catch (SQLException se) {
 //			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		}  finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -317,7 +302,7 @@ permissionMappingVO = new PermissionMappingVO();
 
 	public static void main(String[] args) throws IOException {
 
-		PermissionMappingJDBCDAO dao = new PermissionMappingJDBCDAO();
+		PermissionMappingDAO dao = new PermissionMappingDAO();
 //		PermissionMappingVO PermissionMappingVO1 = new PermissionMappingVO();
 //
 //		PermissionMappingVO1.setPermissionId(3);
@@ -360,11 +345,8 @@ permissionMappingVO = new PermissionMappingVO();
 
 //		
 //		dao.delete(1007,3);
-//
-		List<PermissionMappingVO> list = dao.findByPrimaryKey(1067);
-		System.out.println(list);
-		System.out.println(list.size());
-		
+
+//		PermissionMappingVO PermissionMappingVO3 = dao.findByPrimaryKey(2);
 //		System.out.print(PermissionMappingVO3.getPermissionId());
 //		System.out.print(PermissionMappingVO3.getPermissionName() + ",");
 //		System.out.print(PermissionMappingVO3.getEmpPassword() + ",");
@@ -387,23 +369,16 @@ permissionMappingVO = new PermissionMappingVO();
 //		
 //			System.out.println();
 //		}
-//		List<PermissionMappingVO> list = dao.getAllDAO();
+//		List<PermissionMappingVO> list = dao.getAll();
 //		for (PermissionMappingVO aEmp : list) {
 //			System.out.print(aEmp.getEmpId() + ",");
-//			System.out.print(aEmp.getPermissionId() + ",");
+//			System.out.print(aEmp.getDepId() + ",");
+//			System.out.print(aEmp.getEmpName() + ",");
+//			System.out.print(aEmp.getHiredate() + ",");
+//			System.out.print(aEmp.getPhone() + ",");
+//			System.out.print(aEmp.getExtension() + ",");
 //		
 //			System.out.println();
 //		}
-//		PermissionMappingVO pmVO=new PermissionMappingVO();
-//		pmVO.setEmpId(1001);
-//		EmpVO empVO=pmVO.getEmpVO();
-//		System.out.println(empVO.getEmpName()+empVO.getMail());
-		
-		
-		
-		
-		
-		
-		
 	}
 }

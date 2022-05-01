@@ -1,4 +1,4 @@
-package com.permissionmaaping.model;
+package com.permissionmapping.model;
 
 import java.sql.Date;
 
@@ -28,4 +28,11 @@ public class PermissionMappingVO implements java.io.Serializable{
 		    com.emp.model.EmpVO empVO = empSvc.getOneEmp(empId);
 		    return empVO;
 	    }
+	 @Override
+		public String toString() {
+			String text = String.format(
+					"%d",
+					permissionId );
+				return text;
+		}
 }

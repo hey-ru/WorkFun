@@ -376,7 +376,52 @@
 	
 </table>
 									</div>
+									<div>
+									                         <table class="table table-striped table-bordered table-hover"
+                                                id="dataTables-example">
+                                               <tr>
+		<th>員工編號</th>
+		<th>員工姓名</th>
+		<th>部門</th>
+		<th>雇用日期</th>
+		<th>離職日期</th>
+		<th>手機</th>
+		<th>分機</th>
+		<th>興趣</th>
+		<th>專長</th>
+		<th>頭貼</th>
+		<th>信箱</th>
+		<th>生日</th>
+		<th></th>
+		<th></th>
+		
+		
+	</tr>
+	
+		<jsp:useBean id="permission" scope="session"
+									class="com.permissionmapping.model.PermissionMappingVO" />
 									
+		<tr>
+				<c:forEach var="permissionId" items="${permission.permissionId}">
+			<td><input type="checkbox">${permissionId}</td>
+		
+						</c:forEach>					
+			
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
+			     <input type="submit" value="修改">
+			     <input type="hidden" name="empId"  value="${empVO.empId}">
+			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
+			     <input type="submit" value="刪除">
+			     <input type="hidden" name="empId"  value="${empVO.empId}">
+			     <input type="hidden" name="action" value="delete"></FORM>
+			</td>
+		</tr>
+	
+</table></div>
 									
 									
                     <!-- /.container-fluid -->

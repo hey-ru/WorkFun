@@ -1,4 +1,4 @@
-package com.permissionmaaping.model;
+package com.permissionmapping.model;
 
 import java.sql.Connection;
 import java.util.List;
@@ -19,7 +19,7 @@ public class PermissionMappingService {
 
 		
 	}
-	public List<PermissionMappingVO> getOneEmpPermissions(Integer empId) {
+	public List<Integer> getOneEmpPermissions(Integer empId) {
 		return dao.findByPrimaryKey(empId);
 		
 		

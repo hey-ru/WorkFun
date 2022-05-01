@@ -10,8 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.emp.model.*;
-import com.permissionmaaping.model.PermissionMappingService;
-import com.permissionmaaping.model.PermissionMappingVO;
+import com.permissionmapping.model.PermissionMappingService;
+import com.permissionmapping.model.PermissionMappingVO;
 @MultipartConfig
 @WebServlet("/empServlet")
 public class EmpServlet extends HttpServlet {
@@ -625,7 +625,9 @@ return;
 					EmpService empSvc = new EmpService();
 					EmpVO empVO=empSvc.login(empId,empPassword,con);
 					PermissionMappingService pmSrv=new PermissionMappingService();
-					 List<PermissionMappingVO> empPm=pmSrv.getOneEmpPermissions(empId);
+					 List<Integer> empPm=pmSrv.getOneEmpPermissions(empId);
+					 System.out.println(empPm);
+					 
 //				EmpVO empVO=empSvc.login(empId,empPassword);
 					  if (empVO == null) {
 						
@@ -658,17 +660,6 @@ return;
 	
 			}
 		   
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 }

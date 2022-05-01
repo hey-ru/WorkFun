@@ -46,7 +46,8 @@
             <hr class="sidebar-divider my-0">
             <div style="height: 1px;">
             </div>
-
+	<c:forEach var="permissionIds" items="${empPm}">
+				<c:if test="${permissionIds==2}" var="condition">
             <!-- Nav Item - Pages Collapse Menu第一項 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -80,23 +81,17 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>公告管理</span>
-                </a>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.html">新增公告</a>
-                        <a class="collapse-item" href="cards.html">修改公告</a>
-                        <a class="collapse-item" href="cards.html">查詢公告</a>
-                        <a class="collapse-item" href="cards.html">刪除公告</a>
-                    </div>
-                </div>
-            </li>
-            </li>
+            
+            
+                  </c:if> 
+				</c:forEach>	
+            
+         
+            
+            
+            
+            <c:forEach var="permissionIds" items="${empPm}">
+				<c:if test="${permissionIds==4}" var="condition">
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -113,7 +108,15 @@
                     </div>
                 </div>
             </li>
-            </li>
+                  </c:if> 
+				</c:forEach>	
+            
+            
+            
+            
+            
+            <c:forEach var="permissionIds" items="${empPm}">
+				<c:if test="${permissionIds==3}" var="condition">
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -149,6 +152,35 @@
                     </div>
                 </div>
             </li>
+            
+                  </c:if> 
+				</c:forEach>	
+            
+             
+            <c:forEach var="permissionIds" items="${empPm}">
+				<c:if test="${permissionIds==1}" var="condition">
+            
+            
+               <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>公告管理</span>
+                </a>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
+                        <a class="collapse-item" href="buttons.html">新增公告</a>
+                        <a class="collapse-item" href="cards.html">修改公告</a>
+                        <a class="collapse-item" href="cards.html">查詢公告</a>
+                        <a class="collapse-item" href="cards.html">刪除公告</a>
+                    </div>
+                </div>
+            </li>
+            
+            
+            
+            
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -164,6 +196,11 @@
                     </div>
                 </div>
             </li>
+            
+               </c:if> 
+				</c:forEach>	
+            
+            
             <!-- Nav Item - Utilities Collapse Menu第二項 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"

@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.emp.model.EmpVO;
-import com.permissionmaaping.model.PermissionMappingService;
-import com.permissionmaaping.model.PermissionMappingVO;
+import com.permissionmapping.model.PermissionMappingService;
+import com.permissionmapping.model.PermissionMappingVO;
 
 /**
  * Servlet Filter implementation class backFilter

@@ -47,6 +47,9 @@
             <div style="height: 1px;">
             </div>
 
+	<c:forEach var="permissionIds" items="${empPm}">
+				<c:if test="${permissionIds==2}" var="condition">
+
             <!-- Nav Item - Pages Collapse Menu第一項 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -64,6 +67,9 @@
                     </div>
                 </div>
             </li>
+            
+               </c:if> 
+				</c:forEach>	
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                     aria-expanded="true" aria-controls="collapseTwo">
