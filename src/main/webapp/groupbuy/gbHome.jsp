@@ -33,7 +33,7 @@ pageContext.setAttribute("list", list);
 		<%@ include file="/design/frontheader.jsp"%>
 
 		<!-- ======= 內容開始 ======= -->
-		<div style="height: var(- -header-height);"></div>
+		<div style="height: var(--header-height);"></div>
 		<main>
 
 			<section id="portfolio" class="portfolio">

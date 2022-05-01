@@ -177,7 +177,7 @@ int itemsPerPage = 10;
 											</td>
 											<td>${shopVO.address}</td>
 											<td>${shopVO.tel}</td>
-											<td><a href="${shopVO.website}">link</a></td>
+											<td><a href="${shopVO.website}"  class="nav-link ${(shopVO.website=='')? 'disabled':''}">link</a></td>
 											<td>${shopVO.min_amt}</td>
 											<td><img
 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1"
@@ -248,6 +248,8 @@ int itemsPerPage = 10;
 	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
+
+
 
 </body>
 
