@@ -25,6 +25,11 @@ import com.equipment.model.EquipmentVO;
 @MultipartConfig
 public class EquipmentServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 
@@ -35,7 +40,7 @@ public class EquipmentServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		res.setContentType("text/html; charset=UTF-8");
-		
+
 		if ("getOne_For_Display".equals(action)) { // 來自eq_select_page.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -197,6 +202,8 @@ public class EquipmentServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer equipmentId = Integer.valueOf(req.getParameter("equipmentId").trim());
 
+//			Integer imageId = Integer.valueOf(req.getParameter("imageId").trim());
+
 			String eqName = req.getParameter("eqName");
 			if (eqName == null || eqName.trim().length() == 0) {
 				errorMsgs.put("eqName", "器材名稱: 請勿空白");
@@ -210,10 +217,35 @@ public class EquipmentServlet extends HttpServlet {
 			}
 
 			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
+			// 0:上架 1:未歸還器材 2:維修中 3:下架
 
 			String introduction = req.getParameter("introduction");
 
 			String spec = req.getParameter("spec");
+
+			EquipmentVO oldEquipmentVO = new EquipmentService().getByEqId(equipmentId);
+
+			byte[] img1 = oldEquipmentVO.getImg1();
+			byte[] img2 = oldEquipmentVO.getImg2();
+			byte[] img3 = oldEquipmentVO.getImg3();
+
+			Part pic1 = req.getPart("img1");
+			String filename1 = getFileNameFromPart(pic1);
+			if (filename1 != null && pic1.getContentType() != null) {
+				img1 = getByteArrayFromPart(pic1);
+			}
+
+			Part pic2 = req.getPart("img2");
+			String filename2 = getFileNameFromPart(pic2);
+			if (filename2 != null && pic2.getContentType() != null) {
+				img2 = getByteArrayFromPart(pic2);
+			}
+
+			Part pic3 = req.getPart("img3");
+			String filename3 = getFileNameFromPart(pic3);
+			if (filename3 != null && pic1.getContentType() != null) {
+				img3 = getByteArrayFromPart(pic3);
+			}
 
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/update_equipment_input.jsp");
@@ -223,7 +255,11 @@ public class EquipmentServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 			EquipmentService equipSvc = new EquipmentService();
-			EquipmentVO equipmentVO = equipSvc.updatEquipment(equipmentId, eqName, price, eqStatus, introduction, spec);
+			EquipmentVO equipmentVO = equipSvc.updatEquipment(equipmentId, eqName, price, eqStatus, introduction, spec,
+					img1, img2, img3);
+
+//			EqImageService equipImageSvc = new EqImageService();
+//			equipImageSvc.updateEqImage(equipmentId, image1, image2, image3);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("equipmentVO", equipmentVO);
@@ -252,18 +288,34 @@ public class EquipmentServlet extends HttpServlet {
 			}
 
 			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
+			// 0:上架 3:下架
 
 			String introduction = req.getParameter("introduction");
 
 			String spec = req.getParameter("spec");
 
-System.out.println(action);
-			
-			byte[] image = null;
-			Part pics = req.getPart("image");
-			String filename = getFileNameFromPart(pics);
-			if (filename != null && pics.getContentType() != null) {
-				image = getByteArrayFromPart(pics);
+			System.out.println(action);
+
+			byte[] img1 = null;
+			byte[] img2 = null;
+			byte[] img3 = null;
+
+			Part pic1 = req.getPart("img1");
+			String filename1 = getFileNameFromPart(pic1);
+			if (filename1 != null && pic1.getContentType() != null) {
+				img1 = getByteArrayFromPart(pic1);
+			}
+
+			Part pic2 = req.getPart("img2");
+			String filename2 = getFileNameFromPart(pic2);
+			if (filename2 != null && pic2.getContentType() != null) {
+				img2 = getByteArrayFromPart(pic2);
+			}
+
+			Part pic3 = req.getPart("img3");
+			String filename3 = getFileNameFromPart(pic3);
+			if (filename3 != null && pic3.getContentType() != null) {
+				img3 = getByteArrayFromPart(pic3);
 			}
 //                 
 			EquipmentVO equipmentVO = new EquipmentVO();
@@ -272,9 +324,14 @@ System.out.println(action);
 			equipmentVO.setEqStatus(eqStatus);
 			equipmentVO.setIntroduction(introduction);
 			equipmentVO.setSpec(spec);
-			
-			EqImageVO eqImageVO = new EqImageVO();
-			eqImageVO.setEqImage(image);
+			equipmentVO.setImg1(img1);
+			equipmentVO.setImg2(img2);
+			equipmentVO.setImg3(img3);
+
+//			EqImageVO eqImageVO = new EqImageVO();
+//			eqImageVO.setEqImage(image1);
+//			eqImageVO.setEqImage(image2);
+//			eqImageVO.setEqImage(image3);
 
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/addEquipment.jsp");
@@ -284,12 +341,12 @@ System.out.println(action);
 
 			/*************************** 2.開始新增資料 ***************************************/
 			EquipmentService equipSvc = new EquipmentService();
-			equipSvc.addEquipment(eqName, price, eqStatus, introduction, spec);
-			
-			System.out.println(equipSvc.getLast().getEqId());
-			
-			EqImageService equipImageSvc = new EqImageService();
-			equipImageSvc.addEqImage(equipSvc.getLast().getEqId(), image);
+			equipSvc.addEquipment(eqName, price, eqStatus, introduction, spec, img1, img2, img3);
+
+//			System.out.println(equipSvc.getLast().getEqId());
+
+//			EqImageService equipImageSvc = new EqImageService();
+//			equipImageSvc.addEqImage(equipSvc.getLast().getEqId(), image1, image2, image3);
 //			equipSvc.getLast().getEqId()
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/

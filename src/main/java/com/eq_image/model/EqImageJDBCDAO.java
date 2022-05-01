@@ -43,6 +43,7 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 			pstmt.setInt(1, eqImageVO.getEquipmentId());
 			pstmt.setBytes(2, eqImageVO.getEqImage());
 
+
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -76,16 +77,19 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int count = 0;
+
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			EqImageVO oldeqImage = getByImageId(eqImageVO.getEquipmentId());
+
 			StringBuilder sb = new StringBuilder();
 			sb.append(UPDATE);
 			if (eqImageVO.getEqImage() != null) {
-				sb.append("eq_image=?, ");
+				sb.append("eq_image1=?, ");
 			}
+
 
 			sb.append("image_id=? ");
 
@@ -97,6 +101,7 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 				count++;
 				pstmt.setBytes(count, eqImageVO.getEqImage());
 			}
+
 			count++;
 			pstmt.setInt(count, eqImageVO.getImageId());
 			count++;
@@ -301,8 +306,9 @@ public class EqImageJDBCDAO implements EqImageDAO_interface {
 		// 新增
 		EqImageVO eqImageVO1 = new EqImageVO();
 		eqImageVO1.setEquipmentId(128);
-		byte[] image1 = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\照片\\圖片1.jpg");
-		eqImageVO1.setEqImage(image1);
+		byte[] image = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\照片\\圖片1.jpg");
+		eqImageVO1.setEqImage(image);
+
 		dao.insert(eqImageVO1);
 
 		// 查詢

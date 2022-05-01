@@ -1,6 +1,7 @@
 package com.equipment.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class EquipmentVO implements Serializable {
 	private Integer equipmentId;
@@ -9,15 +10,43 @@ public class EquipmentVO implements Serializable {
 	private Integer eqStatus;
 	private String introduction;
 	private String spec;
-	
-	public Integer getEqId() {
-		return equipmentId;
-	}
+	private byte[] img1;
+	private byte[] img2;
+	private byte[] img3;
 
 	@Override
 	public String toString() {
 		return "EquipmentVO [equipmentId=" + equipmentId + ", eqName=" + eqName + ", price=" + price + ", eqStatus="
-				+ eqStatus + ", introduction=" + introduction + ", spec=" + spec + "]";
+				+ eqStatus + ", introduction=" + introduction + ", spec=" + spec + ", img1=" + Arrays.toString(img1)
+				+ ", img2=" + Arrays.toString(img2) + ", img3=" + Arrays.toString(img3) + "]";
+	}
+
+	public byte[] getImg1() {
+		return img1;
+	}
+
+	public void setImg1(byte[] img1) {
+		this.img1 = img1;
+	}
+
+	public byte[] getImg2() {
+		return img2;
+	}
+
+	public void setImg2(byte[] img2) {
+		this.img2 = img2;
+	}
+
+	public byte[] getImg3() {
+		return img3;
+	}
+
+	public void setImg3(byte[] img3) {
+		this.img3 = img3;
+	}
+
+	public Integer getEqId() {
+		return equipmentId;
 	}
 
 	public Integer getEquipmentId() {

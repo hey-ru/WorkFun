@@ -51,7 +51,7 @@
 <!-- Template Main CSS File -->
 
 <link
-	href="${pageContext.request.contextPath}/equipment/backAddEqpt.css"
+	href="${pageContext.request.contextPath}/equipment/eqpt.css"
 	rel="stylesheet">
 
 </head>
@@ -132,30 +132,30 @@
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">上傳圖片:</label>
 									<div class="col-sm-10">
-										<input class="form-control" type=file name="image1"
+										<input class="form-control" type=file name="img1"
 											oninput="pic1.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile0" value="${param.image1}"> <img id="pic1"
-											style="width: 150px" /> <br>${errorMsgs.image1}
+											id="formFile0" value="${param.img1}"> <img id="pic1"
+											style="width: 150px" /> <br>${errorMsgs.img1}
 									</div>
 								</div>
 								
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">上傳圖片:</label>
 									<div class="col-sm-10">
-										<input class="form-control" type=file name="image2"
+										<input class="form-control" type=file name="img2"
 											oninput="pic2.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile1" value="${param.image2}"> <img id="pic2"
-											style="width: 150px" /> <br>${errorMsgs.image2}
+											id="formFile1" value="${param.img2}"> <img id="pic2"
+											style="width: 150px" /> <br>${errorMsgs.img2}
 									</div>
 								</div>
 								
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">上傳圖片:</label>
 									<div class="col-sm-10">
-										<input class="form-control" type=file name="image3"
+										<input class="form-control" type=file name="img3"
 											oninput="pic3.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile2" value="${param.image3}"> <img id="pic3"
-											style="width: 150px" /> <br>${errorMsgs.image3}
+											id="formFile2" value="${param.img3}"> <img id="pic3"
+											style="width: 150px" /> <br>${errorMsgs.img3}
 									</div>
 								</div>
 								<div class="row mb-3">
