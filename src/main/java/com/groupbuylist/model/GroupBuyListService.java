@@ -8,7 +8,8 @@ public class GroupBuyListService {
 	private GroupBuyListDAO_interface dao;
 
 	public GroupBuyListService() {
-		dao = new GroupBuyListJDBCDAO();
+//		dao = new GroupBuyListJDBCDAO();
+		dao = new GroupBuyListDAO();//連線池
 	}
 
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
@@ -28,8 +29,9 @@ public class GroupBuyListService {
 		return groupBuyListVO;
 	}
 
-	public GroupBuyListVO updateGbItem(Integer gbList_id, Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
-			Integer price, Integer qty, Integer total, String remark, Integer is_pay, Integer is_pickup, Timestamp gbList_upd) {
+	public GroupBuyListVO updateGbItem(Integer gbList_id, Integer gb_id, Integer buyer, String buyer_name,
+			Integer menu_id, String item, Integer price, Integer qty, Integer total, String remark, Integer is_pay,
+			Integer is_pickup, Timestamp gbList_upd) {
 
 		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
 
@@ -46,7 +48,7 @@ public class GroupBuyListService {
 		groupBuyListVO.setIs_pay(is_pay);
 		groupBuyListVO.setIs_pickup(is_pickup);
 		groupBuyListVO.setGbList_upd(gbList_upd);
-		
+
 		dao.updateItem(groupBuyListVO);
 
 		return groupBuyListVO;
@@ -59,13 +61,18 @@ public class GroupBuyListService {
 	public void deleteMyGb(Integer buyer, Integer gb_id) {
 		dao.deleteMyGb(buyer, gb_id);
 	}
-	
-	public List<GroupBuyListVO> getMyGb(Integer buyer, Integer gb_id){
-		return dao.getMyGb(buyer, gb_id);		
+
+	public List<GroupBuyListVO> getMyGb(Integer buyer, Integer gb_id) {
+		return dao.getMyGb(buyer, gb_id);
 	}
-	
-	public List<GroupBuyListVO> getAll(){
+
+	public List<GroupBuyListVO> getAll() {
 		return dao.getAll();
-	} 
+	}
+
+	public GroupBuyListVO findByPrimaryKey(Integer gbList_id) {
+		return dao.findByPrimaryKey(gbList_id);
+	
+	}
 	
 }

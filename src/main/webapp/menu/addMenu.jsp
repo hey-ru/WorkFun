@@ -39,13 +39,19 @@ pageContext.setAttribute("list", list);
 			<div class="col-lg-6">
 				<div class="card">
 					<div class="card-body">
-					
+
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/menu/addmenubyshop">
 							<table class="table table-hover" style="text-align: center;">
+
+								<jsp:useBean id="shopSvc" scope="page"
+									class="com.shop.model.ShopService" />
+
 								<tr>
 									<td>店家名稱:</td>
 									<td>${param.shop_id}</td>
+<%-- 									<td>${(param.shop_id==shopSvc.shop_id)? '${shopSvc.all.shop_name}':'' }</td> --%>
+									
 								</tr>
 								<tr>
 									<td>品項:</td>
@@ -80,9 +86,9 @@ pageContext.setAttribute("list", list);
 	<%-- 			</c:forEach> --%>
 	<!-- 		</select></td> -->
 	<!-- 	</tr> -->
-				
-		
-		<!-- ======= 內容結束 ======= -->
+
+
+	<!-- ======= 內容結束 ======= -->
 	<!-- ======= Footer ======= -->
 	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- ======= js ======= -->

@@ -9,6 +9,8 @@ import javax.servlet.http.*;
 
 import com.groupbuy.model.GroupBuyService;
 import com.groupbuy.model.GroupBuyVO;
+import com.menu.model.MenuService;
+import com.menu.model.MenuVO;
 import com.shop.model.*;
 
 
@@ -24,71 +26,43 @@ public class GroupBuyServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		String action = req.getParameter("action");
 		res.setContentType("text/html; charset=UTF-8");
+		String action = req.getParameter("action");
+		System.out.println(action);
 		
+		//參團者加入揪團並新增修改刪除品項(加入菜單搜尋結果)
+		if ("showGB".equals(action)) { 
+
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+//			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
+				Integer shop_id = Integer.valueOf(req.getParameter("shop_id")); //以店家搜尋出菜單
+				
+				/***************************2.開始查詢資料*****************************************/
+				GroupBuyService gbSvc = new GroupBuyService();
+				GroupBuyVO groupBuyVO = gbSvc.getOneGB(gb_id);
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				HttpSession session = req.getSession();
+				session.setAttribute("groupBuyVO", groupBuyVO);
+				System.out.println(groupBuyVO.toString());
+				
+				//再取得一次店家菜單物件集合,以顯示於填寫揪團單畫面
+				MenuService menuService = new MenuService();
+				List<MenuVO> menuList = menuService.getByShopId(shop_id);
+				req.setAttribute("menuList", menuList);
+				System.out.println(menuList.toString());
+				
+				String url = "/groupbuylist/joinGB.jsp";
+				
+				// 成功轉交 joinGB.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+		}
 		
-//		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
-//
-//			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-////			try {
-//				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-//				String str = req.getParameter("gb_id");
-//				if (str == null || (str.trim()).length() == 0) {
-//					errorMsgs.put("shop_id","請輸入店家編號");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/shop/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;//程式中斷
-//				}
-//				
-//				Integer shop_id = null;
-//				try {
-//					shop_id = Integer.valueOf(str);
-//				} catch (Exception e) {
-//					errorMsgs.put("shop_id","店家編號格式不正確");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/shop/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;//程式中斷
-//				}
-//				
-//				/***************************2.開始查詢資料*****************************************/
-//				ShopService shopSvc = new ShopService();
-//				ShopVO shopVO = shopSvc.getOneShop(shop_id);
-//				if (shopVO == null) {
-//					errorMsgs.put("shop_id","查無資料");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/shop/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;//程式中斷
-//				}
-//				
-//				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-//				req.setAttribute("shopVO", shopVO); // 資料庫取出的empVO物件,存入req
-//				String url = "/shop/listOneShop.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-//				successView.forward(req, res);
-//
-////				/***************************其他可能的錯誤處理*************************************/
-////			} catch (Exception e) {
-////				errorMsgs.put("Exception","無法取得資料:" + e.getMessage());
-////				RequestDispatcher failureView = req
-////						.getRequestDispatcher("/shop/select_page.jsp");
-////				failureView.forward(req, res);
-////			}
-//		}
 		
 		
 //		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求

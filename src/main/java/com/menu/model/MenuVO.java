@@ -10,6 +10,12 @@ public class MenuVO implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+    // for join shop_name from shop_id
+    public com.shop.model.ShopVO getShopVO() {
+	    com.shop.model.ShopService shopSvc = new com.shop.model.ShopService();
+	    com.shop.model.ShopVO shopVO = shopSvc.getOneShop(shop_id);
+	    return shopVO;
+    }
 	
 	private Integer menu_id;
 	

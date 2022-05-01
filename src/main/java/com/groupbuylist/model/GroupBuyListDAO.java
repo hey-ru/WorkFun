@@ -1,13 +1,25 @@
 package com.groupbuylist.model;
 
 import java.util.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import java.sql.*;
 
-public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
-	String userid = "cga101-03";
-	String passwd = "cga101-03";
+public class GroupBuyListDAO implements GroupBuyListDAO_interface {
+	
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 //  <<參團管理>>
 //	參團者新增一筆參團
@@ -35,12 +47,19 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 
 	//PK
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuylist where gbList_id = ?";
+
 	
 //	參團者新增一筆參團	
 	@Override
 	public void insertItem(GroupBuyListVO groupBuyListVO) {
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT_STMT);
+			
 			// 新增單筆項目			
 			pstmt.setInt(1, groupBuyListVO.getGb_id());
 			pstmt.setInt(2, groupBuyListVO.getBuyer());
@@ -62,8 +81,12 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	@Override
 	public void updateItem(GroupBuyListVO groupBuyListVO) {
 		
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(UPDATE)) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setInt(1, groupBuyListVO.getQty());
 			pstmt.setString(2, groupBuyListVO.getRemark());
@@ -93,8 +116,13 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	@Override
 	public void deleteItem(Integer gbList_id) {
 		
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE);
+		
 			pstmt.setInt(1, gbList_id);
 			pstmt.executeUpdate();
 			
@@ -107,8 +135,13 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 //	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目 
 	public void deleteMyGb(Integer buyer, Integer gb_id) {
 		
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(DELETEMYGB)) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETEMYGB);
+		
 			pstmt.setInt(1, buyer);
 			pstmt.setInt(2, gb_id);
 
@@ -124,16 +157,23 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	@Override
 	public List<GroupBuyListVO> getMyGb(Integer buyer, Integer gb_id) {
 		List<GroupBuyListVO> mygblist = new ArrayList<GroupBuyListVO>();
+		
+		GroupBuyListVO groupBuyListVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE_BYBUYER)) {
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_BYBUYER);
+		
 					pstmt.setInt(1, buyer); //buyer = ?
 					pstmt.setInt(2, gb_id); //gb_id= ?
 					
-					ResultSet rs = pstmt.executeQuery();
+					rs = pstmt.executeQuery();
 			
 					while (rs.next()) {
-						GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+						groupBuyListVO = new GroupBuyListVO();
 						groupBuyListVO.setGbList_id(rs.getInt(1));
 						groupBuyListVO.setGb_id(rs.getInt(2));
 						groupBuyListVO.setItem(rs.getString(3));
@@ -156,13 +196,19 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	@Override
 	public List<GroupBuyListVO> getAll() {
 		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
+		
+		GroupBuyListVO groupBuyListVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
-			ResultSet rs = pstmt.executeQuery(); // 當Statement關閉，ResultSet也會自動關閉，不需將ResultSet宣告置入try with resource
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_STMT);
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+				groupBuyListVO = new GroupBuyListVO();
 				groupBuyListVO.setGbList_id(rs.getInt(1));
 				groupBuyListVO.setGb_id(rs.getInt(2));
 				groupBuyListVO.setBuyer(rs.getInt(3));
@@ -187,13 +233,18 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 
 	@Override
 	public GroupBuyListVO findByPrimaryKey(Integer gbList_id) {
-		GroupBuyListVO groupBuyListVO = null;
 		
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-			PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT)) {
-			
+		GroupBuyListVO groupBuyListVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_STMT);
+
 			pstmt.setInt(1, gbList_id);
-			ResultSet rs = pstmt.executeQuery(); 
+			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				groupBuyListVO = new GroupBuyListVO();

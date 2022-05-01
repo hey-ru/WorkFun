@@ -9,7 +9,7 @@ public class TestGroupBuyList {
 		GroupBuyListJDBCDAO dao = new GroupBuyListJDBCDAO();	
 		
 		//更新某人單品項
-		GroupBuyListVO gblVO2 = new GroupBuyListVO();
+//		GroupBuyListVO gblVO2 = new GroupBuyListVO();
 		
 //		gblVO2.setQty(10);
 //		gblVO2.setRemark("醬少");
@@ -54,16 +54,19 @@ public class TestGroupBuyList {
 //		System.out.println("新增一筆參團完成");
 
 		// 查詢全部揪團明細
-		List<GroupBuyListVO> list = dao.getAll();
-		int countList1 = 0;
-		for (GroupBuyListVO allList : list) {
-			System.out.println(allList.toString());
-			System.out.println("---------------------筆數:" + ++countList1);
-		}
+//		List<GroupBuyListVO> list = dao.getAll();
+//		int countList1 = 0;
+//		for (GroupBuyListVO allList : list) {
+//			System.out.println(allList.toString());
+//			System.out.println("---------------------筆數:" + ++countList1);
+//		}
 		
+		GroupBuyListVO gblVO4 = dao.findByPrimaryKey(10018);
+		System.out.println(gblVO4.toString());
+		
+	
 		
 		GroupBuyListService gbListSvc = new GroupBuyListService();
-		
 //		gbListSvc.getAll().toString();
 		
 	}
