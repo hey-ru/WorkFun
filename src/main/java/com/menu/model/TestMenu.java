@@ -13,7 +13,7 @@ public class TestMenu {
 
 		MenuJDBCDAO dao = new MenuJDBCDAO();
 		
-		MenuVO m3 = new MenuVO();
+//		MenuVO m3 = new MenuVO();
 //		m3.setMenu_id(1004);
 //		dao.updatestatus(m3);
 
@@ -23,17 +23,19 @@ public class TestMenu {
 //	menuVO1.setItem("牛丼咖哩飯");
 //	menuVO1.setPrice(90);
 //	dao.insert(menuVO1);
+//	System.out.println("新增成功! "+menuVO1.toString());
 
 		// 修改
-//	MenuVO menuVO2 = new MenuVO();
-//	menuVO2.setMenu_id(1010);
-//	menuVO2.setShop_id(114);
-//	menuVO2.setItem("牛丼+豬排咖哩");
-//	menuVO2.setPrice(40);
-//	menuVO2.setIs_item(1);
-//	dao.update(menuVO2);
+	MenuVO menuVO2 = new MenuVO();
+	menuVO2.setMenu_id(1113);
+	menuVO2.setShop_id(123);
+	menuVO2.setItem("牛丼+豬排咖哩");
+	menuVO2.setPrice(40);
+	menuVO2.setIs_item(1);
+	dao.update(menuVO2);
+	System.out.println("修改成功! "+menuVO2.toString());
 
-//		dao.findByPrimaryKey(1084).toString();
+		dao.findByPrimaryKey(1084).toString();
 
 		// 查詢
 //		List<MenuVO> list = dao.getAll();

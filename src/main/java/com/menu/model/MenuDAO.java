@@ -1,35 +1,42 @@
 package com.menu.model;
 
 import java.util.*;
-import java.io.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+
 import java.sql.*;
 
-public class MenuJDBCDAO implements MenuDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
-	String userid = "cga101-03";
-	String passwd = "cga101-03";
-
+public class MenuDAO implements MenuDAO_interface {
+	
+	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// 前台 新增店家單品項目
 	private static final String INSERT_STMT = "INSERT INTO menu (shop_id,item,price) VALUES (?, ?, ?)";
 	// 前台 修改店家單品項目
 	private static final String UPDATE = "UPDATE menu set shop_id=?, item=?, price=?, is_item=? where menu_id = ?";
-	
 	// 前台 由下架修改為上架
 	private static final String UPDATESTATUS = "UPDATE menu set is_item = 1 where menu_id = ?";
-		
 	// 前台 查詢一間店家菜單(上架中)
 	private static final String GET_ByShopId = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ? and is_item=1 ";
 	// 前台 查詢一間店家菜單(下架)
 	private static final String GET_ByShopId_Disable = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ? and is_item=0 ";
-	
 	// 後台 查詢各店家菜單
 	private static final String GET_ALL_STMT = "SELECT * FROM menu ";
-	
 	//查詢一筆菜單項目
 	private static final String GET_ONE_STMT = " SELECT menu_id, shop_id, item, price, is_item, menu_upd FROM menu where menu_id = ?";
-
-
 	// 前台 新增店家單品項目
 	@Override
 	public void insert(MenuVO menuVO) {
@@ -39,8 +46,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, menuVO.getShop_id());
@@ -50,9 +56,6 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -72,33 +75,68 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 				}
 			}
 		}
-
 	}
 
 	// 前台 修改店家單品項目
 	@Override
-	public void update(MenuVO menuVO) {
+	public void update(MenuVO newmenu) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		int count = 0;
+		
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, menuVO.getShop_id());
-			pstmt.setString(2, menuVO.getItem());
-			pstmt.setInt(3, menuVO.getPrice());
-			pstmt.setInt(4, menuVO.getIs_item());
-			pstmt.setInt(5, menuVO.getMenu_id());
-
+			MenuVO oldmenu = findByPrimaryKey(newmenu.getMenu_id());
+		StringBuilder sb=new StringBuilder();
+			sb.append(UPDATE);	
+			
+			if(newmenu.getShop_id() != null) {
+				sb.append(" shop_id=?, ");
+			}
+			if(newmenu.getItem() != null) {
+				sb.append(" item=?, ");
+			}
+			if(newmenu.getPrice() != null) {
+				sb.append(" price=?, ");
+			}
+			if(newmenu.getIs_item() != null) {
+				sb.append(" is_item=?, ");
+			}
+		
+			sb.append(" menu_id=? where menu_id = ? ");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			
+			if(newmenu.getShop_id() != null) {
+				count++;
+				pstmt.setInt(count, newmenu.getShop_id());
+			}
+			if(newmenu.getItem() != null) {
+				count++;
+				pstmt.setString(count, newmenu.getItem());
+			}
+			if(newmenu.getPrice() != null) {
+				count++;
+				pstmt.setInt(count, newmenu.getPrice());
+			}
+			if(newmenu.getIs_item() != null) {
+				pstmt.setInt(count, newmenu.getIs_item());
+			}
+			
+			
+			count++;
+			pstmt.setInt(count, newmenu.getMenu_id()); 
+			count++;
+			pstmt.setInt(count, newmenu.getMenu_id()); 
+			
 			pstmt.executeUpdate();
-
+			System.out.println(count);
+			
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -128,9 +166,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATESTATUS);
 
 			pstmt.setInt(1, menuVO.getMenu_id());
@@ -138,9 +174,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -175,9 +209,8 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ByShopId);
 
 			pstmt.setInt(1, shop_id);
@@ -195,9 +228,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -238,9 +269,8 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 			ResultSet rs = null;
 
 			try {
-
-				Class.forName(driver);
-				con = DriverManager.getConnection(url, userid, passwd);
+				
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ByShopId_Disable);
 
 				pstmt.setInt(1, shop_id);
@@ -258,9 +288,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 				}
 
 				// Handle any driver errors
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-				// Handle any SQL errors
+
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
 				// Clean up JDBC resources
@@ -301,9 +329,8 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -319,9 +346,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -360,9 +385,8 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, menu_id);
@@ -380,9 +404,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -411,6 +433,7 @@ public class MenuJDBCDAO implements MenuDAO_interface {
 		}
 		return menuVO;
 	}
-
 	
+
+
 }

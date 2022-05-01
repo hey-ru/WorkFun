@@ -8,7 +8,8 @@ public class MenuService {
 
 	
 	public MenuService() {
-		dao = new MenuJDBCDAO();
+//		dao = new MenuJDBCDAO();
+		dao = new MenuDAO(); //連線池
 	}
 
 	//主揪新增品項,金額
