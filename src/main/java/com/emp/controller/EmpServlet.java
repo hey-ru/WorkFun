@@ -749,11 +749,7 @@ return;
 
 					  }
 				
-				  
-				  
-				  
-				  
-				  
+	  
 //		            Iterator<String> it=allPermissionList.iterator();
 //		            while (it.hasNext()) {
 //					String onePermission=it.next();
@@ -763,21 +759,43 @@ return;
 						
 					}		
 		            
-		            
-		            
-		            
-		            
-		            
+	
 		            
 		        }
 			   
 			   
-
-//				try {
-					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-				
 					
+		   if ("listEmps_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
 
+					
+					/***************************1.將輸入資料轉為Map**********************************/ 
+					//採用Map<String,String[]> getParameterMap()的方法 
+					//注意:an immutable java.util.Map 
+					//Map<String, String[]> map = req.getParameterMap();
+					
+					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");//還沒有此物件，他會創建一個空的mapp
+					
+					// 以下的 if 區塊只對第一次執行時有效
+					if (req.getParameter("whichPage") == null){                                              //map在規格書說明接到,getParameterMap()在這裡接到的map不允許改變，需要洗掉 aka 轉型成HashMap
+						Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());  //不轉成<HashMap> 不給儲存在session裡面。
+						session.setAttribute("map",map1);
+						map = map1;
+					} 
+					
+					
+					/***************************2.開始複合查詢***************************************/
+					EmpService empSvc = new EmpService();
+					List<EmpVO> list  = empSvc.getAll(map);
+					
+					/***************************3.查詢完成,準備轉交(Send the Success view)************/
+					req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+					RequestDispatcher successView = req.getRequestDispatcher("/back/searchEmp.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+					successView.forward(req, res);
+			}
 
 					
 				

@@ -884,6 +884,137 @@ return list;
 		}
 return list;
 	}
+	
+	
+	
+	
+	
+	
+	
+	public static String get_aCondition_For_myDB(String columnName, String value) {
+
+		String aCondition = null;
+		StringBuilder sb=new StringBuilder();
+sb.append(columnName);
+sb.insert(3,"_");
+
+String colString=sb.toString();
+System.out.println(colString);
+System.out.println(value);
+
+
+		if ("emp_Id".equals(colString)  ) // 用於其他
+			aCondition = colString + "=" + value;
+		else if ("emp_Name".equals(colString) ) // 用於varchar
+			aCondition = colString + " like '%" + value + "%'";
+		else if ("dep_Id".equals(colString))  
+			aCondition = colString + "=" + value;
+			// 用於date
+//			aCondition = colString + "=" + "'"+ value +"'";                          //for 其它DB  的 date
+//		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
+		
+		return aCondition + " ";
+	}
+
+	public static String get_WhereCondition(Map<String, String[]> map) {
+		Set<String> keys = map.keySet();
+		StringBuffer whereCondition = new StringBuffer();
+		int count = 0;
+		for (String key : keys) {
+			String value = map.get(key)[0];
+			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
+				count++;
+				String aCondition = get_aCondition_For_myDB(key, value.trim());
+
+				if (count == 1)
+					whereCondition.append(" where " + aCondition);
+				else
+					whereCondition.append(" and " + aCondition);
+
+				System.out.println("有送出查詢資料的欄位數count = " + count);
+			}
+		}
+		
+		return whereCondition.toString();
+	}
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<EmpVO> getAllDAO(Map<String, String[]> map) {
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		EmpVO empVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	EmpDAO dao =new EmpDAO();
+		try {
+			
+
+			con = getConectPool().getConnection();
+			String finalSQL = "select * from emp "
+		          + dao.get_WhereCondition(map)
+		          + "order by emp_Id";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				empVO = new EmpVO();
+				empVO.setEmpId(rs.getInt("emp_id"));
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+
+				list.add(empVO); // Store the row in the List
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
 
 	public static void main(String[] args) throws IOException {
 

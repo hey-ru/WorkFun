@@ -66,7 +66,7 @@ public class backFilter extends HttpFilter implements Filter {
 		List<Integer> empPm =(List<Integer>) session.getAttribute("empPm");
 		
 	
-		if(empPm.size()==0) {
+		if(empPm==null) {
 			
 			res.sendRedirect(req.getContextPath() + "/home/home.jsp");
 			

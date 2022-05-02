@@ -12,7 +12,7 @@ public interface EmpDAO_interface {
           public int delete(Integer empno,Connection oneConnection);
           public EmpVO findByPrimaryKey(Integer empno);
           public EmpVO findByPrimaryKey(Integer empno,Connection oneConnection);
-       
+          public List<EmpVO> getAllDAO(Map<String, String[]> map);
           public List<EmpVO> getAllDAO();
           public List<EmpVO> getAllDAO(Connection oneConnection);
       	EmpVO selectForLogin(Integer empId, String password);

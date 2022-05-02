@@ -327,12 +327,25 @@
                     <div id="page-inner">
 
 
-  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" >
-        <b>輸入員工編號 :</b>
-        <input type="text" name="empId" value="${param.empId}"><font color=red>${errorMsgs.empId}</font>
-        <input type="hidden" name="action" value="getOne_For_Display">
+  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1">
+
+        <b>輸入員工編號:</b>
+        <input type="text" name="empId" value="7001"><br>
+           
+       <b>輸入員工姓名:</b>
+       <input type="text" name="empName" value="KING"><br>
+  <jsp:useBean id="depSvc" scope="page" class="com.dep.model.DepService" />
+       <b>選擇部門:</b>
+       <select size="1" name="depId" >
+          <option value="">
+         <c:forEach var="deptVO" items="${depSvc.all}" > 
+          <option value="${deptVO.depId}">${deptVO.depName}
+         </c:forEach>   
+       </select><br>
+          		        
         <input type="submit" value="送出">
-    </FORM>
+        <input type="hidden" name="action" value="listEmps_ByCompositeQuery">
+     </FORM>
 
 
                         <div class="row">

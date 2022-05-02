@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Part;
 
@@ -114,6 +115,9 @@ public int updateEmp(EmpVO empVO,Connection oneConnection) {
 		in.read(buffer);
 		in.close();
 		return buffer;
+	}
+	public List<EmpVO> getAll(Map<String, String[]> map) {
+		return dao.getAllDAO(map);
 	}
 	
 	
