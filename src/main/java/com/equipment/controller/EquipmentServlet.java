@@ -189,8 +189,10 @@ public class EquipmentServlet extends HttpServlet {
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			String param = "?eqName=" + equipmentVO.getEqName() + "&price=" + equipmentVO.getPrice() + "&eqStatus="
 					+ equipmentVO.getEqStatus() + "&introduction=" + equipmentVO.getIntroduction() + "&spec="
-					+ equipmentVO.getSpec();
-			String url = "/equipment/update_equipment_input.jsp" + param;
+					+ equipmentVO.getSpec() + "&img1=" + equipmentVO.getImg1() + "&img2=" + equipmentVO.getImg2()
+					+ "&img3=" + equipmentVO.getImg3();
+			
+			String url = "/equipment/updateBackAddEqpt.jsp" + param;
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -248,7 +250,7 @@ public class EquipmentServlet extends HttpServlet {
 			}
 
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/update_equipment_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/updateBackAddEqpt.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -334,7 +336,7 @@ public class EquipmentServlet extends HttpServlet {
 //			eqImageVO.setEqImage(image3);
 
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/addEquipment.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/backAddEqpt.jsp");
 				failureView.forward(req, res);
 				return;
 			}

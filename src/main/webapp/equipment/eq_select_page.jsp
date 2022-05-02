@@ -51,7 +51,7 @@
   
   
   <li>
-    <FORM METHOD="post" ACTION="equipment.do" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/equipment/equipment.do" >
         <b>輸入器材編號(100起): </b>
         <input type="text" name="equipmentId" value="${param.equipmentId}"><font color=red>${errorMsgs.equipmentId}</font>
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -108,7 +108,7 @@
 <h3>器材管理:</h3>
 
 <ul>
-  <li><a href='addEquipment.jsp'>器材(新增)</a></li>
+  <li><a href='backAddEqpt.jsp'>器材(新增)</a></li>
 </ul>
 
 </body>

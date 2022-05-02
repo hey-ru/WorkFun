@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>新增器材商品</title>
+<title>修改器材商品</title>
 
 <!-- Favicons -->
 
@@ -50,8 +50,7 @@
 
 <!-- Template Main CSS File -->
 
-<link
-	href="${pageContext.request.contextPath}/equipment/eqpt.css"
+<link href="${pageContext.request.contextPath}/equipment/eqpt.css"
 	rel="stylesheet">
 
 </head>
@@ -70,12 +69,24 @@
 
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">新增器材商品</h5>
+							<h5 class="card-title">修改器材商品</h5>
 
 							<!-- General Form Elements -->
 							<form METHOD="post"
-								ACTION="<%=request.getContextPath()%>/equipment/equipment.do" name="form1"
-								enctype="multipart/form-data">
+								ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
+								name="form1" enctype="multipart/form-data">
+
+								<div class="row mb-3">
+									<label for="inputText" class="col-sm-2 col-form-label">器材編號:<font
+										color=red><b>*</b></font>
+									</label>
+									<div class="col-sm-10">
+										<input disabled name="" type="text" class="form-control" 
+											value="${param.equipmentId}">
+										${errorMsgs.equipmentId}<br>
+									</div>
+								</div>
+
 
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">器材名稱:
@@ -101,10 +112,11 @@
 									<div class="col-sm-10">
 										<select name="eqStatus" id="">
 											<option value="" selected>請選擇狀態</option>
-											<option value="0"${(param.eqStatus==0)? 'selected':'' }>上架</option>
-											<option value="3"${(param.eqStatus==3)? 'selected':'' }>下架</option>
-										</select>
-									${errorMsgs.eqStatus}
+											<option value="0" ${(param.eqStatus==0)? 'selected':'' }>上架</option>
+											<option value="1" ${(param.eqStatus==1)? 'selected':'' }>未歸還器材</option>
+											<option value="2" ${(param.eqStatus==2)? 'selected':'' }>送修中</option>
+											<option value="3" ${(param.eqStatus==3)? 'selected':'' }>下架</option>
+										</select> ${errorMsgs.eqStatus}
 									</div>
 								</div>
 
@@ -113,7 +125,8 @@
 									</label>
 									<div class="col-sm-10">
 										<input name="introduction" type="text" class="form-control"
-											value="${param.name}"> ${errorMsgs.name}<br>
+											value="${param.introduction}">
+										${errorMsgs.introduction}<br>
 										<textarea name="text" class="form-control" cols="84" rows="10"></textarea>
 									</div>
 								</div>
@@ -123,7 +136,7 @@
 									</label>
 									<div class="col-sm-10">
 										<input name="spec" type="text" class="form-control"
-											value="${param.name}"> ${errorMsgs.name}<br>
+											value="${param.spec}"> ${errorMsgs.spec}<br>
 										<textarea name="text" class="form-control" cols="84" rows="10"></textarea>
 									</div>
 								</div>
@@ -138,7 +151,7 @@
 											style="width: 150px" /> <br>${errorMsgs.img1}
 									</div>
 								</div>
-								
+
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">上傳圖片:</label>
 									<div class="col-sm-10">
@@ -148,14 +161,14 @@
 											style="width: 150px" /> <br>${errorMsgs.img2}
 									</div>
 								</div>
-								
+
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">上傳圖片:</label>
 									<div class="col-sm-10">
 										<input class="form-control" type=file name="img3"
 											oninput="pic3.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile2" value="${param.img3}"> <img id="pic3"
-											style="width: 150px" /> <br>${errorMsgs.img3}
+											id="formFile2" value="${param.image3}"> <img
+											id="pic3" style="width: 150px" /> <br>${errorMsgs.img3}
 									</div>
 								</div>
 								<div class="row mb-3">
