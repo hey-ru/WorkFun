@@ -18,9 +18,9 @@ public interface BookingDAO_interface {
 	// 查詢預約單 by 員工編號
 	public BookingVO getByEmpId(Integer empId);
 
-	// 查詢預約單所有欄位
-	public List<BookingVO> getAll(); 
-
 	// 查詢自己預約單 by 狀態
 	public BookingVO getbyReturnStatus(Integer returnStatus); 
+	
+	// 查詢預約單所有欄位
+	public List<BookingVO> getAll(); 
 }

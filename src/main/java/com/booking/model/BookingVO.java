@@ -3,6 +3,9 @@ package com.booking.model;
 import java.sql.Timestamp;
 
 public class BookingVO implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	private Integer bookingId;
 	private Integer equipmentId;
 	private Integer empId;

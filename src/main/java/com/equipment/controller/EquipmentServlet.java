@@ -54,7 +54,7 @@ public class EquipmentServlet extends HttpServlet {
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/eq_select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/equipmentHome.jsp");
 				failureView.forward(req, res);
 				return;// 程式中斷
 			}
@@ -66,7 +66,7 @@ public class EquipmentServlet extends HttpServlet {
 				errorMsgs.put("equipmentId", "器材編號格式不正確");
 			}
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/eq_select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/equipmentHome.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -79,7 +79,7 @@ public class EquipmentServlet extends HttpServlet {
 			}
 
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/eq_select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/equipmentHome.jsp");
 				failureView.forward(req, res);
 				return;
 			}

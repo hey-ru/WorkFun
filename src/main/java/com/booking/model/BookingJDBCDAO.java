@@ -394,21 +394,21 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 		BookingJDBCDAO dao = new BookingJDBCDAO();
 
 		// 新增
-//		BookingVO bookingVO1 = new BookingVO();
-//		bookingVO1.setEmpId(1005);
-//		bookingVO1.setEquipmentId(105);
-//		bookingVO1.setStartDate(java.sql.Timestamp.valueOf("2022-03-29 17:24:57"));
-//		bookingVO1.setEndDate(java.sql.Timestamp.valueOf("2022-04-03 09:57:01"));
-//		bookingVO1.setReturnStatus(0);
-//		bookingVO1.setOverdueDate(java.sql.Timestamp.valueOf("2022-04-04 13:22:01"));
-//		bookingVO1.setOverduePrice(new Integer(20300));
-//		dao.insert(bookingVO1);
+		BookingVO bookingVO1 = new BookingVO();
+		bookingVO1.setEmpId(1011);
+		bookingVO1.setEquipmentId(105);
+		bookingVO1.setStartDate(java.sql.Timestamp.valueOf("2022-03-29 17:24:57"));
+		bookingVO1.setEndDate(java.sql.Timestamp.valueOf("2022-04-03 09:57:01"));
+		bookingVO1.setReturnStatus(0);
+		bookingVO1.setOverdueDate(java.sql.Timestamp.valueOf("2022-03-08 13:22:01"));
+		bookingVO1.setOverduePrice(new Integer(203022220));
+		dao.insert(bookingVO1);
 
 		// 修改
 //		BookingVO bookingVO2 = new BookingVO();
-//		bookingVO2.setStartDate(java.sql.Timestamp.valueOf("2022-04-01 17:24:57"));
+//		bookingVO2.setStartDate(java.sql.Timestamp.valueOf("2022-04-04 17:24:57"));
 //		bookingVO2.setEndDate(java.sql.Timestamp.valueOf("2022-04-10 09:57:10"));
-//		bookingVO2.setBookingId(1002);
+//		bookingVO2.setBookingId(1006);
 //		dao.updateDate(bookingVO2);
 
 		// 刪除
@@ -437,8 +437,8 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 //		}
 	
 		// 查詢自己預約單 by 狀態
-		BookingVO bookingVO5 = dao.getbyReturnStatus(0);
-		System.out.println(bookingVO5.toString());
+//		BookingVO bookingVO5 = dao.getbyReturnStatus(0);
+//		System.out.println(bookingVO5.toString());
 	
 	
 	}
