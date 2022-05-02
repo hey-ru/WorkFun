@@ -2,14 +2,15 @@ package com.groupbuylist.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class GroupBuyListService {
 
 	private GroupBuyListDAO_interface dao;
 
 	public GroupBuyListService() {
-//		dao = new GroupBuyListJDBCDAO();
-		dao = new GroupBuyListDAO();//連線池
+		dao = new GroupBuyListJDBCDAO();
+//		dao = new GroupBuyListDAO();//連線池
 	}
 
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
@@ -62,8 +63,14 @@ public class GroupBuyListService {
 		dao.deleteMyGb(buyer, gb_id);
 	}
 
-	public List<GroupBuyListVO> getMyGb(Integer buyer, Integer gb_id) {
-		return dao.getMyGb(buyer, gb_id);
+	
+	public List<GroupBuyListVO> getMyGB(Integer buyer) {
+		return dao.getMyGB(buyer);
+	}
+
+	
+	public List<GroupBuyListVO> getOne(Integer buyer, Integer gb_id) {
+		return dao.getOne(buyer, gb_id);
 	}
 
 	public List<GroupBuyListVO> getAll() {
@@ -75,4 +82,8 @@ public class GroupBuyListService {
 	
 	}
 	
+	//萬用查詢
+	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
 }

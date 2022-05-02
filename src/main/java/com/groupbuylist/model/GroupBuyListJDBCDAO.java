@@ -1,6 +1,9 @@
 package com.groupbuylist.model;
 
 import java.util.*;
+
+import com.groupbuylist.controller.jdbcUtil_CompositeQuery;
+
 import java.sql.*;
 
 public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
@@ -10,33 +13,36 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	String passwd = "cga101-03";
 
 //  <<參團管理>>
-//	參團者新增一筆參團
+//	參團者新增一筆參團ok
 	private static final String INSERT_STMT = "INSERT INTO groupbuylist (gb_id, buyer, buyer_name, menu_id, item, "
 			+ "price, qty, remark) " + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 //	-- 1.查詢我的參團: 查詢各團總額及狀態(主頁查詢畫面, 依結束時間降冪排序)-->join groupbuy
-	
-//	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目 	
+	private static final String GET_MYGB = "SELECT * "
+			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gb_id ";
+			
+//	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目ok	
 	private static final String DELETEMYGB = "DELETE FROM groupbuy where buyer = ? and gb_id = ?";
 
-//	-- 2. 檢視按鈕: 查詢 我的單筆明細
-	private static final String GET_ONE_BYBUYER = "SELECT gbList_id, gb_id, item, price, qty, (price*qty), remark "
-			+ "FROM groupbuylist where buyer = ? and gb_id= ? group by gbList_id ";
+//	-- 2. 檢視按鈕: 查詢 我的單筆明細ok
+	private static final String GET_ONE_BYBUYER = "SELECT * FROM groupbuylist WHERE buyer = ? AND gb_id= ? GROUP BY gbList_id ";
 	
-//	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註
+//	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註ok
 	private static final String UPDATE = "UPDATE groupbuylist set qty=?, remark=? where buyer=? and gbList_id=?";
 
-//	-- 2-2. 刪除按鈕: (揪團截止前)刪除 單個品項
+//	-- 2-2. 刪除按鈕: (揪團截止前)刪除 單個品項ok
 	private static final String DELETE = "DELETE FROM groupbuylist where gbList_id = ?";
 	
 
-//	[後台]: 查詢所有揪團明細
+//	[後台]: 查詢所有參團明細ok
 	private static final String GET_ALL_STMT = "SELECT * FROM groupbuylist order by gb_id";
 
-	//PK
+	//PK ok
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuylist where gbList_id = ?";
 	
-//	參團者新增一筆參團	
+//===================================================================================================	
+	
+//	參團者新增一筆參團	ok
 	@Override
 	public void insertItem(GroupBuyListVO groupBuyListVO) {
 		try (Connection con = DriverManager.getConnection(url, userid, passwd);
@@ -58,7 +64,103 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		} 
 	}
 
-//	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註
+//	-- 1.查詢我的參團: 查詢各團總額及狀態(主頁查詢畫面, 依結束時間降冪排序)-->join groupbuy
+	@Override
+	public List<GroupBuyListVO> getMyGB(Integer buyer) {
+		List<GroupBuyListVO> mygblist = new ArrayList<GroupBuyListVO>();
+
+		try (Connection con = DriverManager.getConnection(url, userid, passwd);
+				PreparedStatement pstmt = con.prepareStatement(GET_MYGB)) {
+			
+					pstmt.setInt(1, buyer); //buyer = ?
+					
+					ResultSet rs = pstmt.executeQuery();
+					
+					while (rs.next()) {
+						GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+//						groupBuyListVO.setGb_id(rs.getInt(1));
+//						groupBuyListVO.setTotal(rs.getInt(2));
+//						groupBuyListVO.setIs_pay(rs.getInt(3));
+//						groupBuyListVO.setIs_pickup(rs.getInt(4));
+//						groupBuyListVO.setTotal(rs.getInt(5));
+//						groupBuyListVO.setGbList_upd(rs.getTimestamp(6));
+						groupBuyListVO.setGbList_id(rs.getInt(1));
+						groupBuyListVO.setGb_id(rs.getInt(2));
+						groupBuyListVO.setBuyer(rs.getInt(3));
+						groupBuyListVO.setBuyer_name(rs.getString(4));
+						groupBuyListVO.setMenu_id(rs.getInt(5));
+						groupBuyListVO.setItem(rs.getString(6));
+						groupBuyListVO.setPrice(rs.getInt(7));
+						groupBuyListVO.setQty(rs.getInt(8));
+						groupBuyListVO.setRemark(rs.getString(9));
+						groupBuyListVO.setIs_pay(rs.getInt(10));
+						groupBuyListVO.setIs_pickup(rs.getInt(11));
+						groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
+						
+						mygblist.add(groupBuyListVO);
+					}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} 
+		return mygblist;
+	}
+	
+//	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目 ok
+	public void deleteMyGb(Integer buyer, Integer gb_id) {
+		
+		try (Connection con = DriverManager.getConnection(url, userid, passwd);
+				PreparedStatement pstmt = con.prepareStatement(DELETEMYGB)) {
+			pstmt.setInt(1, buyer);
+			pstmt.setInt(2, gb_id);
+
+			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} 	
+	}
+	
+//	-- 2. 檢視按鈕: 查詢 我的單筆明細 ok
+	@Override
+	public List<GroupBuyListVO> getOne(Integer buyer, Integer gb_id) {
+		List<GroupBuyListVO> onelist = new ArrayList<GroupBuyListVO>();
+
+		try (Connection con = DriverManager.getConnection(url, userid, passwd);
+				PreparedStatement pstmt = con.prepareStatement(GET_ONE_BYBUYER)) {
+					pstmt.setInt(1, buyer); //buyer = ?
+					pstmt.setInt(2, gb_id); //gb_id= ?
+					
+					ResultSet rs = pstmt.executeQuery();
+			
+					while (rs.next()) {
+						GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+						
+						groupBuyListVO = new GroupBuyListVO();
+						groupBuyListVO.setGbList_id(rs.getInt(1));
+						groupBuyListVO.setGb_id(rs.getInt(2));
+						groupBuyListVO.setBuyer(rs.getInt(3));
+						groupBuyListVO.setBuyer_name(rs.getString(4));
+						groupBuyListVO.setMenu_id(rs.getInt(5));
+						groupBuyListVO.setItem(rs.getString(6));
+						groupBuyListVO.setPrice(rs.getInt(7));
+						groupBuyListVO.setQty(rs.getInt(8));
+						groupBuyListVO.setRemark(rs.getString(9));
+						groupBuyListVO.setIs_pay(rs.getInt(10));
+						groupBuyListVO.setIs_pickup(rs.getInt(11));
+						groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
+						
+						onelist.add(groupBuyListVO);
+					}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} 
+		return onelist;
+	}
+	
+//	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註 ok
 	@Override
 	public void updateItem(GroupBuyListVO groupBuyListVO) {
 		
@@ -89,7 +191,7 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		} 		
 	}
 
-//	-- 2-2. 刪除按鈕: (揪團截止前)刪除 單個品項
+//	-- 2-2. 刪除按鈕: (揪團截止前)刪除 單個品項 ok
 	@Override
 	public void deleteItem(Integer gbList_id) {
 		
@@ -104,55 +206,7 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		} 		
 	}
 	
-//	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目 
-	public void deleteMyGb(Integer buyer, Integer gb_id) {
-		
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(DELETEMYGB)) {
-			pstmt.setInt(1, buyer);
-			pstmt.setInt(2, gb_id);
-
-			pstmt.executeUpdate();
-			
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} 	
-	}
-	
-//	-- 2. 檢視按鈕: 查詢 我的單筆明細
-	@Override
-	public List<GroupBuyListVO> getMyGb(Integer buyer, Integer gb_id) {
-		List<GroupBuyListVO> mygblist = new ArrayList<GroupBuyListVO>();
-
-		try (Connection con = DriverManager.getConnection(url, userid, passwd);
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE_BYBUYER)) {
-					pstmt.setInt(1, buyer); //buyer = ?
-					pstmt.setInt(2, gb_id); //gb_id= ?
-					
-					ResultSet rs = pstmt.executeQuery();
-			
-					while (rs.next()) {
-						GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
-						groupBuyListVO.setGbList_id(rs.getInt(1));
-						groupBuyListVO.setGb_id(rs.getInt(2));
-						groupBuyListVO.setItem(rs.getString(3));
-						groupBuyListVO.setPrice(rs.getInt(4));
-						groupBuyListVO.setQty(rs.getInt(5));
-						groupBuyListVO.setTotal(rs.getInt(6));
-						groupBuyListVO.setRemark(rs.getString(7));
-						
-						mygblist.add(groupBuyListVO);
-					}
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} 
-		return mygblist;
-	}
-	
-	
-//	[後台]: 查詢所有揪團明細
+//	[後台]: 查詢所有參團明細 ok
 	@Override
 	public List<GroupBuyListVO> getAll() {
 		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
@@ -163,6 +217,7 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 
 			while (rs.next()) {
 				GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+				groupBuyListVO = new GroupBuyListVO();
 				groupBuyListVO.setGbList_id(rs.getInt(1));
 				groupBuyListVO.setGb_id(rs.getInt(2));
 				groupBuyListVO.setBuyer(rs.getInt(3));
@@ -185,6 +240,7 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		return list;
 	}
 
+//	PK OK
 	@Override
 	public GroupBuyListVO findByPrimaryKey(Integer gbList_id) {
 		GroupBuyListVO groupBuyListVO = null;
@@ -197,6 +253,7 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 			
 			while (rs.next()) {
 				groupBuyListVO = new GroupBuyListVO();
+				
 				groupBuyListVO.setGbList_id(rs.getInt(1));
 				groupBuyListVO.setGb_id(rs.getInt(2));
 				groupBuyListVO.setBuyer(rs.getInt(3));
@@ -209,7 +266,7 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 				groupBuyListVO.setIs_pay(rs.getInt(10));
 				groupBuyListVO.setIs_pickup(rs.getInt(11));
 				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
-
+				
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -217,6 +274,54 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		} 
 		return groupBuyListVO;
 	}
+
+	//萬用查詢
+	//萬用複合查詢
+	@Override
+	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
+		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
+		GroupBuyListVO groupBuyListVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			String finalSQL = "select * from groupbuylist "
+		          + jdbcUtil_CompositeQuery.get_WhereCondition(map)
+		          + "order by gblist_id";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				groupBuyListVO = new GroupBuyListVO();
+				groupBuyListVO.setGbList_id(rs.getInt("gblist_id"));
+				groupBuyListVO.setGb_id(rs.getInt("gb_id"));
+				groupBuyListVO.setBuyer(rs.getInt("buyer"));
+				groupBuyListVO.setBuyer_name(rs.getString("buyer_name"));
+				groupBuyListVO.setMenu_id(rs.getInt("menu_id"));
+				groupBuyListVO.setItem(rs.getString("item"));
+				groupBuyListVO.setPrice(rs.getInt("price"));
+				groupBuyListVO.setQty(rs.getInt("qty"));
+				groupBuyListVO.setTotal(rs.getInt("total"));
+				groupBuyListVO.setRemark(rs.getString("remark"));
+				groupBuyListVO.setIs_pay(rs.getInt("is_pay"));
+				groupBuyListVO.setIs_pickup(rs.getInt("is_pickup"));
+				groupBuyListVO.setGbList_upd(rs.getTimestamp("gbList_upd"));
+				
+				list.add(groupBuyListVO); // Store the row in the List
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}
+		return list;
+	}
+
+	
 
 
 }

@@ -138,8 +138,8 @@ public class GroupBuyListVO implements java.io.Serializable {
 	   // for join gb_id from groupbuy
     public com.groupbuy.model.GroupBuyVO getGroupBuyVO() {
 	    com.groupbuy.model.GroupBuyService gbSvc = new com.groupbuy.model.GroupBuyService();
-	    com.groupbuy.model.GroupBuyVO GroupBuyVO = gbSvc.getOneGB(gb_id);
-	    return GroupBuyVO;
+	    com.groupbuy.model.GroupBuyVO groupBuyVO = gbSvc.getOneGB(gb_id);
+	    return groupBuyVO;
     }
 	
 }
