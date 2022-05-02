@@ -20,7 +20,7 @@ import java.sql.Date;
 
 public class PermissionDAO implements PermissionDAO_interface {
 
-
+	private static final String GET_ALL_PERMISSIONNAME = "select permission_name FROM permission ";
 	private static final String INSERT_STMT = "INSERT INTO permission (permission_name) VALUES (?) ";
 	private static final String GET_ALL_STMT = "select permission_id,permission_name FROM permission order by permission_id ";
 	private static final String GET_ONE_STMT = "SELECT permission_id,permission_name FROM permission where permission_id = ? ";
@@ -73,6 +73,66 @@ public class PermissionDAO implements PermissionDAO_interface {
 
 	}
 
+	@Override
+	public List<String> getAllPermissionNameDAO() {
+		// TODO Auto-generated method stub
+		List<String> list = new ArrayList<String>();
+	
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
+			// FROM emp order by emp_id";
+
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(GET_ALL_PERMISSIONNAME);
+	
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+			
+				
+
+				list.add(rs.getString("permission_name")); // Store the row in the list
+			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		}  finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	
+	}
+	
+	
 	public int update(PermissionVO newPermission) {
 
 		Connection con = null;
@@ -162,13 +222,14 @@ public class PermissionDAO implements PermissionDAO_interface {
 
 	}
 
-	public PermissionVO findByPrimaryKey(Integer permissionId) {
+	public String findByPrimaryKey(Integer permissionId) {
 
-		PermissionVO permissionVO = null;
+	
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		String permissionName=null;
+		
 		try {
 			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
@@ -179,10 +240,9 @@ public class PermissionDAO implements PermissionDAO_interface {
 
 			while (rs.next()) {
 				// PermissionVO Domain objects
-				permissionVO = new PermissionVO();
+			
 				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
-				permissionVO.setPermissionId(rs.getInt("permission_id"));
-				permissionVO.setPermissionName(rs.getString("permission_name"));
+			permissionName=(rs.getString("permission_name"));
 
 			}
 
@@ -230,7 +290,7 @@ public class PermissionDAO implements PermissionDAO_interface {
 //			}
 
 		}
-		return permissionVO;
+		return permissionName;
 	}
 
 	public List<PermissionVO> getAllDAO() {

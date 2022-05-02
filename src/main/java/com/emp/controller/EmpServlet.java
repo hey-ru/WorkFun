@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.emp.model.*;
+import com.permission.model.PermissionService;
 import com.permissionmapping.model.PermissionMappingService;
 import com.permissionmapping.model.PermissionMappingVO;
 @MultipartConfig
@@ -660,6 +661,136 @@ return;
 	
 			}
 		   
+		   
+		   
+		   
+		   
+		   
+
+		   if ("changePermission".equals(action)) { // 來自addEmp.jsp的請求  
+			   
+				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+			   
+			PermissionMappingService pmmSvc=new PermissionMappingService();
+			   PermissionService pmSvc=new PermissionService();
+//			List<String> allPermissionList=pmSvc.getAllPermissionName();
+			  String[] a=req.getParameterValues("permissionId");
+			  Integer empId=Integer.valueOf(req.getParameter("empId"));
+			  
+			 List<Integer> oldpm =pmmSvc.getOneEmpPermissions(empId);
+	            System.out.println(empId);
+			  for(int j=0; j < a.length; j++){
+				  System.out.println(a[j]);
+				  Integer pmId=Integer.valueOf(a[j]);
+				  if(!oldpm.contains(pmId)) {
+					  pmmSvc.addpmId2emp(empId,pmId);
+				  }
+				  else {
+					 String permissionName=pmSvc.getPermissionName(pmId);
+					  errorMsgs.put("permission","已有"+permissionName);
+
+				  }
+				  
+				  
+//
+//			      String url = "/back/backmain.jsp";
+//					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+//					successView.forward(req, res);	
+				  
+				  
+				  
+				  
+				  
+//		            Iterator<String> it=allPermissionList.iterator();
+//		            while (it.hasNext()) {
+//					String onePermission=it.next();
+//					if(onePermission.equals(a[j])) {
+//						System.out.println(j+1);
+//					}
+						
+					}		
+
+		      String url = "/back/permission.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);	
+				return;
+		            
+		            
+		            
+		            
+		            
+		            
+		        }
+
+		   if ("deletePermission".equals(action)) { // 來自addEmp.jsp的請求  
+			   
+			   
+			   
+			PermissionMappingService pmmSvc=new PermissionMappingService();
+			   PermissionService pmSvc=new PermissionService();
+//			List<String> allPermissionList=pmSvc.getAllPermissionName();
+			  String[] a=req.getParameterValues("permissionId");
+			  Integer empId=Integer.valueOf(req.getParameter("empId"));
+			  
+			 List<Integer> oldpm =pmmSvc.getOneEmpPermissions(empId);
+	            System.out.println(empId);
+			  for(int j=0; j < a.length; j++){
+				  System.out.println(a[j]);
+				  Integer pmId=Integer.valueOf(a[j]);
+				  if(!oldpm.contains(pmId)) {
+					  pmmSvc.deleteEmpPm(empId, pmId);
+				  }
+				  
+				
+				  
+				  
+				  
+				  
+				  
+//		            Iterator<String> it=allPermissionList.iterator();
+//		            while (it.hasNext()) {
+//					String onePermission=it.next();
+//					if(onePermission.equals(a[j])) {
+//						System.out.println(j+1);
+//					}
+						
+					}		
+		            
+		            
+		            
+		            
+		            
+		            
+		            
+		        }
+			   
+			   
+
+//				try {
+					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				
+					
+
+
+					
+				
+				
+					
+					
+				
+
+					// Send the use back to the form, if there were errors
+				
+					
+				
+					 
+//				EmpVO empVO=empSvc.login(empId,empPassword);
+					
+				
+	
+			}
+		   
 		
 	}
-}
+

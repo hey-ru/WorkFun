@@ -25,8 +25,16 @@ public class PermissionService {
 		return permissionVO;
 	}
 	
-
-
+public List<String> getAllPermissionName(){
+	
+	return dao.getAllPermissionNameDAO();
+	
+	
+}
+public String getPermissionName(Integer permissionId) {
+return dao.findByPrimaryKey(permissionId);
+	
+}
 	
 	
 	public int updateEmp(PermissionVO permissionVO) {
@@ -43,7 +51,12 @@ public class PermissionService {
 	}
 
 	public PermissionVO getOnePermission(Integer permissionId) {
-		return dao.findByPrimaryKey(permissionId);
+	String permissionName=dao.findByPrimaryKey(permissionId);
+	PermissionVO permissionVO=new PermissionVO();
+	permissionVO.setPermissionId(permissionId);
+	permissionVO.setPermissionName(permissionName);
+	return permissionVO;
+	
 	}
 
 	public List<PermissionVO> getAll() {

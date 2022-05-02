@@ -31,7 +31,7 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 	//private static final String UPDATE = "UPDATE permission_mapping set permission_name=?  where permission_id = ? ";
 
 	@Override
-	public void insert(PermissionMappingVO permissionMappingVO) {
+	public void insert(Integer empId,Integer permissionId) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -43,8 +43,8 @@ public class PermissionMappingJDBCDAO implements PermissionMappingDAO_interface 
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			
-			pstmt.setInt(1, permissionMappingVO.getEmpId());
-			pstmt.setInt(2, permissionMappingVO.getPermissionId());
+			pstmt.setInt(1, empId);
+			pstmt.setInt(2, permissionId);
 
 			pstmt.executeUpdate();
 //			ResultSet rs = pstmt.getGeneratedKeys();

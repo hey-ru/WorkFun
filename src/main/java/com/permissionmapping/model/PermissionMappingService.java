@@ -12,12 +12,14 @@ public class PermissionMappingService {
 		dao = new PermissionMappingDAO();
 	}
 
-	public void addpmId2emp(PermissionMappingVO pm) {
+	public void addpmId2emp(Integer empId,Integer permissionId) {
 
 		
-		dao.insert(pm);
-
+		dao.insert(empId,permissionId);
 		
+	}
+	public void deleteEmpPm(Integer empId,Integer permissionId) {
+		dao.delete(empId, permissionId);
 	}
 	public List<Integer> getOneEmpPermissions(Integer empId) {
 		return dao.findByPrimaryKey(empId);

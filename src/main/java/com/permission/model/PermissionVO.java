@@ -22,6 +22,6 @@ public class PermissionVO implements java.io.Serializable{
 	public void setPermissionName(String permissionName) {
 		this.permissionName = permissionName;
 	}
-	
+
 	
 }

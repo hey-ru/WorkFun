@@ -360,7 +360,7 @@
 		<th>信箱</th>
 		<th>生日</th>
 		<th></th>
-		<th></th>
+		<!-- <th></th> -->
 		
 		
 	</tr>
@@ -395,12 +395,12 @@
 			     <input type="hidden" name="empId"  value="${empVOSearch.empId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
-			<td>
+			<%-- <td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="empId"  value="${empVO.empId}">
 			     <input type="hidden" name="action" value="delete"></FORM>
-			</td>
+			</td> --%>
 		</tr>
 	</c:forEach>
 </table>

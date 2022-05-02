@@ -1,6 +1,7 @@
 package com.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.DispatcherType;
@@ -62,7 +63,7 @@ public class backFilter extends HttpFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
-		List<PermissionMappingVO> empPm =(List<PermissionMappingVO>) session.getAttribute("empPm");
+		List<Integer> empPm =(List<Integer>) session.getAttribute("empPm");
 		
 	
 		if(empPm.size()==0) {
