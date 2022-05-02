@@ -725,7 +725,9 @@ return;
 
 		   if ("deletePermission".equals(action)) { // 來自addEmp.jsp的請求  
 			   
-			   
+
+				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+				req.setAttribute("errorMsgs", errorMsgs);
 			   
 			PermissionMappingService pmmSvc=new PermissionMappingService();
 			   PermissionService pmSvc=new PermissionService();
@@ -738,10 +740,14 @@ return;
 			  for(int j=0; j < a.length; j++){
 				  System.out.println(a[j]);
 				  Integer pmId=Integer.valueOf(a[j]);
-				  if(!oldpm.contains(pmId)) {
+				  if(oldpm.contains(pmId)) {
 					  pmmSvc.deleteEmpPm(empId, pmId);
 				  }
-				  
+				  else {
+						 String permissionName=pmSvc.getPermissionName(pmId);
+						  errorMsgs.put("permission","沒有"+permissionName);
+
+					  }
 				
 				  
 				  
