@@ -6,35 +6,15 @@
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<%@ include file="/design/frontmetacss.jsp"%>
 
-<title>:: WorkFun ::</title>
-
-<!-- Favicons -->
-<link href="${pageContext.request.contextPath}/assets/img/wf.png" rel="icon">
-<link href="${pageContext.request.contextPath}/assets/img/wf.png" rel=" apple-touch-icon">
-
-<!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-	rel="stylesheet">
-
-<!-- Vendor CSS Files -->
-<link href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css"
-	rel="stylesheet">
-
-<!-- Template Main CSS File -->
-<link href="${pageContext.request.contextPath}/old_groupBuy/style_gb.css" rel="stylesheet">
+<style>
+.portfolio-wrap {
+	width: 300px;
+	height: 400px;
+	display: flex
+}
+</style>
 
 </head>
 
@@ -55,10 +35,10 @@
 							<form METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1" enctype="multipart/form-data">
 								<input name="second_hand_id" type="hidden" class="form-control" value="${param.second_hand_id}">
 								<div class="row mb-3">
-									<label for="inputText" class="col-sm-2 col-form-label">拍賣人id</label>
+									<label for="inputText" class="col-sm-2 col-form-label">拍賣人</label>
 									<div class="col-sm-10">
-										<input name="saler" type="text" class="form-control" value="${param.saler}">
-									${errorMsgs.saler}<br>
+									${empVO.empName}
+									<input type="hidden" name="saler" value="${empVO.empId}">
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -153,23 +133,7 @@
 		class="bi bi-arrow-up-short"></i></a>
 
 	<!-- Vendor JS Files -->
-	<script src="${pageContext.request.contextPath}/assets/vendor/purecounter/purecounter.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/aos/aos.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/glightbox/js/glightbox.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/waypoints/noframework.waypoints.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-		crossorigin="anonymous"></script>
-
-	<!-- Template Main JS File -->
-	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+	<%@ include file="/design/frontjs.jsp"%>
 
 </body>
 

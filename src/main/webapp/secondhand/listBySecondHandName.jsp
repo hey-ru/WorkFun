@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.secondHand.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
 List<SecondHandVO> list = (List<SecondHandVO>) request.getAttribute("list");
@@ -14,45 +13,7 @@ pageContext.setAttribute("list", list);
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-<title>:: WorkFun ::</title>
-
-<!-- Favicons -->
-<link href="${pageContext.request.contextPath}/assets/img/wf.png"
-	rel="icon">
-<link href="${pageContext.request.contextPath}/assets/img/wf.png"
-	rel=" apple-touch-icon">
-
-<!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-	rel="stylesheet">
-
-<!-- Vendor CSS Files -->
-<link
-	href="${pageContext.request.contextPath}/assets/vendor/aos/aos.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/assets/vendor/glightbox/css/glightbox.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.css"
-	rel="stylesheet">
-
-<!-- Template Main CSS File -->
-<link href="${pageContext.request.contextPath}/assets/css/style.css"
-	rel="stylesheet">
+<%@ include file="/design/frontmetacss.jsp"%>
 
 <style>
 .portfolio-wrap {
@@ -67,139 +28,11 @@ pageContext.setAttribute("list", list);
 <body>
 
 	<!-- ======= Header ======= -->
-	<header id="header" class="fixed-top">
-		<div
-			class="container-fluid d-flex justify-content-between align-items-center">
-			<a href="${pageContext.request.contextPath}/home/Home.html"
-				class="logo"><img
-				src="${pageContext.request.contextPath}/assets/img/workfun.gif"
-				alt="" class="img-fluid" style="width: 250px;"></a>
-
-			<nav id="navbar" class="navbar order-last order-lg-0">
-				<ul>
-					<!-- 修改跳頁 -->
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">揪團訂餐</button>
-							<div class="dropdown-content">
-								<a href="${pageContext.request.contextPath}/listAllShop.jsp">瀏覽揪團</a>
-								<a
-									href="${pageContext.request.contextPath}/old_groupBuy/shoplist.html">我要揪團</a>
-								<a href="#">查詢揪團</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">二手競標</button>
-							<div class="dropdown-content">
-								<a
-									href="<%=request.getContextPath()%>/secondhand/secondHandHome.jsp">競標首頁</a>
-								<a
-									href="<%=request.getContextPath()%>/secondhand/addSecondHand.jsp">新增競標</a>
-								<a href="#">修改競標(我沒有用)</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">問題回報</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">器材預約</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="dropdown">
-							<button class="dropbtn">塗鴉牆</button>
-							<div class="dropdown-content">
-								<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
-									3</a>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<i class="bi bi-list mobile-nav-toggle"></i>
-
-				<nav class="navbar navbar-light bg-light"
-					style="margin-left: 120px;"></nav>
-
-				<!-- 右邊icon -->
-				<div class="navbar">
-					<ul>
-						<li><a href=""> <i class="bi bi-chat-dots"
-								style="font-size: 25px; color: black;"></i>
-						</a></li>
-						<li><a href=""><i class="bi bi-chat"
-								style="font-size: 25px; color: black;"></i></a></li>
-						<li>
-							<div class="dropdown">
-								<i class="bi bi-bell" style="font-size: 25px"></i>
-								<div class="dropdown-content nav-item-right">
-									<a href="#">訊息一</a> <a href="#">訊息二</a> <a href="#">訊息三</a>
-								</div>
-							</div>
-						</li>
-
-						<!-- 個人頁面dropdown -->
-						<li class="nav-item dropdown pe-3"><a
-							class="nav-link nav-profile d-flex align-items-center pe-0 ; width:2px"
-							href="#" data-bs-toggle="dropdown"> <img
-								src="${pageContext.request.contextPath}/assets/img/wu.jpeg"
-								alt="Profile" class="rounded-circle" style="width: 50px;">
-						</a> <!-- End Profile Iamge Icon -->
-
-							<ul
-								class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile show"
-								style="position: absolute; inset: 0px 0px auto auto; margin: 15px; transform: translate3d(-16px, 54px, 0px);"
-								data-popper-placement="bottom-end">
-								<li class="dropdown-header">
-									<h6>Peter Wu</h6> <span>Java Consultant</span>
-								</li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="#"> <i class="bi bi-person"></i> <span>My
-											Profile</span>
-								</a></li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="#"> <i class="bi bi-gear"></i> <span>Account
-											Settings</span>
-								</a></li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="#"> <i class="bi bi-box-arrow-right"></i> <span>Sign
-											Out</span>
-								</a></li>
-
-							</ul></li>
-						<!-- End Profile Nav -->
-
-					</ul>
-				</div>
-		</div>
-
-	</header>
+	<%@ include file="/design/frontheader.jsp"%>
 	<!-- End Header -->
 
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-	<main id="main" style="height: 200vh;">
+	<main id="main">
 
 		<section id="portfolio" class="portfolio">
 			<div class="container" data-aos="fade-up">
@@ -286,49 +119,12 @@ pageContext.setAttribute("list", list);
 	</main>
 	<!-- End #main -->
 	<!-- ======= Footer ======= -->
-	<footer id="footer">
-		<div class="container">
-			<div class="copyright">
-				&copy; Copyright <strong><span>WorkFun</span></strong>. All Rights
-				Reserved
-			</div>
-		</div>
-	</footer>
-	<!-- End  Footer -->
-
-	<div id="preloader"></div>
-	<a href="#"
-		class="back-to-top d-flex align-items-center justify-content-center"><i
-		class="bi bi-arrow-up-short"></i></a>
+	<%@ include file="/design/frontfooter.jsp"%>
+		
+		<!-- End  Footer -->
 
 	<!-- Vendor JS Files -->
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/purecounter/purecounter.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/aos/aos.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/glightbox/js/glightbox.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/swiper/swiper-bundle.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/waypoints/noframework.waypoints.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/js/jquery/jquery.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-		crossorigin="anonymous"></script>
-
-	<!-- Template Main JS File -->
-	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+	<%@ include file="/design/frontjs.jsp"%>
 
 </body>
 

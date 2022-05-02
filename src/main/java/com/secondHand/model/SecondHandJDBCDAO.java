@@ -543,7 +543,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //	
 //		try {
 //			
-//			con = ds.getConnection();
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
 //			String finalSQL = "select * from emp2 "
 //		          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
 //		          + "order by empno";
