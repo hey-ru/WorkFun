@@ -62,7 +62,7 @@ public class SecondHandService {
 		return dao.getAll();
 	}
 	
-//	public List<SecondHandVO> getAll(Map<String, String[]> map) {
-//		return dao.getAll(map);
-//	}
+	public List<SecondHandVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
 }

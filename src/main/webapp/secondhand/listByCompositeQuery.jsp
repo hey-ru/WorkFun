@@ -4,11 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.secondHand.model.*"%>
 
-<%
-SecondHandService secondHandSvc = new SecondHandService();
-List<SecondHandVO> list = secondHandSvc.getAll();
-pageContext.setAttribute("list", list);
-%>
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<SecondHandVO>" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,29 +16,7 @@ pageContext.setAttribute("list", list);
 .portfolio-wrap {
 	width: 300px;
 	height: 400px;
-	display: flex;
-	background:transparent !important;
-}
-
-.portfolio{
-	background:transparent !important;
-}
-
-.submitbtn{
-	margin-top: 10px;
-	background-color: transparent;
-	border: 2px solid #3399ff;
-	color: #3399ff;
-	border-radius: 10%;
-	padding:5px 10px;
-	font-weight: bold;
-}
-
-.submitbtn:hover{
-	background-color: #3399ff;
-	border: 2px solid #3399ff;
-	color: white;
-	font-weight: bold;
+	display: flex
 }
 </style>
 
@@ -68,55 +42,31 @@ pageContext.setAttribute("list", list);
 				<div class="row" style="justify-content: end;">
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
-						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1">
+						<form class="my-1">
 							<%
 							int itemsPerPage = 9;
 							%>
-							<%@ include file="/design/page1.file"%>
-<!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
-<%-- 								<jsp:useBean id="secondHandSvc1" scope="page" --%>
-<%-- 									class="com.secondHand.model.SecondHandService" /> --%>
-<!-- 								<select class="form-control" id="exampleFormControlSelect1" -->
-<!-- 									style="border: gray solid 2px;" name="is_deal"> -->
-<!-- 									<option>選擇類型</option> -->
-<!-- 									<option name="is_deal" value="0">競標中</option> -->
-<!-- 									<option name="is_deal" value="1">已成交</option> -->
-<!-- 									<option>顯示全部</option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-<!-- 							<div class="form-group col-3" style="display: inline-block"> -->
-<!-- 								<input type="text" class="form-control" -->
-<!-- 									id="exampleFormControlInput1" placeholder="輸入名稱" -->
-<%-- 									style="border: gray solid 2px;" name="name" value="${param.name}"> --%>
-<!-- 							</div> -->
-<%-- 							<input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-<!-- 							<input type="hidden" name="action" value="listSecondHandsByName"> -->
-<!-- 							<input type="submit" class="btn btn-primary mb-2 mt-1 col" -->
-<!-- 								style="display: inline-block;" value="搜尋"></input> -->
-								
-								
-								
-								<div class="form-group col-2" style="display: inline-block;">
+							<%@ include file="/design/page1_ByCompositeQuery.file" %>
+							<div class="form-group col-2" style="display: inline-block;">
 								<jsp:useBean id="secondHandSvc1" scope="page"
 									class="com.secondHand.model.SecondHandService" />
 								<select class="form-control" id="exampleFormControlSelect1"
 									style="border: gray solid 2px;" name="is_deal">
-<!-- 									<option name="is_deal" value="0">競標中</option> -->
-<!-- 									<option name="is_deal" value="1">已成交</option> -->
-									<option value="0">競標中</option>
-									<option value="1">已成交</option>
-									<option value="">顯示全部</option>
+									<option>選擇類型</option>
+									<option value="is_deal = 0">競標中</option>
+									<option value="is_deal = 1">已成交</option>
+									<option>顯示全部</option>
 								</select>
 							</div>
 							<div class="form-group col-3" style="display: inline-block">
 								<input type="text" class="form-control"
-									id="exampleFormControlInput1" placeholder="輸入名稱"
-									style="border: gray solid 2px;" name="name" value="${param.name}">
+									id="exampleFormControlInput1" placeholder="輸入關鍵字"
+									style="border: gray solid 2px;" name="name">
 							</div>
-							<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-							<input type="hidden" name="action" value="listByCompositeQuery">
 							<input type="submit" class="btn btn-primary mb-2 mt-1 col"
 								style="display: inline-block;" value="搜尋"></input>
+								<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
+								<input type="hidden" name="action" value="listSecondHandsByName">
 
 						</form>
 					</div>
@@ -124,7 +74,7 @@ pageContext.setAttribute("list", list);
 
 				<div class="row portfolio-container" data-aos="fade-up"
 					data-aos-delay="200">
-					<c:forEach var="secondHandVO" items="${list}"
+					<c:forEach var="secondHandVO" items="${listByCompositeQuery}"
 						begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 							<div class="portfolio-wrap">
@@ -144,16 +94,16 @@ pageContext.setAttribute("list", list);
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet"
 											style="margin-bottom: 0px;">
-											<input type="submit" value="修改" class="submitbtn"> <input type="hidden"
+											<input type="submit" value="修改"> <input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											<input type="hidden" name="action" value="getOneForUpdate">
 										</FORM>
-<!-- 										<a -->
-<%-- 											href="${pageContext.request.contextPath}/secondhand/updateSecondHandMini.jsp" --%>
-<!-- 											class="portfolio-details-lightbox" -->
-<!-- 											data-glightbox="type: external" title="參與競標"> <i -->
-<!-- 											class="bx bx-link"></i>工事中 -->
-<!-- 										</a> -->
+										<a
+											href="${pageContext.request.contextPath}/secondhand/updateSecondHandMini.jsp"
+											class="portfolio-details-lightbox"
+											data-glightbox="type: external" title="參與競標"> <i
+											class="bx bx-link"></i>工事中
+										</a>
 									</div>
 								</div>
 							</div>

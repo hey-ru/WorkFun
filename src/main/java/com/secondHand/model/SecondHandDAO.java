@@ -5,17 +5,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.util.jdbcUtil_CompositeQuery;
 
 public class SecondHandDAO implements SecondHandDAO_interface {
 	private static DataSource ds = null;
@@ -394,6 +398,75 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 					rs.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<SecondHandVO> getAll(Map<String, String[]> map) {
+		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
+		SecondHandVO secondHandVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			con = ds.getConnection();
+			String finalSQL = "select * from second_hand "
+		          + jdbcUtil_CompositeQuery.get_WhereCondition(map)
+		          + "order by second_hand_id";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				secondHandVO = new SecondHandVO();
+				secondHandVO.setsecond_hand_id(rs.getInt("second_hand_id"));
+				secondHandVO.setSaler(rs.getInt("saler"));
+				secondHandVO.setBid_winner(rs.getInt("bid_winner"));
+				secondHandVO.setDeal_price(rs.getInt("deal_price"));
+				secondHandVO.setName(rs.getString("name"));
+				secondHandVO.setBottom_price(rs.getInt("bottom_price"));
+				secondHandVO.setTop_price(rs.getInt("top_price"));
+				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
+				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
+				secondHandVO.setIs_deal(rs.getInt("is_deal"));
+				secondHandVO.setImg1(rs.getBytes("img1"));
+//				secondHandVO.setImg1(rs.getString("img1"));
+				secondHandVO.setImg2(rs.getBytes("img2"));
+				secondHandVO.setImg3(rs.getBytes("img3"));
+				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
+				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
+				list.add(secondHandVO);
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
 			}
 			if (pstmt != null) {

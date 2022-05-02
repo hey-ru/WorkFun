@@ -14,5 +14,5 @@ public interface SecondHandDAO_interface {
 
 	public List<SecondHandVO> getAll();
 	
-//	public List<SecondHandVO> getAll(Map<String, String[]> map); 
+	public List<SecondHandVO> getAll(Map<String, String[]> map); 
 }
