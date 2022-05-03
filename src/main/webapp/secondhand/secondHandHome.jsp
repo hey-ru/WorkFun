@@ -101,8 +101,6 @@ pageContext.setAttribute("list", list);
 									class="com.secondHand.model.SecondHandService" />
 								<select class="form-control" id="exampleFormControlSelect1"
 									style="border: gray solid 2px;" name="is_deal">
-<!-- 									<option name="is_deal" value="0">競標中</option> -->
-<!-- 									<option name="is_deal" value="1">已成交</option> -->
 									<option value="0">競標中</option>
 									<option value="1">已成交</option>
 									<option value="">顯示全部</option>
@@ -144,16 +142,13 @@ pageContext.setAttribute("list", list);
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet"
 											style="margin-bottom: 0px;">
-											<input type="submit" value="修改" class="submitbtn"> <input type="hidden"
+											<c:if test="${empVO.empId == secondHandVO.saler}">
+											<input type="submit" value="修改" class="submitbtn">
+											</c:if>
+											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											<input type="hidden" name="action" value="getOneForUpdate">
 										</FORM>
-<!-- 										<a -->
-<%-- 											href="${pageContext.request.contextPath}/secondhand/updateSecondHandMini.jsp" --%>
-<!-- 											class="portfolio-details-lightbox" -->
-<!-- 											data-glightbox="type: external" title="參與競標"> <i -->
-<!-- 											class="bx bx-link"></i>工事中 -->
-<!-- 										</a> -->
 									</div>
 								</div>
 							</div>
