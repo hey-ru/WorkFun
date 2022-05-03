@@ -125,8 +125,8 @@
 						</div>
 					</c:forEach>
 				</div>
-
-				<%@ include file="/design/page2.file"%>
+				<% String yourServlet = "/secondhand/SecondHandServlet"; %>
+				<%@ include file="/design/page2_ByCompositeQuery.file"%>
 		</section>
 	</main>
 	<!-- End #main -->
