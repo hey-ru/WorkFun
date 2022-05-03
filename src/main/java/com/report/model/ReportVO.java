@@ -103,17 +103,5 @@ public class ReportVO implements java.io.Serializable{
 	public void setReport_type(Integer report_type) {
 		this.report_type = report_type;
 	}
-	@Override
-	public String toString() {
-		return "ReportVO [report_id=" + report_id + ", reporter=" + reporter + ", handler=" + handler + ", starttime="
-				+ starttime + ", updatetime=" + updatetime + ", endtime=" + endtime + ", content=" + content
-				+ ", status=" + status + ", report_image=" + Arrays.toString(report_image) + ", report_type="
-				+ report_type + ", title=" + title + "]";
-	}
-	  public com.emp.model.EmpVO getEmpVOByID(Integer ID) {
-		    com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
-		    com.emp.model.EmpVO empVO = empSvc.getOneEmp(ID);
-		    return empVO;
-	    }
 
 }

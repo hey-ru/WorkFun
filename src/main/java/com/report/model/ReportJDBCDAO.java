@@ -20,7 +20,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	private static final String GET_ALL_STMT = "select e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler ORDER BY starttime DESC";
 	private static final String GET_ONE_STMT = "SELECT * FROM report where report_id = ?";
 	private static final String UPDATE = "UPDATE report set title=?,report_type=?,reporter=?,handler=?,content=?,report_image=? where report_id= ?";
-	private static final String GET_KEYWORD = "SELECT * FROM report";
+	private static final String GET_KEYWORD = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler ORDER BY starttime DESC";
 	
 	@Override
 	public void insert(ReportVO reportVO) {
@@ -433,22 +433,27 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	public List<ReportVO> getAll(Map<String, String[]> map) {
 		List<ReportVO> list = new ArrayList<ReportVO>();
 		ReportVO reportVO = null;
-	
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 	try {			
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			String finalSQL = "select * from report"
+			String finalSQL = "select e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler"
 		          + QueryReport.get_WhereCondition(map)
-		          + "order by report_id";
+		          + "order by starttime DESC";
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
 			rs = pstmt.executeQuery();
 	
 			while (rs.next()) {
 				reportVO = new ReportVO();
+				EmpVO empVO1 = new EmpVO();
+				EmpVO empVO2 = new EmpVO();
+				empVO1.setEmpName(rs.getString("reporterName"));
+				empVO2.setEmpName(rs.getString("handlerName"));
+				reportVO.setEmpVO1(empVO1);
+				reportVO.setEmpVO2(empVO2);
 				reportVO.setReport_id(rs.getInt("report_id"));
 				reportVO.setReporter(rs.getInt("reporter"));
 				reportVO.setHandler(rs.getInt("handler"));

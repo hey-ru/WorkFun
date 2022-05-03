@@ -27,8 +27,8 @@
             style="border:3px blue solid;width:900px;position:absolute; height:650px; top:50%; margin-top:-175px;margin-left: 10%;">
              <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">回報者</span>
-                <input type="text" class="form-control" aria-label="Username" name="reporter"
-                    aria-describedby="basic-addon1" value="${param.reporter}">
+                <span class="form-control" aria-label="Username"
+                    aria-describedby="basic-addon1">${empVO.empName}</span>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">接收者</span>

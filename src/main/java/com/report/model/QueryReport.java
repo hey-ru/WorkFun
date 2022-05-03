@@ -8,8 +8,7 @@ public class QueryReport {
 
 		String aCondition = null;
 
-		if ("report_id".equals(columnName) || "reporter".equals(columnName) || "handler".equals(columnName) || 
-			"status".equals(columnName) || "report_image".equals(columnName) || "report_type".equals(columnName)) 
+		if ("status".equals(columnName) || "report_type".equals(columnName)) 
 			aCondition = columnName + "=" + value;
 		else if ("content".equals(columnName) || "title".equals(columnName))
 			aCondition = columnName + " like '%" + value + "%'";

@@ -3,7 +3,6 @@ package com.report.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -20,12 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.emp.model.EmpService;
-import com.emp.model.EmpVO;
 import com.report.model.ReportService;
 import com.report.model.ReportVO;
-import com.shop.model.ShopService;
-import com.shop.model.ShopVO;
 
 @WebServlet("/reportServlet")
 @MultipartConfig
@@ -228,7 +223,7 @@ public class ReportServlet extends HttpServlet{
 			}
 		}
 	
-	if ("listQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+	if ("listByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
 		List<String> errorMsgs = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
@@ -253,12 +248,10 @@ public class ReportServlet extends HttpServlet{
 			/***************************2.開始複合查詢***************************************/
 			ReportService repSvc = new ReportService();
 			List<ReportVO> list  = repSvc.getAll(map);
-			
 			/***************************3.查詢完成,準備轉交(Send the Success view)************/
-			req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+			req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
 			RequestDispatcher successView = req.getRequestDispatcher("/report/queryList.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 			successView.forward(req, res);
-			
 			/***************************其他可能的錯誤處理**********************************/
 		} catch (Exception e) {
 			errorMsgs.add(e.getMessage());
