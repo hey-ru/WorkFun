@@ -81,9 +81,8 @@
 										color=red><b>*</b></font>
 									</label>
 									<div class="col-sm-10">
-										<input disabled name="" type="text" class="form-control" 
-											value="${param.equipmentId}">
-										${errorMsgs.equipmentId}<br>
+										${param.equipmentId} <input name="equipmentId" type="hidden"
+											class="form-control" value="${param.equipmentId}">
 									</div>
 								</div>
 
@@ -174,17 +173,40 @@
 								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label"></label>
 									<div class="col-sm-10">
-										<input type="hidden" name="action" value="insert"><input
-											type="submit" class="btn btn-primary" value="送出新增">
+										<input type="hidden" name="action" value="update"><input
+											type="submit" class="btn btn-primary" value="送出修改">
 									</div>
 								</div>
 							</form>
 
 						</div>
-					</div>
+						<div class="col-1"></div>
+						<div class="col-4">
+							<div style="height: 150px; padding: 5px;">
+								<img
+									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${param.equipmentId}&table=equipment&pic=img1"
+									style="max-height: 100%;" id="oldpic1"> <img id="pic1"
+									style="max-height: 100%;">
+							</div>
+							<div style="height: 150px; padding: 5px;">
+								<img
+									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${param.equipmentId}&table=equipment&pic=img2"
+									style="max-height: 100%;" id="oldpic2"> <img id="pic2"
+									style="max-height: 100%;">
+							</div>
+							<div style="height: 150px; padding: 5px;">
+								<img
+									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${param.equipmentId}&table=equipment&pic=img3"
+									style="max-height: 100%;" id="oldpic3"> <img id="pic3"
+									style="max-height: 100%;">
+							</div>
+						</div>
 
+					</div>
 				</div>
+
 			</div>
+		
 		</section>
 	</main>
 	<!-- End of Main  -->

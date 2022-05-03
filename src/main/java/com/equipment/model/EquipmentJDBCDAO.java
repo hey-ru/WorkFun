@@ -14,7 +14,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
 
-	private static final String INSERT = "INSERT INTO equipment (eq_name,price,eq_status,introduction,spec) VALUES (?,?,?,?,?)";
+	private static final String INSERT = "INSERT INTO equipment (eq_name,price,eq_status,introduction,spec,img1,img2,img3) VALUES (?,?,?,?,?,?,?,?)";
 	private static final String UPDATE = "UPDATE equipment set ";
 	private static final String DELETE_BY_EQID = "DELETE FROM equipment where equipment_id = ?";
 	private static final String DELETE_BY_EQNAME = "DELETE FROM equipment where eq_name = ?";
@@ -22,7 +22,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	private static final String GET_ALL_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_name like ?";
 	private static final String GET_BY_EQUIPMENTID = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where equipment_id = ?";
 	private static final String GET_BY_EQSTATUS = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_status = ?";
-	private static final String GET_ALL = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment";
+	private static final String GET_ALL = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec,img1,img2,img3 FROM equipment";
 
 	@Override
 	public void insert(EquipmentVO equipmentVO) {
@@ -41,6 +41,10 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			pstmt.setInt(3, equipmentVO.getEqStatus());
 			pstmt.setString(4, equipmentVO.getIntroduction());
 			pstmt.setString(5, equipmentVO.getSpec());
+			pstmt.setBytes(6, equipmentVO.getImg1());
+			pstmt.setBytes(7, equipmentVO.getImg2());
+			pstmt.setBytes(8, equipmentVO.getImg3());
+			
 
 			pstmt.executeUpdate();
 
@@ -103,6 +107,18 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			if (newequipment.getSpec() != null) {
 				sb.append("spec=?, ");
 			}
+			
+			if(newequipment.getImg1() != null) {
+				sb.append("img1=?, ");
+			}
+			
+			if(newequipment.getImg2() != null) {
+				sb.append("img2=?, ");
+			}
+			
+			if(newequipment.getImg3() != null) {
+				sb.append("img3=?, ");
+			}
 
 			sb.append("equipment_id=? ");
 			sb.append("where equipment_id =? ");
@@ -138,6 +154,22 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 				count++;
 				pstmt.setString(count, newequipment.getSpec());
 			}
+			
+			if (newequipment.getImg1() != null) {
+				count++;
+				pstmt.setBytes(count, newequipment.getImg1());
+			}
+			
+			if (newequipment.getImg2() != null) {
+				count++;
+				pstmt.setBytes(count, newequipment.getImg2());
+			}
+			
+			if (newequipment.getImg3() != null) {
+				count++;
+				pstmt.setBytes(count, newequipment.getImg3());
+			}
+			
 
 			count++;
 			pstmt.setInt(count, newequipment.getEquipmentId());

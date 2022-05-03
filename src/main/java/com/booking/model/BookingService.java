@@ -54,4 +54,8 @@ public class BookingService {
 	public List<BookingVO> getAll(){
 		return dao.getAll();
 	}
+
+	public BookingVO getbyReturnStatus(Integer returnStatus) {
+		return dao.getbyReturnStatus(returnStatus);
+	}
 }
