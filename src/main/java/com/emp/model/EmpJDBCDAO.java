@@ -1166,5 +1166,11 @@ return list;
 		
 	
 		}
+
+	@Override
+	public List<EmpVO> getAllDAO(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	}

@@ -12,18 +12,18 @@ import static com.util.ConnectionPool.*;
 //import org.graalvm.compiler.core.common.alloc.Trace;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
-import java.io.OutputStream;
+
 import java.sql.*;
-import java.sql.Date;
-import com.util.*;
+
+
 
 public class EmpDAO implements EmpDAO_interface {
 	
 	
 	private static final String LOGIN_STMT = "select * from emp where emp_id = ? and emp_password = ? ";
-	
+	private static final String FORGOT_STMT = "select * from emp where mail = ? and birthday = ? ";
 	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT emp_id,dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
 	private static final String GET_ONE_STMT = "SELECT dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp where emp_id = ?";
@@ -90,16 +90,16 @@ public class EmpDAO implements EmpDAO_interface {
 return 1;
 	}
 
-	public int insert(EmpVO empVO,Connection oneConnection) {
+	public int insert(EmpVO empVO,Connection con) {
 
 
-		Connection con=oneConnection;
+	
 		PreparedStatement pstmt = null;
 
 		try {
 
 			
-			con = getConectPool().getConnection();
+	
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, empVO.getDepId());
@@ -305,15 +305,15 @@ int count=0;
 		}
 return 1;
 	}
-	public int update(EmpVO newemp,Connection oneConnection) {
+	public int update(EmpVO newemp,Connection con) {
 
-		Connection con = oneConnection;
+	
 		PreparedStatement pstmt = null;
 
 int count=0;
 		try {
 
-			con = getConectPool().getConnection();
+		
 			pstmt = con.prepareStatement(UPDATE);
 			
 			
@@ -499,13 +499,13 @@ return 1;
 		}
 return 1;
 	}
-	public int delete(Integer EmpId,Connection oneConnection) {
+	public int delete(Integer EmpId,Connection con) {
 
-		Connection con =oneConnection;
+	
 		PreparedStatement pstmt = null;
 
 		try {
-			con = getConectPool().getConnection();
+			
 			pstmt = con.prepareStatement(DELETE);
 			
 
@@ -590,16 +590,16 @@ return 1;
 		}
 return empVO;
 	}
-	public EmpVO findByPrimaryKey(Integer empno,Connection oneConnection) {
+	public EmpVO findByPrimaryKey(Integer empno,Connection con) {
 
 		EmpVO empVO = null;
-		Connection con = oneConnection;
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
 			
-			con = getConectPool().getConnection();
+		
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			
 
@@ -644,13 +644,13 @@ return empVO;
 		}
 return empVO;
 	}
-	public EmpVO selectForLogin(Integer empId, String password) {
-		Connection con = null;
+	public EmpVO selectForLogin(Integer empId, String password,Connection con) {
+		
 		PreparedStatement pstmt = null;
 		EmpVO empVO = null;
 		ResultSet rs = null;
 		try {
-			con = getConectPool().getConnection();
+			
 			pstmt = con.prepareStatement(LOGIN_STMT);
 		
 			
@@ -700,8 +700,64 @@ return empVO;
 		}
 return empVO;
 	}
-	public EmpVO selectForLogin(Integer empId, String password,Connection oneConnection) {
+	 public EmpVO findbymailandbirthday(String mail,java.sql.Date birthday){
 		Connection con = null;
+		PreparedStatement pstmt = null;
+		EmpVO empVO = null;
+		ResultSet rs = null;
+		try {
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(FORGOT_STMT);
+		
+			
+
+			pstmt.setString(1, mail);
+			pstmt.setDate(2, birthday);
+		
+//			pstmt.setInt(14, empVO.getEmpId());
+
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo Domain objects
+				empVO = new EmpVO();
+				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
+				empVO.setEmpId(rs.getInt("emp_id"));
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		
+		}
+return empVO;
+	}
+	public EmpVO selectForLogin(Integer empId, String password) {
+	Connection con=null;
 		PreparedStatement pstmt = null;
 		EmpVO empVO = null;
 		ResultSet rs = null;
@@ -762,6 +818,62 @@ return empVO;
 		}
 return empVO;
 	}
+	 public EmpVO findbymailandbirthday(String mail,java.sql.Date birthday,Connection con){
+		
+			PreparedStatement pstmt = null;
+			EmpVO empVO = null;
+			ResultSet rs = null;
+			try {
+				
+				pstmt = con.prepareStatement(FORGOT_STMT);
+			
+				
+
+				pstmt.setString(1, mail);
+				pstmt.setDate(2, birthday);
+			
+//				pstmt.setInt(14, empVO.getEmpId());
+
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					// empVo Domain objects
+					empVO = new EmpVO();
+					// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
+					empVO.setEmpId(rs.getInt("emp_id"));
+					empVO.setDepId(rs.getInt("dep_id"));
+					empVO.setEmpName(rs.getString("emp_name"));
+					empVO.setHiredate(rs.getDate("hire_date"));
+					empVO.setResigndate(rs.getDate("resign_date"));
+					empVO.setPhone(rs.getString("phone"));
+					empVO.setExtension(rs.getString("extension"));
+					empVO.setHobby(rs.getString("hobby"));
+					empVO.setEmpPassword(rs.getString("emp_password"));
+					empVO.setSkill(rs.getString("skill"));
+					empVO.setEmpProfile(rs.getBytes("emp_profile"));
+					empVO.setMail(rs.getString("mail"));
+					empVO.setBirthday(rs.getDate("birthday"));
+					empVO.setEmpStatus(rs.getByte("emp_status"));
+
+				}
+
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			
+			}
+	return empVO;
+		}
 
 	public List<EmpVO> getAllDAO() {
 		List<EmpVO> list = new ArrayList<EmpVO>();
@@ -827,11 +939,11 @@ return empVO;
 return list;
 	}
 
-	public List<EmpVO> getAllDAO(Connection oneConnection) {
+	public List<EmpVO> getAllDAO(Connection con) {
 		List<EmpVO> list = new ArrayList<EmpVO>();
 		EmpVO empVO = null;
 
-		Connection con = oneConnection;
+		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
@@ -1018,11 +1130,11 @@ System.out.println(value);
 
 	public static void main(String[] args) throws IOException {
 
-		EmpDAO dao = new EmpDAO();
-		EmpVO empVO1 = new EmpVO();
-		FileInputStream in = new FileInputStream("/Users/lin/tomcat.gif");
-		byte[] buf = new byte[in.available()];
-		in.read(buf);
+//		EmpDAO dao = new EmpDAO();
+//		EmpVO empVO1 = new EmpVO();
+//		FileInputStream in = new FileInputStream("/Users/lin/tomcat.gif");
+//		byte[] buf = new byte[in.available()];
+//		in.read(buf);
 		
 //		empVO1.setDepId(10);
 //		empVO1.setEmpName("張偉航");
@@ -1206,20 +1318,20 @@ System.out.println(value);
 //	fout.write(empVO3.getEmpProfile());
 //	fout.close();
 
-		List<EmpVO> list = dao.getAllDAO();
-		for (EmpVO aEmp : list) {
-			System.out.println(aEmp.getEmpId() + ",");
-			System.out.println(aEmp.getDepId() + ",");
-			System.out.println(aEmp.getResigndate() + ",");
-			System.out.println(aEmp.getExtension() + ",");
-			System.out.println(aEmp.getEmpName() + ",");
-			System.out.println(aEmp.getHiredate() + ",");
-			System.out.println(aEmp.getPhone() + ",");
-			System.out.println(aEmp.getExtension() + ",");
-	
-		
-	
-		}
+//		List<EmpVO> list = dao.getAllDAO();
+//		for (EmpVO aEmp : list) {
+//			System.out.println(aEmp.getEmpId() + ",");
+//			System.out.println(aEmp.getDepId() + ",");
+//			System.out.println(aEmp.getResigndate() + ",");
+//			System.out.println(aEmp.getExtension() + ",");
+//			System.out.println(aEmp.getEmpName() + ",");
+//			System.out.println(aEmp.getHiredate() + ",");
+//			System.out.println(aEmp.getPhone() + ",");
+//			System.out.println(aEmp.getExtension() + ",");
+//	
+//		
+//	
+//		}
 		
 	}
 }

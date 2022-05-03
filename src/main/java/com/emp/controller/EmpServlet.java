@@ -3,6 +3,8 @@ package com.emp.controller;
 import java.io.*;
 import java.sql.Connection;
 import java.util.*;
+import static com.util.String2SQLDate.*;
+import static com.util.JavaMail.genAuthCode;
 
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
@@ -13,6 +15,7 @@ import com.emp.model.*;
 import com.permission.model.PermissionService;
 import com.permissionmapping.model.PermissionMappingService;
 import com.permissionmapping.model.PermissionMappingVO;
+import com.util.JavaMail;
 @MultipartConfig
 @WebServlet("/empServlet")
 public class EmpServlet extends HttpServlet {
@@ -429,7 +432,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				empVO.setExtension(extension);
 				empVO.setHobby(hobby);
 				empVO.setSkill(skill);
-				empVO.setEmpPassword(req.getParameter("hiredate"));
+				empVO.setEmpPassword(req.getParameter("hiredate").replace("[\\pP\\p{Punct}]",""));
 			empVO.setEmpProfile(headimg);
 				empVO.setMail(mail);
 				empVO.setBirthday(birthday);
@@ -796,6 +799,128 @@ return;
 					RequestDispatcher successView = req.getRequestDispatcher("/back/searchEmp.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 					successView.forward(req, res);
 			}
+		   
+		   
+		   
+		   if ("forgotpassword".equals(action)) { // 來自addEmp.jsp的請求  
+			   
+
+				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+	java.sql.Date birthday=strToDate(req.getParameter("birthday"));
+
+			 String mail=req.getParameter("mail");
+			
+				EmpService empSvc = new EmpService();
+				EmpVO empVO=empSvc.getbymailandbirthday(mail, birthday);
+			   if(empVO==null) {
+				   errorMsgs.put("forgot","信箱或生日錯誤");
+				   
+				   RequestDispatcher successView = req.getRequestDispatcher("/login/forgot.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+					successView.forward(req, res);
+					return;
+			   }
+			   else {
+				   JavaMail javaMail=new JavaMail();
+				   javaMail.setRECIPIENT(mail);
+				   String authCode=genAuthCode();
+				String text="您的驗證碼為["+authCode+"]請在修改頁面重新設定您的密碼";
+				   javaMail.setTXT(text);
+				   javaMail.sendMail();
+			session.setAttribute("authCode", authCode);
+				   Integer empId=empVO.getEmpId();
+				   
+				   
+				   String param = "?empId="+empVO.getEmpId();
+				   
+				   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"+param); // 成功轉交listEmps_ByCompositeQuery.jsp
+					successView.forward(req, res);
+					return;
+			   }
+//		
+		   }
+		   
+		   
+		   
+		   if ("verifyAuthcode".equals(action)) { // 來自addEmp.jsp的請求  
+			   
+
+				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+			String authCode=(String)session.getAttribute("authCode");
+				String inputauthCode=req.getParameter("authCode");
+				if(authCode.equals(inputauthCode)) {
+					
+					   RequestDispatcher successView = req.getRequestDispatcher("/login/reset.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+						successView.forward(req, res);
+						return;
+					
+					
+				}
+				else {
+	
+				 errorMsgs.put("authCode","驗證碼錯誤");
+		   
+		   
+				   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+					successView.forward(req, res);
+					return;
+	
+				}
+		        }
+		   
+		   
+		   
+		   
+		   if ("forgotchangepassword".equals(action)) { // 來自addEmp.jsp的請求  
+			   
+
+				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+		Integer empId=Integer.valueOf(req.getParameter("empId"));
+		
+				String newpassword1=req.getParameter("newpassword1");
+				EmpService empSvc=new EmpService();
+			
+				String newpassword2=req.getParameter("newpassword2");
+				EmpVO empVO=empSvc.getOneEmp(empId);
+				if (newpassword1 == null || newpassword1.trim().length() == 0 || newpassword2 == null || newpassword2.trim().length() == 0) {
+					errorMsgs.put("password","密碼請勿空白");
+				}
+				if(!newpassword1.equals(newpassword2)) {
+					errorMsgs.put("comparepassword","密碼不一致");
+					
+				}
+				
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/login/reset.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				empVO.setEmpPassword(newpassword2);
+				empSvc.updateEmp(empVO,con);
+				
+				
+				
+				  RequestDispatcher successView = req.getRequestDispatcher("/login/login.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+					successView.forward(req, res);
+				
+			
+		        }
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+	}
 
 					
 				
@@ -816,5 +941,5 @@ return;
 			}
 		   
 		
-	}
+	
 
