@@ -131,8 +131,8 @@ int itemsPerPage = 10;
 													<c:if test="${reportVO.report_type==2}">軟硬體問題</c:if>
 													<c:if test="${reportVO.report_type==3}">其他</c:if></td>
 													<td><fmt:formatDate value="${reportVO.starttime}" pattern="yyyy-MM-dd HH:mm "/></td>
-													<td>${reportVO.reporter}</td>
-													<td>${reportVO.handler}</td>
+													<td>${reportVO.empVO1.empName}</td>
+													<td>${reportVO.empVO2.empName}</td>
 													<td><c:if test="${reportVO.status==0}">已發送</c:if>
 													<c:if test="${reportVO.status==1}">處理中</c:if>
 													<c:if test="${reportVO.status==2}">待確認</c:if>

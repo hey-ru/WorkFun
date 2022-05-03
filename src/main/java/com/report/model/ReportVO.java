@@ -3,6 +3,8 @@ package com.report.model;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
+import com.emp.model.EmpVO;
+
 public class ReportVO implements java.io.Serializable{
 	/**
 	 * 
@@ -19,6 +21,20 @@ public class ReportVO implements java.io.Serializable{
 	private byte[] report_image;
 	private Integer report_type;
 	private String title;
+	private EmpVO empVO1;
+	private EmpVO empVO2;
+	public EmpVO getEmpVO1() {
+		return empVO1;
+	}
+	public void setEmpVO1(EmpVO empVO1) {
+		this.empVO1 = empVO1;
+	}
+	public EmpVO getEmpVO2() {
+		return empVO2;
+	}
+	public void setEmpVO2(EmpVO empVO2) {
+		this.empVO2 = empVO2;
+	}
 	
 	public String getTitle() {
 		return title;
@@ -94,5 +110,10 @@ public class ReportVO implements java.io.Serializable{
 				+ ", status=" + status + ", report_image=" + Arrays.toString(report_image) + ", report_type="
 				+ report_type + ", title=" + title + "]";
 	}
+	  public com.emp.model.EmpVO getEmpVOByID(Integer ID) {
+		    com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+		    com.emp.model.EmpVO empVO = empSvc.getOneEmp(ID);
+		    return empVO;
+	    }
 
 }
