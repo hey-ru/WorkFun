@@ -447,7 +447,7 @@ public class SecondHandServlet extends HttpServlet {
 		}
 		
 		
-		if ("listByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+		if ("listByCompositeQuery".equals(action)) { // 來自secondHandHome.jsp的複合查詢請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -482,9 +482,7 @@ public class SecondHandServlet extends HttpServlet {
 
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
-		// System.out.println("header=" + header); // 測試用
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-		// System.out.println("filename=" + filename); // 測試用
 		if (filename.length() == 0) {
 			return null;
 		}

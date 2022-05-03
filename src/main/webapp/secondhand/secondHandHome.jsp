@@ -145,6 +145,9 @@ pageContext.setAttribute("list", list);
 											<c:if test="${empVO.empId == secondHandVO.saler}">
 											<input type="submit" value="修改" class="submitbtn">
 											</c:if>
+											<c:if test="${empVO.empId != secondHandVO.saler}">
+											<a href="#">參加競標</a>
+											</c:if>
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											<input type="hidden" name="action" value="getOneForUpdate">
