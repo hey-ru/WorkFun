@@ -1408,6 +1408,117 @@ section {
   }
 }
 
+/**
+ * cart section style
+ */
+
+.qtyclass {
+	width: 40px;
+	height: 30px;
+	text-align: center;
+	border: 0;
+	border-top: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+}
+
+input.qtyplus {
+	width: 25px;
+	height: 30px;
+	border: 1px solid #aaa;
+	background: #f8f8f8;
+}
+
+input.qtyminus {
+	width: 25px;
+	height: 30px;
+	border: 1px solid #aaa;
+	background: #f8f8f8;
+}
+
+.btn {
+  border-radius: 5px;
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+.btn:focus {
+  color: white;
+  background: hsl(219, 77%, 60%);
+  outline: 2px solid hsl(219, 77%, 60%);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: hsl(219, 77%, 60%);
+  font-weight: 500;
+  color: white;
+  padding: 13px 45px;
+}
+
+.btn-primary b {
+  margin-right: 10px;
+}
+
+.product-qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-qty button {
+  background: hsl(0, 0%, 91%);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-qty button:active,
+.product-close-btn:active ion-icon {
+  transform: scale(0.95);
+}
+
+.product-qty button ion-icon {
+  --ionicon-stroke-width: 60px;
+  font-size: 10px;
+}
+
+.product-img {
+  border-radius: 5px;
+  width: 80px;
+}
+
+.product-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.product-close-btn ion-icon {
+  font-size: 25px;
+  color: hsl(0, 0%, 64%);
+}
+
+.product-close-btn:hover ion-icon {
+  color: hsl(0, 77%, 60%);
+}
+
+button {
+    border: none;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+}
+.icon-inner, .ionicon, svg {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/

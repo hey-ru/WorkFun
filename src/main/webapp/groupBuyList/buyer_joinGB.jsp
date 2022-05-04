@@ -12,6 +12,11 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
 
+
+<style>
+
+</style>
+
 </head>
 
 <body>
@@ -43,20 +48,16 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 							class="dataTables_wrapper dt-bootstrap4">
 
 							<div class="row">
-								<div class="col-sm-8">
+								<div class="col-sm-6">
 									<!-- Table with hoverable rows -->
 									<table class="table table-hover" style="text-align: center;">
 										<thead>
 											<tr>
-												<th scope="col" width="100px">編號</th>
-												<th scope="col" width="500px">品項</th>
-												<th scope="col" width="100px">單價</th>
-												<th scope="col" width="200px">數量</th>
-												<!-- <th scope="col" width="200px">金額</th> -->
-												<th scope="col" width="300px">備註</th>
-												<th scope="col" ></th>
-												<th scope="col" ></th>
-												<th scope="col" ></th>
+												<th scope="col">編號</th>
+												<th scope="col">品項</th>
+												<th scope="col">單價</th>
+												<th scope="col">數量</th>
+												<th scope="col">備註</th>
 											</tr>
 										</thead>
 
@@ -66,48 +67,61 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 												<td><c:out value="${menu.menu_id}" /></td>
 												<td><c:out value="${menu.item}" /></td>
 												<td><c:out value="${menu.price}" /></td>
-												<td><input type="text" name="qty" size="3" value=></td>
+												<!-- 	
+												<td><input type="text" name="qty" size="3" value=></td> -->
+												<!-- 數量增減 -->
+												<td>
+													<div class="product-qty">
+														<button id="decrement">
+															<ion-icon name="remove-outline"></ion-icon>
+														</button>
+														<span id="quantity">0</span>
+														<button id="increment">
+															<ion-icon name="add-outline"></ion-icon>
+														</button>
+													</div>
+												</td>
+
+
 												<td><input type="text" name="remark" size="15" value=></td>
-												<!-- 加入品項 -->
-												<td>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/groupbuylist/JoinGB">
-														<input type="submit" class="btn btn-warning btn-sm"
-															value="新增"> <input type="hidden" name="gblist_id"
-															value="${groupbuylist.gblist_id}"> <input
-															type="hidden" name="action" value="insertitem">
-													</FORM>
-												</td>
+
+												
 												<!-- 編輯品項 -->
-												<td>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/groupbuylist/JoinGB">
-														<input type="submit" class="btn btn-success btn-sm"
-															value="編輯"> <input type="hidden" name="gblist_id"
-															value="${groupbuylist.gblist_id}"> <input
-															type="hidden" name="action" value="updateitem">
-													</FORM>
-												</td>
+<!-- 												<td> -->
+<!-- 													<FORM METHOD="post" -->
+<%-- 														ACTION="<%=request.getContextPath()%>/groupbuylist/JoinGB"> --%>
+<!-- 														<input type="submit" class="btn btn-success btn-sm" -->
+<!-- 															value="編輯"> <input type="hidden" name="gblist_id" -->
+<%-- 															value="${groupbuylist.gblist_id}"> <input --%>
+<!-- 															type="hidden" name="action" value="updateitem"> -->
+<!-- 													</FORM> -->
+<!-- 												</td> -->
 												<!-- 刪除品項 -->
-												<td>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/groupbuylist/joinGB">
-														<input type="submit" class="btn btn-secondary btn-sm"
-															value="移除"> <input type="hidden" name="gblist_id"
-															value="${groupbuylist.gblist_id}"> <input
-															type="hidden" name="action" value="deleteitem">
-													</FORM>
-													
-												</td>
+<!-- 												<td> -->
+<!-- 													<FORM METHOD="post" -->
+<%-- 														ACTION="<%=request.getContextPath()%>/groupbuylist/joinGB"> --%>
+<!-- 														<input type="submit" class="btn btn-secondary btn-sm" -->
+<!-- 															value="移除"> <input type="hidden" name="gblist_id" -->
+<%-- 															value="${groupbuylist.gblist_id}"> <input --%>
+<!-- 															type="hidden" name="action" value="deleteitem"> -->
+<!-- 													</FORM> -->
+<!-- 												</td> -->
 											</tr>
 										</c:forEach>
 									</table>
-
-
-
-
-
+								<div class="row">
+								<div class="col-sm-2">
+								<!-- 加入品項 -->
+													<FORM METHOD="post"
+														ACTION="<%=request.getContextPath()%>/groupbuylist/JoinGB">
+														<input type="submit" class="btn btn-warning btn-sm" value="訂餐">
+														<input type="hidden" name="gblist_id" value="${groupbuylist.gblist_id}"> 
+														<input type="hidden" name="action" value="insertAll">
+													</FORM>
+								
 								</div>
+								</div>
+									</div>
 							</div>
 						</div>
 					</div>
@@ -121,6 +135,36 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
+
+
+	<script>
+		'use strict';
+
+		const decrementBtn = document.querySelectorAll('#decrement');
+		const quantityElem = document.querySelectorAll('#quantity');
+		const incrementBtn = document.querySelectorAll('#increment');
+
+		// loop: for add event on multiple `increment` & `decrement` button
+		for (let i = 0; i < incrementBtn.length; i++) {
+
+			incrementBtn[i].addEventListener('click',function() {
+				let increment = Number(this.previousElementSibling.textContent);
+				increment++;
+				this.previousElementSibling.textContent = increment;
+			});
+
+			decrementBtn[i].addEventListener('click', function() {
+				let decrement = Number(this.nextElementSibling.textContent);
+				decrement <= 0 ? 0 : decrement--;
+				this.nextElementSibling.textContent = decrement;
+			});
+
+		}
+
+	</script>
+
+
 </body>
+
 
 </html>
