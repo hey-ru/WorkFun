@@ -50,18 +50,14 @@
 <ul>
   <li><a href='<%=request.getContextPath()%>/emp/listAllEmp.jsp'>List</a> all Emps. <br><br></li>
   
+   <li><a href='<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp'>buyer_selectGBList</a> all GBList<br><br></li>
+  
 <!--   琩高把刮Header -->
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/selectGBList" >
-<!--         <input type="text" name="empno"> -->
         <input type="submit" value="琩高把刮">
-		<input type="hidden" value="${EmpVO.empId} }">
-		<input type="hidden" value="${groupBuyVO.gb_id} }">
-		<input type="hidden" name="shop_id" value="${groupBuyVO.shop_id}">
-		<input type="hidden" name="shop_name" value="${groupBuyVO.shop_name}">
-		<input type="hidden" name="start_time" value="${groupBuyVO.start_time}">
-		<input type="hidden" name="end_time" value="${groupBuyVO.end_time}">
-		<input type="hidden" name="end_time" value="${groupBuyVO.gb_status}">
+		<input type="hidden" name="buyer" value="${EmpVO.empId} }">
+		<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id} }">
 		<input type="hidden" name="action" value="get_buyerGB">
     </FORM>
   </li>
