@@ -27,7 +27,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO second_hand (saler,name,bottom_price,top_price,start_time,end_time,img1,img2,img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 //	private static final String UPDATE = "UPDATE second_hand set bid_winner=?, deal_price=?, name=?, bottom_price=?, top_price=?, start_time=?, end_time=?, is_deal=?, img1=?, img2=?, img3=? where second_hand_id = ?";
 	private static final String UPDATE = "UPDATE second_hand set ";//StringBuilder
-	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
+//	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
+	private static final String GET_BY_ID = "SELECT e.emp_name as saler_name,sh.second_hand_id,sh.saler,sh.bid_winner,sh.deal_price,sh.name,sh.bottom_price,sh.top_price,sh.start_time,sh.end_time,sh.is_deal,sh.img1,sh.img2,sh.img3,sh.create_time,sh.update_time FROM second_hand sh join emp e on sh.saler = e.emp_id where second_hand_id = ?";
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
 	private static final String GET_BY_IS_DEAL = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where is_deal like \"%\"?\"%\"";
 	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand order by second_hand_id";
@@ -335,7 +336,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
+				EmpVO empVO = new EmpVO();
+				empVO.setEmpName(rs.getString("saler_name"));
 				secondHandVO = new SecondHandVO();
+				secondHandVO.setEmpVO(empVO);
 				secondHandVO.setsecond_hand_id(rs.getInt("second_hand_id"));
 				secondHandVO.setSaler(rs.getInt("saler"));
 				secondHandVO.setBid_winner(rs.getInt("bid_winner"));
