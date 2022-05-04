@@ -55,13 +55,6 @@
 
 </head>
 
-<script type="text/javascript">
-	function changeText(){
-		document.getElementById("introduction").value=document.getElementById("introduction1").value;
-	}
-</script>
-
-
 
 <body>
 
@@ -128,11 +121,11 @@
 									<label for="inputText" class="col-sm-2 col-form-label">商品介紹:
 									</label>
 									<div class="col-sm-10">
-										<input name="introduction1" type="hidden" id="introduction1"
-											class="form-control" value="${param.introduction}">
-										${errorMsgs.introduction}<br>
-										<textarea name="introduction" id="introduction" class="form-control"
-											cols="84" rows="10"></textarea>
+										<input name="introduction1" type="text" id="introduction1"
+											class="form-control" value="${param.name}">
+										${errorMsgs.name}<br>
+<!-- 										<textarea name="introduction" id="introduction" -->
+<!-- 											class="form-control" cols="84" rows="10"></textarea> -->
 									</div>
 								</div>
 
@@ -195,6 +188,16 @@
 	<!-- End of Main  -->
 	<!-- ======= Footer ======= -->
 
+
+	<!-- ======= js ======= -->
+	<script type="text/javascript">
+	function changeText(){
+		document.getElementById("introduction").value=document.getElementById("introduction1").value;
+	}
+</script>
+
+
+
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
 	<%
@@ -249,4 +252,5 @@
 		', // value:   new Date(),
 		});
 	</script>
+</body>
 </html>
