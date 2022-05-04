@@ -43,9 +43,9 @@
                         <div class="dropdown">
                             <button class="dropbtn">器材預約</button>
                             <div class="dropdown-content">
-                                <a href="<%=request.getContextPath()%>/equipment/eq_select_page.jsp">器材首頁</a>
-                                <a href="#">Link 2</a>
-                                <a href="#">Link 3</a>
+                                <a href="<%=request.getContextPath()%>/booking/frontBookingHome.jsp">器材首頁</a>
+                                <a href="<%=request.getContextPath()%>/booking/bookingList.jsp">瀏覽預約單</a>
+<!--                                 <a href="#">Link 3</a> -->
                             </div>
                         </div>
                     </li>

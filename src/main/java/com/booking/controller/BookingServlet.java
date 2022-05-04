@@ -8,6 +8,9 @@ import javax.servlet.http.*;
 import com.booking.model.BookingDAO_interface;
 import com.booking.model.BookingService;
 import com.booking.model.BookingVO;
+import com.emp.model.EmpVO;
+import com.equipment.model.EquipmentService;
+import com.equipment.model.EquipmentVO;
 
 @WebServlet("/booking/booking.do")
 public class BookingServlet extends HttpServlet {
@@ -119,5 +122,65 @@ public class BookingServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
+
+		if ("get_For_empId".equals(action)) { // 來自eq_select_page.jsp的請求
+
+//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+//			String str = req.getParameter("empId");
+//			if (str == null || (str.trim()).length() == 0) {
+//				errorMsgs.put("equipmentId", "請輸入器材編號");
+//			}
+//
+//			// Send the use back to the form, if there were errors
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/booking/bookingList.jsp");
+//				failureView.forward(req, res);
+//				return;// 程式中斷
+//			}
+//
+//			Integer empId = null;
+//			try {
+//				empId = Integer.valueOf(str);
+//			} catch (Exception e) {
+//				errorMsgs.put("empId", "器材編號格式不正確");
+//			}
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/booking/bookingList.jsp");
+//				failureView.forward(req, res);
+//				return;
+//			}
+			
+			EmpVO empVO = (EmpVO) (req.getSession().getAttribute("empVO"));
+			BookingService bookingService = new BookingService();
+			List<BookingVO> list = bookingService.getByEmpId(empVO.getEmpId());
+			req.setAttribute("list", list);
+			String url = "/equipment/bookingList.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			
+			
+			/*************************** 2.開始查詢資料 *****************************************/
+//			BookingService bookingSvc = new BookingService();
+//			List<BookingVO> bookingVO = bookingSvc.getByEmpId(empId);
+//			if (empId == null) {
+//				errorMsgs.put("equipmentId", "查無此資料");
+//			}
+//
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/booking/bookingList.jsp");
+//				failureView.forward(req, res);
+//				return;
+//			}
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+//			req.setAttribute("bookingVO", bookingVO);
+//			String url = "/equipment/bookingList.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url);
+//			successView.forward(req, res);
+		}
+
 	}
 }
