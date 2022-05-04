@@ -695,22 +695,24 @@ return;
 			PermissionMappingService pmmSvc=new PermissionMappingService();
 			   PermissionService pmSvc=new PermissionService();
 //			List<String> allPermissionList=pmSvc.getAllPermissionName();
-			  String[] a=req.getParameterValues("permissionId");
+			  String[] newpm=req.getParameterValues("permissionId");
 			  Integer empId=Integer.valueOf(req.getParameter("empId"));
 			  
 			 List<Integer> oldpm =pmmSvc.getOneEmpPermissions(empId);
 	           
-			  for(int j=0; j < a.length; j++){
+			  for(int j=0; j < newpm.length; j++){
 				
-				  Integer pmId=Integer.valueOf(a[j]);
+				  Integer pmId=Integer.valueOf(newpm[j]);
 				  if(!oldpm.contains(pmId)) {
 					  pmmSvc.addpmId2emp(empId,pmId);
 				  }
-				  else {
+				  else if(oldpm.contains(pmId)){
 					 String permissionName=pmSvc.getPermissionName(pmId);
 					  errorMsgs.put("permission","已有"+permissionName);
-
 				  }
+				  
+				  
+				  
 				  
 				  
 //

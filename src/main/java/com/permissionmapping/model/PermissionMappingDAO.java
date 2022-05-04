@@ -23,7 +23,7 @@ public class PermissionMappingDAO implements PermissionMappingDAO_interface {
 	private static final String GET_ALL_STMT = "select emp_id,permission_id FROM permission_mapping order by emp_id ";
 	private static final String GET_ONE_STMT = "SELECT emp_id,permission_id FROM permission_mapping where emp_id = ? ";
 	private static final String DELETE = "DELETE FROM permission_mapping where emp_id = ? and permission_id = ? ;";
-	//private static final String UPDATE = "UPDATE permission_mapping set permission_name=?  where permission_id = ? ";
+	private static final String UPDATE = "UPDATE permission_mapping set permission_name=?  where permission_id = ? ";
 
 	@Override
 	public void insert(Integer empId,Integer permissionId) {
@@ -73,61 +73,60 @@ public class PermissionMappingDAO implements PermissionMappingDAO_interface {
 
 	}
 
-//	public int update(PermissionMappingVO newPermission) {
-//
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(UPDATE);
-//			PermissionMappingVO oldPermission = findByPrimaryKey(newPermission.getPermissionId());
-//
-//			if (newPermission.getPermissionName() != null) {
-//				pstmt.setString(1, newPermission.getPermissionName());
-//			} else {
-//				pstmt.setString(1, oldPermission.getPermissionName());
-//
+	public int update(PermissionMappingVO newPermission) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(UPDATE);
+ oldPermission = findByPrimaryKey(newPermission.getPermissionId());
+
+			if (newPermission.getPermissionName() != null) {
+				pstmt.setString(1, newPermission.getPermissionName());
+			} else {
+				pstmt.setString(1, oldPermission.getPermissionName());
+
+			}
+
+			pstmt.setInt(2, newPermission.getPermissionId());
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
 //			}
-//
-//			pstmt.setInt(2, newPermission.getPermissionId());
-//
-//			pstmt.executeUpdate();
-//
-//			// Handle any driver errors
-//
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. " + se.getMessage());
-//			// Clean up JDBC resources
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				con.close();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
 //			}
-//
-////			if (pstmt != null) {
-////				try {
-////					pstmt.close();
-////				} catch (SQLException se) {
-////					se.printStackTrace(System.err);
-////				}
-////			}
-////			if (con != null) {
-////				try {
-////					con.close();
-////				} catch (Exception e) {
-////					e.printStackTrace(System.err);
-////				}
-////			}
-//		}
-//		return 1;
-//	}
+		}
+		return 1;
+	}
 
 	public void delete(Integer empId,Integer permissionId) {
 

@@ -326,7 +326,8 @@
 
                     <div id="page-inner">
 
-
+				<jsp:useBean id="permissionSvc" scope="page" class="com.permission.model.PermissionService" />
+									<jsp:useBean id="permissionMappingSvc" scope="page" class="com.permissionmapping.model.PermissionMappingService" />
   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" >
         <b>輸入員工編號 :</b>
         <input type="text" name="empId" value="${param.empId}"><font color=red>${errorMsgs.empId}</font>
@@ -347,30 +348,33 @@
                                             <table class="table table-striped table-bordered table-hover"
                                                 id="dataTables-example">
                                                <tr>
-                   <td>員工姓名</td>                            
-		<th>行政管理權限</th>
-		<th>人事管理權限</th>
-		<th>總務管理權限</th>
-		<th>回報處理權限</th>
-		
+                   <td>員工姓名</td> 
+                        
+	<c:forEach var="permissionVO" items="${permissionSvc.all}">                      
+		<th>${permissionVO.permissionName}</th>
+	
+	
+			</c:forEach>
 		<th></th>
 		
 		
 		
 	</tr>
 	<%@ include file="page1.file" %> 
+	
+	
+	 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 	<c:forEach var="empVOSearch" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 	
-		 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
+		
 		<tr>
 		<td>${empVOSearch.empName}</td>
 		
-			<td>  <input type="checkbox" name="permissionId" value="1"> </td>
-			<td>  <input type="checkbox"  name="permissionId"value="2"> </td>
-		<td>  <input type="checkbox" name="permissionId" value="3"> </td>
-
-				<td>  <input type="checkbox" name="permissionId" value="4"> </td>
-			
+	<c:forEach var="permissionVO" items="${permissionSvc.all}">          
+			<td>  <input type="checkbox" name="permissionId" value="${permissionVO.permissionId}" ${  permissionMappingSvc.getOneEmpPermissions(empVOSearch.empId).toString().indexOf(permissionVO.permissionId.toString())!=-1 ? "checked":""  }> 
+			</td>
+	
+					</c:forEach>
 										
 			
 			<td>
@@ -383,13 +387,13 @@
 			
 		
 		</tr>
+</c:forEach>
 		   </FORM>
-	</c:forEach>
+	
+	
 </table>
 <%@ include file="page2.file" %>
-<c:forEach var="permission" items="${errorMsgs.permission}" >
-${permission}
-	</c:forEach>
+
 
 </div>
 </div>

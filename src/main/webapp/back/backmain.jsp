@@ -28,6 +28,7 @@
 <body id="page-top">
 
     <!-- Page Wrapper -->
+    
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -43,9 +44,14 @@
 			</a>
 
             <!-- Divider -->
+            
+            
             <hr class="sidebar-divider my-0">
-            <div style="height: 1px;">
-            </div>
+            
+            
+            
+          <!--   <div style="height: 1px;">
+            </div> -->
 	<c:forEach var="permissionIds" items="${empPm}">
 				<c:if test="${permissionIds==2}" var="condition">
             <!-- Nav Item - Pages Collapse Menu第一項 -->
@@ -222,7 +228,7 @@
             
             
             <!-- Nav Item - Utilities Collapse Menu第二項 -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -238,9 +244,9 @@
                         <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
             <!-- Nav Item - Pages Collapse Menu第三項 -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -258,22 +264,22 @@
                         <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Tables第四項 -->
-            <li class="nav-item">
+           <!--  <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
-            </li>
+            </li> -->
 
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+           <!--  <hr class="sidebar-divider d-none d-md-block"> -->
 
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
+          <!--   <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+            </div> -->
         </ul>
         <!-- End of Sidebar -->
 
@@ -288,9 +294,9 @@
 
                     <!-- Sidebar Toggle (Topbar) -->
 
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                   <!--  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
-                    </button>
+                    </button> -->
 
                     <!-- Topbar Search 搜尋列開始 -->
 
