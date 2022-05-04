@@ -297,56 +297,53 @@
 					<!-- 內容放這 -->
 
 
-					<jsp:useBean id="permissionSvc" scope="page"
-						class="com.permission.model.PermissionService" />
+					<jsp:useBean id="permissionSvc" scope="page" class="com.permission.model.PermissionService" />
+						<jsp:useBean id="permissionMappingSvc" scope="page" class="com.permissionmapping.model.PermissionMappingService" />
 					<div class="input-group mb-3">
-						<table size="1" name="depId" class="input-group-text"
-							id="basic-addon3">
+						
 
-							<tr>
-								<c:forEach var="permissionVO" items="${permissionSvc.all}">
-
-									<td>${permissionVO.permissionName}</td>
-
-
-
-								</c:forEach>
-							</tr>
+						
+	<c:forEach var="permissionVO" items="${permissionSvc.all}">
+        
+        
+        <input type="checkbox" value="${permissionVO.permissionId}"  ${  permissionMappingSvc.getOneEmpPermissions(1002).toString().indexOf(permissionVO.permissionId.toString())!=-1 ? "checked":""  } >${permissionVO.permissionName}
 
 
-							<tr>
+	</c:forEach>
+						
 
-						 	<c:forEach var="permissionVO" items="${permissionSvc.all}"> 
+
+
+
+<%-- 						 	<c:forEach var="permissionVO" items="${permissionSvc.all}">  --%>
 							
-									<c:forEach var="empPm" items="${empPm}">
-										<%-- <c:if test="${permissionVO.permissionId==empPm}">
-											<td><input type="checkbox" checked></td>
+<%-- 									<c:forEach var="empPm" items="${empPm}"> --%>
+<%-- 										 <c:if test="${permissionVO.permissionId==empPm}"> --%>
+<!-- 											<td><input type="checkbox" checked></td> -->
 
-										</c:if> --%>
+<%-- 										</c:if>  --%>
 										
-											<%-- <c:forEach var="empPm" items="${empPm}"> --%>
-										<%-- <c:if test="${permissionVO.permissionId==empPm}">
-											<td><input type="checkbox" checked></td>
+<%-- 											<c:forEach var="empPm" items="${empPm}"> --%>
+<%-- 									<c:if test="${permissionVO.permissionId!=empPm}"> --%>
+<!-- 											<td><input type="checkbox" ></td> -->
 
-										</c:if> --%>
-											for<input type="checkbox" ${(empPm==1)? 'checked' : ''}>      
-											   for<input type="checkbox" ${(empPm==2)? 'checked' : ''}>            
-											                    for<input type="checkbox" ${(empPm==3)? 'checked' : ''}>           
-											                                   for<input type="checkbox" ${(empPm==4)? 'checked' : ''}>
-											                                   
+<%-- 										</c:if>  --%>
+<%-- 											for<input type="checkbox" ${(empPm==1)? 'checked' : ''}>      
+<%-- 											   for<input type="checkbox" ${(empPm==2)? 'checked' : ''}>             --%>
+<%-- 											                    for<input type="checkbox" ${(empPm==3)? 'checked' : ''}>            --%>
+<%-- 											                                   for<input type="checkbox" ${(empPm==4)? 'checked' : ''}> --%>
+<%-- 											                                    --%> 
 										
 										
-<%-- 
-										<c:if test="${permissionVO.permissionId!=empPm }">
+<%-- <%--  --%>
+<%-- 										<c:if test="${permissionVO.permissionId!=empPm }"> --%>
 
-											<td><input type="checkbox"></td>
-										</c:if> --%>
+<%-- 											<td><input type="checkbox"></td> --%>
+<%-- 										</c:if> --%> 
 
-									</c:forEach>
-							 	</c:forEach> 
-							</tr>
-						</table>
-
+<%-- 									</c:forEach> --%>
+<%-- 							 	</c:forEach>  --%>
+						
 				<%-- 		 	<c:forEach var="empPm" items="${empPm}">
 		<a>${empPm}</a>	
 			

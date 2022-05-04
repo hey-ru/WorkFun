@@ -241,6 +241,8 @@ public class EmpServlet extends HttpServlet {
 				
 //				empSvc.updateEmp(newempVO);
 				empSvc.updateEmp(newempVO,con);
+				
+				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 //				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/back/listAllEmp.jsp";
@@ -350,8 +352,19 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				
 				/***************************2.開始修改資料*****************************************/
 				
+				EmpVO empVO=(EmpVO) session.getAttribute("empVO");
+						System.out.println(empVO.getExtension());
+						empVO=newempVO;
+						System.out.println(empVO.getExtension());
+						session.setAttribute("empVO", empVO);
+						
+						
 //				empSvc.updateEmp(newempVO);
 				empSvc.updateEmp(newempVO,con);
+				
+			
+				
+				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 //				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/emp/frontProfile.jsp";
@@ -424,18 +437,18 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				}
 				
 
-				EmpVO empVO = new EmpVO();
-				empVO.setEmpName(empName);
-				empVO.setDepId(depId);
-				empVO.setHiredate(hiredate);
-				empVO.setPhone(phone);
-				empVO.setExtension(extension);
-				empVO.setHobby(hobby);
-				empVO.setSkill(skill);
-				empVO.setEmpPassword(req.getParameter("hiredate").replace("[\\pP\\p{Punct}]",""));
-			empVO.setEmpProfile(headimg);
-				empVO.setMail(mail);
-				empVO.setBirthday(birthday);
+				EmpVO newempVO = new EmpVO();
+				newempVO.setEmpName(empName);
+				newempVO.setDepId(depId);
+				newempVO.setHiredate(hiredate);
+				newempVO.setPhone(phone);
+				newempVO.setExtension(extension);
+				newempVO.setHobby(hobby);
+				newempVO.setSkill(skill);
+				newempVO.setEmpPassword(req.getParameter("hiredate").replace("[\\pP\\p{Punct}]",""));
+				newempVO.setEmpProfile(headimg);
+				newempVO.setMail(mail);
+				newempVO.setBirthday(birthday);
 				
 				
 			
@@ -451,7 +464,11 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				/***************************2.開始新增資料***************************************/
 				
 //				empSvc.addEmp(empVO);
-				empSvc.addEmp(empVO,con);
+				empSvc.addEmp(newempVO,con);
+				EmpVO oldEmpVO=(EmpVO) session.getAttribute("empVO");
+				oldEmpVO=newempVO;
+				session.setAttribute("empVO", oldEmpVO);
+				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/back/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
@@ -630,7 +647,7 @@ return;
 					EmpVO empVO=empSvc.login(empId,empPassword,con);
 					PermissionMappingService pmSrv=new PermissionMappingService();
 					 List<Integer> empPm=pmSrv.getOneEmpPermissions(empId);
-					 System.out.println(empPm);
+				
 					 
 //				EmpVO empVO=empSvc.login(empId,empPassword);
 					  if (empVO == null) {
@@ -682,9 +699,9 @@ return;
 			  Integer empId=Integer.valueOf(req.getParameter("empId"));
 			  
 			 List<Integer> oldpm =pmmSvc.getOneEmpPermissions(empId);
-	            System.out.println(empId);
+	           
 			  for(int j=0; j < a.length; j++){
-				  System.out.println(a[j]);
+				
 				  Integer pmId=Integer.valueOf(a[j]);
 				  if(!oldpm.contains(pmId)) {
 					  pmmSvc.addpmId2emp(empId,pmId);
