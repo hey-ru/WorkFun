@@ -1,3 +1,6 @@
+<%@page import="com.bid.model.BidVO"%>
+<%@page import="com.bid.model.BidService"%>
+<%@page import="java.io.PrintWriter"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -5,9 +8,12 @@
 <%@ page import="com.secondHand.model.*"%>
 
 <%
-SecondHandService secondHandSvc = new SecondHandService();
-List<SecondHandVO> list = secondHandSvc.getAll();
-pageContext.setAttribute("list", list);
+Integer second_hand_id = Integer.valueOf(request.getParameter("second_hand_id"));
+
+SecondHandService secondHandService = new SecondHandService();
+SecondHandVO secondHandVO = secondHandService.getOneById(second_hand_id);
+pageContext.setAttribute("secondHandVO", secondHandVO);
+
 %>
 
 <!DOCTYPE html>
@@ -26,357 +32,176 @@ pageContext.setAttribute("list", list);
 
 </head>
 
-<body>
+<body style="height:auto">
 
 	<!-- ======= Header ======= -->
 	<%@ include file="/design/frontheader.jsp"%>
 	<!-- End Header -->
-
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
 	<main id="main">
 
 		<section class="section profile">
-      <div class="row">
-        <div class="col-xl-6">
+			<div class="row">
+				<div class="col-xl-6">
 
-          <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+					<div class="card">
+						<div
+							class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:365px;">
-              <div class="row" style="margin-top:10px;">
-              <!-- Button trigger modal -->	
-					 <div class="col-sm-3" style="height:100px;width:100px;">
-					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic1" style="border:0px">
-					<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
-					</button>
+							<img
+								src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}"
+								alt="Profile" style="width: 365px;" id="test123">
+							<div class="row" style="margin-top: 10px;">
+								<!-- Button trigger modal -->
+								<div class="col-sm-3" style="height: 100px; width: 100px;">
+									<button type="button" data-bs-toggle="modal"
+										data-bs-target="#pic1" style="border: 0px" id="btn1">
+										<img
+											src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}"
+											style="max-height: 100%; max-width: 100%;">
+									</button>
+								</div>
+								<!-- Button trigger modal end-->
+								<!-- Button trigger modal -->
+								<div class="col-sm-3" style="height: 100px; width: 100px;">
+									<button type="button" data-bs-toggle="modal"
+										data-bs-target="#pic2" style="border: 0px" id="btn2">
+										<img
+											src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}"
+											style="max-height: 100%; max-width: 100%;">
+									</button>
+								</div>
+								<!-- Button trigger modal -->
+								<div class="col-sm-3" style="height: 100px; width: 100px;">
+									<button type="button" data-bs-toggle="modal"
+										data-bs-target="#pic3" style="border: 0px" id="btn3">
+										<img
+											src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}"
+											style="max-height: 100%; max-width: 100%;">
+									</button>
+								</div>
+<!-- 								Modal -->
+<!-- 								<div class="modal fade" id="pic3" tabindex="-1" -->
+<!-- 									aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!-- 									<div class="modal-dialog"> -->
+<!-- 										<div class="modal-content"> -->
+<!-- 											<div class="modal-body"> -->
+<!-- 												<img -->
+<%-- 													src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}" --%>
+<!-- 													style="max-height: 100%; max-width: 100%;"> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								Modal_end -->
+								<!-- Button trigger modal end-->
+							</div>
+						</div>
 					</div>
-					<!-- Modal -->
-					<div class="modal fade" id="pic1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-					      <div class="modal-body">
-					        <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
-					      </div>
-					  </div>
-					  </div>
-					</div>
-					<!-- Modal_end -->
-				<!-- Button trigger modal end-->
-              <!-- Button trigger modal -->	
-					 <div class="col-sm-3" style="height:100px;width:100px;">
-					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic2" style="border:0px">
-					<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
-					</button>
-					</div>
-					<!-- Modal -->
-					<div class="modal fade" id="pic2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-					      <div class="modal-body">
-					        <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
-					      </div>
-					  </div>
-					  </div>
-					</div>
-					<!-- Modal_end -->
-				<!-- Button trigger modal end-->
-              <!-- Button trigger modal -->	
-					 <div class="col-sm-3" style="height:100px;width:100px;">
-					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic3" style="border:0px">
-					<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
-					</button>
-					</div>
-					<!-- Modal -->
-					<div class="modal fade" id="pic3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-					      <div class="modal-body">
-					        <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
-					      </div>
-					  </div>
-					  </div>
-					</div>
-					<!-- Modal_end -->
-				<!-- Button trigger modal end-->
 				</div>
-              
-<!--               <div style="display:flex"> -->
-<%--                 <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;"> --%>
-<%--                 <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;"> --%>
-<%--                 <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;"> --%>
-<!--               </div> -->
-            </div>
-          </div>
+				
+				<div class="col-xl-6">
 
-        </div>
+					<div class="card">
+						<div class="card-body pt-3">
+							<!-- Bordered Tabs -->
+							<ul class="nav nav-tabs nav-tabs-bordered">
 
-        <div class="col-xl-6">
+								<li class="nav-item">
+									<button class="nav-link active" data-bs-toggle="tab"
+										data-bs-target="#profile-overview">Overview</button>
+								</li>
 
-          <div class="card">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered">
+							</ul>
+							<div class="tab-content pt-2">
 
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                </li>
+								<div class="tab-pane fade show active profile-overview"
+									id="profile-overview">
+									<h5 class="card-title">競標商品</h5>
+									<p class="col-lg-3 col-md-4 label">${secondHandVO.name}</p>
 
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                </li>
+									<h5 class="card-title">拍賣人</h5>
+									<p class="small fst-italic">${secondHandVO.empVO.empName}</p>
 
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                </li>
+									<div class="row">
+										<div class="col-lg-3 col-md-4 label">起標價</div>
+										<div class="col-lg-9 col-md-8">${secondHandVO.bottom_price}</div>
+									</div>
 
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
+									<div class="row">
+										<div class="col-lg-3 col-md-4 label">直購價</div>
+										<div class="col-lg-9 col-md-8">${secondHandVO.top_price}</div>
+									</div>
 
-              </ul>
-              <div class="tab-content pt-2">
+									<div class="row">
+										<div class="col-lg-3 col-md-4 label">競標時間</div>
+										<div class="col-lg-9 col-md-8">${secondHandVO.start_time}
+											~ ${secondHandVO.end_time}</div>
+									</div>
 
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+									<div class="row">
+										<div class="col-lg-3 col-md-4 label">當前最高出價人</div>
+										<div class="col-lg-9 col-md-8">
+										<c:if test="${secondHandVO.bidVO.bidder==0}">
+											尚未有人出價
+										</c:if>
+										<c:if test="${secondHandVO.bidVO.bidder!=0}">
+											${secondHandVO.bidVO.bidder}
+										</c:if>
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="col-lg-3 col-md-4 label">當前價格</div>
+										<div class="col-lg-9 col-md-8">${secondHandVO.bidVO.price}</div>
+									</div>
 
-                  <h5 class="card-title">Profile Details</h5>
+								</div>
 
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                  </div>
+							</div>
+							<!-- End Bordered Tabs -->
 
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
-                  </div>
-
-                </div>
-
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                  <!-- Profile Edit Form -->
-                  <form>
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                      <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
-
-                </div>
-
-                <div class="tab-pane fade pt-3" id="profile-settings">
-
-                  <!-- Settings Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End settings Form -->
-
-                </div>
-
-                <div class="tab-pane fade pt-3" id="profile-change-password">
-                  <!-- Change Password Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                  </form><!-- End Change Password Form -->
-
-                </div>
-
-              </div><!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
+							<form class="my-1" METHOD="post"
+								ACTION="<%=request.getContextPath()%>/bid/BidServlet"
+								name="form1">
+								<div class="form-group col-3" style="display: inline-block">
+									<input type="text" class="form-control"
+										id="exampleFormControlInput1" placeholder="輸入競標金額"
+										style="border: gray solid 2px;" name="name"
+										value="${secondHandVO.bidVO.price+1}">
+								</div>
+								<input type="hidden" name="action" value="listByCompositeQuery">
+								<input type="submit" class="btn btn-primary mb-2 mt-1 col"
+									style="display: inline-block;" value="送出"></input>
+							</form>
+							${param.second_hand_id}
+						<%=request.getParameter("second_hand_id")%>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 	</main>
 	<!-- End #main -->
 	<!-- ======= Footer ======= -->
 	<%@ include file="/design/frontfooter.jsp"%>
-		
-		<!-- End  Footer -->
+
+	<!-- End  Footer -->
 
 	<!-- Vendor JS Files -->
 	<%@ include file="/design/frontjs.jsp"%>
-
+	<script>
+	$("#btn1").click(function(){
+		$("#test123").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
+	});
+	$("#btn2").click(function(){
+		$("#test123").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
+	});
+	$("#btn3").click(function(){
+		$("#test123").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
+	});
+		
+	</script>
 </body>
 
 </html>
