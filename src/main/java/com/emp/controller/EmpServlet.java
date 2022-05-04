@@ -700,39 +700,60 @@ return;
 			  
 			 List<Integer> oldpm =pmmSvc.getOneEmpPermissions(empId);
 	           
+			 if(newpm.length==0 || newpm==null && oldpm!=null) {
+				 System.out.println("消除全部權限");
+				 
+				  Iterator<Integer> it=oldpm.iterator();
+				  while (it.hasNext()) {
+				 pmmSvc.deleteEmpPm(empId,it.next());
+				 
+				  }
+			 }
+			 else if(newpm.length==0 || newpm==null && oldpm==null){
+				 
+				 System.out.println("原本沒有權限改變之後也沒有");
+			 }
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
 			  for(int j=0; j < newpm.length; j++){
 				
 				  Integer pmId=Integer.valueOf(newpm[j]);
 				  if(!oldpm.contains(pmId)) {
 					  pmmSvc.addpmId2emp(empId,pmId);
+					  System.out.println("加入權限"+newpm.toString());
 				  }
-				  else if(oldpm.contains(pmId)){
-					 String permissionName=pmSvc.getPermissionName(pmId);
-					  errorMsgs.put("permission","已有"+permissionName);
-				  }
-				  
-				  
-				  
-				  
-				  
-//
-//			      String url = "/back/backmain.jsp";
-//					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-//					successView.forward(req, res);	
-				  
-				  
-				  
-				  
-				  
-//		            Iterator<String> it=allPermissionList.iterator();
-//		            while (it.hasNext()) {
-//					String onePermission=it.next();
-//					if(onePermission.equals(a[j])) {
-//						System.out.println(j+1);
-//					}
+				  else {
+					System.out.println("權限重複"+newpm.toString());
+				}
+				 
 						
 					}		
+			  
+			  Iterator<Integer> it=oldpm.iterator();
+			  while (it.hasNext()) {
+				
+		if(!Arrays.asList(newpm).contains(it.next())) {
+			pmmSvc.deleteEmpPm(empId,it.next());
+			System.out.println("刪除權限");
+		}
+				
+				
+				
+			}
+			  
 
+			  
+			  
+			  
+			  
+			  
+			  
 		      String url = "/back/permission.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);	

@@ -328,12 +328,12 @@
 
 				<jsp:useBean id="permissionSvc" scope="page" class="com.permission.model.PermissionService" />
 									<jsp:useBean id="permissionMappingSvc" scope="page" class="com.permissionmapping.model.PermissionMappingService" />
-  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" >
+  <%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" >
         <b>輸入員工編號 :</b>
         <input type="text" name="empId" value="${param.empId}"><font color=red>${errorMsgs.empId}</font>
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
-    </FORM>
+    </FORM> --%>
 
 
                         <div class="row">
@@ -363,10 +363,10 @@
 	<%@ include file="page1.file" %> 
 	
 	
-	 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 	<c:forEach var="empVOSearch" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 	
 		
+	 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 		<tr>
 		<td>${empVOSearch.empName}</td>
 		
@@ -387,8 +387,9 @@
 			
 		
 		</tr>
-</c:forEach>
 		   </FORM>
+</c:forEach>
+		
 	
 	
 </table>

@@ -403,4 +403,10 @@ permissionMappingVO = new PermissionMappingVO();
 		
 		
 	}
+
+	@Override
+	public int update(PermissionMappingVO permissionMappingVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
