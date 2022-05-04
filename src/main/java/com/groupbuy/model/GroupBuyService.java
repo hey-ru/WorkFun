@@ -58,4 +58,8 @@ public class GroupBuyService {
 	public List<GroupBuyVO> getNowAll() {
 		return dao.getNowAll();
 	}
+	
+	public List<GroupBuyVO> getMyGBAll(Integer gb_owner) {
+		return dao.getMyGBAll(gb_owner);
+	}
 }

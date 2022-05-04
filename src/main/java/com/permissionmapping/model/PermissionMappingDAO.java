@@ -23,7 +23,7 @@ public class PermissionMappingDAO implements PermissionMappingDAO_interface {
 	private static final String GET_ALL_STMT = "select emp_id,permission_id FROM permission_mapping order by emp_id ";
 	private static final String GET_ONE_STMT = "SELECT emp_id,permission_id FROM permission_mapping where emp_id = ? ";
 	private static final String DELETE = "DELETE FROM permission_mapping where emp_id = ? and permission_id = ? ;";
-	//private static final String UPDATE = "UPDATE permission_mapping set permission_name=?  where permission_id = ? ";
+	private static final String UPDATE = "UPDATE permission_mapping set permission_name=?  where permission_id = ? ";
 
 	@Override
 	public void insert(Integer empId,Integer permissionId) {
@@ -79,10 +79,9 @@ public class PermissionMappingDAO implements PermissionMappingDAO_interface {
 //		PreparedStatement pstmt = null;
 //
 //		try {
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
+//			con = getConectPool().getConnection();
 //			pstmt = con.prepareStatement(UPDATE);
-//			PermissionMappingVO oldPermission = findByPrimaryKey(newPermission.getPermissionId());
+// oldPermission = findByPrimaryKey(newPermission.getPermissionId());
 //
 //			if (newPermission.getPermissionName() != null) {
 //				pstmt.setString(1, newPermission.getPermissionName());
@@ -380,5 +379,11 @@ permissionMappingVO = new PermissionMappingVO();
 //		
 //			System.out.println();
 //		}
+	}
+
+	@Override
+	public int update(PermissionMappingVO permissionMappingVO) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -1172,5 +1172,17 @@ return list;
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public EmpVO findbymailandbirthday(String mail, Date birthday) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EmpVO findbymailandbirthday(String mail, Date birthday, Connection con) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	}

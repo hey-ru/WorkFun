@@ -241,6 +241,8 @@ public class EmpServlet extends HttpServlet {
 				
 //				empSvc.updateEmp(newempVO);
 				empSvc.updateEmp(newempVO,con);
+				
+				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 //				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/back/listAllEmp.jsp";
@@ -350,8 +352,19 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				
 				/***************************2.開始修改資料*****************************************/
 				
+				EmpVO empVO=(EmpVO) session.getAttribute("empVO");
+						System.out.println(empVO.getExtension());
+						empVO=newempVO;
+						System.out.println(empVO.getExtension());
+						session.setAttribute("empVO", empVO);
+						
+						
 //				empSvc.updateEmp(newempVO);
 				empSvc.updateEmp(newempVO,con);
+				
+			
+				
+				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 //				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/emp/frontProfile.jsp";
@@ -424,18 +437,18 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				}
 				
 
-				EmpVO empVO = new EmpVO();
-				empVO.setEmpName(empName);
-				empVO.setDepId(depId);
-				empVO.setHiredate(hiredate);
-				empVO.setPhone(phone);
-				empVO.setExtension(extension);
-				empVO.setHobby(hobby);
-				empVO.setSkill(skill);
-				empVO.setEmpPassword(req.getParameter("hiredate").replace("[\\pP\\p{Punct}]",""));
-			empVO.setEmpProfile(headimg);
-				empVO.setMail(mail);
-				empVO.setBirthday(birthday);
+				EmpVO newempVO = new EmpVO();
+				newempVO.setEmpName(empName);
+				newempVO.setDepId(depId);
+				newempVO.setHiredate(hiredate);
+				newempVO.setPhone(phone);
+				newempVO.setExtension(extension);
+				newempVO.setHobby(hobby);
+				newempVO.setSkill(skill);
+				newempVO.setEmpPassword(req.getParameter("hiredate").replace("[\\pP\\p{Punct}]",""));
+				newempVO.setEmpProfile(headimg);
+				newempVO.setMail(mail);
+				newempVO.setBirthday(birthday);
 				
 				
 			
@@ -451,7 +464,11 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				/***************************2.開始新增資料***************************************/
 				
 //				empSvc.addEmp(empVO);
-				empSvc.addEmp(empVO,con);
+				empSvc.addEmp(newempVO,con);
+				EmpVO oldEmpVO=(EmpVO) session.getAttribute("empVO");
+				oldEmpVO=newempVO;
+				session.setAttribute("empVO", oldEmpVO);
+				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/back/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
@@ -630,7 +647,7 @@ return;
 					EmpVO empVO=empSvc.login(empId,empPassword,con);
 					PermissionMappingService pmSrv=new PermissionMappingService();
 					 List<Integer> empPm=pmSrv.getOneEmpPermissions(empId);
-					 System.out.println(empPm);
+				
 					 
 //				EmpVO empVO=empSvc.login(empId,empPassword);
 					  if (empVO == null) {
@@ -678,42 +695,65 @@ return;
 			PermissionMappingService pmmSvc=new PermissionMappingService();
 			   PermissionService pmSvc=new PermissionService();
 //			List<String> allPermissionList=pmSvc.getAllPermissionName();
-			  String[] a=req.getParameterValues("permissionId");
+			  String[] newpm=req.getParameterValues("permissionId");
 			  Integer empId=Integer.valueOf(req.getParameter("empId"));
 			  
 			 List<Integer> oldpm =pmmSvc.getOneEmpPermissions(empId);
-	            System.out.println(empId);
-			  for(int j=0; j < a.length; j++){
-				  System.out.println(a[j]);
-				  Integer pmId=Integer.valueOf(a[j]);
+	           
+			 if(newpm.length==0 || newpm==null && oldpm!=null) {
+				 System.out.println("消除全部權限");
+				 
+				  Iterator<Integer> it=oldpm.iterator();
+				  while (it.hasNext()) {
+				 pmmSvc.deleteEmpPm(empId,it.next());
+				 
+				  }
+			 }
+			 else if(newpm.length==0 || newpm==null && oldpm==null){
+				 
+				 System.out.println("原本沒有權限改變之後也沒有");
+			 }
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			  for(int j=0; j < newpm.length; j++){
+				
+				  Integer pmId=Integer.valueOf(newpm[j]);
 				  if(!oldpm.contains(pmId)) {
 					  pmmSvc.addpmId2emp(empId,pmId);
+					  System.out.println("加入權限"+newpm.toString());
 				  }
 				  else {
-					 String permissionName=pmSvc.getPermissionName(pmId);
-					  errorMsgs.put("permission","已有"+permissionName);
-
-				  }
-				  
-				  
-//
-//			      String url = "/back/backmain.jsp";
-//					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-//					successView.forward(req, res);	
-				  
-				  
-				  
-				  
-				  
-//		            Iterator<String> it=allPermissionList.iterator();
-//		            while (it.hasNext()) {
-//					String onePermission=it.next();
-//					if(onePermission.equals(a[j])) {
-//						System.out.println(j+1);
-//					}
+					System.out.println("權限重複"+newpm.toString());
+				}
+				 
 						
 					}		
+			  
+			  Iterator<Integer> it=oldpm.iterator();
+			  while (it.hasNext()) {
+				
+		if(!Arrays.asList(newpm).contains(it.next())) {
+			pmmSvc.deleteEmpPm(empId,it.next());
+			System.out.println("刪除權限");
+		}
+				
+				
+				
+			}
+			  
 
+			  
+			  
+			  
+			  
+			  
+			  
 		      String url = "/back/permission.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);	

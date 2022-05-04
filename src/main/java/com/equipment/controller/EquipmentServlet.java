@@ -234,8 +234,14 @@ public class EquipmentServlet extends HttpServlet {
 			}
 			
 			String introduction = req.getParameter("introduction");
+			if (introduction== null || introduction.trim().length() == 0) {
+				errorMsgs.put("introduction", "器材介紹: 請勿空白");
+			} 
 
 			String spec = req.getParameter("spec");
+			if (spec== null || spec.trim().length() == 0) {
+				errorMsgs.put("spec", "器材規格: 請勿空白");
+			}
 
 			EquipmentVO oldEquipmentVO = new EquipmentService().getByEqId(equipmentId);
 
@@ -319,8 +325,14 @@ public class EquipmentServlet extends HttpServlet {
 			}
 
 			String introduction = req.getParameter("introduction");
+			if (introduction== null || introduction.trim().length() == 0) {
+				errorMsgs.put("introduction", "器材介紹: 請勿空白");
+			} 
 
 			String spec = req.getParameter("spec");
+			if (spec== null || spec.trim().length() == 0) {
+				errorMsgs.put("spec", "器材規格: 請勿空白");
+			}
 
 			System.out.println(action);
 

@@ -25,14 +25,13 @@ public class ReportService{
 	
 
 	public ReportVO addReport(Integer reporter, Integer handler, String content,
-			Integer status, byte[] report_image, Integer report_type , String title) {
+			 byte[] report_image, Integer report_type , String title) {
 
 		ReportVO reportVO = new ReportVO();
 
 		reportVO.setReporter(reporter);
 		reportVO.setHandler(handler);
 		reportVO.setContent(content);
-		reportVO.setStatus(status);
 		reportVO.setReport_image(report_image);
 		reportVO.setReport_type(report_type);
 		reportVO.setTitle(title);

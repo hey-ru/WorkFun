@@ -57,7 +57,7 @@ int itemsPerPage = 10;
 							<div class="col-10" style="height: 60px; display: inline-block;">
 								<form class="my-1">
 									<div class="form-group col-2" style="display: inline-block;">
-										<select class="form-control" id="exampleFormControlSelect1"
+										<select class="form-select" id="exampleFormControlSelect1"
 											style="border: gray solid 2px;">
 											<option selected>選擇店家類型</option>
 											<option value="0">飲料</option>
@@ -177,7 +177,7 @@ int itemsPerPage = 10;
 											</td>
 											<td>${shopVO.address}</td>
 											<td>${shopVO.tel}</td>
-											<td><a href="${shopVO.website}"  class="nav-link ${(shopVO.website=='')? 'disabled':''}">link</a></td>
+											<td><a href="${shopVO.website}"  class="nav-link ${(shopVO.website==''||shopVO.website==null)? 'disabled':''}">link</a></td>
 											<td>${shopVO.min_amt}</td>
 											<td><img
 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1"
@@ -212,9 +212,9 @@ int itemsPerPage = 10;
 											</td>
 											<td>
 												<FORM METHOD="post"
-													ACTION="<%=request.getContextPath()%>/groupbuy/addGB.jsp"
+													ACTION="<%=request.getContextPath()%>/groupbuy/owner_addGB.jsp"
 													style="margin-bottom: 0px;">
-													<input type="submit" class="btn-info btn-lg" value="我要揪團"> <input
+													<input type="submit" class="btn-info btn-lg" value="揪這家"> <input
 														type="hidden" name="shop_id" value="${shopVO.shop_id}">
 												</FORM>
 											</td>

@@ -53,11 +53,18 @@
 <link href="${pageContext.request.contextPath}/equipment/eqpt.css"
 	rel="stylesheet">
 
+
 </head>
 
 
 <body>
 
+	<script type="text/javascript">
+	function changeText(){
+		document.getElementById("introduction").value=document.getElementById("introduction1").value;
+	}
+</script>
+	
 	<!-- ======= Header ======= -->
 
 	<!-- End Header -->
@@ -118,16 +125,17 @@
 								<!-- 								</div> -->
 
 								<div class="row mb-3">
-									<label for="inputText" class="col-sm-2 col-form-label">商品介紹:
+									<label for="inputText" class="col-sm-2 col-form-label">器材介紹:
 									</label>
 									<div class="col-sm-10">
-										<input name="introduction1" type="text" id="introduction1"
-											class="form-control" value="${param.name}">
-										${errorMsgs.name}<br>
-<!-- 										<textarea name="introduction" id="introduction" -->
-<!-- 											class="form-control" cols="84" rows="10"></textarea> -->
+										<input name="introduction1" type="hidden" id="introduction1"
+											class="form-control" value="${param.introduction}">
+										${errorMsgs.introduction}<br>
+										<textarea name="introduction" id="introduction"
+											class="form-control" ></textarea>
 									</div>
 								</div>
+
 
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">詳細規格:
@@ -189,42 +197,38 @@
 	<!-- ======= Footer ======= -->
 
 
-	<!-- ======= js ======= -->
-	<script type="text/javascript">
-	function changeText(){
-		document.getElementById("introduction").value=document.getElementById("introduction1").value;
-	}
-</script>
+	<!-- ======= Vendor JS Files ======= -->
 
 
 
-	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
+</body>
+<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
-	<%
-	java.sql.Timestamp start_time = null;
-	try {
-		start_time = java.sql.Timestamp.valueOf(request.getParameter("start_time").trim());
-	} catch (Exception e) {
-		start_time = new java.sql.Timestamp(((long) (System.currentTimeMillis()) / 60000) * 60000
-		- ((((long) (System.currentTimeMillis()) / 60000) * 60000) % 900000) + 900000);
-	}
-	%>
-	<%
-	java.sql.Timestamp end_time = null;
-	try {
-		end_time = java.sql.Timestamp.valueOf(request.getParameter("end_time").trim());
-	} catch (Exception e) {
-		end_time = new java.sql.Timestamp(((long) (System.currentTimeMillis()) / 60000) * 60000
-		- ((((long) (System.currentTimeMillis()) / 60000) * 60000) % 900000) + 1800000);
-	}
-	%>
-	<link rel="stylesheet" type="text/css"
-		href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<%
+java.sql.Timestamp start_time = null;
+try {
+	start_time = java.sql.Timestamp.valueOf(request.getParameter("start_time").trim());
+} catch (Exception e) {
+	start_time = new java.sql.Timestamp(((long) (System.currentTimeMillis()) / 60000) * 60000
+	- ((((long) (System.currentTimeMillis()) / 60000) * 60000) % 900000) + 900000);
+}
+%>
+<%
+java.sql.Timestamp end_time = null;
+try {
+	end_time = java.sql.Timestamp.valueOf(request.getParameter("end_time").trim());
+} catch (Exception e) {
+	end_time = new java.sql.Timestamp(((long) (System.currentTimeMillis()) / 60000) * 60000
+	- ((((long) (System.currentTimeMillis()) / 60000) * 60000) % 900000) + 1800000);
+}
+%>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script
+	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
-	<style>
+<style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
 	width: 300px; /* width:  300px; */
 }
@@ -234,7 +238,7 @@
 }
 </style>
 
-	<script>
+<script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
  	       theme: '',              //theme: 'dark',
@@ -252,5 +256,4 @@
 		', // value:   new Date(),
 		});
 	</script>
-</body>
 </html>

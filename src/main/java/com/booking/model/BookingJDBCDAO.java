@@ -245,6 +245,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 				bookingVO.setReturnStatus(rs.getInt("return_status"));
 				bookingVO.setOverdueDate(rs.getTimestamp("overdue_date"));
 				bookingVO.setOverduePrice(rs.getInt("overdue_price"));
+				list.add(bookingVO);
 			}
 
 		} catch (ClassNotFoundException e) {

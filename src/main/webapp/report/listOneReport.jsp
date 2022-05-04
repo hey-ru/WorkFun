@@ -59,10 +59,10 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">回報人</span>
-                             <span>${reportVO.reporter}</span>
+                             <span>${reportVO.empVO1.empName}</span>
                                 
                                 <span class="input-group-text" id="basic-addon2">處理人</span>
-                              <span>${reportVO.handler}</span>
+                              <span>${reportVO.empVO2.empName}</span>
                                   
                             </div>
                             <label for="basic-url" class="form-label">回報內容</label>
@@ -72,7 +72,9 @@
 
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupFile01">回報圖片</label>                              
+                             <c:if test="${reportVO.report_image!=null}">
                               <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${reportVO.report_id}&table=report&pic=report_image" style="width:100px; height:100px;">
+                              </c:if>
                             </div>
 
                             <div class="input-group">

@@ -45,7 +45,7 @@ pageContext.setAttribute("list", list);
 
 
 					<div class="row" style="justify-content: end;">
-						<div class="col-10"
+						<div class="col-9"
 							style="height: 60px; display: inline-block; text-align: right;">
 							<form class="my-1" METHOD="post"
 								ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet"
@@ -57,7 +57,7 @@ pageContext.setAttribute("list", list);
 								<div class="form-group col-2" style="display: inline-block;">
 									<jsp:useBean id="groupBuysvc1" scope="page"
 										class="com.groupbuy.model.GroupBuyService" />
-									<select class="form-control" id="exampleFormControlSelect1"
+									<select class="form-select" id="exampleFormControlSelect1"
 										style="border: gray solid 2px;" name="is_deal">
 										<option>選擇類型</option>
 										<option value="is_deal = 0">競標中</option>
@@ -77,6 +77,10 @@ pageContext.setAttribute("list", list);
 								<input type="submit" class="btn btn-primary mb-2 mt-1 col"
 									style="display: inline-block;" value="搜尋"></input>
 							</form>
+						</div>
+						<div class="col-1"></div>
+						<div class="col-2">
+						<a class="btn btn-success" href="<%=request.getContextPath()%>/shop/listAllShop.jsp" role="button">選店家開團</a>
 						</div>
 					</div>
 

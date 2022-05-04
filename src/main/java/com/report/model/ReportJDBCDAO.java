@@ -16,9 +16,9 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
-	private static final String INSERT_STMT = "INSERT INTO report (reporter,handler,content,status,report_image,report_type,title) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO report (reporter,handler,content,report_image,report_type,title) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "select e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler ORDER BY starttime DESC";
-	private static final String GET_ONE_STMT = "SELECT * FROM report where report_id = ?";
+	private static final String GET_ONE_STMT = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler where report_id = ?";
 	private static final String UPDATE = "UPDATE report set title=?,report_type=?,reporter=?,handler=?,content=?,report_image=? where report_id= ?";
 	private static final String GET_KEYWORD = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler ORDER BY starttime DESC";
 	
@@ -34,10 +34,9 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 			pstmt.setInt(1, reportVO.getReporter());
 			pstmt.setInt(2, reportVO.getHandler());
 			pstmt.setString(3, reportVO.getContent());
-			pstmt.setInt(4,0);
-			pstmt.setBytes(5, reportVO.getReport_image());
-			pstmt.setInt(6, reportVO.getReport_type());
-			pstmt.setString(7, reportVO.getTitle());
+			pstmt.setBytes(4, reportVO.getReport_image());
+			pstmt.setInt(5, reportVO.getReport_type());
+			pstmt.setString(6, reportVO.getTitle());
 
 			pstmt.executeUpdate();
 
@@ -212,6 +211,12 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 
 			while (rs.next()) {
 				reportVO = new ReportVO();
+				EmpVO empVO1 = new EmpVO();
+				EmpVO empVO2 = new EmpVO();
+				empVO1.setEmpName(rs.getString("reporterName"));
+				empVO2.setEmpName(rs.getString("handlerName"));
+				reportVO.setEmpVO1(empVO1);
+				reportVO.setEmpVO2(empVO2);
 				reportVO.setReport_id(rs.getInt("report_id"));
 				reportVO.setReporter(rs.getInt("reporter"));
 				reportVO.setHandler(rs.getInt("handler"));

@@ -4,7 +4,7 @@ import java.util.*;
 
 public interface PermissionMappingDAO_interface {
           public void insert(Integer empId,Integer permissionId);
-//          public int update(PermissionMappingVO permissionMappingVO);
+          public int update(PermissionMappingVO permissionMappingVO);
           public void delete(Integer empId,Integer permissionId);
           public List<Integer> findByPrimaryKey(Integer empno);
           public List<PermissionMappingVO> getAllDAO();
