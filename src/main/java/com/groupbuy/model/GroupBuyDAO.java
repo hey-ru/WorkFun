@@ -49,7 +49,11 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 			pstmt.setInt(3, groupBuyVO.getGb_owner());
 			pstmt.setTimestamp(4, groupBuyVO.getStart_time());
 			pstmt.setTimestamp(5, groupBuyVO.getEnd_time());
-			pstmt.setTimestamp(6, groupBuyVO.getArr_time());
+			if(groupBuyVO.getArr_time() != null) {
+				pstmt.setTimestamp(6, groupBuyVO.getArr_time());
+			}else {
+				pstmt.setNull(6, java.sql.Types.TIMESTAMP);
+			}
 			pstmt.setInt(7, groupBuyVO.getMin_amt());
 
 			pstmt.executeUpdate();

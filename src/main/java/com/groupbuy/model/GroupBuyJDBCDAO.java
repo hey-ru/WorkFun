@@ -42,7 +42,11 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 			pstmt.setInt(3, groupBuyVO.getGb_owner());
 			pstmt.setTimestamp(4, groupBuyVO.getStart_time());
 			pstmt.setTimestamp(5, groupBuyVO.getEnd_time());
-			pstmt.setTimestamp(6, groupBuyVO.getArr_time());
+			if(groupBuyVO.getArr_time() != null) {
+				pstmt.setTimestamp(6, groupBuyVO.getArr_time());
+			}else {
+				pstmt.setNull(6, java.sql.Types.TIMESTAMP);
+			}
 			pstmt.setInt(7, groupBuyVO.getMin_amt());
 
 			pstmt.executeUpdate();
@@ -384,15 +388,15 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 		GroupBuyJDBCDAO dao = new GroupBuyJDBCDAO();
 
 		// 新增
-//		GroupBuyVO groupBuyVO1 = new GroupBuyVO();
-//		groupBuyVO1.setShop_id(102);
-//		groupBuyVO1.setShop_name("大同町");
-//		groupBuyVO1.setGb_owner(1002);
-//		groupBuyVO1.setStart_time(Timestamp.valueOf("2022-04-21 08:50:00.0"));
-//		groupBuyVO1.setEnd_time(Timestamp.valueOf("2022-04-30 08:50:00.0"));
-//		groupBuyVO1.setArr_time(Timestamp.valueOf("2022-12-31 12:59:99.0"));
-//		groupBuyVO1.setMin_amt(0);
-//		dao.insert(groupBuyVO1);
+		GroupBuyVO groupBuyVO1 = new GroupBuyVO();
+		groupBuyVO1.setShop_id(107);
+		groupBuyVO1.setShop_name("可不可熟成紅茶-中壢中山店");
+		groupBuyVO1.setGb_owner(1001);
+		groupBuyVO1.setStart_time(new Timestamp(System.currentTimeMillis()));
+		groupBuyVO1.setEnd_time(Timestamp.valueOf("2022-05-20 11:00:00.0"));
+		groupBuyVO1.setArr_time(Timestamp.valueOf("2022-05-30 13:00:00.0"));
+		groupBuyVO1.setMin_amt(0);
+		dao.insert(groupBuyVO1);
 
 		// 修改
 //		GroupBuyVO groupBuyVO2 = new GroupBuyVO();
@@ -425,11 +429,11 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 //			System.out.println();
 //	}
 		// 查詢開團中
-		List<GroupBuyVO> list = dao.getNowAll();
-		for (GroupBuyVO aGroupBuy : list) {
-			System.out.println(aGroupBuy.toString());
-			System.out.println();
-		}
+//		List<GroupBuyVO> list = dao.getNowAll();
+//		for (GroupBuyVO aGroupBuy : list) {
+//			System.out.println(aGroupBuy.toString());
+//			System.out.println();
+//		}
 		
 	}
 }

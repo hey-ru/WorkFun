@@ -1,3 +1,4 @@
+<%@page import="java.sql.Timestamp"%>
 <%@page import="org.hibernate.annotations.ParamDef"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,12 +13,23 @@ pageContext.setAttribute("shopVO", shopVO);
 <html>
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+
 <style>
 body{
 overflow-x:hidden;
 left:0;
 }
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
 </style>
+
+
 </head>
 
 <body style="width:100vw;">
@@ -97,7 +109,7 @@ left:0;
 				<!-- Button trigger modal -->	
 					 <div class="col-sm-3" style="height:100px;width:100px;">
 					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic1" style="border:0px">
-					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img1" style="max-height:100%;max-width:100%;">
+					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1" style="max-height:100%;max-width:100%;">
 					</button>
 					</div>
 					<!-- Modal -->
@@ -105,7 +117,7 @@ left:0;
 					  <div class="modal-dialog">
 					    <div class="modal-content">
 					      <div class="modal-body">
-					        <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img1" style="max-height:100%;max-width:100%;">
+					        <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1" style="max-height:100%;max-width:100%;">
 					      </div>
 					  </div>
 					  </div>
@@ -114,7 +126,7 @@ left:0;
 					<!-- Button trigger modal -->	
 					 <div class="col-sm-3" style="height:100px;width:100px;">
 					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic2" style="border:0px">
-					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img2" style="max-height:100%;max-width:100%;">
+					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img2" style="max-height:100%;max-width:100%;">
 					</button>
 					</div>
 					<!-- Modal -->
@@ -122,7 +134,7 @@ left:0;
 					  <div class="modal-dialog">
 					    <div class="modal-content">
 					      <div class="modal-body">
-					        <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img2" style="max-height:100%;max-width:100%;">
+					        <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img2" style="max-height:100%;max-width:100%;">
 					      </div>
 					      </div>
 					  </div>
@@ -131,7 +143,7 @@ left:0;
 					<!-- Button trigger modal -->	
 					 <div class="col-sm-3" style="height:100px;width:100px;">
 					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic3" style="border:0px">
-					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img3" style="max-height:100%;max-width:100%;">
+					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img3" style="max-height:100%;max-width:100%;">
 					</button>
 					</div>
 					<!-- Modal -->
@@ -139,7 +151,7 @@ left:0;
 					  <div class="modal-dialog">
 					    <div class="modal-content">
 					       <div class="modal-body">
-					        <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${param.shop_id}&table=shop&pic=shop_img3" style="max-height:100%;max-width:100%;">
+					        <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img3" style="max-height:100%;max-width:100%;">
 					      </div>
 					      </div>
 					  </div>
@@ -154,109 +166,52 @@ left:0;
 	</div>
 	<div style="width:90px;"></div>
 	<div class="col-md-6">		
-	<div class="card" style="background-color:lightyellow;">
+	<div class="card" style="background-color:lightyellow;height:100%;">
 		<div class="card-body">
 		<h5 class="card-title">揪團表單</h5>
-				<FORM METHOD="post" style="padding:0px 20px;" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
+				<FORM METHOD="post" style="padding:0px 20px;" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
 			<div class="row mb-3">
-				<label for="inputText" class="col-sm-2 col-form-label">店家名稱<font color=red><b>*</b></font></label>
+				<label for="inputText" class="col-sm-2 col-form-label">主揪</label>
 				<div class="col-sm-5">
-					<input type="text"  name="shop_name" class="form-control"value="${param.shop_name}"/>
+					<input type="text"  name="gb_ownername" class="form-control-plaintext"value="${empVO.empName}" readonly/>
 				</div>
-				<div class="col-sm-4">${errorMsgs.shop_name}</div>
-			</div>
-			<div class="row mb-3">
-				<label class="col-sm-2 col-form-label">店家類型</label>
-				<div class="col-sm-3">
-					<select class="form-select" name="shop_type" aria-label="Default select example">
-						<option value="5" ${(param.shop_type=="")? 'selected':'' } >請選擇類型
-						<option value="0" ${(param.shop_type==0)? 'selected':'' } >飲料
-						<option value="1" ${(param.shop_type==1)? 'selected':'' } >中式
-						<option value="2" ${(param.shop_type==2)? 'selected':'' } >異國
-						<option value="3" ${(param.shop_type==3)? 'selected':'' } >小吃
-						<option value="4" ${(param.shop_type==4)? 'selected':'' } >素食
-						<option value="5" ${(param.shop_type==5)? 'selected':'' } >其他
-					</select>
-				</div>
-				<div class="col-sm-6">${errorMsgs.shop_type}</div>
-			</div>
-			<div class="row mb-3">
-				<label for="inputText" class="col-sm-2 col-form-label">地址</label>
-				<div class="col-sm-3">
-					<input class="js-demeter-tw-zipcode-selector" data-city="#city" data-dist="#dist" name="placecode" style="width:120px;" placeholder="請輸入郵遞區號" />
-				</div>
-				<div class="col-sm-6">
-					<select id="city" name="city" placeholder="請選擇縣市"></select>
-					<select id="dist" name="dist" placeholder="請選擇鄉鎮區"></select>
-				</div>
+				<div class="col-sm-4"></div>
 			</div>
 				<div class="row mb-3">
-					<div class="col-sm-2"></div>
+					<label for="start_time" class="col-sm-2 col-form-label">開始時間</label>
 					<div class="col-sm-5">
-						<input type="TEXT" name="address" class="form-control" placeholder="請輸入接續地址" value="${param.address}"/>
+						<input name="start_time" id="start_time" type="text" class="form-control" value="${param.start_time}"/>
 					</div>
-					<div class="col-sm-4">${errorMsgs.address}</div>
+					<div class="col-sm-4">${errorMsgs.start_time}</div>
 				</div>
 				<div class="row mb-3">
-					<label for="inputText" class="col-sm-2 col-form-label">電話<font color=red><b>*</b></font></label>
+					<label for="end_time" class="col-sm-2 col-form-label">結束時間</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" name="tel" value="${param.tel}">
+						<input name="end_time" id="end_time" type="text" class="form-control" value="${param.end_time}"/>
 					</div>
-					<div class="col-sm-4">${errorMsgs.tel}</div>
+					<div class="col-sm-4">${errorMsgs.end_time}</div>
 				</div>
 				<div class="row mb-3">
-					<label for="inputText" class="col-sm-2 col-form-label">網站</label>
+					<label for="arr_time" class="col-sm-2 col-form-label">到貨時間</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" name="website" value="${param.website}">
+						<input name="arr_time" id="arr_time" type="text" class="form-control" value="${param.arr_time}"/>
 					</div>
-					<div class="col-sm-4">${errorMsgs.website}</div>			
+					<div class="col-sm-4">${errorMsgs.arr_time}</div>
 				</div>
 				<div class="row mb-3">
-					<label for="inputText" class="col-sm-2 col-form-label">低消</label>
-					<div class="col-sm-5">
-						<input type="text" class="form-control" name="min_amt" value="${param.min_amt}">
-					</div>
-					<div class="col-sm-4">${errorMsgs.min_amt}</div>
+				<label for="inputText" class="col-sm-2 col-form-label">低消</label>
+				<div class="col-sm-5">
+					<input type="text"  name="min_amt" class="form-control"value="${param.min_amt}"/>
 				</div>
-				<div class="row mb-3">
-					<label for="inputText" class="col-sm-2 col-form-label">圖片</label>
-					<div class="col-sm-5">
-						<input type="FILE" class="form-control" name="shop_img1" 
-						oninput="pic1.src=window.URL.createObjectURL(this.files[0])" value="${param.shop_img1}">
-					</div>
-					<div class="col-sm-4">${errorMsgs.shop_img1}</div>
-				</div>
-				
-				<div class="row mb-3">
-					<label for="inputText" class="col-sm-2 col-form-label">圖片</label>
-					<div class="col-sm-5">
-						<input type="FILE" class="form-control" name="shop_img2" 
-						oninput="pic2.src=window.URL.createObjectURL(this.files[0])" value="${param.shop_img2}">
-					</div>
-					<div class="col-sm-4">${errorMsgs.shop_img2}</div>
-				</div>
-				
-				<div class="row mb-3">
-					<label for="inputText" class="col-sm-2 col-form-label">圖片</label>
-					<div class="col-sm-5">
-						<input type="FILE" class="form-control" name="shop_img3" 
-						oninput="pic3.src=window.URL.createObjectURL(this.files[0])" value="${param.shop_img3}">
-					</div>
-					<div class="col-sm-4">${errorMsgs.shop_img2}</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col-sm-4" style="height:150px;padding: 0px 5px;">
-					<img id="pic1" style="max-width:100%;">
-					</div>
-					<div class="col-sm-4" style="height:150px;padding: 0px 5px;">
-					<img id="pic2" style="max-width:100%;">
-					</div>
-					<div class="col-sm-3" style="height:150px;padding: 0px 5px;">
-					<img id="pic3" style="max-width:100%;">
-					</div>				
-				</div>
-<!-- 				<input type="hidden" name="action" value="insert"> -->
-<!-- 				<input type="submit" value="送出新增"> -->
+				<div class="col-sm-4">${errorMsgs.min_amt}</div>
+			</div>
+					
+					<input type="hidden" name="gb_owner" value="${empVO.empId}">
+					<input type="hidden" name="gb_status" value="${param.gb_status}">
+					<input type="hidden" name="shop_id" value="${shopVO.shop_id}">
+					<input type="hidden" name="shop_name" value="${shopVO.shop_name}">
+					<input type="hidden" name="action" value="insert">
+					<input type="submit" value="送出新增">
 								
 		</FORM>
 		</div>
@@ -273,6 +228,82 @@ left:0;
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
 	
+<%-- <%  --%>
+//   java.sql.Timestamp start_time = null;
+// try {
+// 	start_time = java.sql.Timestamp.valueOf(request.getParameter("start_time").trim());
+// } catch (Exception e) {
+// 	start_time = new java.sql.Timestamp(((long)(System.currentTimeMillis())/60000)*60000-((((long)(System.currentTimeMillis())/60000)*60000)%900000)+900000);
+// }
+<%-- %> --%>
+<%-- <%  --%>
+//   java.sql.Timestamp end_time = null;
+//   try {
+// 	    end_time = java.sql.Timestamp.valueOf(request.getParameter("end_time").trim());
+//    } catch (Exception e) {
+// 	    end_time = new java.sql.Timestamp(((long)(System.currentTimeMillis())/60000)*60000-((((long)(System.currentTimeMillis())/60000)*60000)%900000)+86400000);
+//    }
+<%-- %> --%>
+<%-- <%  --%>
+//   java.sql.Timestamp arr_time = null;
+//   try {
+// 	    arr_time = java.sql.Timestamp.valueOf(request.getParameter("arr_time").trim());
+//    } catch (Exception e) {
+// 	    arr_time = "";
+//    }
+<%-- %> --%>
+
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script
+	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<script>
+        $.datetimepicker.setLocale('zh');
+        $('#start_time').datetimepicker({
+ 	       theme: '',              //theme: 'dark',
+	       timepicker:true,       //timepicker:true,
+	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+		   //value: '${start_time}',   // value:   new Date(),
+		   onShow:function(){
+			   this.setOptions({
+				minDate:0,
+				minTime:0,
+			    maxDate:$('#end_time').val()?$('#end_time').val():false
+			   })
+		   }
+        });
+        $('#end_time').datetimepicker({
+  	       theme: '',              //theme: 'dark',
+ 	       timepicker:true,       //timepicker:true,
+ 	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+ 		   //value: '${end_time}', // value:   new Date(),
+ 		  onShow:function(){
+ 			   this.setOptions({
+ 			    minDate:$('#start_time').val()?$('#start_time').val():false,
+ 			    maxDate:$('#arr_time').val()?$('#arr_time').val():false,
+ 			   })
+ 			  }
+	});
+        $('#arr_time').datetimepicker({
+   	       theme: '',              //theme: 'dark',
+  	       timepicker:true,       //timepicker:true,
+  	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
+  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+  		   //value: '${arr_time}', // value:   new Date(),
+  		 	onShow:function(){
+  		   this.setOptions({
+  		    minDate:$('#end_time').val()?$('#end_time').val():false
+  		   })
+  		  }
+ 	});
+
+        
+</script>
+	
 </body>
+
+
 
 </html>

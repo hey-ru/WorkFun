@@ -140,11 +140,11 @@ public class ShopServlet extends HttpServlet {
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
 				
 				String shop_name = req.getParameter("shop_name");
-				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
+				String shop_nameReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\(\\-\\)]*$";
 				if (shop_name == null || shop_name.trim().length() == 0) {
 					errorMsgs.put("shop_name","店家名稱: 請勿空白");
 				} else if(!shop_name.trim().matches(shop_nameReg)) {
-					errorMsgs.put("shop_name","店家: 只能是中、日、英文字母、數字、_、-和()");
+					errorMsgs.put("shop_name","店家: 只能是中、英文字母、數字、_、-和()");
 	            }
 				
 				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());
@@ -244,11 +244,11 @@ public class ShopServlet extends HttpServlet {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 	
 				String shop_name = req.getParameter("shop_name");
-				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
+				String shop_nameReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\(\\-\\)]*$";
 				if (shop_name == null || shop_name.trim().length() == 0) {
 					errorMsgs.put("shop_name","店家名稱: 請勿空白");
 				} else if(!shop_name.trim().matches(shop_nameReg)) {
-					errorMsgs.put("shop_name","店家: 只能是中、英文字母、數字和_");
+					errorMsgs.put("shop_name","店家: 店家: 只能是中、英文字母、數字、_、-和()");
 	            }
 				
 				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());

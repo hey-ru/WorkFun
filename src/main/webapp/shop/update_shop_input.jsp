@@ -75,10 +75,10 @@
 		<c:set var = "address" value = "${param.address}" />
 		<c:set var = "placecode" value = "${fn:substring(address, 0, 3)}" />
 		<c:set var = "addressend" value = "${fn:substring(address, 3, -1)}" />
-		<input class="js-demeter-tw-zipcode-selector" data-city="#city" data-dist="#dist" name="placecode" style="width:120px;" placeholder="請輸入郵遞區號" value="${placecode}" />
+		<input class="js-demeter-tw-zipcode-selector" data-city="#city" data-dist="#dist" id="placecode" name="placecode" style="width:120px;" placeholder="請輸入郵遞區號" value="${placecode}" />
 		<select id="city" name="city" placeholder="請選擇縣市"></select>
 		<select id="dist" name="dist" placeholder="請選擇鄉鎮區"></select><br>
-		<input type="TEXT" name="addressend" size="45" placeholder="請輸入接續地址"
+		<input type="TEXT" id="addressend" name="addressend" size="45" placeholder="請輸入接續地址"
 			 value="${addressend}"/></td><td>${errorMsgs.address}</td>
 	</tr>
 	<tr>
@@ -165,6 +165,13 @@
 		});
 		$('#shop_img3').change( function() {  
 			$("#oldpic3").hide(); 
+		});
+		
+		$('#placecode').blur( function() {  
+			$('#addressend').val(''); 
+		}); 
+		$('#city').change( function() {  
+			$('#addressend').val(''); 
 		});
 			
 

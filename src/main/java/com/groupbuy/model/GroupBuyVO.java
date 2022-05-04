@@ -2,6 +2,8 @@ package com.groupbuy.model;
 
 import java.sql.Timestamp;
 
+import com.shop.model.*;
+
 public class GroupBuyVO implements java.io.Serializable {
 	private Integer gb_id;
 	private Integer shop_id;
@@ -12,6 +14,7 @@ public class GroupBuyVO implements java.io.Serializable {
 	private Timestamp arr_time;
 	private Integer gb_status;
 	private Integer min_amt;
+	private ShopVO shopVO;
 	
 	
 	
@@ -76,6 +79,12 @@ public class GroupBuyVO implements java.io.Serializable {
 	}
 	public void setMin_amt(Integer min_amt) {
 		this.min_amt = min_amt;
+	}
+	
+	public ShopVO getShopVO() {
+		ShopService shopSvc = new ShopService();
+		ShopVO shopVO = shopSvc.getOneShop(shop_id);
+		return shopVO;
 	}
 
 

@@ -171,9 +171,9 @@
 											</td>
 											<td>
 												<FORM METHOD="post"
-													ACTION="<%=request.getContextPath()%>/groupbuy/addGB.jsp"
+													ACTION="<%=request.getContextPath()%>/groupbuy/owner_addGB.jsp"
 													style="margin-bottom: 0px;">
-													<input type="submit" class="btn-info btn-lg" value="我要揪團"> <input
+													<input type="submit" class="btn-info btn-lg" value="揪這家"> <input
 														type="hidden" name="shop_id" value="${shopVO.shop_id}">
 												</FORM>
 											</td>
