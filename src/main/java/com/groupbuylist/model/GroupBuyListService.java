@@ -14,7 +14,7 @@ public class GroupBuyListService {
 	}
 
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
-			Integer price, Integer qty, Integer total, String remark) {
+			Integer price, Integer qty, String remark) {
 
 		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
 
@@ -24,6 +24,9 @@ public class GroupBuyListService {
 		groupBuyListVO.setMenu_id(menu_id);
 		groupBuyListVO.setItem(item);
 		groupBuyListVO.setPrice(price);
+		groupBuyListVO.setQty(qty);
+//		groupBuyListVO.setTotal(total);
+		groupBuyListVO.setRemark(remark);
 
 		dao.insertItem(groupBuyListVO);
 

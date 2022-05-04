@@ -26,7 +26,7 @@ public class JoinGBServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("getmenu".equals(action)) { // 來自select_page.jsp的請求
+		if ("insert".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
