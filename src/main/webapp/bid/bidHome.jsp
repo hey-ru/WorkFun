@@ -43,11 +43,68 @@ pageContext.setAttribute("list", list);
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
               <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:365px;">
-              <div style="display:flex">
-                <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;">
-                <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;">
-                <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;">
-              </div>
+              <div class="row" style="margin-top:10px;">
+              <!-- Button trigger modal -->	
+					 <div class="col-sm-3" style="height:100px;width:100px;">
+					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic1" style="border:0px">
+					<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
+					</button>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="pic1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-body">
+					        <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
+					      </div>
+					  </div>
+					  </div>
+					</div>
+					<!-- Modal_end -->
+				<!-- Button trigger modal end-->
+              <!-- Button trigger modal -->	
+					 <div class="col-sm-3" style="height:100px;width:100px;">
+					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic2" style="border:0px">
+					<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
+					</button>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="pic2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-body">
+					        <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
+					      </div>
+					  </div>
+					  </div>
+					</div>
+					<!-- Modal_end -->
+				<!-- Button trigger modal end-->
+              <!-- Button trigger modal -->	
+					 <div class="col-sm-3" style="height:100px;width:100px;">
+					 <button type="button" data-bs-toggle="modal" data-bs-target="#pic3" style="border:0px">
+					<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
+					</button>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="pic3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-body">
+					        <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=1004" style="max-height:100%;max-width:100%;">
+					      </div>
+					  </div>
+					  </div>
+					</div>
+					<!-- Modal_end -->
+				<!-- Button trigger modal end-->
+				</div>
+              
+<!--               <div style="display:flex"> -->
+<%--                 <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;"> --%>
+<%--                 <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;"> --%>
+<%--                 <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=1004" alt="Profile" style="width:100px;"> --%>
+<!--               </div> -->
             </div>
           </div>
 
