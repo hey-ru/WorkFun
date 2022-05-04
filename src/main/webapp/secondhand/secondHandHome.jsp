@@ -101,8 +101,10 @@ pageContext.setAttribute("list", list);
 									class="com.secondHand.model.SecondHandService" />
 								<select class="form-select" id="exampleFormControlSelect1"
 									style="border: gray solid 2px;" name="is_deal">
-									<option value="0">競標中</option>
-									<option value="1">已成交</option>
+									<option value="0">未開始</option>
+									<option value="1">競標中</option>
+									<option value="2">已成交</option>
+									<option value="3">流標</option>
 									<option value="">顯示全部</option>
 								</select>
 							</div>

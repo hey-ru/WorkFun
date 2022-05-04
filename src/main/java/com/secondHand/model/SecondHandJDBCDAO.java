@@ -9,12 +9,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.sql.Timestamp;
 
+import com.bid.model.BidJDBCDAO;
+import com.bid.model.BidVO;
 import com.emp.model.EmpVO;
 import com.util.jdbcUtil_CompositeQuery;
 
@@ -26,9 +29,9 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO second_hand (saler,name,bottom_price,top_price,start_time,end_time,img1,img2,img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 //	private static final String UPDATE = "UPDATE second_hand set bid_winner=?, deal_price=?, name=?, bottom_price=?, top_price=?, start_time=?, end_time=?, is_deal=?, img1=?, img2=?, img3=? where second_hand_id = ?";
-	private static final String UPDATE = "UPDATE second_hand set ";//StringBuilder
+	private static final String UPDATE = "UPDATE second_hand set ";// StringBuilder
 //	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
-	private static final String GET_BY_ID = "SELECT e.emp_name as saler_name,sh.second_hand_id,sh.saler,sh.bid_winner,sh.deal_price,sh.name,sh.bottom_price,sh.top_price,sh.start_time,sh.end_time,sh.is_deal,sh.img1,sh.img2,sh.img3,sh.create_time,sh.update_time FROM second_hand sh join emp e on sh.saler = e.emp_id where second_hand_id = ?";
+	private static final String GET_BY_ID = "SELECT e.emp_name as saler_name,b.bid_winner as bid_winner,b.price as bid_price,sh.second_hand_id,sh.saler,sh.bid_winner,sh.deal_price,sh.name,sh.bottom_price,sh.top_price,sh.start_time,sh.end_time,sh.is_deal,sh.img1,sh.img2,sh.img3,sh.create_time,sh.update_time FROM second_hand sh join emp e on sh.saler = e.emp_id join bid b on sh.second_hand_id = b.second_hand_id where sh.second_hand_id = ?";
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
 	private static final String GET_BY_IS_DEAL = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where is_deal like \"%\"?\"%\"";
 	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand order by second_hand_id";
@@ -59,12 +62,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -84,58 +85,93 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		}
 
 	}
-	
-//	@Override
-//	public void insert(SecondHandVO secondHandVO) {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(INSERT_STMT);
-//
-//			pstmt.setInt(1, secondHandVO.getSaler());
-//			pstmt.setString(2, secondHandVO.getName());
-//			pstmt.setInt(3, secondHandVO.getBottom_price());
-//			pstmt.setInt(4, secondHandVO.getTop_price());
-//			pstmt.setTimestamp(5, secondHandVO.getStart_time());
-//			pstmt.setTimestamp(6, secondHandVO.getEnd_time());
-//			pstmt.setBytes(7, secondHandVO.getImg1());
-////			pstmt.setString(7, secondHandVO.getImg1());
-//			pstmt.setString(8, secondHandVO.getImg2());
-//			pstmt.setString(9, secondHandVO.getImg3());
-//
-//			pstmt.executeUpdate();
-//
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//
-//	}
+
+	@Override
+	public void insertWithBid(SecondHandVO secondHandVO, BidVO bidVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+
+			// 先新增部門
+			String cols[] = { "second_hand_id" };// for 複合主鍵
+
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+
+			pstmt.setInt(1, secondHandVO.getSaler());
+			pstmt.setString(2, secondHandVO.getName());
+			pstmt.setInt(3, secondHandVO.getBottom_price());
+			pstmt.setInt(4, secondHandVO.getTop_price());
+			pstmt.setTimestamp(5, secondHandVO.getStart_time());
+			pstmt.setTimestamp(6, secondHandVO.getEnd_time());
+			pstmt.setBytes(7, secondHandVO.getImg1());
+			pstmt.setBytes(8, secondHandVO.getImg2());
+			pstmt.setBytes(9, secondHandVO.getImg3());
+
+			Statement stmt = con.createStatement();
+
+			pstmt.executeUpdate();
+
+			String next_second_hand_id = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_second_hand_id = rs.getString(1);
+				System.out.println("自增主鍵值= " + next_second_hand_id + "(剛新增成功的二手編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			// 再同時新增競標
+			BidJDBCDAO dao = new BidJDBCDAO();
+			bidVO.setsecond_hand_id(new Integer(next_second_hand_id));
+			dao.insertBySecondHand(bidVO, con);
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("新增二手編號" + next_second_hand_id + "時,競標同時被新增");
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-secondHand");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
 
 //	@Override
 //	public void update(SecondHandVO secondHandVO) {
@@ -292,12 +328,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -338,8 +372,12 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			while (rs.next()) {
 				EmpVO empVO = new EmpVO();
 				empVO.setEmpName(rs.getString("saler_name"));
+				BidVO bidVO = new BidVO();
+				bidVO.setBidder(rs.getInt("bid_winner"));
+				bidVO.setPrice(rs.getInt("bid_price"));
 				secondHandVO = new SecondHandVO();
 				secondHandVO.setEmpVO(empVO);
+				secondHandVO.setBidVO(bidVO);
 				secondHandVO.setsecond_hand_id(rs.getInt("second_hand_id"));
 				secondHandVO.setSaler(rs.getInt("saler"));
 				secondHandVO.setBid_winner(rs.getInt("bid_winner"));
@@ -360,12 +398,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -433,12 +469,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -504,12 +538,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -536,27 +568,26 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<SecondHandVO> getAll(Map<String, String[]> map) {
 		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
 		SecondHandVO secondHandVO = null;
-	
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-	
+
 		try {
-			
+
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			String finalSQL = "select * from second_hand "
-		          + jdbcUtil_CompositeQuery.get_WhereCondition(map)
-		          + "order by second_hand_id";
+			String finalSQL = "select * from second_hand " + jdbcUtil_CompositeQuery.get_WhereCondition(map)
+					+ "order by second_hand_id";
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
-	
+
 			while (rs.next()) {
 				secondHandVO = new SecondHandVO();
 				secondHandVO.setsecond_hand_id(rs.getInt("second_hand_id"));
@@ -577,15 +608,13 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
 				list.add(secondHandVO);
 			}
-	
+
 			// Handle any SQL errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
@@ -611,8 +640,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		}
 		return list;
 	}
-	
-	//for img
+
+	// for img
 	public static byte[] getPictureByteArray(String path) throws IOException {
 		FileInputStream fis = new FileInputStream(path);
 		byte[] buffer = new byte[fis.available()];
@@ -620,7 +649,6 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		fis.close();
 		return buffer;
 	}
-	
 
 	public static void main(String[] args) throws Exception {
 
@@ -632,14 +660,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //		byte[] buffer = new byte[fis.available()];
 //		fis.read(buffer);
 //		fis.close();
-		
+
 //
 //		ByteBuffer bb = ByteBuffer.wrap(buffer);//base64
 //		ByteBuffer base64encoded = Base64.getEncoder().encode(bb);//base64
-		
-		
-		
-		
 
 //		String fileName1 = "/Users/ryan/Coding/CGA101/secondHand_pic/火紅眼_2.jpg";
 //		File file1 = new File(fileName1);
@@ -751,5 +775,5 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //			System.out.println(listSecondHandVO.getUpdate_time());
 //		}
 	}
-	
+
 }

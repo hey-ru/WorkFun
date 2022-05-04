@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -19,6 +20,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.bid.model.BidJDBCDAO;
+import com.bid.model.BidVO;
 import com.util.jdbcUtil_CompositeQuery;
 
 public class SecondHandDAO implements SecondHandDAO_interface {
@@ -69,6 +72,89 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 					pstmt.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	@Override
+	public void insertWithBid(SecondHandVO secondHandVO, BidVO bidVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+
+			// 先新增部門
+			String cols[] = { "second_hand_id" };// for 複合主鍵
+
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+
+			pstmt.setInt(1, secondHandVO.getSaler());
+			pstmt.setString(2, secondHandVO.getName());
+			pstmt.setInt(3, secondHandVO.getBottom_price());
+			pstmt.setInt(4, secondHandVO.getTop_price());
+			pstmt.setTimestamp(5, secondHandVO.getStart_time());
+			pstmt.setTimestamp(6, secondHandVO.getEnd_time());
+			pstmt.setBytes(7, secondHandVO.getImg1());
+			pstmt.setBytes(8, secondHandVO.getImg2());
+			pstmt.setBytes(9, secondHandVO.getImg3());
+
+			Statement stmt = con.createStatement();
+
+			pstmt.executeUpdate();
+
+			String next_second_hand_id = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_second_hand_id = rs.getString(1);
+				System.out.println("自增主鍵值= " + next_second_hand_id + "(剛新增成功的二手編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			// 再同時新增競標
+			BidJDBCDAO dao = new BidJDBCDAO();
+			bidVO.setsecond_hand_id(new Integer(next_second_hand_id));
+			dao.insertBySecondHand(bidVO, con);
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("新增二手編號" + next_second_hand_id + "時,競標同時被新增");
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-secondHand");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
 			}
 			if (con != null) {
