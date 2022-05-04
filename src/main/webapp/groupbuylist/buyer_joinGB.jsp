@@ -114,7 +114,7 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 								<!-- 加入品項 -->
 													<FORM METHOD="post"
 														ACTION="<%=request.getContextPath()%>/groupbuylist/JoinGB">
-														<input type="submit" class="btn btn-warning btn-sm" value="訂餐">
+														<input type="submit" class="btn btn-warning btn-sm" value="下單">
 														<input type="hidden" name="gblist_id" value="${groupbuylist.gblist_id}"> 
 														<input type="hidden" name="action" value="insertAll">
 													</FORM>
