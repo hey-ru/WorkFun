@@ -15,7 +15,7 @@ public class Report_CommentJDBCDAO implements Report_CommentDAO_interface {
 	String passwd = "cga101-03";
 	private static final String INSERT_STMT = "INSERT INTO report_comment (report_id,comment,report_comment_image) VALUES (?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM report_comment";
-	private static final String GET_ONE_STMT = "SELECT report_comment_id,report_id,comment,createtime,report_comment_image FROM report_comment where report_comment_id = ?";
+	private static final String GET_ONE_STMT = "SELECT * FROM report_comment where report_comment_id = ?";
 	private static final String UPDATE = "UPDATE report_comment set ";
 
 	@Override

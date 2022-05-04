@@ -24,18 +24,6 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="back.html">
-                <div class="sidebar-brand-text mx-3">
-                    <h2 class="font-weight-bold">WorkFun</h2>
-                </div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-            <div style="height: 1px;">
-            </div>
-
             <!-- Nav Item - Pages Collapse Menu第一項 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -85,7 +73,6 @@
                     </div>
                 </div>
             </li>
-            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -101,7 +88,6 @@
                         <a class="collapse-item" href="cards.html">刪除任務</a>
                     </div>
                 </div>
-            </li>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
@@ -170,7 +156,7 @@
                         <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
                 </div>
-            </li>
+           
             <!-- Nav Item - Pages Collapse Menu第三項 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -190,7 +176,6 @@
                         <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
-            </li>
 
             <!-- Nav Item - Tables第四項 -->
             <li class="nav-item">
@@ -199,15 +184,7 @@
                     <span>Tables</span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
         </ul>
-        <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -334,10 +311,4 @@
 
 </body>
 
-</html>
-
-</head>
-<body>
-
-</body>
 </html>

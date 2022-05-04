@@ -1,6 +1,10 @@
 package com.report_comment.model;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+
+import javax.servlet.http.Part;
 
 public class Report_CommentService {
 private Report_CommentDAO_interface dao;
@@ -9,6 +13,13 @@ private Report_CommentDAO_interface dao;
 		dao = new Report_CommentDAO();
 	}
 	
+	public byte[] Image(Part part) throws IOException {
+		InputStream ins= part.getInputStream();
+		byte[] b = new byte[ins.available()];
+		ins.read(b);
+		
+		return b;
+	}
 	public Report_CommentVO addReport_Comment(Integer report_id,String comment,byte[] report_comment_image) {
 
 		Report_CommentVO report_commentVO = new Report_CommentVO();

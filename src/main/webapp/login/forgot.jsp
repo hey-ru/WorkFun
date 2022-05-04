@@ -47,43 +47,41 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    <br>
+                                    <br>
+                                    <br>
+                                        <h1 class="h4 text-gray-900 mb-4">忘記密碼</h1>
                                     </div>
+                                    ,<br>
                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
                                         <div class="form-group">
                                         
                                            <input
-										type="TEXT" name="empId" size="45" value="${param.empId}"
-										class="form-control" aria-label="Username"
+										type="TEXT" name="mail" size="45" value="${param.mail}"
+										class="form-control" aria-label="Username" placeholder="mail"
 										aria-describedby="basic-addon1">
-                                        </div>${errorMsgs.empId}
-                                      <input
-										type="text" name="empPassword" size="45" value="${param.empPassword}"
-										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1">${errorMsgs.empPassword}
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
                                         </div>
-                                       <input
-										type="submit" value="登入" class="input-group-text bg-info"
-										id="basic-addon2" style="width:345px; color:white; justify-content: center;">
-                                        <hr>
-                                        ${errorMsgs.login}
-                                        <a href="" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
                                         
-                                        <input type="hidden" name="action" value="frontLogin"> 
+                                    <br>
+                                      <input
+										type="text" name="birthday" size="45" value="${param.birthday}"
+										class="form-control" aria-label="Username" placeholder="如19940619"
+										aria-describedby="basic-addon1">${errorMsgs.forgot}
+                                     <br>
+                                     
+                                    <br>
+                                       <input
+										type="submit" value="驗證送出" class="input-group-text bg-info"
+										id="basic-addon2" style="width:345px; color:white; justify-content: center;">
+                                    
+                                  
+                                       
+                                        
+                                        <input type="hidden" name="action" value="forgotpassword"> 
                                     </FORM>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="<%=request.getContextPath()%>/login/forgot.jsp">Forgot Password?</a>
-                                    </div>
+                                
+                                    
                    
                                 </div>
                             </div>

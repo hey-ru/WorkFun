@@ -59,24 +59,27 @@ int itemsPerPage = 10;
 <ul>  
   <li>   
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reportServlet" name="form1">
-     
+     	<jsp:useBean id="reportSvc1" scope="page"
+									class="com.report.model.ReportService" />
        <b>選擇類型:</b>
        <select size="1" name="report_type" >
-          <option value="">
-         <c:forEach var="reportVO" items="${list}" > 
-          <option value="${reportVO.report_type}">
-         </c:forEach>   
+          <option value="0">添購新品</option>
+          <option value="1">損壞報修</option>
+          <option value="2">軟硬體問題</option>
+          <option value="3">其他</option> 
        </select>
            
         <b>選擇回報狀態:</b>
        <select size="1" name="status" >
-          <option value="">
-         <c:forEach var="reportVO" items="${list}" > 
-          <option value="${reportVO.status}">
-         </c:forEach>   
+       	  <option value="">顯示全部</option>
+          <option value="0">已發送</option>
+          <option value="1">處理中</option>
+          <option value="2">待確認</option>
+          <option value="3">取消</option>
+          <option value="4">已完成</option>
        </select>	        
         <input type="submit" value="送出">
-        <input type="hidden" name="action" value="listQuery">
+        <input type="hidden" name="action" value="listByCompositeQuery">
      </FORM>
   </li>
 </ul>
@@ -131,8 +134,8 @@ int itemsPerPage = 10;
 													<c:if test="${reportVO.report_type==2}">軟硬體問題</c:if>
 													<c:if test="${reportVO.report_type==3}">其他</c:if></td>
 													<td><fmt:formatDate value="${reportVO.starttime}" pattern="yyyy-MM-dd HH:mm "/></td>
-													<td>${reportVO.reporter}</td>
-													<td>${reportVO.handler}</td>
+													<td>${reportVO.empVO1.empName}</td>
+													<td>${reportVO.empVO2.empName}</td>
 													<td><c:if test="${reportVO.status==0}">已發送</c:if>
 													<c:if test="${reportVO.status==1}">處理中</c:if>
 													<c:if test="${reportVO.status==2}">待確認</c:if>

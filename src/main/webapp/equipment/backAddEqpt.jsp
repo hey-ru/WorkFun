@@ -50,11 +50,11 @@
 
 <!-- Template Main CSS File -->
 
-<link
-	href="${pageContext.request.contextPath}/equipment/eqpt.css"
+<link href="${pageContext.request.contextPath}/equipment/eqpt.css"
 	rel="stylesheet">
 
 </head>
+
 
 <body>
 
@@ -74,8 +74,8 @@
 
 							<!-- General Form Elements -->
 							<form METHOD="post"
-								ACTION="<%=request.getContextPath()%>/equipment/equipment.do" name="form1"
-								enctype="multipart/form-data">
+								ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
+								name="form1" enctype="multipart/form-data">
 
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">器材名稱:
@@ -101,20 +101,31 @@
 									<div class="col-sm-10">
 										<select name="eqStatus" id="">
 											<option value="" selected>請選擇狀態</option>
-											<option value="0"${(param.eqStatus==0)? 'selected':'' }>上架</option>
-											<option value="3"${(param.eqStatus==3)? 'selected':'' }>下架</option>
-										</select>
-									${errorMsgs.eqStatus}
+											<option value="0" ${(param.eqStatus==0)? 'selected':'' }>上架</option>
+											<option value="3" ${(param.eqStatus==3)? 'selected':'' }>下架</option>
+										</select> ${errorMsgs.eqStatus}
 									</div>
 								</div>
+
+								<!-- 								<div class="row mb-3"> -->
+								<!-- 									<label for="inputText" class="col-sm-2 col-form-label">商品介紹: -->
+								<!-- 									</label> -->
+								<!-- 									<div class="col-sm-10"> -->
+								<!-- 										<input name="introduction" type="text" class="form-control" -->
+								<%-- 											value="${param.name}"> ${errorMsgs.name}<br> --%>
+								<!-- 										<textarea name="text" class="form-control" cols="84" rows="10"></textarea> -->
+								<!-- 									</div> -->
+								<!-- 								</div> -->
 
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">商品介紹:
 									</label>
 									<div class="col-sm-10">
-										<input name="introduction" type="text" class="form-control"
-											value="${param.name}"> ${errorMsgs.name}<br>
-										<textarea name="text" class="form-control" cols="84" rows="10"></textarea>
+										<input name="introduction1" type="text" id="introduction1"
+											class="form-control" value="${param.name}">
+										${errorMsgs.name}<br>
+<!-- 										<textarea name="introduction" id="introduction" -->
+<!-- 											class="form-control" cols="84" rows="10"></textarea> -->
 									</div>
 								</div>
 
@@ -138,7 +149,7 @@
 											style="width: 150px" /> <br>${errorMsgs.img1}
 									</div>
 								</div>
-								
+
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">上傳圖片:</label>
 									<div class="col-sm-10">
@@ -148,7 +159,7 @@
 											style="width: 150px" /> <br>${errorMsgs.img2}
 									</div>
 								</div>
-								
+
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">上傳圖片:</label>
 									<div class="col-sm-10">
@@ -176,6 +187,16 @@
 	</main>
 	<!-- End of Main  -->
 	<!-- ======= Footer ======= -->
+
+
+	<!-- ======= js ======= -->
+	<script type="text/javascript">
+	function changeText(){
+		document.getElementById("introduction").value=document.getElementById("introduction1").value;
+	}
+</script>
+
+
 
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
@@ -231,4 +252,5 @@
 		', // value:   new Date(),
 		});
 	</script>
+</body>
 </html>

@@ -25,10 +25,10 @@ public class EmpService {
 		return empVO;
 	}
 
-	public void addEmp(EmpVO empVO,Connection oneConnection) {
+	public void addEmp(EmpVO empVO,Connection con) {
 
 	
-		dao.insert(empVO,oneConnection);
+		dao.insert(empVO,con);
 
 	
 	}
@@ -47,7 +47,7 @@ public class EmpService {
 		
 		
 	}
-	public EmpVO login(Integer empId, String password,Connection oneConnection ) {
+	public EmpVO login(Integer empId, String password,Connection con ) {
 		EmpVO empVO=dao.selectForLogin(empId, password);
 		return empVO;
 		
@@ -62,7 +62,7 @@ public class EmpService {
 
 		return 1;
 	}
-public int updateEmp(EmpVO empVO,Connection oneConnection) {
+public int updateEmp(EmpVO empVO,Connection con) {
 
 		
 		dao.update(empVO);
@@ -71,24 +71,29 @@ public int updateEmp(EmpVO empVO,Connection oneConnection) {
 		return 1;
 	}
 
-	public void deleteEmp(Integer empno) {
-		dao.delete(empno);
+	public void deleteEmp(Integer empId) {
+		dao.delete(empId);
 	}
-	public void deleteEmp(Integer empno,Connection oneConnection) {
-		dao.delete(empno);
+	public void deleteEmp(Integer empId,Connection con) {
+		dao.delete(empId);
 	}
-
-	public EmpVO getOneEmp(Integer empno) {
-		return dao.findByPrimaryKey(empno);
+	public EmpVO getbymailandbirthday(String mail,java.sql.Date birthday) {
+		
+		return dao.findbymailandbirthday(mail, birthday);
 	}
-	public EmpVO getOneEmp(Integer empno,Connection connection) {
-		return dao.findByPrimaryKey(empno);
+	
+	
+	public EmpVO getOneEmp(Integer empId) {
+		return dao.findByPrimaryKey(empId);
+	}
+	public EmpVO getOneEmp(Integer empId,Connection connection) {
+		return dao.findByPrimaryKey(empId);
 	}
 
 	public List<EmpVO> getAll() {
 		return dao.getAllDAO();
 	}
-	public List<EmpVO> getAll(Connection oneConnection) {
+	public List<EmpVO> getAll(Connection con) {
 		return dao.getAllDAO();
 	}
 	

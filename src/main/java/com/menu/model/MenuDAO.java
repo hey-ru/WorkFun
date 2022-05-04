@@ -26,7 +26,7 @@ public class MenuDAO implements MenuDAO_interface {
 	// 前台 新增店家單品項目
 	private static final String INSERT_STMT = "INSERT INTO menu (shop_id,item,price) VALUES (?, ?, ?)";
 	// 前台 修改店家單品項目
-	private static final String UPDATE = "UPDATE menu set shop_id=?, item=?, price=?, is_item=? where menu_id = ?";
+	private static final String UPDATE = "UPDATE menu set ";
 	// 前台 由下架修改為上架
 	private static final String UPDATESTATUS = "UPDATE menu set is_item = 1 where menu_id = ?";
 	// 前台 查詢一間店家菜單(上架中)
@@ -105,8 +105,8 @@ public class MenuDAO implements MenuDAO_interface {
 			if(newmenu.getIs_item() != null) {
 				sb.append(" is_item=?, ");
 			}
-		
-			sb.append(" menu_id=? where menu_id = ? ");
+			sb.append(" menu_id = ? ");
+			sb.append(" where menu_id = ? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			
@@ -123,9 +123,9 @@ public class MenuDAO implements MenuDAO_interface {
 				pstmt.setInt(count, newmenu.getPrice());
 			}
 			if(newmenu.getIs_item() != null) {
+				count++;
 				pstmt.setInt(count, newmenu.getIs_item());
 			}
-			
 			
 			count++;
 			pstmt.setInt(count, newmenu.getMenu_id()); 

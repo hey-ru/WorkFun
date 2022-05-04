@@ -24,6 +24,9 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	// 後台查詢預約單 by 訂單編號
 	private static final String GET_BY_BOOKINGID = "SELECT booking_id,emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price from booking where booking_id=?";
 
+	// 後台查詢狀態
+	private static final String GET_BY_STATUS = "SELECT booking_id,emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price from booking where return_status=?";
+
 	// 後台查詢預約單 by 員工
 	private static final String GET_BY_EMPID = "SELECT booking_id,emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price from booking where emp_id=?";
 
@@ -35,7 +38,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 
 	// 員工更改已預約日期
 	private static final String UPDATE_DATE = "UPDATE booking set start_date=?,end_date=? where booking_id=?";
-
+	
 	@Override
 	public void insert(BookingVO bookingVO) {
 
@@ -214,8 +217,9 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	}
 
 	@Override
-	public BookingVO getByEmpId(Integer empId) {
+	public List<BookingVO> getByEmpId(Integer empId) {
 
+		List<BookingVO> list = new ArrayList<BookingVO>();
 		BookingVO bookingVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -270,7 +274,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 				}
 			}
 		}
-		return bookingVO;
+		return list;
 	}
 
 	@Override
@@ -435,11 +439,10 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 //			System.out.print(aBooking.getOverduePrice() + ",");
 //			System.out.println();
 //		}
-	
+
 		// 查詢自己預約單 by 狀態
 //		BookingVO bookingVO5 = dao.getbyReturnStatus(0);
 //		System.out.println(bookingVO5.toString());
-	
-	
+
 	}
 }

@@ -67,11 +67,10 @@ td {
 <body>
 	<div class="wrapper">
 		<!-- ======= Header ======= -->
-
+		
 
 
 		<!-- ======= 內容開始 ======= -->
-		
 		<div class="row">
 			<div class="col-10" style="height: 60px; display: inline-block;">
 				<form class="my-1">
@@ -198,15 +197,15 @@ td {
 								<td>${equipmentVO.spec}</td>
 
 								<td><img
-									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipmentId&id=${equipmentVO.equipmentId}&table=equipment&pic=img1"
+									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img1"
 									style="max-height: 100%;"></td>
 
 								<td><img
-									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipmentId&id=${equipmentVO.equipmentId}&table=equipment&pic=img2"
+									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img2"
 									style="max-height: 100%;"></td>
 
 								<td><img
-									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipmentId&id=${equipmentVO.equipmentId}&table=equipment&pic=img3"
+									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img3"
 									style="max-height: 100%;"></td>
 
 								<td>

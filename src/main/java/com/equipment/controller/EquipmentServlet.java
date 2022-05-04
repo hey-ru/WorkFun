@@ -191,9 +191,9 @@ public class EquipmentServlet extends HttpServlet {
 					+ equipmentVO.getEqStatus() + "&introduction=" + equipmentVO.getIntroduction() + "&spec="
 					+ equipmentVO.getSpec() + "&img1=" + equipmentVO.getImg1() + "&img2=" + equipmentVO.getImg2()
 					+ "&img3=" + equipmentVO.getImg3();
-			
+
 			String url = "/equipment/updateBackAddEqpt.jsp" + param;
-			RequestDispatcher successView = req.getRequestDispatcher(url);
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
 			successView.forward(req, res);
 		}
 
@@ -207,9 +207,14 @@ public class EquipmentServlet extends HttpServlet {
 //			Integer imageId = Integer.valueOf(req.getParameter("imageId").trim());
 
 			String eqName = req.getParameter("eqName");
+//			String eqNameReg = "^[\\u4e00-\\u9fa5_a-zA-Z0-9]+$";
 			if (eqName == null || eqName.trim().length() == 0) {
 				errorMsgs.put("eqName", "器材名稱: 請勿空白");
-			}
+			} 
+			
+//			else if (!eqName.trim().matches(eqNameReg)) {
+//				errorMsgs.put("eqName", "器材名稱: 只能是中文，英文字母、数字及_");
+//			}
 
 			Integer price = null;
 			try {
@@ -218,9 +223,16 @@ public class EquipmentServlet extends HttpServlet {
 				errorMsgs.put("price", "金額請填數字");
 			}
 
-			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
+//			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
+			
 			// 0:上架 1:未歸還器材 2:維修中 3:下架
-
+			Integer eqStatus = null;
+			try {
+				eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
+			}catch (NumberFormatException e) {
+				errorMsgs.put("eqStatus", "請選擇狀態");
+			}
+			
 			String introduction = req.getParameter("introduction");
 
 			String spec = req.getParameter("spec");
@@ -265,22 +277,28 @@ public class EquipmentServlet extends HttpServlet {
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("equipmentVO", equipmentVO);
-			String url = "/equipment/listOneEquipment.jsp";
+			String url = "/equipment/backOneEqpt.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
 
-		if ("insert".equals(action)) {
+		if ("insert".equals(action))
+
+		{
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 			String eqName = req.getParameter("eqName");
-
+//			String eqNameReg = "^[\\u4e00-\\u9fa5_a-zA-Z0-9]+$";
 			if (eqName == null || eqName.trim().length() == 0) {
 				errorMsgs.put("eqName", "器材名稱: 請勿空白");
-			}
+			} 
+			
+//			else if (!eqName.trim().matches(eqNameReg)) {
+//				errorMsgs.put("eqName", "器材名稱: 只能是中文，英文字母、数字及_");
+//			}
 
 			Integer price = null;
 			try {
@@ -289,8 +307,16 @@ public class EquipmentServlet extends HttpServlet {
 				errorMsgs.put("price", "金額請填數字");
 			}
 
-			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
+			
+//			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
+			
 			// 0:上架 3:下架
+			Integer eqStatus = null;
+			try {
+				eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
+			}catch (NumberFormatException e) {
+				errorMsgs.put("eqStatus", "請選擇狀態");
+			}
 
 			String introduction = req.getParameter("introduction");
 
@@ -352,7 +378,7 @@ public class EquipmentServlet extends HttpServlet {
 //			equipSvc.getLast().getEqId()
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/equipment/listAllEquipment.jsp";
+			String url = "/equipment/equipmentHome.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -369,7 +395,7 @@ public class EquipmentServlet extends HttpServlet {
 			equipSvc.deleteByEqId(equipmentId);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/equipment/listAllEquipment.jsp";
+			String url = "/equipment/equipmentHome.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
