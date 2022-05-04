@@ -5,7 +5,6 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import com.booking.model.BookingDAO;
 import com.booking.model.BookingDAO_interface;
 import com.booking.model.BookingService;
 import com.booking.model.BookingVO;
@@ -34,7 +33,7 @@ public class BookingServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			String str = req.getParameter("booking");
+			String str = req.getParameter("bookingId");
 			if (str == null || (str.trim()).length() == 0) {
 				errorMsgs.put("bookingId", "請輸入訂單編號");
 			}

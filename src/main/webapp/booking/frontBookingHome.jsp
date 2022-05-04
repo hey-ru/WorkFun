@@ -77,7 +77,7 @@ pageContext.setAttribute("list", list);
 							int itemsPerPage = 9;
 							%>
 							<%@ include file="/design/page1.file"%>
-							
+
 							<!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
 							<%-- 								<jsp:useBean id="secondHandSvc1" scope="page" --%>
 							<%-- 									class="com.secondHand.model.SecondHandService" /> --%>
@@ -99,17 +99,17 @@ pageContext.setAttribute("list", list);
 							<!-- 							<input type="submit" class="btn btn-primary mb-2 mt-1 col" -->
 							<!-- 								style="display: inline-block;" value="搜尋"></input> -->
 
-<!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
-<%-- 								<jsp:useBean id="secondHandSvc1" scope="page" --%>
-<%-- 									class="com.secondHand.model.SecondHandService" /> --%>
-<!-- 								<select class="form-control" id="exampleFormControlSelect1" -->
-<!-- 									style="border: gray solid 2px;" name="is_deal"> -->
-<!-- 									<option value="0">競標中</option> -->
-<!-- 									<option value="1">已成交</option> -->
-<!-- 									<option value="">顯示全部</option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-							
+							<!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
+							<%-- 								<jsp:useBean id="secondHandSvc1" scope="page" --%>
+							<%-- <%-- 									class="com.secondHand.model.SecondHandService" /> --%>
+							<!-- 								<select class="form-control" id="exampleFormControlSelect1" -->
+							<!-- <!-- 									style="border: gray solid 2px;" name="is_deal"> -->
+							<!-- <!-- 									<option value="0">競標中</option> -->
+							<!-- <!-- 									<option value="1">已成交</option> -->
+							<!-- <!-- 									<option value="">顯示全部</option> -->
+							<!-- <!-- 								</select> -->
+							<!-- <!-- 							</div> -->
+
 							<div class="form-group col-3" style="display: inline-block">
 								<input type="text" class="form-control"
 									id="exampleFormControlInput1" placeholder="輸入器材名稱"
@@ -117,7 +117,7 @@ pageContext.setAttribute("list", list);
 									value="${param.eqName}">
 							</div>
 							<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-							
+
 							<input type="hidden" name="action" value="listByCompositeQuery">
 							<input type="submit" class="btn btn-primary mb-2 mt-1 col"
 								style="display: inline-block;" value="搜尋"></input>
@@ -127,38 +127,45 @@ pageContext.setAttribute("list", list);
 
 				<div class="row portfolio-container" data-aos="fade-up"
 					data-aos-delay="200">
-					<c:forEach var="equipmentVO" items="${list}"
-						begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+					<c:forEach var="equipmentVO" items="${list}" begin="<%=pageIndex%>"
+						end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 							<div class="portfolio-wrap">
-								<%-- 下面是base64寫法 --%>
-								<%-- <img src="data:image/png;base64, ${secondHandVO.img1}" --%>
-								<%-- 上面是base64寫法 --%>
+								<div
+									style="color: white; padding: 5px; z-index: 99; background: rgba(0, 255, 204, 0.4); height: 50px; width: 300px;">
+									<h5>${equipmentVO.equipmentId}
+										<strong>${equipmentVO.eqName}</strong>
+									</h5>
+								</div>
 								<img
 									src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}
 									"
 									class="img-fluid"
 									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
-<!-- 								<div class="portfolio-info"> -->
-<%-- 									<h4>${secondHandVO.name}</h4> --%>
-<%-- 									<p>[競標截止時間 ${secondHandVO.end_time}]</p> --%>
-<!-- 									<div class="portfolio-links"> -->
-<!-- 										<FORM METHOD="post" -->
-<%-- 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" --%>
-<!-- 											style="margin-bottom: 0px;"> -->
-<%-- 											<c:if test="${empVO.empId == secondHandVO.saler}"> --%>
-<!-- 												<input type="submit" value="修改" class="submitbtn"> -->
-<%-- 											</c:if> --%>
-<%-- 											<c:if test="${empVO.empId != secondHandVO.saler}"> --%>
-<%-- 												<a href="<%=request.getContextPath()%>/bid/bidHome.jsp">參加競標</a> --%>
-<%-- 											</c:if> --%>
-<!-- 											<input type="hidden" name="second_hand_id" -->
-<%-- 												value="${secondHandVO.second_hand_id}"> <input --%>
-<!-- 												type="hidden" name="action" value="getOneForUpdate"> -->
-<!-- 										</FORM> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
+
+
+
+
+								<!-- 								<div class="portfolio-info"> -->
+								<%-- 									<h4>${secondHandVO.name}</h4> --%>
+								<%-- 									<p>[競標截止時間 ${secondHandVO.end_time}]</p> --%>
+								<!-- 									<div class="portfolio-links"> -->
+								<!-- 										<FORM METHOD="post" -->
+								<%-- 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" --%>
+								<!-- 											style="margin-bottom: 0px;"> -->
+								<%-- 											<c:if test="${empVO.empId == secondHandVO.saler}"> --%>
+								<!-- 												<input type="submit" value="修改" class="submitbtn"> -->
+								<%-- 											</c:if> --%>
+								<%-- 											<c:if test="${empVO.empId != secondHandVO.saler}"> --%>
+								<%-- 												<a href="<%=request.getContextPath()%>/bid/bidHome.jsp">參加競標</a> --%>
+								<%-- 											</c:if> --%>
+								<!-- 											<input type="hidden" name="second_hand_id" -->
+								<%-- 												value="${secondHandVO.second_hand_id}"> <input --%>
+								<!-- 												type="hidden" name="action" value="getOneForUpdate"> -->
+								<!-- 										</FORM> -->
+								<!-- 									</div> -->
+								<!-- 								</div> -->
 							</div>
 						</div>
 					</c:forEach>

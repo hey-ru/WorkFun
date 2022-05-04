@@ -38,7 +38,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 
 	// 員工更改已預約日期
 	private static final String UPDATE_DATE = "UPDATE booking set start_date=?,end_date=? where booking_id=?";
-
+	
 	@Override
 	public void insert(BookingVO bookingVO) {
 
@@ -217,8 +217,9 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	}
 
 	@Override
-	public BookingVO getByEmpId(Integer empId) {
+	public List<BookingVO> getByEmpId(Integer empId) {
 
+		List<BookingVO> list = new ArrayList<BookingVO>();
 		BookingVO bookingVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -273,7 +274,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 				}
 			}
 		}
-		return bookingVO;
+		return list;
 	}
 
 	@Override

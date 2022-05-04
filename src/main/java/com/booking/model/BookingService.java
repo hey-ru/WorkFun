@@ -58,4 +58,8 @@ public class BookingService {
 	public BookingVO getbyReturnStatus(Integer returnStatus) {
 		return dao.getbyReturnStatus(returnStatus);
 	}
+
+	public List<BookingVO> getByEmpId(Integer empId){
+		return dao.getByEmpId(empId);
+	}
 }
