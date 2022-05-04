@@ -52,7 +52,7 @@ public class ReportServlet extends HttpServlet{
 			/***************************2.開始查詢資料****************************************/
 			ReportService repSvc = new ReportService();
 			ReportVO repVO = repSvc.getOneReport(report_id);
-			
+			System.out.println(repVO.getReport_image());
 			/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				String url = "/report/listOneReport.jsp";
 				req.setAttribute("reportVO", repVO);
@@ -70,25 +70,28 @@ public class ReportServlet extends HttpServlet{
 	}
 	
 	  if ("insert".equals(action)) { // 來自addReport.jsp的請求  
-
+		  System.out.println("123");
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				Integer reporter = Integer.valueOf(req.getParameter("reporter").trim());
+				System.out.println(reporter);
 				Integer handler = Integer.valueOf(req.getParameter("handler").trim());
+				System.out.println(handler);
 				String content = req.getParameter("content");
-				String contentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_)]*$";
+				System.out.println(content);
+				String contentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
 				if (content == null || content.trim().length() == 0) {
 					errorMsgs.put("content","回報內容: 請勿空白");
 				} else if(!content.trim().matches(contentReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字");
+					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字! 不要加符號!!");
 	            }
-				Integer status = Integer.valueOf(req.getParameter("status").trim());
 				Integer report_type = Integer.valueOf(req.getParameter("report_type").trim());
 				
 				String title = req.getParameter("title");
+
 				String titleReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_)]*$";
 				if (title == null || title.trim().length() == 0) {
 					errorMsgs.put("title","標題: 請勿空白");
@@ -103,15 +106,21 @@ public class ReportServlet extends HttpServlet{
 					return;
 				}
 //				System.out.println(errorMsgs);
+				byte[] report_image = null;
 				/***************************2.開始新增資料***************************************/
 				ReportService repSvc= new ReportService();
 				Part part = req.getPart("report_image");
+				String filename1 = getFileNameFromPart(part);
+				if (filename1!= null && part.getContentType()!=null) {
+					report_image = getByteArrayFromPart(part);
+				}
 //				repSvc.addReport(reporter, handler, content,
 //						status, report_image, report_type , title);			
 //				for(Part part :parts) {					
-				byte[]report_image = repSvc.Image(part);
+//				report_image = repSvc.Image(part);
+				System.out.println(report_image);
 					ReportVO reportVO = repSvc.addReport(reporter,handler,content,
-							status,report_image,report_type ,title);
+							report_image,report_type ,title);
 //				}
 //				System.out.println(part);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
