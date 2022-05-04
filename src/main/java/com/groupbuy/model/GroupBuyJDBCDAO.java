@@ -24,6 +24,7 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuy where gb_id = ?";
 	private static final String GET_GBLIST_BYGB_ID_STMT = "SELECT * FROM groupbuylist WHERE gb_id = ?";
 	private static final String GET_NOW_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_status = 1 ORDER BY end_time";
+	private static final String GET_MY_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_owner=? ORDER BY gb_status";
 
 	@Override
 	public void insert(GroupBuyVO groupBuyVO) {
@@ -435,5 +436,77 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 //			System.out.println();
 //		}
 		
+		// 查詢我的團
+		List<GroupBuyVO> list = dao.getMyGBAll(1010);
+		for (GroupBuyVO aGroupBuy : list) {
+			System.out.println(aGroupBuy.toString());
+			System.out.println();
+		}
+		
 	}
+
+	@Override
+	public List<GroupBuyVO> getMyGBAll(Integer gb_owner) {
+		
+		List<GroupBuyVO> list = new ArrayList<GroupBuyVO>();
+		GroupBuyVO groupBuyVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_MY_ALL_STMT);
+			pstmt.setInt(1, gb_owner);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				groupBuyVO = new GroupBuyVO();
+				groupBuyVO.setGb_id(rs.getInt("gb_id"));
+				groupBuyVO.setShop_id(rs.getInt("shop_id"));
+				groupBuyVO.setShop_name(rs.getString("shop_name"));
+				groupBuyVO.setGb_owner(rs.getInt("gb_owner"));
+				groupBuyVO.setStart_time(rs.getTimestamp("start_time"));
+				groupBuyVO.setEnd_time(rs.getTimestamp("end_time"));
+				groupBuyVO.setArr_time(rs.getTimestamp("arr_time"));
+				groupBuyVO.setGb_status(rs.getInt("gb_status"));
+				groupBuyVO.setMin_amt(rs.getInt("min_amt"));
+				list.add(groupBuyVO);
+			}
+
+			// Handle any driver errors
+					} catch (ClassNotFoundException e) {
+						throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+						// Handle any SQL errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. " + se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (rs != null) {
+							try {
+								rs.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+					return list;
+				}
 }

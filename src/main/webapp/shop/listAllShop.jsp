@@ -57,7 +57,7 @@ int itemsPerPage = 10;
 							<div class="col-10" style="height: 60px; display: inline-block;">
 								<form class="my-1">
 									<div class="form-group col-2" style="display: inline-block;">
-										<select class="form-control" id="exampleFormControlSelect1"
+										<select class="form-select" id="exampleFormControlSelect1"
 											style="border: gray solid 2px;">
 											<option selected>選擇店家類型</option>
 											<option value="0">飲料</option>

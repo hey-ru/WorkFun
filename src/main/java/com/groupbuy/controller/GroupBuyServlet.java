@@ -27,6 +27,7 @@ public class GroupBuyServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		res.setContentType("text/html; charset=UTF-8");
+		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
 		//參團者加入揪團並新增修改刪除品項(加入菜單搜尋結果)
@@ -211,6 +212,7 @@ public class GroupBuyServlet extends HttpServlet {
 	
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
 				String shop_name = req.getParameter("shop_name");
+				System.out.println(shop_name);
 				Integer gb_owner = Integer.valueOf(req.getParameter("gb_owner").trim());
 				
 				Timestamp start_time = null;

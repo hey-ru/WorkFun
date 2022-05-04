@@ -1,5 +1,4 @@
 <%@page import="java.sql.Timestamp"%>
-<%@page import="org.hibernate.annotations.ParamDef"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
@@ -180,28 +179,28 @@ left:0;
 				<div class="row mb-3">
 					<label for="start_time" class="col-sm-2 col-form-label">開始時間</label>
 					<div class="col-sm-5">
-						<input name="start_time" id="start_time" type="text" class="form-control" value="${param.start_time}"/>
+						<input name="start_time" id="start_time" type="text" class="form-control" autocomplete="off" value="${param.start_time}"/>
 					</div>
 					<div class="col-sm-4">${errorMsgs.start_time}</div>
 				</div>
 				<div class="row mb-3">
 					<label for="end_time" class="col-sm-2 col-form-label">結束時間</label>
 					<div class="col-sm-5">
-						<input name="end_time" id="end_time" type="text" class="form-control" value="${param.end_time}"/>
+						<input name="end_time" id="end_time" type="text" class="form-control" autocomplete="off" value="${param.end_time}"/>
 					</div>
 					<div class="col-sm-4">${errorMsgs.end_time}</div>
 				</div>
 				<div class="row mb-3">
 					<label for="arr_time" class="col-sm-2 col-form-label">到貨時間</label>
 					<div class="col-sm-5">
-						<input name="arr_time" id="arr_time" type="text" class="form-control" value="${param.arr_time}"/>
+						<input name="arr_time" id="arr_time" type="text" class="form-control" autocomplete="off" value="${param.arr_time}"/>
 					</div>
 					<div class="col-sm-4">${errorMsgs.arr_time}</div>
 				</div>
 				<div class="row mb-3">
 				<label for="inputText" class="col-sm-2 col-form-label">低消</label>
 				<div class="col-sm-5">
-					<input type="text"  name="min_amt" class="form-control"value="${param.min_amt}"/>
+					<input type="text"  name="min_amt" class="form-control" autocomplete="off" value="${param.min_amt}"/>
 				</div>
 				<div class="col-sm-4">${errorMsgs.min_amt}</div>
 			</div>
@@ -228,30 +227,6 @@ left:0;
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
 	
-<%-- <%  --%>
-//   java.sql.Timestamp start_time = null;
-// try {
-// 	start_time = java.sql.Timestamp.valueOf(request.getParameter("start_time").trim());
-// } catch (Exception e) {
-// 	start_time = new java.sql.Timestamp(((long)(System.currentTimeMillis())/60000)*60000-((((long)(System.currentTimeMillis())/60000)*60000)%900000)+900000);
-// }
-<%-- %> --%>
-<%-- <%  --%>
-//   java.sql.Timestamp end_time = null;
-//   try {
-// 	    end_time = java.sql.Timestamp.valueOf(request.getParameter("end_time").trim());
-//    } catch (Exception e) {
-// 	    end_time = new java.sql.Timestamp(((long)(System.currentTimeMillis())/60000)*60000-((((long)(System.currentTimeMillis())/60000)*60000)%900000)+86400000);
-//    }
-<%-- %> --%>
-<%-- <%  --%>
-//   java.sql.Timestamp arr_time = null;
-//   try {
-// 	    arr_time = java.sql.Timestamp.valueOf(request.getParameter("arr_time").trim());
-//    } catch (Exception e) {
-// 	    arr_time = "";
-//    }
-<%-- %> --%>
 
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script

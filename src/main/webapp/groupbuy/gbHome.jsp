@@ -57,7 +57,7 @@ pageContext.setAttribute("list", list);
 								<div class="form-group col-2" style="display: inline-block;">
 									<jsp:useBean id="groupBuysvc1" scope="page"
 										class="com.groupbuy.model.GroupBuyService" />
-									<select class="form-control" id="exampleFormControlSelect1"
+									<select class="form-select" id="exampleFormControlSelect1"
 										style="border: gray solid 2px;" name="is_deal">
 										<option>選擇類型</option>
 										<option value="is_deal = 0">競標中</option>

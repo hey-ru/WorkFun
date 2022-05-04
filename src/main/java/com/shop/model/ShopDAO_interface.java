@@ -19,4 +19,6 @@ public interface ShopDAO_interface {
 	public List<ShopVO> getAll();
 	
 	public Set<MenuVO> getMenusByShopid(Integer shop_id);
+	
+	public void insertWithMenus(ShopVO shopVO , List<MenuVO> list);
 }
