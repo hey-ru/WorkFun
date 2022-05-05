@@ -5,9 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList");
-// Integer buyer = Integer.valueOf(request.getParameter("buyer"));
-// Integer buyer_name = Integer.valueOf(request.getParameter("buyer_name"));
+List<MenuVO> menuList = (List<MenuVO>) request.getAttribute("menuList");
 %>
 
 <html>
@@ -52,7 +50,7 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 							<div class="row">
 								<div class="col-sm-6">
 								
-								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/JoinGB">
+								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/addGBList">
 									<!-- Table with hoverable rows -->
 									<table class="table table-hover" style="text-align: center;">
 										<thead>
@@ -68,23 +66,22 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 										<c:forEach var="menu" items="${menuList}">
 
 											<tr>
-												<td><c:out value="${menu.menu_id}" /></td>
-												<td><c:out value="${menu.item}" /></td>
-												<td><c:out value="${menu.price}" /></td>
-												<!-- 	
-												<td><input type="text" name="qty" size="3" value=></td> -->
+												<td><input type="text" name="menu_id" value="${menu.menu_id}" readonly="readonly"/></td>
+												<td><input type="text" name="item" value="${menu.item}" readonly="readonly"/></td>
+												<td><input type="text" name="price" value="${menu.price}" readonly="readonly"/></td>
+												<td><input type="text" name="qty" value="${param.qty}" placeholder=0></td> 
 												<!-- 數量增減 -->
-												<td>
-													<div class="product-qty">
-														<button id="decrement">
-															<ion-icon name="remove-outline"></ion-icon>
-														</button>
-														<span ><input type="hidden" id="quantity" name="qty" size="15" value="$">0</span>
-														<button id="increment">
-															<ion-icon name="add-outline"></ion-icon>
-														</button>
-													</div>
-												</td>
+<!-- 												<td> -->
+<!-- 													<div class="product-qty"> -->
+<!-- 														<button id="decrement"> -->
+<!-- 															<ion-icon name="remove-outline"></ion-icon> -->
+<!-- 														</button> -->
+<!-- 														<span ><input type="hidden" id="quantity" name="qty" size="15" value="$">0</span> -->
+<!-- 														<button id="increment"> -->
+<!-- 															<ion-icon name="add-outline"></ion-icon> -->
+<!-- 														</button> -->
+<!-- 													</div> -->
+<!-- 												</td> -->
 												<td><input type="text" name="remark" size="15" value="${param.remark}"></td>
 											</tr>
 										</c:forEach>
@@ -95,7 +92,7 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 												<input type="text" name="menu_id" value="${menu.menu_id}">
 <%-- 														<input type="hidden" name="item" value="${menu.item}"> --%>
 <%-- 														<input type="hidden" name="price" value="${menu.price}"> --%>
-														<input type="hidden" name="action" value="insertAll">
+														<input type="hidden" name="action" value="insert2GBlist">
 														<input type="submit" class="btn btn-warning btn-sm" value="下單">
 									
 									</FORM>

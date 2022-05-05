@@ -13,6 +13,21 @@ public class GroupBuyListService {
 //		dao = new GroupBuyListDAO();//連線池
 	}
 
+	public GroupBuyListVO addGblist(Integer gb_id, Integer buyer, Integer menu_id, Integer qty, String remark) {
+
+		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+
+		groupBuyListVO.setGb_id(gb_id);
+		groupBuyListVO.setBuyer(buyer);
+		groupBuyListVO.setMenu_id(menu_id);
+		groupBuyListVO.setQty(qty);
+		groupBuyListVO.setRemark(remark);
+
+		dao.insertItem(groupBuyListVO);
+
+		return groupBuyListVO;
+	}
+	
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
 			Integer price, Integer qty, String remark) {
 

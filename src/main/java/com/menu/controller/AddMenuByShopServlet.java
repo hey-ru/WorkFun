@@ -29,6 +29,7 @@ public class AddMenuByShopServlet extends HttpServlet {
 		System.out.println(action);
 		
 		// 在該店家新增菜單
+		//join shop
 		if ("getShop_For_AddMenu".equals(action)) { // 來自listMenuByShop.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -71,7 +72,7 @@ public class AddMenuByShopServlet extends HttpServlet {
 				}
 				
 				// 店家編號FK shop_id
-				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
+				Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
 				System.out.println(shop_id);
 				
 				if (!errorMsgs.isEmpty()) {
