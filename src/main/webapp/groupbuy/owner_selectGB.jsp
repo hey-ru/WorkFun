@@ -1,17 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.groupbuy.model.*"%>
 <%@ page import="com.groupbuylist.model.*"%>
 
 <%
 //只能查詢個人參團紀錄
-Integer buyer = Integer.valueOf(request.getParameter("buyer"));
-GroupBuyListService gblistSvc = new GroupBuyListService();
-List<GroupBuyListVO> mygblist = gblistSvc.getMyGB(buyer);
-pageContext.setAttribute("mygblist", mygblist);
+Integer gb_owner = Integer.valueOf(request.getParameter("gb_owner"));
+GroupBuyService gbSvc = new GroupBuyService();
+List<GroupBuyVO> list = gbSvc.getMyGBAll(gb_owner);
+pageContext.setAttribute("list", list);
 
-int itemsPerPage = 10;
+int itemsPerPage = 6;
 %>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ int itemsPerPage = 10;
 					<div class="row">
 						<div class="col-11" style="height: 20px; display: inline-block;">
 							<h5>
-								<strong>查詢參團</strong>
+								<strong>查詢揪團</strong>
 							</h5>
 						</div>
 						<div class="col-1" style="height: 20px; display: inline-block;">
@@ -61,7 +61,7 @@ int itemsPerPage = 10;
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 50px;">參團編號</th>
+													style="width: 50px;">揪團編號</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
@@ -69,18 +69,6 @@ int itemsPerPage = 10;
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 50px;">總金額</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">付款狀態</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">取貨狀態</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
 													style="width: 50px;">開始時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
@@ -88,39 +76,61 @@ int itemsPerPage = 10;
 													style="width: 50px;">結束時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
+													aria-label="Office: activate to sort column ascending"
+													style="width: 50px;">到貨時間</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Office: activate to sort column ascending"
+													style="width: 50px;">低消限制</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;">團狀態</th>
+													style="width: 50px;">狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
 													style="width: 50px;"></th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;"></th>
+<!-- 												<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+<!-- 													rowspan="1" colspan="1" -->
+<!-- 													aria-label="Salary: activate to sort column ascending" -->
+<!-- 													style="width: 50px;"></th> -->
 											</tr>
 										</thead>
 
 
-										<%-- 										<%@ include file="/design/page1.file"%> --%>
+											<%@ include file="/design/page1.file"%>
 
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
-									<!-- 用groupbuylist取出 gbList_id,price,qty,is_pay,is_pickup -->
-											<c:forEach var="mygb" items="${mygblist}">
+											<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>"
+										end="<%=pageIndex+rowsPerPage-1%>">
 													<tr>
-														<td><c:out value="${mygb.gbList_id}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.shop_name}" /></td>
-														<td><c:out value="${mygb.price*mygb.qty}" /></td>
-														<td><c:out value="${mygb.is_pay}" /></td>
-														<td><c:out value="${mygb.is_pickup}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.start_time}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.end_time}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.gb_status}" /></td>
+														<td><c:out value="${groupBuyVO.gb_id}" /></td>
+														<td><c:out value="${groupBuyVO.shop_name}" /></td>
+														<td><c:out value="${groupBuyVO.start_time}" /></td>
+														<td><c:out value="${groupBuyVO.end_time}" /></td>
+														<td><c:out value="${groupBuyVO.arr_time}" /></td>
+														<td><c:out value="${groupBuyVO.min_amt}" /></td>
+														<td><c:choose>
+														    <c:when test="${groupBuyVO.gb_status == 0}">
+														       	揪團中
+														    </c:when>
+														    <c:when test="${groupBuyVO.gb_status == 1}">
+														       	取消
+														    </c:when>
+														    <c:when test="${groupBuyVO.gb_status == 2}">
+														       	揪團截止
+														    </c:when>
+														    <c:when test="${groupBuyVO.gb_status == 2}">
+														       	揪團關閉
+														    </c:when>
+														</c:choose>
+														</td>
+<%-- 														<td><c:out value="${groupBuyVO.gb_status}" /></td> --%>
 														<td><a href="buyer_3_updateGb.html"><button
-																	type="button" class="btn btn-success btn-sm">編輯</button></a></td>
-														<td><input type="submit"
-															class="btn btn-secondary btn-sm" value="退出"></td>
+																	type="button" class="btn btn-success btn-sm">詳細</button></a></td>
+<!-- 														<td><input type="submit" -->
+<!-- 															class="btn btn-secondary btn-sm" value="退出"></td> -->
 													</tr>
 													<!-- 揪團截止不能取消及編輯 -->
 												</c:forEach>
@@ -129,7 +139,7 @@ int itemsPerPage = 10;
 								</div>
 							</div>
 
-<%-- 							<%@ include file="/design/page2.file"%> --%>
+							<%@ include file="/groupbuy/page2.file"%>
 
 
 

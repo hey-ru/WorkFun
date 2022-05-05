@@ -23,7 +23,7 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 	private static final String UPDATE = "UPDATE groupbuy set shop_id=?, shop_name=?, gb_owner=?, start_time=?, end_time=?, arr_time=?, min_amt=? where gb_id = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuy where gb_id = ?";
 	private static final String GET_GBLIST_BYGB_ID_STMT = "SELECT * FROM groupbuylist WHERE gb_id = ?";
-	private static final String GET_NOW_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_status = 1 ORDER BY end_time";
+	private static final String GET_NOW_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_status = 0 ORDER BY end_time";
 	private static final String GET_MY_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_owner=? ORDER BY gb_status";
 
 	@Override
