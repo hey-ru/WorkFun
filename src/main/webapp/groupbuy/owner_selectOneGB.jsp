@@ -40,23 +40,24 @@
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
 
-							<div class="row">
-								<div class="col-sm-12">
+							
 								
-								<c:forEach var="GBbuyer" items="${GBbuyers}">
 								
-								<div>${GBbuyer.buyer}
-									${GBbuyer.buyer_name}
-									${GBbuyer.total}
-									${GBbuyer.is_pay== 0? '未付款':'已付款'}
-									${GBbuyer.is_pickup== 0? '未取貨':'已取貨'}
-								</div>
+						<c:forEach var="GBbuyer" items="${GBbuyers}">
+						<div class="card fw-bolder" >							
+							<div class="card-body" style="bg-secondary">
+								<div class="row">
+								<div class="card-title col-3">
+									<h5> ${GBbuyer.buyer} &nbsp;&nbsp;&nbsp; ${GBbuyer.buyer_name}</h5></div>
+									 
+									<div class="col-2">總金額: ${GBbuyer.total}</div>
+									<div class="col-2">付款狀況: ${GBbuyer.is_pay== 0? '未付款':'已付款'}</div>
+									<div class="col-2">取貨狀況: ${GBbuyer.is_pickup== 0? '未取貨':'已取貨'}</div>
+									</div>
 								
-								<%groupBuyListSvc.getMyGB(Integer.valueOf(requst.getParameter("GBbuyer.buyer"))); %>
 								
 									<table class="table table-bordered dataTable" id="dataTable"
-										width="100%" cellspacing="0" role="grid"
-										aria-describedby="dataTable_info" style="width: 100%">
+										 role="grid" aria-describedby="dataTable_info" style="width: 70% cellspacing:0;">
 										<!-- ========================= 表頭 ========================= -->
 										<thead>
 											<tr role=" row">
@@ -82,17 +83,23 @@
 
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
+										<c:forEach var="groupBuyListVO" items="${groupBuyListVOs}">
+										<c:if test="${(groupBuyListVO.buyer) == (GBbuyer.buyer)}">
 													<tr>
-														<td>${groupBuylistVO.item}</td>
-														<td>${groupBuylistVO.qty}</td>
-														<td>${groupBuylistVO.price}</td>
-														<td>${groupBuylistVO.remark}</td>
+														<td>${groupBuyListVO.item}</td>
+														<td>${groupBuyListVO.qty}</td>
+														<td>${groupBuyListVO.price}</td>
+														<td>${groupBuyListVO.remark}</td>
 													</tr>
+										</c:if>
+										</c:forEach>			
 										</tbody>
 									</table>
-									</c:forEach>
-								</div>
-							</div>
+									</div>
+								</div>									
+							</c:forEach>
+								
+							
 
 						</div>
 					</div>

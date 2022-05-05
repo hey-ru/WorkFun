@@ -9,8 +9,8 @@ public class GroupBuyListService {
 	private GroupBuyListDAO_interface dao;
 
 	public GroupBuyListService() {
-		dao = new GroupBuyListJDBCDAO();
-//		dao = new GroupBuyListDAO();//連線池
+		//dao = new GroupBuyListJDBCDAO();
+		dao = new GroupBuyListDAO();//連線池
 	}
 
 	public GroupBuyListVO addGblist(Integer gb_id, Integer buyer, Integer menu_id, Integer qty, String remark) {
