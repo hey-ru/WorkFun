@@ -2,7 +2,15 @@ package com.groupbuylist.model;
 
 import java.sql.Timestamp;
 
-import com.groupbuy.model.GroupBuyDAO_interface;
+import javax.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Entity
+@Setter
+@Getter
+
 
 public class GroupBuyListVO implements java.io.Serializable {
 	
@@ -140,6 +148,20 @@ public class GroupBuyListVO implements java.io.Serializable {
 	    com.groupbuy.model.GroupBuyService gbSvc = new com.groupbuy.model.GroupBuyService();
 	    com.groupbuy.model.GroupBuyVO groupBuyVO = gbSvc.getOneGB(gb_id);
 	    return groupBuyVO;
+    }
+    
+    // for join menu_id from menu
+    public com.menu.model.MenuVO menuVO() {
+	    com.menu.model.MenuService menuSvc = new com.menu.model.MenuService();
+	    com.menu.model.MenuVO menuVO = menuSvc.getOneMenuItem(menu_id);
+	    return menuVO;
+    }
+    
+    // for join empId from emp
+    public com.emp.model.EmpVO empVO() {
+	    com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+	    com.emp.model.EmpVO empVO = empSvc.getOneEmp(buyer);
+	    return empVO;
     }
 	
 }

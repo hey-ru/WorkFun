@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.groupbuylist.model.GroupBuyListService;
 import com.groupbuylist.model.GroupBuyListVO;
+import com.menu.model.MenuService;
+import com.menu.model.MenuVO;
 
 @WebServlet("/groupbuylist/addGBList")
 public class AddGBListServlet extends HttpServlet {
@@ -28,13 +30,22 @@ public class AddGBListServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		System.out.println(action);
 		
-		// 在該團選購品項下單
-		if ("insertAll".equals(action)) { // 來自buyer_joinGB.jsp的請求
+			
+		// 在該團GB下單,團,個人,菜單項目
+		//join gb_ID,empID, menu_id
+		if ("insert2GBlist".equals(action)) { // 來自buyer_joinGB.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				//數量
+				Integer qty = null;
+				try {
+					qty = Integer.valueOf(req.getParameter("qty").trim());
+				} catch (NumberFormatException e) {
+					errorMsgs.put("price", "價格請填數字");
+				}
 				//備註
 				String remark = req.getParameter("remark");
 				String remarkReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
@@ -44,23 +55,20 @@ public class AddGBListServlet extends HttpServlet {
 				
 				// 其他參數不須輸入格式的錯誤處理
 				//From groupbuyVO
-				Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
+		Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));//FK
 				//From empVO
-				Integer buyer = Integer.valueOf(req.getParameter("buyer"));
+		Integer buyer = Integer.valueOf(req.getParameter("buyer"));//FK
 //				String buyer_name = req.getParameter("buyer_name");
 				//From menu
-				Integer menu_id = Integer.valueOf(req.getParameter("menu_id"));
+		Integer menu_id = Integer.valueOf(req.getParameter("menu_id"));//FK
 //				String item = req.getParameter("item");
 //				Integer price = Integer.valueOf(req.getParameter("price"));
-				//點擊新增
-				Integer qty = Integer.valueOf(req.getParameter("qty"));
+				//點擊新增(未實現)
+//				Integer qty = Integer.valueOf(req.getParameter("qty"));
 				System.out.println("接收請求參數");
 				System.out.println("gb_id: " + gb_id);
 				System.out.println("buyer: " + buyer);
-//				System.out.println("buyer_name: " + buyer_name);
 				System.out.println("menu_id: " + menu_id);
-//				System.out.println("item: " + item);
-//				System.out.println("price: " + price);
 				System.out.println("qty: " + qty);
 				
 				if (!errorMsgs.isEmpty()) {
@@ -72,7 +80,8 @@ public class AddGBListServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 *****************************************/
 				GroupBuyListService gblistSvc = new GroupBuyListService();
-				GroupBuyListVO groupBuyListVO = gblistSvc.addGbItem(gb_id, buyer, buyer_name, menu_id, item, price, qty, remark);
+//				GroupBuyListVO groupBuyListVO = gblistSvc.addGbItem(gb_id, buyer, buyer_name, menu_id, item, price, qty, remark);
+				GroupBuyListVO groupBuyListVO = gblistSvc.addGblist(gb_id, buyer, menu_id, qty, remark);
 				System.out.println("新增的值: " + groupBuyListVO.toString());
 				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/

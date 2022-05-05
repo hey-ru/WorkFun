@@ -33,7 +33,7 @@ public class jdbcUtil_CompositeQuery {
 		StringBuffer whereCondition = new StringBuffer();
 		int count = 0;
 		for (String key : keys) {
-			String value = map.get(key)[0];
+			String value = map.get(key)[1];
 			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_myDB(key, value.trim());
@@ -54,20 +54,20 @@ public class jdbcUtil_CompositeQuery {
 
 		// 配合 req.getParameterMap()方法 回傳 java.util.Map<java.lang.String,java.lang.String[]> 之測試
 		Map<String, String[]> map = new TreeMap<String, String[]>();
-		map.put("gbList_id", new String[] { "10001" });
-		map.put("gb_id", new String[] { "1005" });
-		map.put("buyer", new String[] { "1029" });
-		map.put("buyer_name", new String[] { "胖叔叔" });
-		map.put("menu_id", new String[] { "1020" });
-		map.put("item", new String[] { "鴨肉麵" });
-		map.put("price", new String[] { "45" });
-		map.put("qty", new String[] { "2" });
-		map.put("total", new String[] { "100" });
-		map.put("remark", new String[] { "不" });
-		map.put("is_pay", new String[] { "0" });
-		map.put("is_pickup", new String[] { "0" });
-		map.put("gbList_upd", new String[] { "2022-05-01" });
-		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key
+		map.put("gbList_id", new String[] { "10001" ,"10003"});
+		map.put("gb_id", new String[] { "1005","1002" });
+		map.put("buyer", new String[] { "1029","1002"});
+		map.put("buyer_name", new String[] { "胖叔叔", "獅子丸" });
+//		map.put("menu_id", new String[] { "1020" });
+//		map.put("item", new String[] { "鴨肉麵" });
+//		map.put("price", new String[] { "45" });
+//		map.put("qty", new String[] { "2" });
+//		map.put("total", new String[] { "100" });
+//		map.put("remark", new String[] { "不" });
+//		map.put("is_pay", new String[] { "0" });
+//		map.put("is_pickup", new String[] { "0" });
+//		map.put("gbList_upd", new String[] { "2022-05-01" });
+		map.put("action", new String[] { "getXXX","getXXX" }); // 注意Map裡面會含有action的key
 
 		String finalSQL = "select * from groupbuylist "
 				          + jdbcUtil_CompositeQuery.get_WhereCondition(map)
