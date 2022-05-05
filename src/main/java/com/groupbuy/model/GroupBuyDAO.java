@@ -31,8 +31,7 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 	private static final String GET_GBLIST_BYGB_ID_STMT = "SELECT * FROM groupbuylist WHERE gb_id = ?";
 	private static final String GET_NOW_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_status = 0 ORDER BY end_time";
 	private static final String GET_MY_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_owner=? ORDER BY gb_status";
-	
-	
+	private static final String GET_BUYER_BYGB_ID_STMT = "SELECT buyer, buyer_name, sum(price*qty) AS total, is_pay, is_pickup FROM groupbuylist WHERE gb_id = ? GROUP BY buyer";
 	
 	@Override
 	public void insert(GroupBuyVO groupBuyVO) {
@@ -397,6 +396,62 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 				groupBuyListVO.setIs_pay(rs.getInt("is_pay"));
 				groupBuyListVO.setIs_pickup(rs.getInt("is_pickup"));
 				groupBuyListVO.setGbList_upd(rs.getTimestamp("gbList_upd"));
+				set.add(groupBuyListVO);
+			}
+
+			// Handle any driver errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. " + se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (rs != null) {
+							try {
+								rs.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+					return set;
+				}
+
+	
+	public Set<GroupBuyListVO> getBuyerBygbid(Integer gb_id) {
+		Set<GroupBuyListVO> set = new LinkedHashSet<GroupBuyListVO>();
+		GroupBuyListVO groupBuyListVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_BUYER_BYGB_ID_STMT);
+			pstmt.setInt(1, gb_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				groupBuyListVO = new GroupBuyListVO();
+				groupBuyListVO.setBuyer(rs.getInt("buyer"));
+				groupBuyListVO.setBuyer_name(rs.getString("buyer_name"));
+				groupBuyListVO.setTotal(rs.getInt("total"));
+				groupBuyListVO.setIs_pay(rs.getInt("is_pay"));
+				groupBuyListVO.setIs_pickup(rs.getInt("is_pickup"));
 				set.add(groupBuyListVO);
 			}
 
