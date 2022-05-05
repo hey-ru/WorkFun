@@ -16,7 +16,7 @@
                             <div class="dropdown-content">
                                 <a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"> 瀏覽揪團 </a>
                                 <a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">查詢店家</a>
-                                <a href="#">查詢揪團</a>
+                                <a href="<%=request.getContextPath()%>/groupbuy/owner_selectGB.jsp?gb_owner=${empVO.empId}">查詢揪團</a>
                                 <a href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp?buyer=${empVO.empId}">查詢參團</a>
                             </div>
                         </div>

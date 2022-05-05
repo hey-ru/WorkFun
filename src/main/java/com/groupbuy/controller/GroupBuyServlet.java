@@ -10,6 +10,8 @@ import javax.servlet.http.*;
 
 
 import com.groupbuy.model.*;
+import com.groupbuylist.model.GroupBuyListService;
+import com.groupbuylist.model.GroupBuyListVO;
 import com.menu.model.*;
 import com.shop.model.*;
 
@@ -65,42 +67,30 @@ public class GroupBuyServlet extends HttpServlet {
 		
 		
 		
-//		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
-//
+		if ("getOne_For_Display".equals(action)) { // 來自owner_selectGb.jsp的請求
+
 //			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 //			req.setAttribute("errorMsgs", errorMsgs);
-//			
-////			try {
-//				/***************************1.接收請求參數****************************************/
-//				Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
-//				
-//				/***************************2.開始查詢資料****************************************/
-//				GroupBuyService groupBuySvc = new GroupBuyService();
-//				GroupBuyVO groupBuyVO = groupBuySvc.getOneGB(gb_id);
-//								
-//				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-//				String param = "?gb_id="  +groupBuyVO.getGb_id()+
-//								"&shop_id=" +groupBuyVO.getShop_id()+
-//						       "&shop_name="  +groupBuyVO.getShop_name()+
-//						       "&gb_owner=" +groupBuyVO.getGb_owner()+
-//						       "&start_time="+groupBuyVO.getStart_time()+
-//						       "&end_time="    +groupBuyVO.getEnd_time()+
-//						       "&arr_time="   +groupBuyVO.getArr_time()+
-//						       "&gb_status=" +groupBuyVO.getGb_status()+
-//						       "&min_amt=" +groupBuyVO.getMin_amt();						       
-//										    
-//				String url = "/groupbuy/update_groupbuy_input.jsp"+param;
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
-//				successView.forward(req, res);
-//
-////				/***************************其他可能的錯誤處理**********************************/
-////			} catch (Exception e) {
-////				errorMsgs.put("Exception","無法取得要修改的資料:" + e.getMessage());
-////				RequestDispatcher failureView = req
-////						.getRequestDispatcher("/shop/listAllShop.jsp");
-////				failureView.forward(req, res);
-////			}
-//		}
+
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
+				
+				/***************************2.開始查詢資料*****************************************/
+				GroupBuyService groupBuySvc = new GroupBuyService();
+				GroupBuyVO groupBuyVO = groupBuySvc.getOneGB(gb_id);
+				Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);				
+				Set<GroupBuyListVO> groupBuyListVOs = groupBuySvc.getGroupBuyListBygbid(gb_id);
+				
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("groupBuyVO", groupBuyVO);
+				req.setAttribute("GBbuyers", GBbuyers);
+				req.setAttribute("groupBuyListVOs", groupBuyListVOs); 
+				String url = "/groupbuy/owner_selectOneGB.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+
+		}
 		
 		
 //		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求

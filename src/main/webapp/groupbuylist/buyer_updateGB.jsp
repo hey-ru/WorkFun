@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-List<MenuVO> menuList = (List<MenuVO>) request.getAttribute("menuList");
+ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList");
 %>
 
 <html>
@@ -49,8 +49,6 @@ List<MenuVO> menuList = (List<MenuVO>) request.getAttribute("menuList");
 
 							<div class="row">
 								<div class="col-sm-6">
-								
-								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/addGBList">
 									<!-- Table with hoverable rows -->
 									<table class="table table-hover" style="text-align: center;">
 										<thead>
@@ -66,42 +64,60 @@ List<MenuVO> menuList = (List<MenuVO>) request.getAttribute("menuList");
 										<c:forEach var="menu" items="${menuList}">
 
 											<tr>
-												<td><input type="text" name="menu_id" value="${menu.menu_id}" readonly="readonly"/></td>
-												<td><input type="text" name="item" value="${menu.item}" readonly="readonly"/></td>
-												<td><input type="text" name="price" value="${menu.price}" readonly="readonly"/></td>
-												<td><input type="text" name="qty" value="${param.qty}" placeholder=0></td> 
+												<td><c:out value="${menu.menu_id}" /></td>
+												<td><c:out value="${menu.item}" /></td>
+												<td><c:out value="${menu.price}" /></td>
+												<!-- 	
+												<td><input type="text" name="qty" size="3" value=></td> -->
 												<!-- 數量增減 -->
+												<td>
+													<div class="product-qty">
+														<button id="decrement">
+															<ion-icon name="remove-outline"></ion-icon>
+														</button>
+														<span id="quantity">0</span>
+														<button id="increment">
+															<ion-icon name="add-outline"></ion-icon>
+														</button>
+													</div>
+												</td>
+
+
+												<td><input type="text" name="remark" size="15" value=></td>
+
+												
+												<!-- 編輯品項 -->
 <!-- 												<td> -->
-<!-- 													<div class="product-qty"> -->
-<!-- 														<button id="decrement"> -->
-<!-- 															<ion-icon name="remove-outline"></ion-icon> -->
-<!-- 														</button> -->
-<!-- 														<span ><input type="hidden" id="quantity" name="qty" size="15" value="$">0</span> -->
-<!-- 														<button id="increment"> -->
-<!-- 															<ion-icon name="add-outline"></ion-icon> -->
-<!-- 														</button> -->
-<!-- 													</div> -->
+<!-- 													<FORM METHOD="post" -->
+<%-- 														ACTION="<%=request.getContextPath()%>/groupbuylist/JoinGB"> --%>
+<!-- 														<input type="submit" class="btn btn-success btn-sm" -->
+<!-- 															value="編輯"> <input type="hidden" name="gblist_id" -->
+<%-- 															value="${groupbuylist.gblist_id}"> <input --%>
+<!-- 															type="hidden" name="action" value="updateitem"> -->
+<!-- 													</FORM> -->
 <!-- 												</td> -->
-												<td><input type="text" name="remark" size="15" value="${param.remark}"></td>
+												<!-- 刪除品項 -->
+<!-- 												<td> -->
+<!-- 													<FORM METHOD="post" -->
+<%-- 														ACTION="<%=request.getContextPath()%>/groupbuylist/joinGB"> --%>
+<!-- 														<input type="submit" class="btn btn-secondary btn-sm" -->
+<!-- 															value="移除"> <input type="hidden" name="gblist_id" -->
+<%-- 															value="${groupbuylist.gblist_id}"> <input --%>
+<!-- 															type="hidden" name="action" value="deleteitem"> -->
+<!-- 													</FORM> -->
+<!-- 												</td> -->
 											</tr>
 										</c:forEach>
 									</table>
-												<input type="text" name="gb_id" value="${param.gb_id}">
-												<input type="text" name="buyer" value="${empVO.empId}">
-<%-- 														<input type="hidden" name="buyer_name" value="${empVO.empName}"> --%>
-												<input type="text" name="menu_id" value="${menu.menu_id}">
-<%-- 														<input type="hidden" name="item" value="${menu.item}"> --%>
-<%-- 														<input type="hidden" name="price" value="${menu.price}"> --%>
-														<input type="hidden" name="action" value="insert2GBlist">
-														<input type="submit" class="btn btn-warning btn-sm" value="下單">
-									
-									</FORM>
-									
 								<div class="row">
 								<div class="col-sm-2">
 								<!-- 加入品項 -->
-													
-													
+													<FORM METHOD="post"
+														ACTION="<%=request.getContextPath()%>/groupbuylist/JoinGB">
+														<input type="submit" class="btn btn-warning btn-sm" value="下單">
+														<input type="hidden" name="gblist_id" value="${groupbuylist.gblist_id}"> 
+														<input type="hidden" name="action" value="insertAll">
+													</FORM>
 								
 								</div>
 								</div>

@@ -2,6 +2,8 @@ package com.groupbuy.model;
 
 import java.sql.Timestamp;
 
+import com.groupbuylist.model.GroupBuyListService;
+import com.groupbuylist.model.GroupBuyListVO;
 import com.shop.model.*;
 
 public class GroupBuyVO implements java.io.Serializable {
@@ -86,7 +88,5 @@ public class GroupBuyVO implements java.io.Serializable {
 		ShopVO shopVO = shopSvc.getOneShop(shop_id);
 		return shopVO;
 	}
-
-
 
 }
