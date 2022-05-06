@@ -38,7 +38,8 @@ import com.emp.model.EmpVO;
 				"/groupbuylist/*",
 				"/emp/*",
 				"/home/*",
-				"/secondhand/*"
+				"/secondhand/*",
+				"/bid/*"
 				
 		})
 public class LoginFilter extends HttpFilter implements Filter {
