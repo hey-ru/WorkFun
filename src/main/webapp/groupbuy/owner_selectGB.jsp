@@ -15,7 +15,7 @@ int itemsPerPage = 6;
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
 
@@ -127,8 +127,14 @@ int itemsPerPage = 6;
 														</c:choose>
 														</td>
 <%-- 														<td><c:out value="${groupBuyVO.gb_status}" /></td> --%>
-														<td><a href="buyer_3_updateGb.html"><button
-																	type="button" class="btn btn-success btn-sm">詳細</button></a></td>
+														<td>
+														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet"
+																style="margin-bottom: 0px;">
+														<input type="submit" class="btn-info" value="詳細" style="margin-bottom: 0px;"> 
+														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
+														<input type="hidden" name="action" value="getOne_For_Display">										
+													</FORM>															
+														</td>
 <!-- 														<td><input type="submit" -->
 <!-- 															class="btn btn-secondary btn-sm" value="退出"></td> -->
 													</tr>

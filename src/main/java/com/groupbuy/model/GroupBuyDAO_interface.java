@@ -14,5 +14,6 @@ public interface GroupBuyDAO_interface {
      public List<GroupBuyVO> getMyGBAll(Integer gb_owner);
      public List<GroupBuyVO> getNowAll();
      public Set<GroupBuyListVO> getGBListBygbid(Integer gb_id);
+     public Set<GroupBuyListVO> getBuyerBygbid(Integer gb_id);
      
 }

@@ -13,8 +13,8 @@ public class GroupBuyListService {
 	private GroupBuyListDAO_interface dao;
 
 	public GroupBuyListService() {
-		dao = new GroupBuyListJDBCDAO();
-//		dao = new GroupBuyListDAO();//連線池
+		//dao = new GroupBuyListJDBCDAO();
+		dao = new GroupBuyListDAO();//連線池
 	}
 
 	public List<GroupBuyListVO> insertAll(Map<String, String[]> map){

@@ -1,7 +1,9 @@
 package com.groupbuy.model;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.*;
+
+import com.groupbuylist.model.GroupBuyListVO;
 
 
 public class GroupBuyService {
@@ -61,5 +63,14 @@ public class GroupBuyService {
 	
 	public List<GroupBuyVO> getMyGBAll(Integer gb_owner) {
 		return dao.getMyGBAll(gb_owner);
+	}
+	
+	public Set<GroupBuyListVO> getGroupBuyListBygbid(Integer gb_id) {
+		return dao.getGBListBygbid(gb_id);
+	}
+	
+	
+	public  Set<GroupBuyListVO> getBuyerBygbid(Integer gb_id) {
+		return dao.getBuyerBygbid(gb_id);
 	}
 }

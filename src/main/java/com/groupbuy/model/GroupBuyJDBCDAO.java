@@ -25,7 +25,68 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 	private static final String GET_GBLIST_BYGB_ID_STMT = "SELECT * FROM groupbuylist WHERE gb_id = ?";
 	private static final String GET_NOW_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_status = 0 ORDER BY end_time";
 	private static final String GET_MY_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_owner=? ORDER BY gb_status";
+	private static final String GET_BUYER_BYGB_ID_STMT = "SELECT buyer, buyer_name, sum(price*qty) AS total, is_pay, is_pickup FROM groupbuylist WHERE gb_id = ? GROUP BY buyer";
+	
+	@Override
+	public Set<GroupBuyListVO> getBuyerBygbid(Integer gb_id) {
+		Set<GroupBuyListVO> set = new LinkedHashSet<GroupBuyListVO>();
+		GroupBuyListVO groupBuyListVO = null;
 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_BUYER_BYGB_ID_STMT);
+			pstmt.setInt(1, gb_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				groupBuyListVO = new GroupBuyListVO();
+				groupBuyListVO.setBuyer(rs.getInt("buyer"));
+				groupBuyListVO.setBuyer_name(rs.getString("buyer_name"));
+				groupBuyListVO.setTotal(rs.getInt("total"));
+				groupBuyListVO.setIs_pay(rs.getInt("is_pay"));
+				groupBuyListVO.setIs_pickup(rs.getInt("is_pickup"));
+				set.add(groupBuyListVO);
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
+	
+	
 	@Override
 	public void insert(GroupBuyVO groupBuyVO) {
 
@@ -318,6 +379,71 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 
 
 	@Override
+	public List<GroupBuyVO> getMyGBAll(Integer gb_owner) {
+		
+		List<GroupBuyVO> list = new ArrayList<GroupBuyVO>();
+		GroupBuyVO groupBuyVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_MY_ALL_STMT);
+			pstmt.setInt(1, gb_owner);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				groupBuyVO = new GroupBuyVO();
+				groupBuyVO.setGb_id(rs.getInt("gb_id"));
+				groupBuyVO.setShop_id(rs.getInt("shop_id"));
+				groupBuyVO.setShop_name(rs.getString("shop_name"));
+				groupBuyVO.setGb_owner(rs.getInt("gb_owner"));
+				groupBuyVO.setStart_time(rs.getTimestamp("start_time"));
+				groupBuyVO.setEnd_time(rs.getTimestamp("end_time"));
+				groupBuyVO.setArr_time(rs.getTimestamp("arr_time"));
+				groupBuyVO.setGb_status(rs.getInt("gb_status"));
+				groupBuyVO.setMin_amt(rs.getInt("min_amt"));
+				list.add(groupBuyVO);
+			}
+
+			// Handle any driver errors
+					} catch (ClassNotFoundException e) {
+						throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+						// Handle any SQL errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. " + se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (rs != null) {
+							try {
+								rs.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+					return list;
+				}
+	
+	@Override
 	public Set<GroupBuyListVO> getGBListBygbid(Integer gb_id) {
 		Set<GroupBuyListVO> set = new LinkedHashSet<GroupBuyListVO>();
 		GroupBuyListVO groupBuyListVO = null;
@@ -387,17 +513,24 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 	public static void main(String[] args) throws IOException {
 
 		GroupBuyJDBCDAO dao = new GroupBuyJDBCDAO();
+		
+		// 查詢參團資訊
+		Set<GroupBuyListVO> set = dao.getBuyerBygbid(1001);
+		for (GroupBuyListVO aGroupBuyList : set) {
+			System.out.println(aGroupBuyList.toString());
+			System.out.println();
+	}
 
 		// 新增
-		GroupBuyVO groupBuyVO1 = new GroupBuyVO();
-		groupBuyVO1.setShop_id(107);
-		groupBuyVO1.setShop_name("可不可熟成紅茶-中壢中山店");
-		groupBuyVO1.setGb_owner(1001);
-		groupBuyVO1.setStart_time(new Timestamp(System.currentTimeMillis()));
-		groupBuyVO1.setEnd_time(Timestamp.valueOf("2022-05-20 11:00:00.0"));
-		groupBuyVO1.setArr_time(Timestamp.valueOf("2022-05-30 13:00:00.0"));
-		groupBuyVO1.setMin_amt(0);
-		dao.insert(groupBuyVO1);
+//		GroupBuyVO groupBuyVO1 = new GroupBuyVO();
+//		groupBuyVO1.setShop_id(107);
+//		groupBuyVO1.setShop_name("可不可熟成紅茶-中壢中山店");
+//		groupBuyVO1.setGb_owner(1001);
+//		groupBuyVO1.setStart_time(new Timestamp(System.currentTimeMillis()));
+//		groupBuyVO1.setEnd_time(Timestamp.valueOf("2022-05-20 11:00:00.0"));
+//		groupBuyVO1.setArr_time(Timestamp.valueOf("2022-05-30 13:00:00.0"));
+//		groupBuyVO1.setMin_amt(0);
+//		dao.insert(groupBuyVO1);
 
 		// 修改
 //		GroupBuyVO groupBuyVO2 = new GroupBuyVO();
@@ -437,76 +570,13 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 //		}
 		
 		// 查詢我的團
-		List<GroupBuyVO> list = dao.getMyGBAll(1010);
-		for (GroupBuyVO aGroupBuy : list) {
-			System.out.println(aGroupBuy.toString());
-			System.out.println();
-		}
+//		List<GroupBuyVO> list = dao.getMyGBAll(1010);
+//		for (GroupBuyVO aGroupBuy : list) {
+//			System.out.println(aGroupBuy.toString());
+//			System.out.println();
+//		}
 		
 	}
 
-	@Override
-	public List<GroupBuyVO> getMyGBAll(Integer gb_owner) {
-		
-		List<GroupBuyVO> list = new ArrayList<GroupBuyVO>();
-		GroupBuyVO groupBuyVO = null;
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_MY_ALL_STMT);
-			pstmt.setInt(1, gb_owner);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				groupBuyVO = new GroupBuyVO();
-				groupBuyVO.setGb_id(rs.getInt("gb_id"));
-				groupBuyVO.setShop_id(rs.getInt("shop_id"));
-				groupBuyVO.setShop_name(rs.getString("shop_name"));
-				groupBuyVO.setGb_owner(rs.getInt("gb_owner"));
-				groupBuyVO.setStart_time(rs.getTimestamp("start_time"));
-				groupBuyVO.setEnd_time(rs.getTimestamp("end_time"));
-				groupBuyVO.setArr_time(rs.getTimestamp("arr_time"));
-				groupBuyVO.setGb_status(rs.getInt("gb_status"));
-				groupBuyVO.setMin_amt(rs.getInt("min_amt"));
-				list.add(groupBuyVO);
-			}
-
-			// Handle any driver errors
-					} catch (ClassNotFoundException e) {
-						throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-						// Handle any SQL errors
-					} catch (SQLException se) {
-						throw new RuntimeException("A database error occured. " + se.getMessage());
-						// Clean up JDBC resources
-					} finally {
-						if (rs != null) {
-							try {
-								rs.close();
-							} catch (SQLException se) {
-								se.printStackTrace(System.err);
-							}
-						}
-						if (pstmt != null) {
-							try {
-								pstmt.close();
-							} catch (SQLException se) {
-								se.printStackTrace(System.err);
-							}
-						}
-						if (con != null) {
-							try {
-								con.close();
-							} catch (Exception e) {
-								e.printStackTrace(System.err);
-							}
-						}
-					}
-					return list;
-				}
+	
 }
