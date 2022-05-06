@@ -327,7 +327,6 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		return groupBuyListVO;
 	}
 
-	//萬用查詢
 	//萬用複合查詢
 	@Override
 	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
