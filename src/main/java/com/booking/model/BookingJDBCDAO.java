@@ -119,7 +119,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 			count++;
 			pstmt.setInt(count, newbooking.getBookingId());
 			pstmt.executeUpdate();
-			System.out.println(count);
+//			System.out.println(count);
 
 			// Handle any driver errors
 
@@ -519,11 +519,11 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 //		System.out.println(bookingVO5.toString());
 
 		// 修改 串接英雄
-		BookingVO bookingVO6 = new BookingVO();
-		bookingVO6.setBookingId(1001);
-
-		bookingVO6.setReturnStatus(3);
-		dao.updateReturnStatus(bookingVO6);
+//		BookingVO bookingVO6 = new BookingVO();
+//		bookingVO6.setBookingId(1001);
+//
+//		bookingVO6.setReturnStatus(3);
+//		dao.updateReturnStatus(bookingVO6);
 
 	}
 }

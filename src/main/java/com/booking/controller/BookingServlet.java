@@ -15,9 +15,6 @@ import com.equipment.model.EquipmentVO;
 @WebServlet("/booking/booking.do")
 public class BookingServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -182,19 +179,16 @@ public class BookingServlet extends HttpServlet {
 		}
 
 		if ("updateReturnStatus".equals(action)) {
+			System.out.println("111111111");
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer bookingId = Integer.valueOf(req.getParameter("bookingId").trim());
-			System.out.println(bookingId);
+			System.out.println("bookingId= "+bookingId);
 
-			Integer returnStatus = null;
-			try {
-				returnStatus = Integer.valueOf(req.getParameter("returnStatus").trim());
-			} catch (NumberFormatException e) {
-				errorMsgs.put("returnStatus", "123");
-			}
+			Integer returnStatus = Integer.valueOf(req.getParameter("returnStatus").trim());
+			System.out.println("returnStatus= "+returnStatus);
 			
 			/*************************** 2.開始修改資料 *****************************************/
 			BookingService bookingSvc = new BookingService();

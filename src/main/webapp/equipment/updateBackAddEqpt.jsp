@@ -173,8 +173,8 @@
 								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label"></label>
 									<div class="col-sm-10">
-										<input type="hidden" name="action" value="update"><input
-											type="submit" class="btn btn-primary" value="送出修改">
+										<input type="hidden" name="action" value="update">
+										<input type="submit" class="btn btn-primary" value="送出修改">
 									</div>
 								</div>
 							</form>
