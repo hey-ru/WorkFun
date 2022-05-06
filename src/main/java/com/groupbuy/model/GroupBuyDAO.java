@@ -26,7 +26,7 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO groupbuy (shop_id,shop_name,gb_owner,start_time,end_time,arr_time,min_amt) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM groupbuy order by gb_id";
-	private static final String UPDATE = "UPDATE groupbuy set shop_id=?, shop_name=?, gb_owner=?, start_time=?, end_time=?, arr_time=?, min_amt=? where gb_id = ?";
+	private static final String UPDATEARRTIME = "UPDATE groupbuy set arr_time=? where gb_id = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuy where gb_id = ?";
 	private static final String GET_GBLIST_BYGB_ID_STMT = "SELECT * FROM groupbuylist WHERE gb_id = ?";
 	private static final String GET_NOW_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_status = 0 ORDER BY end_time";
@@ -82,23 +82,17 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 	}
 
 	@Override
-	public void update(GroupBuyVO groupBuyVO) {
+	public void updateArrTime(GroupBuyVO groupBuyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
+			pstmt = con.prepareStatement(UPDATEARRTIME);
 
-			pstmt.setInt(1, groupBuyVO.getShop_id());
-			pstmt.setString(2, groupBuyVO.getShop_name());
-			pstmt.setInt(3, groupBuyVO.getGb_owner());
-			pstmt.setTimestamp(4, groupBuyVO.getStart_time());
-			pstmt.setTimestamp(5, groupBuyVO.getEnd_time());
-			pstmt.setTimestamp(6, groupBuyVO.getArr_time());
-			pstmt.setInt(7, groupBuyVO.getMin_amt());
-			pstmt.setInt(8, groupBuyVO.getGb_id());
+			pstmt.setTimestamp(1, groupBuyVO.getArr_time());
+			pstmt.setInt(2, groupBuyVO.getGb_id());
 
 			pstmt.executeUpdate();
 

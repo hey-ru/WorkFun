@@ -92,6 +92,46 @@ public class GroupBuyServlet extends HttpServlet {
 
 		}
 		
+		if ("updateArrTime".equals(action)) { // 來自owner_selectOneGB.jsp的請求
+			
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+
+			/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+			
+			Integer gb_id = Integer.valueOf(req.getParameter("gb_id").trim());
+			Timestamp end_time = Timestamp.valueOf(req.getParameter("end_time"));;
+			Timestamp arr_time = null;
+			try {
+				arr_time = Timestamp.valueOf(req.getParameter("arr_time"));
+				if(arr_time.compareTo(end_time)<=0) {
+					arr_time = null;
+					errorMsgs.put("arr_time","請再確認到貨時間必須晚於截止時間!");
+				}
+			} catch (IllegalArgumentException e) {
+				arr_time = null;
+			}
+			
+			
+			/***************************2.開始修改資料*****************************************/
+			GroupBuyService groupBuySvc = new GroupBuyService();
+			groupBuySvc.updateArrTime(gb_id, arr_time);
+			System.out.println("修改完成");
+			GroupBuyVO groupBuyVO = groupBuySvc.getOneGB(gb_id);
+			Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);				
+			Set<GroupBuyListVO> groupBuyListVOs = groupBuySvc.getGroupBuyListBygbid(gb_id);
+			System.out.println("123");
+			/***************************3.修改完成,準備轉交(Send the Success view)*************/
+			req.setAttribute("groupBuyVO", groupBuyVO);
+			req.setAttribute("GBbuyers", GBbuyers);
+			req.setAttribute("groupBuyListVOs", groupBuyListVOs); 
+			String url = "/groupbuy/owner_selectOneGB.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+			successView.forward(req, res);
+
+	}
+		
 		
 		if ("updatePayPickUp".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 		
@@ -109,12 +149,11 @@ public class GroupBuyServlet extends HttpServlet {
 				/***************************2.開始修改資料*****************************************/
 				GroupBuyListService groupBuyListSvc = new GroupBuyListService();
 				groupBuyListSvc.updatePayPickUP(gb_id, buyer, is_pay, is_pickup);
-				System.out.println("修改完成");
 				GroupBuyService groupBuySvc = new GroupBuyService();
 				GroupBuyVO groupBuyVO = groupBuySvc.getOneGB(gb_id);
 				Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);				
 				Set<GroupBuyListVO> groupBuyListVOs = groupBuySvc.getGroupBuyListBygbid(gb_id);
-				System.out.println("123");
+
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("groupBuyVO", groupBuyVO);
 				req.setAttribute("GBbuyers", GBbuyers);
@@ -248,25 +287,6 @@ public class GroupBuyServlet extends HttpServlet {
 //			}
 //		}
 	
-	}
-
-	
-	public String getFileNameFromPart(Part part) {
-		String header = part.getHeader("content-disposition");
-		//System.out.println("header=" + header); // 測試用
-		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-		//System.out.println("filename=" + filename); // 測試用
-		if (filename.length() == 0) {
-			return null;
-		}
-		return filename;
-	}
-	public static byte[] getByteArrayFromPart(Part part) throws IOException {
-		InputStream in = part.getInputStream();
-		byte[] buffer = new byte[in.available()];
-		in.read(buffer);
-		in.close();
-		return buffer;
 	}
 
 }

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.List"%>
 <%@ page import="com.groupbuy.model.*"%>
 <%@ page import="com.groupbuylist.model.*"%>
@@ -11,13 +12,18 @@ GroupBuyService gbSvc = new GroupBuyService();
 List<GroupBuyVO> list = gbSvc.getMyGBAll(gb_owner);
 pageContext.setAttribute("list", list);
 
-int itemsPerPage = 6;
+int itemsPerPage = 10;
 %>
 
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
+    <style>
+        .table-responsive {
+    	overflow-x: hidden;
+	}
+    </style>
 
 </head>
 
@@ -105,12 +111,15 @@ int itemsPerPage = 6;
 											<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>"
 										end="<%=pageIndex+rowsPerPage-1%>">
 													<tr>
-														<td><c:out value="${groupBuyVO.gb_id}" /></td>
-														<td><c:out value="${groupBuyVO.shop_name}" /></td>
-														<td><c:out value="${groupBuyVO.start_time}" /></td>
-														<td><c:out value="${groupBuyVO.end_time}" /></td>
-														<td><c:out value="${groupBuyVO.arr_time}" /></td>
-														<td><c:out value="${groupBuyVO.min_amt}" /></td>
+														<td>${groupBuyVO.gb_id}</td>
+														<td>${groupBuyVO.shop_name}</td>
+														<td><fmt:formatDate value="${groupBuyVO.start_time}" pattern="yyyy-MM-dd HH:mm"/>
+														</td>
+														<td><fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/>
+														</td>
+														<td><fmt:formatDate value="${groupBuyVO.arr_time}" pattern="yyyy-MM-dd HH:mm"/>
+														</td>
+														<td>${groupBuyVO.min_amt}</td>
 														<td><c:choose>
 														    <c:when test="${groupBuyVO.gb_status == 0}">
 														       	揪團中
@@ -126,19 +135,26 @@ int itemsPerPage = 6;
 														    </c:when>
 														</c:choose>
 														</td>
-<%-- 														<td><c:out value="${groupBuyVO.gb_status}" /></td> --%>
+<!-- 														<td> -->
+<%-- 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" --%>
+<!-- 																style="margin-bottom: 0px;"> -->
+<!-- 														<input type="submit" class="btn-info" value="修改到貨時間" style="margin-bottom: 0px;">  -->
+<%-- 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}"> --%>
+<%-- 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}"> --%>
+<!-- 														<input type="hidden" name="action" value="getOne_For_Display">										 -->
+<!-- 														</FORM>	 -->
+<!-- 														</td> -->
 														<td>
 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet"
 																style="margin-bottom: 0px;">
 														<input type="submit" class="btn-info" value="詳細" style="margin-bottom: 0px;"> 
 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 														<input type="hidden" name="action" value="getOne_For_Display">										
-													</FORM>															
+														</FORM>															
 														</td>
-<!-- 														<td><input type="submit" -->
-<!-- 															class="btn btn-secondary btn-sm" value="退出"></td> -->
+
 													</tr>
-													<!-- 揪團截止不能取消及編輯 -->
+
 												</c:forEach>
 										</tbody>
 									</table>
@@ -161,6 +177,9 @@ int itemsPerPage = 6;
 	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+
 </body>
+
 
 </html>

@@ -179,7 +179,7 @@ left:0;
 				<div class="row mb-3">
 					<label for="start_time" class="col-sm-2 col-form-label">開始時間</label>
 					<div class="col-sm-5">
-						<input name="start_time" id="start_time" type="text" class="form-control" autocomplete="off" value="${param.start_time}"/>
+						<input name="start_time" id="start_time" type="text" class="form-control-plaintext" readonly autocomplete="off" value="${param.start_time}"/>
 					</div>
 					<div class="col-sm-4">${errorMsgs.start_time}</div>
 				</div>
@@ -239,7 +239,7 @@ left:0;
 	       timepicker:true,       //timepicker:true,
 	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
-		   //value: '${start_time}',   // value:   new Date(),
+		   value:   new Date(),
 		   onShow:function(){
 			   this.setOptions({
 				minDate:0,

@@ -8,6 +8,18 @@
 <html lang="zh-TW">
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+
+<style>
+
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
 
 </head>
 
@@ -39,8 +51,23 @@
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
 
+						<FORM METHOD="post" style="padding:0px 20px;margin-bottom:30px;" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
+						<h4> ${groupBuyVO.gb_id} &nbsp;&nbsp;&nbsp; ${groupBuyVO.shop_name}</h4>
+						
+							<div class="row mb-3">
+							<label for="arr_time" class="col-sm-1 col-form-label">到貨時間:</label>
+							<div class="col-sm-5">
+								<input name="arr_time" id="arr_time" type="text" class="form-control-plaintext" style="width:250px; border:1px solid gray; display:inline-block;" autocomplete="off" value="${groupBuyVO.arr_time}"/>
+								<input type="submit" value="送出修改到貨時間" style="display:inline-block;margin-left:30px;">
+							</div>
+							</div>
 							
-						<h4> ${groupBuyVO.gb_id} &nbsp;&nbsp;&nbsp; ${groupBuyVO.shop_name}</h4>		
+							<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
+							<input type="hidden" name="end_time" value="${groupBuyVO.end_time}">
+							<input type="hidden" name="action" value="updateArrTime">
+							
+							
+						</FORM>		
 								
 						<c:forEach var="GBbuyer" items="${GBbuyers}">
 						<div class="card fw-bolder">							
@@ -62,7 +89,7 @@
 										<input type="hidden" name="buyer" value="${GBbuyer.buyer}">
 										<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 										<input type="hidden" name="action" value="updatePayPickUp">
-									<div class="col-1">
+									<div class="col-1 mb-2">
 										<input type="submit" value="送出修改">
 									</div>
 									</form>
@@ -127,6 +154,29 @@
 	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
+	
+	
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script
+	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<script>
+        $.datetimepicker.setLocale('zh');
+        $('#arr_time').datetimepicker({
+    	       theme: '',              //theme: 'dark',
+   	       timepicker:true,       //timepicker:true,
+   	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
+   	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+   		   value: '${groupBuyVO.arr_time}', // value:   new Date(),
+   		 	onShow:function(){
+   		   this.setOptions({
+   		    minDate:'${groupBuyVO.end_time}'? '${groupBuyVO.end_time}':0
+   		   })
+   		  }
+  	});
+
+         
+ </script>
 </body>
 
 </html>
