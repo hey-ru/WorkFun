@@ -97,6 +97,7 @@ public class BidServlet extends HttpServlet {
 //			Integer second_hand_id = Integer.valueOf(req.getParameter("second_hand_id").trim());
 			Integer bidder = Integer.valueOf(req.getParameter("bidder").trim());
 			Integer bid_id = Integer.valueOf(req.getParameter("bid_id").trim());
+			Integer second_hand_id = Integer.valueOf(req.getParameter("second_hand_id").trim());
 			
 
 			// Send the use back to the form, if there were errors
@@ -112,8 +113,9 @@ public class BidServlet extends HttpServlet {
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 //			req.setAttribute("bidVO", bidVO); // 資料庫update成功後,正確的的bidVO物件,存入req
-			String param = "?second_hand_id=" + bidVO.getsecond_hand_id();
-			String url = "/bid/bidHome.jsp"+param;
+//			String param = "?second_hand_id=" + bidVO.getsecond_hand_id();
+			String url = "/bid/bidHome.jsp";
+			req.setAttribute("second_hand_id", second_hand_id);
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交bidHome.jsp
 			successView.forward(req, res);
 

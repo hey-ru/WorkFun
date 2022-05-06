@@ -196,6 +196,7 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 								<input type="hidden" name="bid_id" value="${secondHandVO.bidVO.bid_id}">
 								<input type="hidden" name="top_price" value="${secondHandVO.top_price}">
 								<input type="hidden" name="bidder" value="${empVO.empId}">
+								<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
 								<input type="submit" class="btn btn-primary mb-2 mt-1 col"
 									style="display: inline-block;" value="送出"></input>
 							</form>
