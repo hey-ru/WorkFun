@@ -49,7 +49,53 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 
 	//PK
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuylist where gbList_id = ?";
+	
+//	[揪團管理]: 修改取貨付款
+	private static final String UPDATE_FROMGBOWNER_STMT = "UPDATE groupbuylist SET is_pay = ?, is_pickup = ? WHERE gb_id = ? AND buyer = ?";
 
+	
+//	[揪團]: 修改取貨付款
+	@Override
+	public void updateIsPayIsPickUp(GroupBuyListVO groupBuyListVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_FROMGBOWNER_STMT);
+			
+			pstmt.setInt(1, groupBuyListVO.getIs_pay());
+			pstmt.setInt(2, groupBuyListVO.getIs_pickup());
+			pstmt.setInt(3, groupBuyListVO.getGb_id());
+			pstmt.setInt(4, groupBuyListVO.getBuyer());			
+			
+
+			pstmt.executeUpdate();
+			
+			// Handle any SQL errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. " + se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+
+
+	}
 	
 //	參團者新增一筆參團	
 	@Override

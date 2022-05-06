@@ -61,31 +61,31 @@ int itemsPerPage = 6;
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 50px;">揪團編號</th>
+													>揪團編號</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 50px;">店家名稱</th>
+													>店家名稱</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 50px;">開始時間</th>
+													>開始時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">結束時間</th>
+													>結束時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">到貨時間</th>
+													>到貨時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">低消限制</th>
+													>低消限制</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;">狀態</th>
+													>狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
@@ -121,7 +121,7 @@ int itemsPerPage = 6;
 														    <c:when test="${groupBuyVO.gb_status == 2}">
 														       	揪團截止
 														    </c:when>
-														    <c:when test="${groupBuyVO.gb_status == 2}">
+														    <c:when test="${groupBuyVO.gb_status == 3}">
 														       	揪團關閉
 														    </c:when>
 														</c:choose>

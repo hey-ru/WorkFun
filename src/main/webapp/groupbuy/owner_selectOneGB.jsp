@@ -4,7 +4,6 @@
 <%@ page import="com.groupbuy.model.*"%>
 <%@ page import="com.groupbuylist.model.*"%>
 
-<% GroupBuyListService groupBuyListSvc =new GroupBuyListService(); %>
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -41,19 +40,34 @@
 							class="dataTables_wrapper dt-bootstrap4">
 
 							
-								
+						<h4> ${groupBuyVO.gb_id} &nbsp;&nbsp;&nbsp; ${groupBuyVO.shop_name}</h4>		
 								
 						<c:forEach var="GBbuyer" items="${GBbuyers}">
-						<div class="card fw-bolder" >							
-							<div class="card-body" style="bg-secondary">
+						<div class="card fw-bolder">							
+							<div class="card-body bg-white text-dark">
 								<div class="row">
 								<div class="card-title col-3">
 									<h5> ${GBbuyer.buyer} &nbsp;&nbsp;&nbsp; ${GBbuyer.buyer_name}</h5></div>
 									 
 									<div class="col-2">總金額: ${GBbuyer.total}</div>
-									<div class="col-2">付款狀況: ${GBbuyer.is_pay== 0? '未付款':'已付款'}</div>
-									<div class="col-2">取貨狀況: ${GBbuyer.is_pickup== 0? '未取貨':'已取貨'}</div>
+									<form class="col-8 row" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet">
+									<div class="col-4"><label>付款狀況: </label>
+										<input type="radio" name="is_pay" value="0" ${(GBbuyer.is_pay=="0")? 'checked':'' }> 未付款 
+										<input type="radio" name="is_pay" value="1" ${(GBbuyer.is_pay=="1")? 'checked':'' }> 已付款 
 									</div>
+									<div class="col-4"><label>取貨狀況: </label>
+										<input type="radio" name="is_pickup" value="0" ${(GBbuyer.is_pickup=="0")? 'checked':'' }> 未取貨 
+										<input type="radio" name="is_pickup" value="1" ${(GBbuyer.is_pickup=="1")? 'checked':'' }> 已取貨
+										</div>
+										<input type="hidden" name="buyer" value="${GBbuyer.buyer}">
+										<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
+										<input type="hidden" name="action" value="updatePayPickUp">
+									<div class="col-1">
+										<input type="submit" value="送出修改">
+									</div>
+									</form>
+								</div>
+									
 								
 								
 									<table class="table table-bordered dataTable" id="dataTable"

@@ -12,7 +12,9 @@ public interface GroupBuyListDAO_interface {
     public List<GroupBuyListVO> getMyGB(Integer buyer);//查詢我所有參團
     public List<GroupBuyListVO> getOne(Integer buyer, Integer gb_id);//查詢我的單筆明細
     public List<GroupBuyListVO> getAll(); 
-    public GroupBuyListVO findByPrimaryKey(Integer gb_id); 
+    public GroupBuyListVO findByPrimaryKey(Integer gb_id);
+    
+    public void updateIsPayIsPickUp(GroupBuyListVO groupBuyListVO);
     
     
     //萬用複合查詢(傳入參數型態Map)(回傳 List)

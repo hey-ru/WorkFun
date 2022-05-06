@@ -2,8 +2,10 @@ package com.groupbuylist.model;
 
 import java.util.*;
 
+import com.groupbuy.model.GroupBuyJDBCDAO;
 import com.groupbuylist.controller.jdbcUtil_CompositeQuery;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
@@ -40,7 +42,57 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	//PK ok
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuylist where gbList_id = ?";
 	
+//	[揪團管理]: 修改取貨付款
+	private static final String UPDATE_FROMGBOWNER_STMT = "UPDATE groupbuylist SET is_pay = ?, is_pickup = ? WHERE gb_id = ? AND buyer = ?";
+	
 //===================================================================================================	
+	
+//	[揪團]: 修改取貨付款
+	@Override
+	public void updateIsPayIsPickUp(GroupBuyListVO groupBuyListVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE_FROMGBOWNER_STMT);
+			
+			pstmt.setInt(1, groupBuyListVO.getIs_pay());
+			pstmt.setInt(2, groupBuyListVO.getIs_pickup());
+			pstmt.setInt(3, groupBuyListVO.getGb_id());
+			pstmt.setInt(4, groupBuyListVO.getBuyer());			
+			
+
+			pstmt.executeUpdate();
+			
+			// Handle any driver errors
+					} catch (ClassNotFoundException e) {
+						throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+						// Handle any SQL errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. " + se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+
+	}
+	
 	
 //	參團者新增一筆參團	ok
 	@Override
@@ -321,7 +373,18 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		return list;
 	}
 
-	
+	//main方法
+	public static void main(String[] args) throws IOException {
+		GroupBuyListJDBCDAO dao = new GroupBuyListJDBCDAO();
+		
+		// 測試修改付款狀況
+		GroupBuyListVO groupBuyListVO5 = new GroupBuyListVO();
+		groupBuyListVO5.setBuyer(1002);
+		groupBuyListVO5.setGb_id(1001);
+		groupBuyListVO5.setIs_pay(0);
+		groupBuyListVO5.setIs_pickup(1);
+		dao.updateIsPayIsPickUp(groupBuyListVO5);
+	}
 
 
 }

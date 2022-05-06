@@ -13,9 +13,27 @@ public class GroupBuyListService {
 	private GroupBuyListDAO_interface dao;
 
 	public GroupBuyListService() {
-		dao = new GroupBuyListJDBCDAO();
-//		dao = new GroupBuyListDAO();//連線池
+//		dao = new GroupBuyListJDBCDAO();
+		dao = new GroupBuyListDAO();//連線池
 	}
+	
+	
+//揪團:修改付款取貨
+	public void updatePayPickUP(Integer gb_id, Integer buyer,Integer is_pay,Integer is_pickup) {
+
+		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+		
+		
+		groupBuyListVO.setGb_id(gb_id);
+		groupBuyListVO.setBuyer(buyer);
+		groupBuyListVO.setIs_pay(is_pay);
+		groupBuyListVO.setIs_pickup(is_pickup);
+
+		dao.updateIsPayIsPickUp(groupBuyListVO);
+
+	}
+
+	
 
 	public List<GroupBuyListVO> insertAll(Map<String, String[]> map){
 
