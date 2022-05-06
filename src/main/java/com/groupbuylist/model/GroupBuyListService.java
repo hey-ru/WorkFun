@@ -33,8 +33,6 @@ public class GroupBuyListService {
 
 	}
 
-	
-
 	public List<GroupBuyListVO> insertAll(Map<String, String[]> map){
 
 		Set<String> menuKey= map.keySet();
@@ -63,8 +61,6 @@ public class GroupBuyListService {
 		return list; 
 	} 
           
-	
-	
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
 			Integer price, Integer qty, String remark) {
 

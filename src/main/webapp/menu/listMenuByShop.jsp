@@ -1,11 +1,11 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.menu.model.*"%>
-<%@ page import="java.util.List"%>
+<%@ page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList");
+List<MenuVO> list = (List<MenuVO>) request.getAttribute("menuList");
 // int itemsPerPage = 10; //設定每頁頁數
 %>
 
@@ -83,9 +83,9 @@ ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList"
 										</thead>
 
 
-										<%-- 				<%@ include file="/design/page1.file"%> --%>
-										<%-- 					<c:forEach var="menu" items="${menuList}" begin="<%=pageIndex%>" --%>
-										<%-- 										end="<%=pageIndex+rowsPerPage-1%>"> --%>
+<%-- 														<%@ include file="/design/page1.file"%> --%>
+<%-- 															<c:forEach var="menu" items="${menuList}" begin="<%=pageIndex%>" --%>
+<%-- 																				end="<%=pageIndex+rowsPerPage-1%>"> --%>
 
 
 										<c:forEach var="menu" items="${menuList}">

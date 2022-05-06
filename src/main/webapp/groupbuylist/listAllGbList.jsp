@@ -8,6 +8,8 @@
 	GroupBuyListService gbListSvc = new GroupBuyListService();
     List<GroupBuyListVO> list = gbListSvc.getAll();
     pageContext.setAttribute("list",list);
+    
+    int itemsPerPage = 10;
 %>
 
 
@@ -82,7 +84,7 @@
 		<th>付款狀態</th>
 		<th>取貨狀態</th>
 	</tr>
-	<%@ include file="page1.file" %> 
+	<%@ include file="/design/page1.file"%>
 	<c:forEach var="groupBuyListVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
@@ -109,7 +111,7 @@
 	
 	
 </table>
-<%@ include file="page2.file" %>
+<%@ include file="/design/page2.file" %>
 
 </body>
 </html>

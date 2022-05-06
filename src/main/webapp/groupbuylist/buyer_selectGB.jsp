@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="java.util.List"%>
+<%@ page import ="java.util.*"%>
 <%@ page import="com.groupbuylist.model.*"%>
 <%@ page import="com.groupbuy.model.*"%>
 
@@ -8,10 +8,11 @@
 //只能查詢個人參團紀錄
 Integer buyer = Integer.valueOf(request.getParameter("buyer"));
 GroupBuyListService gblistSvc = new GroupBuyListService();
-List<GroupBuyListVO> mygblist = gblistSvc.getMyGB(buyer);
-pageContext.setAttribute("mygblist", mygblist);
+List<GroupBuyListVO> list = gblistSvc.getMyGB(buyer);
+pageContext.setAttribute("mygblist", list);
 
-int itemsPerPage = 10;
+int itemsPerPage = 6;
+
 %>
 
 <!DOCTYPE html>
@@ -57,66 +58,92 @@ int itemsPerPage = 10;
 										<!-- ========================= 表頭 ========================= -->
 										<thead>
 											<tr role=" row">
-												<th class="sorting sorting_asc" tabindex="0"
-													aria-controls="dataTable" rowspan="1" colspan="1"
-													aria-sort="ascending"
-													aria-label="Name: activate to sort column descending"
-													style="width: 50px;">參團編號</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 50px;">店家名稱</th>
+													>參團編號</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 50px;">總金額</th>
+													>店家名稱</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Position: activate to sort column ascending"
+													>總金額</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">付款狀態</th>
+													>付款狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">取貨狀態</th>
+													>取貨狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">開始時間</th>
+													>開始時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">結束時間</th>
+													>結束時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;">團狀態</th>
+													>各團狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;"></th>
+													></th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;"></th>
+													></th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Salary: activate to sort column ascending"
+													></th>
 											</tr>
-										</thead>
+										</thead>	
 
 
-										<%-- 										<%@ include file="/design/page1.file"%> --%>
-
+								<%@ include file="/groupbuylist/page1.file"%>
+							
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
-									<!-- 用groupbuylist取出 gbList_id,price,qty,is_pay,is_pickup -->
-											<c:forEach var="mygb" items="${mygblist}">
+											<c:forEach var="mygb" items="${mygblist}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 													<tr>
-														<td><c:out value="${mygb.gbList_id}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.shop_name}" /></td>
-														<td><c:out value="${mygb.price*mygb.qty}" /></td>
+														<td>${mygb.gbList_id}</td>
+														<td>${mygb.groupBuyVO.shop_name}</td>
+														<td>${mygb.price*mygb.qty}</td>
 														<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
-														<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}" /></td>
+														<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}</td>
 														<td>${mygb.groupBuyVO.start_time}</td>
 														<td>${mygb.groupBuyVO.end_time}</td>
-														<td>"${mygb.groupBuyVO.gb_status}</td>
+														<td>		
+														<c:choose>
+														    <c:when test="${mygb.groupBuyVO.gb_status == 0}">
+														       	揪團中
+														    </c:when>
+														    <c:when test="${mygb.groupBuyVO.gb_status == 1}">
+														        取消
+														    </c:when>
+														    <c:when test="${mygb.groupBuyVO.gb_status == 2}">
+														        揪團結束
+														    </c:when>
+														    <c:when test="${mygb.groupBuyVO.gb_status == 3}">
+														        揪團關閉
+														    </c:when>
+														</c:choose>
+														</td>
+														<td>
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
+																style="margin-bottom: 0px;">
+																<input type="submit" class="btn btn-info btn-sm" value="查看訂單" > 
+																<input type="hidden" name="gb_id" value="${mygb.gb_id}">
+																<input type="hidden" name="buyer" value="${empVO.empId}">
+																<input type="hidden" name="action" value="get_buyerlist">										
+															</FORM>															
+														</td>
 														<td><a href="buyer_3_updateGb.html"><button
 																	type="button" class="btn btn-success btn-sm">編輯</button></a></td>
 														<td><input type="submit"
@@ -129,8 +156,8 @@ int itemsPerPage = 10;
 								</div>
 							</div>
 
-<%-- 							<%@ include file="/design/page2.file"%> --%>
 
+							<%@ include file="/groupbuylist/page2.file"%>
 
 
 						</div>
