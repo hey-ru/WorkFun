@@ -12,6 +12,7 @@
 
 	<%@ include file="/design/frontheader.jsp"%>
 
+<<<<<<< Updated upstream
 	<!-- ====================== 內容開始 ====================== -->
 	<main id="main" class="main" style="height: 50vh;">
 		<div class="card shadow mb-4">
@@ -32,6 +33,44 @@
 			<div class="col-lg-6">
 				<div class="card">
 					<div class="card-body">
+=======
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop" name="form1">
+<table>
+	<tr>
+		<td>菜單編號:</td>
+		<td>${param.menu_id}</td>
+	</tr>
+	<tr>
+		<td>品項:</td>
+		<td><input type="TEXT" name="item" size="45" 
+			value="${param.item}" /></td><td>${errorMsgs.item}</td>
+	</tr>
+	<tr>
+		<td>價格:</td>
+		<td><input type="TEXT" name="price" size="45"	
+			value="${param.price}" /></td><td>${errorMsgs.price}</td>
+	</tr>
+	<tr>
+			
+<td><label>項目狀態:</label></td>
+<td>
+<label><input type="radio" name="is_item" value="1" ${(param.is_item=="1")? 'checked':'' }> 上架 </label>
+<label><input type="radio" name="is_item" value="0" ${(param.is_item=="0")? 'checked':'' }> 下架 </label>
+</td>	
+
+<!-- <td>啟用狀態:<font color=red><b>*</b></font></td> -->
+<!--    <td><select size="1" name="empStatus"> -->
+<%--      <option value="啟用" ${(param.empStatus=="啟用")? 'selected':'' } >啟用</option> --%>
+<%--      <option value="未啟用" ${(param.empStatus=="未啟用")? 'selected':'' }>未啟用</option> --%>
+<%--      <option value="離職" ${(param.empStatus=="離職")? 'selected':'' }>離職</option> --%>
+<%--           <option selected="selected">${param.empStatus}</option> --%>
+<!--    </select></td>     -->
+<!--    </tr> -->
+
+	
+		
+</tr>
+>>>>>>> Stashed changes
 
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/menu/updatemenubyshop"

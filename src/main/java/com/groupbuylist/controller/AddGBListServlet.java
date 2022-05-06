@@ -1,9 +1,11 @@
 package com.groupbuylist.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,7 +30,7 @@ public class AddGBListServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println(action);
+//		System.out.println(action);
 		
 			
 		// 在該團GB下單,團,個人,菜單項目
@@ -65,11 +67,11 @@ public class AddGBListServlet extends HttpServlet {
 //				Integer price = Integer.valueOf(req.getParameter("price"));
 				//點擊新增(未實現)
 //				Integer qty = Integer.valueOf(req.getParameter("qty"));
-				System.out.println("接收請求參數");
-				System.out.println("gb_id: " + gb_id);
-				System.out.println("buyer: " + buyer);
-				System.out.println("menu_id: " + menu_id);
-				System.out.println("qty: " + qty);
+//				System.out.println("接收請求參數");
+//				System.out.println("gb_id: " + gb_id);
+//				System.out.println("buyer: " + buyer);
+//				System.out.println("menu_id: " + menu_id);
+//				System.out.println("qty: " + qty);
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -77,18 +79,27 @@ public class AddGBListServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
-
-				/*************************** 2.開始新增資料 *****************************************/
-				GroupBuyListService gblistSvc = new GroupBuyListService();
-//				GroupBuyListVO groupBuyListVO = gblistSvc.addGbItem(gb_id, buyer, buyer_name, menu_id, item, price, qty, remark);
-				GroupBuyListVO groupBuyListVO = gblistSvc.addGblist(gb_id, buyer, menu_id, qty, remark);
-				System.out.println("新增的值: " + groupBuyListVO.toString());
 				
-				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
-				String url = "/groupbuy/gbHome.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
-				successView.forward(req, res);
-				System.out.println(gb_id + "參團新增成功!");
+				/*************************** 2-1.取出Menu *****************************************/
+				Map<String, String[]> map= req.getParameterMap();
+			    Set<String> aString0= map.keySet();
+			    Iterator<String> iterator=aString0.iterator();
+			    while(iterator.hasNext()) {
+			     System.out.println( Arrays.toString(map.get(iterator.next())));
+			    }
+				
+				
+				/*************************** 2-2.開始新增資料 *****************************************/
+//				GroupBuyistService gblistSvc = new GroupBuyListService();
+////				GroupBuyListVO groupBuyListVO = gblistSvc.addGbItem(gb_id, buyer, buyer_name, menu_id, item, price, qty, remark);
+//				GroupBuyListVO groupBuyListVO = gblistSvc.addGblist(gb_id, buyer, menu_id, qty, remark);
+//				System.out.println("新增的值: " + groupBuyListVO.toString());
+//				
+//				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
+//				String url = "/groupbuy/gbHome.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
+//				successView.forward(req, res);
+//				System.out.println(gb_id + "參團新增成功!");
 		}
 
 	}

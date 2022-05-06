@@ -13,9 +13,15 @@ public class TestMenu {
 
 		MenuJDBCDAO dao = new MenuJDBCDAO();
 		
+<<<<<<< Updated upstream
 //		MenuVO m3 = new MenuVO();
 //		m3.setMenu_id(1004);
 //		dao.updatestatus(m3);
+=======
+		MenuVO m3 = new MenuVO();
+		m3.setMenu_id(1004);
+		dao.updatestatus(m3);
+>>>>>>> Stashed changes
 
 		// 新增
 //	MenuVO menuVO1 = new MenuVO();
@@ -26,6 +32,7 @@ public class TestMenu {
 //	System.out.println("新增成功! "+menuVO1.toString());
 
 		// 修改
+<<<<<<< Updated upstream
 	MenuVO menuVO2 = new MenuVO();
 	menuVO2.setMenu_id(1113);
 	menuVO2.setShop_id(123);
@@ -36,6 +43,17 @@ public class TestMenu {
 	System.out.println("修改成功! "+menuVO2.toString());
 
 		dao.findByPrimaryKey(1084).toString();
+=======
+//	MenuVO menuVO2 = new MenuVO();
+//	menuVO2.setMenu_id(1010);
+//	menuVO2.setShop_id(114);
+//	menuVO2.setItem("牛丼+豬排咖哩");
+//	menuVO2.setPrice(40);
+//	menuVO2.setIs_item(1);
+//	dao.update(menuVO2);
+
+//		dao.findByPrimaryKey(1084).toString();
+>>>>>>> Stashed changes
 
 		// 查詢
 //		List<MenuVO> list = dao.getAll();

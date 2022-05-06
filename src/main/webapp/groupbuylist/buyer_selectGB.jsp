@@ -57,47 +57,44 @@ int itemsPerPage = 10;
 										<!-- ========================= 表頭 ========================= -->
 										<thead>
 											<tr role=" row">
-												<th class="sorting sorting_asc" tabindex="0"
-													aria-controls="dataTable" rowspan="1" colspan="1"
-													aria-sort="ascending"
-													aria-label="Name: activate to sort column descending"
-													style="width: 50px;">參團編號</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable" 
+													rowspan="1" colspan="1" 
+													aria-label="Name: activate to sort column descending">參團編號</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
-													style="width: 50px;">店家名稱</th>
+													aria-label="Name: activate to sort column ascending">店家名稱</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
-													style="width: 50px;">總金額</th>
+													aria-label="Name: activate to sort column ascending"
+													>總金額</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">付款狀態</th>
+													aria-label="Name: activate to sort column ascending"
+													>付款狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">取貨狀態</th>
+													aria-label="Name: activate to sort column ascending"
+													>取貨狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">開始時間</th>
+													aria-label="Name: activate to sort column ascending"
+													>開始時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													style="width: 50px;">結束時間</th>
+													aria-label="Name: activate to sort column ascending"
+													>結束時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;">團狀態</th>
+													aria-label="Name: activate to sort column ascending"
+													>團狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;"></th>
+													aria-label="Name: activate to sort column ascending"
+													></th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
-													style="width: 50px;"></th>
+													aria-label="Name: activate to sort column ascending"
+													></th>
 											</tr>
 										</thead>
 
@@ -109,14 +106,14 @@ int itemsPerPage = 10;
 									<!-- 用groupbuylist取出 gbList_id,price,qty,is_pay,is_pickup -->
 											<c:forEach var="mygb" items="${mygblist}">
 													<tr>
-														<td><c:out value="${mygb.gbList_id}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.shop_name}" /></td>
-														<td><c:out value="${mygb.price*mygb.qty}" /></td>
-														<td><c:out value="${mygb.is_pay}" /></td>
-														<td><c:out value="${mygb.is_pickup}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.start_time}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.end_time}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.gb_status}" /></td>
+														<td>${mygb.gbList_id}</td>
+														<td>${mygb.groupBuyVO.shop_name}</td>
+														<td>${mygb.price*mygb.qty}</td>
+														<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
+														<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}</td>
+														<td>${mygb.groupBuyVO.start_time}</td>
+														<td>${mygb.groupBuyVO.end_time}</td>
+														<td>${mygb.groupBuyVO.gb_status}</td>
 														<td><a href="buyer_3_updateGb.html"><button
 																	type="button" class="btn btn-success btn-sm">編輯</button></a></td>
 														<td><input type="submit"

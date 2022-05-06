@@ -1,8 +1,12 @@
 package com.groupbuylist.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import com.menu.model.MenuVO;
 
 public class GroupBuyListService {
 
@@ -13,20 +17,34 @@ public class GroupBuyListService {
 //		dao = new GroupBuyListDAO();//連線池
 	}
 
-	public GroupBuyListVO addGblist(Integer gb_id, Integer buyer, Integer menu_id, Integer qty, String remark) {
+	public List<GroupBuyListVO> insertAll(Map<String, String[]> map){
 
+		Set<String> menuKey= map.keySet();
 		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
+//		MenuVO menuVO = new MenuVO();
+		List<GroupBuyListVO> list = new ArrayList<>();
+		
+		  int count = 0;
+          int talLength = 0;
+          do {
+          for (String key : menuKey) {
 
-		groupBuyListVO.setGb_id(gb_id);
-		groupBuyListVO.setBuyer(buyer);
-		groupBuyListVO.setMenu_id(menu_id);
-		groupBuyListVO.setQty(qty);
-		groupBuyListVO.setRemark(remark);
+          if ("fqKeyWordContent".equals(key)) {
+          talLength = map.get(key).length;
+          groupBuyListVO.setQty((Integer) map.get(key)[count]);
+          }
+          if ("answerContent".equals(key)) {
+        	  groupBuyListVO.setAnswerContent((String) map.get(key)[count]);
+          }
 
-		dao.insertItem(groupBuyListVO);
-
-		return groupBuyListVO;
-	}
+          }
+          count++;
+          dao.insert(fqKeyWordVO);
+          list.add(fqKeyWordVO);
+          } while (count < talLength); return list; } 
+          
+	
+	
 	
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
 			Integer price, Integer qty, String remark) {
@@ -101,7 +119,7 @@ public class GroupBuyListService {
 	}
 	
 	//萬用查詢
-	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
-		return dao.getAll(map);
-	}
+//	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
+//		return dao.getAll(map);
+//	}
 }

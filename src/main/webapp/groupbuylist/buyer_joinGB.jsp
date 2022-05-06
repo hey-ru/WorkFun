@@ -66,10 +66,10 @@ List<MenuVO> menuList = (List<MenuVO>) request.getAttribute("menuList");
 										<c:forEach var="menu" items="${menuList}">
 
 											<tr>
-												<td><input type="text" name="menu_id" value="${menu.menu_id}" readonly="readonly"/></td>
-												<td><input type="text" name="item" value="${menu.item}" readonly="readonly"/></td>
-												<td><input type="text" name="price" value="${menu.price}" readonly="readonly"/></td>
-												<td><input type="text" name="qty" value="${param.qty}" placeholder=0></td> 
+												<td><input type="text" name="${menu.menu_id}" value="${menu.menu_id}" readonly="readonly"/></td>
+												<td><input type="text" name="${menu.menu_id}" value="${menu.item}" readonly="readonly"/></td>
+												<td><input type="text" name="${menu.menu_id}" value="${menu.price}" readonly="readonly"/></td>
+												<td><input type="text" name="${menu.menu_id}" value="0"></td> 
 												<!-- 數量增減 -->
 <!-- 												<td> -->
 <!-- 													<div class="product-qty"> -->
