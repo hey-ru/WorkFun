@@ -243,5 +243,23 @@ public class ReportDAO implements ReportDAO_interface {
 		return null;
 	}
 
+	@Override
+	public List<ReportVO> getHandler(Integer handler) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void handleComment(ReportVO reportVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertComment(ReportVO reportVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
  
