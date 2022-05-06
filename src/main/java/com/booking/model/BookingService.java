@@ -30,28 +30,39 @@ public class BookingService {
 
 		return bookingVO;
 	}
-	
-	public BookingVO updateDate(Integer bookingId, Timestamp startDate,Timestamp endDate) {
-		
+
+	public BookingVO updateDate(Integer bookingId, Timestamp startDate, Timestamp endDate) {
+
 		BookingVO bookingVO = new BookingVO();
-		
+
 		bookingVO.setBookingId(bookingId);
 		bookingVO.setStartDate(startDate);
 		bookingVO.setEndDate(endDate);
 		dao.updateDate(bookingVO);
-	
+
+		return dao.getByBookingId(bookingId);
+	}
+
+	public BookingVO updateReturnStatus(Integer bookingId, Integer returnStatus) {
+		
+		BookingVO bookingVO = new BookingVO();
+
+		bookingVO.setBookingId(bookingId);
+		bookingVO.setReturnStatus(returnStatus);
+		dao.updateReturnStatus(bookingVO);
+
 		return dao.getByBookingId(bookingId);
 	}
 
 	public void deleteBooking(Integer bookingId) {
 		dao.delete(bookingId);
 	}
-	
+
 	public BookingVO getByBookingId(Integer bookingId) {
 		return dao.getByBookingId(bookingId);
 	}
-	
-	public List<BookingVO> getAll(){
+
+	public List<BookingVO> getAll() {
 		return dao.getAll();
 	}
 
@@ -59,7 +70,7 @@ public class BookingService {
 		return dao.getbyReturnStatus(returnStatus);
 	}
 
-	public List<BookingVO> getByEmpId(Integer empId){
+	public List<BookingVO> getByEmpId(Integer empId) {
 		return dao.getByEmpId(empId);
 	}
 }
