@@ -6,11 +6,9 @@ import javax.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
 @Setter
 @Getter
-
 
 public class GroupBuyListVO implements java.io.Serializable {
 	

@@ -38,7 +38,10 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 
 	// 員工更改已預約日期
 	private static final String UPDATE_DATE = "UPDATE booking set start_date=?,end_date=? where booking_id=?";
-	
+
+	// 後台員工修改狀態
+	private static final String UPDATE_RETURNSTATUS = "UPDATE booking set ";
+
 	@Override
 	public void insert(BookingVO bookingVO) {
 
@@ -80,6 +83,76 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 				}
 			}
 		}
+	}
+
+	@Override
+	public int updateReturnStatus(BookingVO newbooking) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			BookingVO oldBooking = getByBookingId(newbooking.getBookingId());
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(UPDATE_RETURNSTATUS);
+
+			if (newbooking.getReturnStatus() != null) {
+				sb.append("return_status=?, ");
+			}
+
+			sb.append("booking_id=? ");
+			sb.append("where booking_id=? ");
+
+			pstmt = con.prepareStatement(sb.toString());
+
+			if (newbooking.getReturnStatus() != null) {
+				count++;
+				pstmt.setInt(count, newbooking.getReturnStatus());
+			}
+
+			count++;
+			pstmt.setInt(count, newbooking.getBookingId());
+			count++;
+			pstmt.setInt(count, newbooking.getBookingId());
+			pstmt.executeUpdate();
+			System.out.println(count);
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+//		if (pstmt != null) {
+//			try {
+//				pstmt.close();
+//			} catch (SQLException se) {
+//				se.printStackTrace(System.err);
+//			}
+//		}
+//		if (con != null) {
+//			try {
+//				con.close();
+//			} catch (Exception e) {
+//				e.printStackTrace(System.err);
+//			}
+//		}
+		}
+		return 1;
 	}
 
 	@Override
@@ -399,15 +472,15 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 		BookingJDBCDAO dao = new BookingJDBCDAO();
 
 		// 新增
-		BookingVO bookingVO1 = new BookingVO();
-		bookingVO1.setEmpId(1011);
-		bookingVO1.setEquipmentId(105);
-		bookingVO1.setStartDate(java.sql.Timestamp.valueOf("2022-03-29 17:24:57"));
-		bookingVO1.setEndDate(java.sql.Timestamp.valueOf("2022-04-03 09:57:01"));
-		bookingVO1.setReturnStatus(0);
-		bookingVO1.setOverdueDate(java.sql.Timestamp.valueOf("2022-03-08 13:22:01"));
-		bookingVO1.setOverduePrice(new Integer(203022220));
-		dao.insert(bookingVO1);
+//		BookingVO bookingVO1 = new BookingVO();
+//		bookingVO1.setEmpId(1011);
+//		bookingVO1.setEquipmentId(105);
+//		bookingVO1.setStartDate(java.sql.Timestamp.valueOf("2022-03-29 17:24:57"));
+//		bookingVO1.setEndDate(java.sql.Timestamp.valueOf("2022-04-03 09:57:01"));
+//		bookingVO1.setReturnStatus(0);
+//		bookingVO1.setOverdueDate(java.sql.Timestamp.valueOf("2022-03-08 13:22:01"));
+//		bookingVO1.setOverduePrice(new Integer(203022220));
+//		dao.insert(bookingVO1);
 
 		// 修改
 //		BookingVO bookingVO2 = new BookingVO();
@@ -444,6 +517,13 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 		// 查詢自己預約單 by 狀態
 //		BookingVO bookingVO5 = dao.getbyReturnStatus(0);
 //		System.out.println(bookingVO5.toString());
+
+		// 修改 串接英雄
+		BookingVO bookingVO6 = new BookingVO();
+		bookingVO6.setBookingId(1001);
+
+		bookingVO6.setReturnStatus(3);
+		dao.updateReturnStatus(bookingVO6);
 
 	}
 }

@@ -152,7 +152,7 @@ public class BookingServlet extends HttpServlet {
 //				failureView.forward(req, res);
 //				return;
 //			}
-			
+
 			EmpVO empVO = (EmpVO) (req.getSession().getAttribute("empVO"));
 			BookingService bookingService = new BookingService();
 			List<BookingVO> list = bookingService.getByEmpId(empVO.getEmpId());
@@ -160,8 +160,7 @@ public class BookingServlet extends HttpServlet {
 			String url = "/equipment/bookingList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
-			
-			
+
 			/*************************** 2.開始查詢資料 *****************************************/
 //			BookingService bookingSvc = new BookingService();
 //			List<BookingVO> bookingVO = bookingSvc.getByEmpId(empId);
@@ -182,5 +181,30 @@ public class BookingServlet extends HttpServlet {
 //			successView.forward(req, res);
 		}
 
+		if ("updateReturnStatus".equals(action)) {
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+			Integer bookingId = Integer.valueOf(req.getParameter("bookingId").trim());
+			System.out.println(bookingId);
+
+			Integer returnStatus = null;
+			try {
+				returnStatus = Integer.valueOf(req.getParameter("returnStatus").trim());
+			} catch (NumberFormatException e) {
+				errorMsgs.put("returnStatus", "123");
+			}
+			
+			/*************************** 2.開始修改資料 *****************************************/
+			BookingService bookingSvc = new BookingService();
+			BookingVO bookingVO = bookingSvc.updateReturnStatus(bookingId, returnStatus);
+
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+			req.setAttribute("bookingVO", bookingVO);
+			String url = "/booking/backBookingAllList.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
 	}
 }

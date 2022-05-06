@@ -8,6 +8,9 @@ public interface BookingDAO_interface {
 
 	// 更改預約單日期
 	public void updateDate(BookingVO bookingVO);
+	
+	// 後台員工修改狀態
+	public int updateReturnStatus(BookingVO bookingVO);
 
 	// 刪除預約單
 	public void delete(Integer bookingId);

@@ -112,11 +112,11 @@ int itemsPerPage = 10;
 														<td><c:out value="${mygb.gbList_id}" /></td>
 														<td><c:out value="${mygb.groupBuyVO.shop_name}" /></td>
 														<td><c:out value="${mygb.price*mygb.qty}" /></td>
-														<td><c:out value="${mygb.is_pay}" /></td>
-														<td><c:out value="${mygb.is_pickup}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.start_time}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.end_time}" /></td>
-														<td><c:out value="${mygb.groupBuyVO.gb_status}" /></td>
+														<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
+														<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}" /></td>
+														<td>${mygb.groupBuyVO.start_time}</td>
+														<td>${mygb.groupBuyVO.end_time}</td>
+														<td>"${mygb.groupBuyVO.gb_status}</td>
 														<td><a href="buyer_3_updateGb.html"><button
 																	type="button" class="btn btn-success btn-sm">編輯</button></a></td>
 														<td><input type="submit"

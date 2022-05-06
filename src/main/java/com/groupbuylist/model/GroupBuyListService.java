@@ -1,32 +1,51 @@
 package com.groupbuylist.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import com.menu.model.MenuVO;
 
 public class GroupBuyListService {
 
 	private GroupBuyListDAO_interface dao;
 
 	public GroupBuyListService() {
-		//dao = new GroupBuyListJDBCDAO();
-		dao = new GroupBuyListDAO();//連線池
+		dao = new GroupBuyListJDBCDAO();
+//		dao = new GroupBuyListDAO();//連線池
 	}
 
-	public GroupBuyListVO addGblist(Integer gb_id, Integer buyer, Integer menu_id, Integer qty, String remark) {
+	public List<GroupBuyListVO> insertAll(Map<String, String[]> map){
 
+		Set<String> menuKey= map.keySet();
 		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
-
-		groupBuyListVO.setGb_id(gb_id);
-		groupBuyListVO.setBuyer(buyer);
-		groupBuyListVO.setMenu_id(menu_id);
-		groupBuyListVO.setQty(qty);
-		groupBuyListVO.setRemark(remark);
-
-		dao.insertItem(groupBuyListVO);
-
-		return groupBuyListVO;
-	}
+//		MenuVO menuVO = new MenuVO();
+		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
+		
+//		  int count = 0;
+//          int talLength = 0;
+//          do {
+//          for (String key : menuKey) {
+//
+//          if ("qty".equals(key)) {
+//          talLength = map.get(key).length;
+//          groupBuyListVO.setQty((Integer) map.get(key)[count]);
+//          }
+//          if ("remark".equals(key)) {
+//        	  groupBuyListVO.setRemark((String) map.get(key)[count]);
+//          }
+//
+//          }
+//          count++;
+//          dao.insertItem(groupBuyListVO);
+//          list.add(groupBuyListVO);
+//          } while (count < talLength); 
+		return list; 
+	} 
+          
+	
 	
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
 			Integer price, Integer qty, String remark) {
@@ -101,7 +120,7 @@ public class GroupBuyListService {
 	}
 	
 	//萬用查詢
-	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
-		return dao.getAll(map);
-	}
+//	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
+//		return dao.getAll(map);
+//	}
 }
