@@ -29,11 +29,8 @@ public class SelectMenuByShopServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		System.out.println(action);
 
-<<<<<<< Updated upstream
 		// 以店家搜尋菜單(上架), Session
-=======
 		// 以店家搜尋菜單(上架)
->>>>>>> Stashed changes
 		if ("getmenu".equals(action)) { // 來自selectMenu_page.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -48,12 +45,10 @@ public class SelectMenuByShopServlet extends HttpServlet {
 
 				
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-<<<<<<< Updated upstream
 				// 資料庫取出的menuVO物件集合,存入session(修改或新增回上一頁可取得)
 				HttpSession session = req.getSession();
 				session.setAttribute("menuList", menuList);
 
-=======
 				String param = "?menu_id="  +menuVO.getMenu_id()+
 					       	   "&item="     +menuVO.getItem()+
 					       	   "&price="    +menuVO.getPrice()+

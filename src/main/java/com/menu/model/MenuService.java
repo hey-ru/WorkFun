@@ -64,11 +64,8 @@ public class MenuService {
 	}
 	
 	//以店家搜尋該店家菜單(下架)
-<<<<<<< Updated upstream
 	public List<MenuVO> getByShopIdDisable(Integer shop_id) {
-=======
 		public List<MenuVO> getByShopIdDisable(Integer shop_id) {
->>>>>>> Stashed changes
 			return dao.getByShopIdDisable(shop_id);
 		}
 

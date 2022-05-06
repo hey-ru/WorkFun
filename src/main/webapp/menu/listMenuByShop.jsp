@@ -6,11 +6,7 @@
 
 <%
 ArrayList<MenuVO> menuList = (ArrayList<MenuVO>) request.getAttribute("menuList");
-<<<<<<< Updated upstream
-// int itemsPerPage = 10; //設定每頁頁數
-=======
 int itemsPerPage = 10; //設定每頁頁數
->>>>>>> Stashed changes
 %>
 
 <html>
