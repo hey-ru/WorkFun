@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 
 import com.emp.model.EmpVO;
+import com.report_comment.model.Report_CommentVO;
 
 public class ReportVO implements java.io.Serializable{
 	/**
@@ -23,6 +24,13 @@ public class ReportVO implements java.io.Serializable{
 	private String title;
 	private EmpVO empVO1;
 	private EmpVO empVO2;
+	private Report_CommentVO recVO;
+	public Report_CommentVO getRecVO() {
+		return recVO;
+	}
+	public void setRecVO(Report_CommentVO recVO) {
+		this.recVO = recVO;
+	}
 	public EmpVO getEmpVO1() {
 		return empVO1;
 	}

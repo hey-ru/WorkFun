@@ -269,6 +269,37 @@ public class ReportServlet extends HttpServlet{
 			failureView.forward(req, res);
 		}
 	}
+	if("listByHandlerQuery".equals(action)){
+		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+		
+		try {
+			/***************************1.接收請求參數****************************************/
+			Integer handler = Integer.valueOf(req.getParameter("handler"));
+			System.out.println(handler);
+			/***************************2.開始查詢資料****************************************/
+//			ReportService repSvc = new ReportService();
+//			List<ReportVO> repVO = repSvc.getHandler(handler);
+//			System.out.println(repVO);
+			/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				String url = "/report/backListHandler.jsp";
+				req.setAttribute("handler", handler);
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 listOneReport.jsp
+				successView.forward(req, res);
+
+			/***************************其他可能的錯誤處理**********************************/
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			errorMsgs.put("無法取得要修改的資料",e.getMessage());
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/report/backListAll.jsp");
+			failureView.forward(req, res);
+		}
+	}
+	
+	if("getOne_forUpdate".equals(action)) {
+		
+	}
 	
 }
 	public String getFileNameFromPart(Part part) {

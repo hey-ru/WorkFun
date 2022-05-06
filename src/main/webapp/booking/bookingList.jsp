@@ -115,6 +115,7 @@ pageContext.setAttribute("list", list);
 
 										<c:forEach var="bookingVO" items="${list}">
 
+<<<<<<< Updated upstream
 											<tr>
 												<td>${bookingVO.bookingId}</td>
 												<td>${empVO.empId}</td>
@@ -136,6 +137,28 @@ pageContext.setAttribute("list", list);
 												<td>${bookingVO.overdueDate}</td>
 												<td>${bookingVO.overduePrice}</td>
 											</tr>
+=======
+										<tr>
+											<td>${bookingVO.bookingId}</td>
+											<td>${empVO.empId}</td>
+											<td>${bookingVO.startDate}</td>
+											<td>${bookingVO.endDate}</td>
+											
+											<td><c:choose>
+											<c:when test="${bookingVO.returnStatus == 0}">已歸還</c:when>
+											<c:when test="${bookingVO.returnStatus == 1}">租借中</c:when>
+											<c:when test="${bookingVO.returnStatus == 2}">未領取器材</c:when>
+											<c:when test="${bookingVO.returnStatus == 3}">逾期歸還(需罰金)</c:when>
+											<c:when test="${bookingVO.returnStatus == 4}">未歸還(需罰金)</c:when>
+											<c:when test="${bookingVO.returnStatus == 5}">使商品損壞(需罰金)</c:when>
+											</c:choose></td>
+
+<%-- 											<td>${bookingVO.returnStatus}</td> --%>
+											
+											<td>${bookingVO.overdueDate}</td>
+											<td>${bookingVO.overduePrice}</td>
+										</tr>
+>>>>>>> Stashed changes
 										</c:forEach>
 
 

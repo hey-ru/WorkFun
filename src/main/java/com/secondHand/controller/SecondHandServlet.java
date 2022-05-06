@@ -3,15 +3,11 @@ package com.secondHand.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.zip.ZipOutputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,68 +36,6 @@ public class SecondHandServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		System.out.println(action);
 
-//		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
-//
-//			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-//			try {
-//				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-//				String str = req.getParameter("empno");
-//				if (str == null || (str.trim()).length() == 0) {
-//					errorMsgs.put("empno","請輸入員工編號");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/emp/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;//程式中斷
-//				}
-//				
-//				Integer empno = null;
-//				try {
-//					empno = Integer.valueOf(str);
-//				} catch (Exception e) {
-//					errorMsgs.put("empno","員工編號格式不正確");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/emp/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;//程式中斷
-//				}
-//				
-//				/***************************2.開始查詢資料*****************************************/
-//				EmpService empSvc = new EmpService();
-//				EmpVO empVO = empSvc.getOneEmp(empno);
-//				if (empVO == null) {
-//					errorMsgs.put("empno","查無資料");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/emp/select_page.jsp");
-//					failureView.forward(req, res);
-//					return;//程式中斷
-//				}
-//				
-//				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-//				req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
-//				String url = "/emp/listOneEmp.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-//				successView.forward(req, res);
-//
-//				/***************************其他可能的錯誤處理*************************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("無法取得資料",e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/select_page.jsp");
-//				failureView.forward(req, res);
-//			}
-//		}
-
 		if ("getOneForUpdate".equals(action)) { // 來自secondHandHome.jsp的請求
 
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -127,7 +61,7 @@ public class SecondHandServlet extends HttpServlet {
 						       "&img2="   +secondHandVO.getImg2()+
 						       "&img3=" +secondHandVO.getImg3();
 				String url = "/secondhand/updateSecondHand.jsp"+param;
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 /secondhand/updateSecondHand.jsp
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理**********************************/
@@ -244,7 +178,7 @@ public class SecondHandServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/update_emp_input.jsp");
+							.getRequestDispatcher("/secondhand/updateSecondHand.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -254,7 +188,7 @@ public class SecondHandServlet extends HttpServlet {
 				SecondHandVO secondHandVO = secondHandService.updateSecondHand(bid_winner, deal_price, name, bottom_price, top_price, start_time, end_time, is_deal, img1, img2, img3, second_hand_id);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("secondHandVO", secondHandVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				req.setAttribute("secondHandVO", secondHandVO); // 資料庫update成功後,正確的的secondHandVO物件,存入req
 				String url = "/secondhand/secondHandHome.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交seondHandHome.jsp
 				successView.forward(req, res);
@@ -371,7 +305,9 @@ public class SecondHandServlet extends HttpServlet {
 				if (filename3 != null && pic3.getContentType() != null) {
 					img3 = getByteArrayFromPart(pic3);
 				}
-				System.out.println(3);				
+				System.out.println(3);	
+				
+				Integer price = 0;
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -380,9 +316,9 @@ public class SecondHandServlet extends HttpServlet {
 					return;
 				}
 
-				/*************************** 2.開始新增資料 ***************************************/
+				/*************************** 2.開始新增資料 ***************************************/				
 				SecondHandService secondHandService = new SecondHandService();
-				secondHandService.addSecondHand(saler, name, bottom_price, top_price, start_time, end_time, img1, img2, img3);
+				secondHandService.addSecondHandWithBid(saler, name, bottom_price, top_price, start_time, end_time, img1, img2, img3, price);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/secondhand/secondHandHome.jsp";

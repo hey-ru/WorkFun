@@ -101,7 +101,7 @@ public class ReportCommentServlet extends HttpServlet{
 					"&content=" +repVO.getContent()+
 					"&report_image=" +repVO.getReport_image();
 				
-				String url = "/report/updateReport.jsp"+param;
+				String url = "/report/backListOne.jsp"+param;
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 			}

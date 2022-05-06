@@ -8,16 +8,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.report.model.ReportVO;
+
 public class Report_CommentJDBCDAO implements Report_CommentDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
 	private static final String INSERT_STMT = "INSERT INTO report_comment (report_id,comment,report_comment_image) VALUES (?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM report_comment";
+	private static final String GET_ALL_STMT = "select e1.emp_name as reporterName, e2.emp_name as handlerName,r.report_id, rc.report_id, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title, comment, report_comment_image from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler join report_comment rc on r.report_id  = rc.report_id ORDER BY starttime DESC";
 	private static final String GET_ONE_STMT = "SELECT * FROM report_comment where report_comment_id = ?";
 	private static final String UPDATE = "UPDATE report_comment set ";
-
+	
+	
+	
+	@Override
+	public List<ReportVO> getHandler() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public void insert(Report_CommentVO report_commentVO) {
 		Connection con = null;
@@ -239,6 +248,7 @@ public class Report_CommentJDBCDAO implements Report_CommentDAO_interface {
 
 		return list;
 	}
+
 
 //	public static void main(String[] args) throws Exception {
 //		report_commentJDBCDAO dao = new report_commentJDBCDAO();

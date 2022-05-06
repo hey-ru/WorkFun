@@ -6,15 +6,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 ReportService repSvc = new ReportService();
-List<ReportVO> list = repSvc.getAll();
-pageContext.setAttribute("list", list);
+List<ReportVO> list = repSvc.getHandler(Integer.valueOf(request.getParameter("handler")));
+
 int itemsPerPage = 10;
+
+pageContext.setAttribute("list", list);
+
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>backListAll</title>
+<title>backListHandler</title>
 <%@ include file="/design/backcss.jsp"%>
  <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,7 +62,7 @@ int itemsPerPage = 10;
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- 內容放這 -->
-				<main>
+<main>
 						<!-- 從這裡開始 -->
 						<div>
 							<div class="card shadow mb-4">
@@ -82,7 +86,8 @@ int itemsPerPage = 10;
 														<ul>  
   <li>   
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reportServlet" name="form1">
-
+     	<jsp:useBean id="reportSvc1" scope="page"
+									class="com.report.model.ReportService" />
        <b>處理人:</b>
        <select size="1" name="handler" >
           <option value="1016">AIDEN</option>
@@ -123,8 +128,7 @@ int itemsPerPage = 10;
 																	<th class="sorting" tabindex="0"
 																	aria-controls="dataTable" rowspan="1" colspan="1"
 																	aria-label="Start date: activate to sort column ascending"
-																	style="">處理人</th>	
-																
+																	style="">處理人</th>
 																<th class="sorting" tabindex="0"
 																	aria-controls="dataTable" rowspan="1" colspan="1"
 																	aria-label="Salary: activate to sort column ascending"
@@ -157,7 +161,7 @@ int itemsPerPage = 10;
 																			test="${reportVO.status==4}">已完成</c:if></td>
 																			<c:if test="${empVO.empId==reportVO.handler}">
 																	<td><a
-																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forUpdate">
+																		href="/CGA101G3/reportCommentServlet?report_id=${reportVO.report_id}&action=getOne_forUpdate">
 																			<button type="button" value="getOne_forUpdate"
 																				class="btn btn-info">處理此回報</button>
 																	</a></td>

@@ -70,4 +70,8 @@ public class ReportService{
 		return dao.getAll(map);
 	}
 	
+	public List<ReportVO> getHandler(Integer handler){
+		return dao.getHandler(handler);
+	}
+	
 }

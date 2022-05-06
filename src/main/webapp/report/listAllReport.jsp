@@ -50,7 +50,7 @@ int itemsPerPage = 10;
 					</h5>
 				</div>
 				<div class="card-body">
-					<div class="table-responsive">
+					<div>
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
 

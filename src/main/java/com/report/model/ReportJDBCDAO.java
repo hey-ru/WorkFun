@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.emp.model.EmpVO;
+import com.report_comment.model.Report_CommentVO;
 
 public class ReportJDBCDAO implements ReportDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -21,7 +22,162 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler where report_id = ?";
 	private static final String UPDATE = "UPDATE report set title=?,report_type=?,reporter=?,handler=?,content=?,report_image=? where report_id= ?";
 	private static final String GET_KEYWORD = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler ORDER BY starttime DESC";
+	private static final String GET_HANDLER = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler Where r.handler = ? ORDER BY starttime DESC";
+	private static final String HANDLE_COMMENT = "select e1.emp_name as reporterName, e2.emp_name as handlerName,r.report_id, rc.report_id, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title, comment, report_comment_image from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler join report_comment rc on r.report_id  = rc.report_id ORDER BY starttime DESC";
+	private static final String INSERT_COMMENT = "INSERT INTO report_comment (report_id,comment,report_comment_image) VALUES (?, ?, ?)";
+
+	@Override
+	public void insertComment(ReportVO reportVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(INSERT_COMMENT);
+			
+			pstmt.setInt(1, reportVO.getReport_id());
+			pstmt.setString(2, reportVO.getRecVO().getComment());
+			pstmt.setBytes(3, reportVO.getRecVO().getReport_comment_image());
+
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	@Override
+	public void handleComment(ReportVO reportVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+		Class.forName(driver);
+		con = DriverManager.getConnection(url, userid, passwd);
+		pstmt = con.prepareStatement(HANDLE_COMMENT);
+		Report_CommentVO recVO = new Report_CommentVO();
 	
+		pstmt.setString(1, reportVO.getTitle());
+	
+		pstmt.executeUpdate();
+
+		// Handle any SQL errors
+	} catch (SQLException se) {
+		throw new RuntimeException("A database error occured. " + se.getMessage());
+		// Clean up JDBC resources
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		}
+
+	}
+
+}
+	
+	
+	@Override
+	public List<ReportVO> getHandler(Integer handler) {
+		List<ReportVO> list = new ArrayList<ReportVO>();
+		ReportVO reportVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_HANDLER);
+			pstmt.setInt(1, handler);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				EmpVO empVO1 = new EmpVO();
+				EmpVO empVO2 = new EmpVO();
+				empVO1.setEmpName(rs.getString("reporterName"));
+				empVO2.setEmpName(rs.getString("handlerName"));
+				reportVO = new ReportVO();
+				reportVO.setEmpVO1(empVO1);
+				reportVO.setEmpVO2(empVO2);
+				reportVO.setReport_id(rs.getInt("report_id"));
+				reportVO.setReporter(rs.getInt("reporter"));
+				reportVO.setHandler(rs.getInt("handler"));
+				reportVO.setStarttime(rs.getTimestamp("starttime"));
+				reportVO.setUpdatetime(rs.getTimestamp("updatetime"));
+				reportVO.setEndtime(rs.getTimestamp("endtime"));
+				reportVO.setContent(rs.getString("content"));
+				reportVO.setStatus(rs.getInt("status"));
+				reportVO.setReport_image(rs.getBytes("report_image"));
+				reportVO.setReport_type(rs.getInt("report_type"));
+				reportVO.setTitle(rs.getString("title"));
+				
+				list.add(reportVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+
+	}
 	@Override
 	public void insert(ReportVO reportVO) {
 		Connection con = null;
@@ -505,8 +661,8 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 		}
 		return list;
 	}
-	
 
+	
 //	public static void main(String[] args) throws Exception {
 		
 //		 ReportService repSvc = new ReportService();

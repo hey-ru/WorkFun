@@ -3,8 +3,12 @@ package com.secondHand.model;
 import java.util.List;
 import java.util.Map;
 
+import com.bid.model.BidVO;
+
 public interface SecondHandDAO_interface {
 	public void insert(SecondHandVO secondhandVO);
+	
+	public void insertWithBid(SecondHandVO secondHandVO, BidVO bidVO);
 
 	public void update(SecondHandVO secondhandVO);
 
@@ -15,4 +19,5 @@ public interface SecondHandDAO_interface {
 	public List<SecondHandVO> getAll();
 	
 	public List<SecondHandVO> getAll(Map<String, String[]> map); 
+	
 }
