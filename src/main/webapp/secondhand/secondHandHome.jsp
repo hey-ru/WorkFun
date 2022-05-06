@@ -101,8 +101,8 @@ pageContext.setAttribute("list", list);
 									class="com.secondHand.model.SecondHandService" />
 								<select class="form-select" id="exampleFormControlSelect1"
 									style="border: gray solid 2px;" name="is_deal">
-									<option value="0">未開始</option>
 									<option value="1">競標中</option>
+									<option value="0">未開始</option>
 									<option value="2">已成交</option>
 									<option value="3">流標</option>
 									<option value="">顯示全部</option>
@@ -147,9 +147,6 @@ pageContext.setAttribute("list", list);
 											<c:if test="${empVO.empId == secondHandVO.saler}">
 											<input type="submit" value="修改" class="submitbtn">
 											</c:if>
-<%-- 											<c:if test="${empVO.empId != secondHandVO.saler}"> --%>
-<%-- 											<a href="<%=request.getContextPath()%>/bid/bidHome.jsp">參加競標</a> --%>
-<%-- 											</c:if> --%>
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											<input type="hidden" name="action" value="getOneForUpdate">
@@ -158,12 +155,10 @@ pageContext.setAttribute("list", list);
 											ACTION="<%=request.getContextPath()%>/bid/bidHome.jsp"
 											style="margin-bottom: 0px;">
 											<c:if test="${empVO.empId != secondHandVO.saler}">
-<%-- 											<a href="<%=request.getContextPath()%>/bid/bidHome.jsp">參加競標</a> --%>
 											<input type="submit" value="參加競標" class="submitbtn">
 											</c:if>
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
-<!-- 											<input type="hidden" name="action" value="getOneForUpdate"> -->
 										</FORM>
 									</div>
 								</div>

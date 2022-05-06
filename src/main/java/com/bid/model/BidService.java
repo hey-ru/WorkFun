@@ -20,12 +20,13 @@ public class BidService {
 		return bidVO;
 	}
 	
-	public BidVO updaBid(Integer bidder, Integer price) {
+	public BidVO updateBid(Integer bidder, Integer price, Integer bid_id) {
 		
 		BidVO bidVO = new BidVO();
 		
 		bidVO.setBidder(bidder);
 		bidVO.setPrice(price);
+		bidVO.setBid_id(bid_id);
 		dao.update(bidVO);
 		
 		return bidVO;

@@ -3,19 +3,14 @@ package com.secondHand.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.zip.ZipOutputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.SessionCookieConfig;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.bid.model.BidService;
 import com.secondHand.model.SecondHandService;
 import com.secondHand.model.SecondHandVO;
 
@@ -67,7 +61,7 @@ public class SecondHandServlet extends HttpServlet {
 						       "&img2="   +secondHandVO.getImg2()+
 						       "&img3=" +secondHandVO.getImg3();
 				String url = "/secondhand/updateSecondHand.jsp"+param;
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 /secondhand/updateSecondHand.jsp
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理**********************************/
@@ -184,7 +178,7 @@ public class SecondHandServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/update_emp_input.jsp");
+							.getRequestDispatcher("/secondhand/updateSecondHand.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -194,7 +188,7 @@ public class SecondHandServlet extends HttpServlet {
 				SecondHandVO secondHandVO = secondHandService.updateSecondHand(bid_winner, deal_price, name, bottom_price, top_price, start_time, end_time, is_deal, img1, img2, img3, second_hand_id);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("secondHandVO", secondHandVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				req.setAttribute("secondHandVO", secondHandVO); // 資料庫update成功後,正確的的secondHandVO物件,存入req
 				String url = "/secondhand/secondHandHome.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交seondHandHome.jsp
 				successView.forward(req, res);
@@ -322,13 +316,9 @@ public class SecondHandServlet extends HttpServlet {
 					return;
 				}
 
-				/*************************** 2.開始新增資料 ***************************************/
-//				SecondHandService secondHandService = new SecondHandService();
-//				secondHandService.addSecondHand(saler, name, bottom_price, top_price, start_time, end_time, img1, img2, img3);
-				
+				/*************************** 2.開始新增資料 ***************************************/				
 				SecondHandService secondHandService = new SecondHandService();
 				secondHandService.addSecondHandWithBid(saler, name, bottom_price, top_price, start_time, end_time, img1, img2, img3, price);
-				
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/secondhand/secondHandHome.jsp";

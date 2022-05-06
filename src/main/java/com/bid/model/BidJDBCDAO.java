@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class BidJDBCDAO implements BidDAO_interface {
 	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "INSERT INTO bid (second_hand_id,price) VALUES (?, ?)";
-	private static final String UPDATE = "UPDATE bid set price=? where bid_id = ?";
+	private static final String UPDATE = "UPDATE bid set ";
 	private static final String GET_ONE_STMT = "SELECT bid_id,second_hand_id,bidder,price,create_time,update_time FROM bid where bid_id = ?";
 	private static final String GET_ALL_STMT = "SELECT bid_id,second_hand_id,bidder,price,create_time,update_time FROM bid order by bid_id";
 
@@ -102,19 +101,43 @@ public class BidJDBCDAO implements BidDAO_interface {
 	}
 
 	@Override
-	public void update(BidVO bidVO) {
+	public void update(BidVO newBidVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		int count = 0;
 
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
+			BidVO oldBidVO = getById(newBidVO.getBid_id());
+			StringBuilder sb = new StringBuilder().append(UPDATE);
+			
+			if (newBidVO.getBidder() != null) {
+				sb.append("bidder=?, ");
+			}
+			if (newBidVO.getPrice() != null) {
+				sb.append("price=?, ");
+			}
+			sb.append("bid_id=? where bid_id = ?");
 
-			pstmt.setInt(1, bidVO.getPrice());
+			pstmt = con.prepareStatement(sb.toString());
+			
+			if (newBidVO.getBidder() != null) {
+				count++;
+				pstmt.setInt(count, newBidVO.getBidder());
+			}
+			if (newBidVO.getPrice() != null) {
+				count++;
+				pstmt.setInt(count, newBidVO.getPrice());
+			}
+			count++;
+			pstmt.setInt(count, newBidVO.getBid_id());
+			count++;// where
+			pstmt.setInt(count, newBidVO.getBid_id());
 
 			pstmt.executeUpdate();
+			System.out.println("update " + (count - 2) + " data!");
 
 			// Handle any driver errors
 		} catch (Exception e) {
@@ -198,7 +221,7 @@ public class BidJDBCDAO implements BidDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo 也稱為 Domain objects
+				// bidVo 也稱為 Domain objects
 				bidVO = new BidVO();
 				bidVO.setBid_id(rs.getInt("bid_id"));
 				bidVO.setsecond_hand_id(rs.getInt("second_hand_id"));

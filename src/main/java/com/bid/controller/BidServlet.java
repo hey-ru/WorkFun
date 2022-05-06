@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.bid.model.BidService;
+import com.bid.model.BidVO;
 import com.secondHand.model.SecondHandService;
 import com.secondHand.model.SecondHandVO;
 
@@ -64,106 +66,65 @@ public class BidServlet extends HttpServlet {
 //			}
 //		}
 //
-//		if ("update".equals(action)) { // 來自updateSecondHand.jsp的請求
-//
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-////			try {
-//			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-//
-//			Integer bid_winner = null;
-//
-//			Integer deal_price = null;
-//
-//			String name = req.getParameter("name");
-//			String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
-//			if (name == null || name.trim().length() == 0) {
-//				errorMsgs.put("name", "商品名稱請勿空白");
-//			} else if (!name.trim().matches(nameReg)) { // 以下練習正則(規)表示式(regular-expression)
-//				errorMsgs.put("name", "商品名稱只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
-//			}
-//			System.out.println(name);
-//
-//			Integer bottom_price = null;
+		if ("update".equals(action)) { // 來自bidHome.jsp的請求
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
 //			try {
-//				bottom_price = Integer.valueOf(req.getParameter("bottom_price").trim());
-//			} catch (Exception e) {
-//				errorMsgs.put("bottom_price", "請填入數字");
-//			}
-//			if (bottom_price < 0) {
-//				errorMsgs.put("bottom_price", "請輸入大於0的數字");
-//			}
-//			if (bottom_price > 100000000) {
-//				errorMsgs.put("bottom_price", "請輸入小於50,000,000的數字");
-//			}
-//			System.out.println(bottom_price);
-//
-//			Integer top_price = null;
-//			try {
-//				top_price = Integer.valueOf(req.getParameter("top_price").trim());
-//			} catch (Exception e) {
-//				errorMsgs.put("top_price", "請填入數字");
-//			}
-//			if (top_price <= bottom_price) {
-//				errorMsgs.put("bottom_price", "請輸入大於起標價格的數字");
-//			}
-//			if (top_price > 100000000) {
-//				errorMsgs.put("bottom_price", "請輸入小於100,000,000的數字");
-//			}
-//			System.out.println(top_price);
-//
-//			java.sql.Timestamp start_time = null;
-//			try {
-//				start_time = java.sql.Timestamp.valueOf(req.getParameter("start_time").trim());
-//			} catch (IllegalArgumentException e) {
-//				errorMsgs.put("start_time", "請輸入開始競標日期時間");
-//			}
-//			System.out.println(start_time);
-//
-//			java.sql.Timestamp end_time = null;
-//			try {
-//				end_time = java.sql.Timestamp.valueOf(req.getParameter("end_time").trim());
-//			} catch (IllegalArgumentException e) {
-//				errorMsgs.put("end_time", "請輸入開始競標日期時間");
-//			}
-////				if (start_time >= end_time) {
-////					errorMsgs.put("bottom_price", "請輸入大於起標價格的數字");
-////				}
-//			System.out.println(end_time);
-//
-//			Integer is_deal = 0;
-//
-//			
-//
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+
+			Integer price = null;
+			System.out.println("這邊還有吧?");
+			System.out.println(req.getParameter("price").trim());
+			System.out.println(Integer.valueOf(req.getParameter("price").trim()));
+			System.out.println(Integer.valueOf(req.getParameter("price").trim()));
+			try {
+				price = Integer.valueOf(req.getParameter("price").trim());
+			} catch (NumberFormatException e) {
+				errorMsgs.put("price","價格請填數字");
+			}
+			if (price < 0) {
+				errorMsgs.put("price", "請輸入大於0的數字");
+			}
+			if (price > Integer.valueOf(req.getParameter("top_price"))) {
+				errorMsgs.put("price", "若要直購請點選下方直購按鈕");
+			}
+
+			System.out.println(price);
+			System.out.println(req.getParameter("bidder").trim());
+			System.out.println(req.getParameter("bid_id").trim());
 //			Integer second_hand_id = Integer.valueOf(req.getParameter("second_hand_id").trim());
-//
-//			// Send the use back to the form, if there were errors
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/emp/update_emp_input.jsp");
+			Integer bidder = Integer.valueOf(req.getParameter("bidder").trim());
+			Integer bid_id = Integer.valueOf(req.getParameter("bid_id").trim());
+			
+
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/bid/bidHome.jsp");
+				failureView.forward(req, res);
+				return; // 程式中斷
+			}
+
+			/*************************** 2.開始修改資料 *****************************************/
+			BidService bidService = new BidService();
+			BidVO bidVO = bidService.updateBid(bidder, price, bid_id);
+
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+//			req.setAttribute("bidVO", bidVO); // 資料庫update成功後,正確的的bidVO物件,存入req
+			String param = "?second_hand_id=" + bidVO.getsecond_hand_id();
+			String url = "/bid/bidHome.jsp"+param;
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交bidHome.jsp
+			successView.forward(req, res);
+
+			/*************************** 其他可能的錯誤處理 *************************************/
+//			} catch (Exception e) {
+//				errorMsgs.put("修改資料失敗",e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/bid/bidHome.jsp");
 //				failureView.forward(req, res);
-//				return; // 程式中斷
 //			}
-//
-//			/*************************** 2.開始修改資料 *****************************************/
-//			SecondHandService secondHandService = new SecondHandService();
-//			SecondHandVO secondHandVO = secondHandService.updateSecondHand(bid_winner, deal_price, name, bottom_price,
-//					top_price, start_time, end_time, is_deal, second_hand_id);
-//
-//			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-//			req.setAttribute("secondHandVO", secondHandVO); // 資料庫update成功後,正確的的empVO物件,存入req
-//			String url = "/secondhand/secondHandHome.jsp";
-//			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交seondHandHome.jsp
-//			successView.forward(req, res);
-//
-//			/*************************** 其他可能的錯誤處理 *************************************/
-////			} catch (Exception e) {
-////				errorMsgs.put("修改資料失敗",e.getMessage());
-////				RequestDispatcher failureView = req
-////						.getRequestDispatcher("/secondhand/updateSecondHand.jsp");
-////				failureView.forward(req, res);
-////			}
-//		}
+		}
 //
 //		if ("insert".equals(action)) { // 來自addSecondHand.jsp的請求
 //
