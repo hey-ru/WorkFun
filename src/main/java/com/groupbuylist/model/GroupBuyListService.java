@@ -13,8 +13,8 @@ public class GroupBuyListService {
 	private GroupBuyListDAO_interface dao;
 
 	public GroupBuyListService() {
-		//dao = new GroupBuyListJDBCDAO();
-		dao = new GroupBuyListDAO();//連線池
+		dao = new GroupBuyListJDBCDAO();
+//		dao = new GroupBuyListDAO();//連線池
 	}
 
 	public List<GroupBuyListVO> insertAll(Map<String, String[]> map){
@@ -22,28 +22,29 @@ public class GroupBuyListService {
 		Set<String> menuKey= map.keySet();
 		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
 //		MenuVO menuVO = new MenuVO();
-		List<GroupBuyListVO> list = new ArrayList<>();
+		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
 		
-		  int count = 0;
-          int talLength = 0;
-          do {
-          for (String key : menuKey) {
-
-          if ("fqKeyWordContent".equals(key)) {
-          talLength = map.get(key).length;
-          groupBuyListVO.setQty((Integer) map.get(key)[count]);
-          }
-          if ("answerContent".equals(key)) {
-        	  groupBuyListVO.setAnswerContent((String) map.get(key)[count]);
-          }
-
-          }
-          count++;
-          dao.insert(fqKeyWordVO);
-          list.add(fqKeyWordVO);
-          } while (count < talLength); return list; } 
+//		  int count = 0;
+//          int talLength = 0;
+//          do {
+//          for (String key : menuKey) {
+//
+//          if ("qty".equals(key)) {
+//          talLength = map.get(key).length;
+//          groupBuyListVO.setQty((Integer) map.get(key)[count]);
+//          }
+//          if ("remark".equals(key)) {
+//        	  groupBuyListVO.setRemark((String) map.get(key)[count]);
+//          }
+//
+//          }
+//          count++;
+//          dao.insertItem(groupBuyListVO);
+//          list.add(groupBuyListVO);
+//          } while (count < talLength); 
+		return list; 
+	} 
           
-	
 	
 	
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
