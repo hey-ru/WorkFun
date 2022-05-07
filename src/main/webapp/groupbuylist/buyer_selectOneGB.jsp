@@ -23,6 +23,7 @@ int itemsPerPage = 10;
 
 		<%@ include file="/design/frontheader.jsp"%>
 
+
 		<!-- ====================== 內容開始 ====================== -->
 		<main id="main" class="main">
 			<div class="card shadow mb-4">
@@ -56,28 +57,22 @@ int itemsPerPage = 10;
 											<tr role=" row">
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
-													>編號</th>
+													aria-label="Position: activate to sort column ascending">編號</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
-													>品項</th>
+													aria-label="Position: activate to sort column ascending">品項</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
-													>單價</th>
+													aria-label="Position: activate to sort column ascending">單價</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													>數量</th>
+													aria-label="Office: activate to sort column ascending">數量</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													>金額</th>
+													aria-label="Office: activate to sort column ascending">金額</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													>備註</th>
+													aria-label="Office: activate to sort column ascending">備註</th>
 											</tr>
 										</thead>
 
@@ -87,29 +82,30 @@ int itemsPerPage = 10;
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
 											<c:forEach var="blist" items="${buyerlist}">
-													<tr>
-														<td>${blist.gbList_id}</td>
-														<td>${blist.item}</td>
-														<td>${blist.price}</td>
-														<td>${blist.qty}</td>
-														<td>${blist.price*blist.qty}</td>
-														<td>${blist.remark}</td>
-													</tr>
-												</c:forEach>
+												<tr>
+													<td>${blist.gbList_id}</td>
+													<td>${blist.item}</td>
+													<td>${blist.price}</td>
+													<td>${blist.qty}</td>
+													<td>${blist.price*blist.qty}</td>
+													<td>${blist.remark}</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
+
 								</div>
 							</div>
 
-<%-- 							<%@ include file="/design/page2.file"%> --%>
-
+							<%-- 							<%@ include file="/design/page2.file"%> --%>
 
 						</div>
 					</div>
 				</div>
-			</div>
 		</main>
 		<!-- ======= 內容結束 ======= -->
+
+
 
 	</div>
 	<!-- ======= Footer ======= -->

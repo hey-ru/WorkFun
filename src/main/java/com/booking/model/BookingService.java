@@ -40,7 +40,7 @@ public class BookingService {
 		bookingVO.setEndDate(endDate);
 		dao.updateDate(bookingVO);
 
-		return dao.getByBookingId(bookingId);
+		return bookingVO;
 	}
 
 	public BookingVO updateReturnStatus(Integer bookingId, Integer returnStatus) {
@@ -51,7 +51,7 @@ public class BookingService {
 		bookingVO.setReturnStatus(returnStatus);
 		dao.updateReturnStatus(bookingVO);
 
-		return dao.getByBookingId(bookingId);
+		return bookingVO;
 	}
 
 	public void deleteBooking(Integer bookingId) {

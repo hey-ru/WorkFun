@@ -70,49 +70,46 @@ int itemsPerPage = 10;
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
-					<!-- 內容放這 -->
+				<!-- 				<div class="container-fluid"> -->
+				<!-- 					內容放這 -->
 
-					<div class="row">
-						<div class="col-10" style="height: 60px; display: inline-block;">
-							<form class="my-1">
+				<!-- 					<div class="row"> -->
+				<!-- 						<div class="col-10" style="height: 60px; display: inline-block;"> -->
+				<!-- 							<form class="my-1"> -->
 
-								<div class="form-group col-2" style="display: inline-block;">
-									<jsp:useBean id="booking1" scope="page"
-										class="com.booking.model.BookingService" />
-									<select class="form-control" id="exampleFormControlSelect1"
-										style="border: gray solid 2px;" name="returnStatus">
-										<option value="5">已登記預約</option>
+				<!-- 								<div class="form-group col-2" style="display: inline-block;"> -->
+				<%-- 									<jsp:useBean id="booking1" scope="page" --%>
+				<%-- 										class="com.booking.model.BookingService" /> --%>
+				<!-- 									<select class="form-control" id="exampleFormControlSelect1" -->
+				<!-- 										style="border: gray solid 2px;" name="returnStatus"> -->
+				<!-- 										<option value="5">已登記預約</option> -->
 
-										<option value="0">已歸還</option>
-										<option value="1">租借中</option>
-										<option value="2">未領取器材</option>
-										<option value="3">逾期歸還</option>
-										<option value="4">未歸還</option>
-									</select>
-								</div>
+				<!-- 										<option value="0">已歸還</option> -->
+				<!-- 										<option value="1">租借中</option> -->
+				<!-- 										<option value="2">未領取器材</option> -->
+				<!-- 										<option value="3">逾期歸還</option> -->
+				<!-- 										<option value="4">未歸還</option> -->
+				<!-- 									</select> -->
+				<!-- 								</div> -->
 
-								<div class="form-group col-3" style="display: inline-block">
-									<input type="text" class="form-control"
-										id="exampleFormControlInput1" placeholder="輸入預約單編號"
-										style="border: gray solid 2px;" name="bookingId"
-										value="${param.bookingId}">
-								</div>
+				<!-- 								<div class="form-group col-3" style="display: inline-block"> -->
+				<!-- 									<input type="text" class="form-control" -->
+				<!-- 										id="exampleFormControlInput1" placeholder="輸入預約單編號" -->
+				<!-- 										style="border: gray solid 2px;" name="bookingId" -->
+				<%-- 										value="${param.bookingId}"> --%>
+				<!-- 								</div> -->
 
-								<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-								<input type="hidden" name="action" value="listByCompositeQuery">
-								<input type="submit" class="btn btn-primary mb-2 mt-1 col"
-									style="display: inline-block;" value="搜尋"></input>
-							</form>
-						</div>
-					</div>
-				</div>
+				<%-- 								<input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
+				<!-- 								<input type="hidden" name="action" value="listByCompositeQuery"> -->
+				<!-- 								<input type="submit" class="btn btn-primary mb-2 mt-1 col" -->
+				<!-- 									style="display: inline-block;" value="搜尋"></input> -->
+				<!-- 							</form> -->
+				<!-- 						</div> -->
+				<!-- 					</div> -->
+				<!-- 				</div> -->
 
 
 				<div class="card-body">
-
-
-
 					<div class="table-responsive">
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
@@ -120,8 +117,8 @@ int itemsPerPage = 10;
 							<div class="row">
 								<div class="col-sm-6">
 									<table class="table table-bordered dataTable" id="dataTable"
-										width="100%" cellspacing="0" role="grid"
-										aria-describedby="dataTable_info" style="width: 100%">
+										 role="grid" cellspacing="0"
+										aria-describedby="dataTable_info" style="width: 100%;">
 
 										<thead>
 											<tr role=" row">
@@ -179,14 +176,15 @@ int itemsPerPage = 10;
 
 													<%-- 													<td><c:choose> --%>
 													<%-- 															<c:when test="${bookingVO.returnStatus == 5}">已登記預約</c:when> --%>
-
 													<%-- 															<c:when test="${bookingVO.returnStatus == 0}">已歸還</c:when> --%>
 													<%-- 															<c:when test="${bookingVO.returnStatus == 1}">租借中</c:when> --%>
 													<%-- 															<c:when test="${bookingVO.returnStatus == 2}">未領取器材</c:when> --%>
 													<%-- 															<c:when test="${bookingVO.returnStatus == 3}">逾期歸還(需罰金)</c:when> --%>
 													<%-- 															<c:when test="${bookingVO.returnStatus == 4}">未歸還(需罰金)</c:when> --%>
 													<%-- 														</c:choose></td> --%>
-
+													
+													<form method="post"	action="<%=request.getContextPath()%>/booking/booking.do">
+													
 													<td><label for="inputNumber"
 														class="col-sm-2 col-form-label"></label>
 														<div class="col-sm-10">
@@ -204,11 +202,8 @@ int itemsPerPage = 10;
 																<option value="5"
 																	${(bookingVO.returnStatus==5)? 'selected':'' }>已登記預約</option>
 															</select> ${errorMsgs.returnStatus}
-														</div>
 														</div></td>
 
-
-													<%-- 											<td>${bookingVO.returnStatus}</td> --%>
 
 													<td>${bookingVO.overdueDate}</td>
 													<td>${bookingVO.overduePrice}</td>
@@ -216,22 +211,15 @@ int itemsPerPage = 10;
 
 													<td>
 														<div class="row mb-3">
-															<FORM METHOD="post"
-																ACTION="<%=request.getContextPath()%>/booking/booking.do"
-																style="margin-bottom: 0px;">
-																<input type="submit" value="儲存"
-																	class="btn btn-dark mb-2 mt-1 col"
-																	style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
-
-																<input type="hidden" name="bookingId"
-																	value="${bookingVO.bookingId}"> <input
-																	type="hidden" name="action" value="updateReturnStatus">
-
-															</FORM>
+															<input type="hidden" name="action"	value="updateReturnStatus"> 
+															<input type="hidden" name="bookingId" value="${bookingVO.bookingId}">
+															<input type="hidden" name="returnStatus" value="${bookingVO.returnStatus}"> 
+															<input type="submit" value="儲存" class="btn btn-dark mb-2 mt-1 col"	style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
+						
 														</div>
-
 													</td>
-
+													</form>
+												
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -241,15 +229,6 @@ int itemsPerPage = 10;
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
 				<!-- /.container-fluid -->
 			</div>
 			<!-- End of Main Content -->
@@ -257,7 +236,7 @@ int itemsPerPage = 10;
 		<!-- End of Content Wrapper -->
 	</div>
 	<!-- End of Page Wrapper -->
-	</div>
+
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>

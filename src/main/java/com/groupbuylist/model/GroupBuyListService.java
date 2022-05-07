@@ -112,6 +112,7 @@ public class GroupBuyListService {
 
 	public void deleteMyGb(Integer buyer, Integer gb_id) {
 		dao.deleteMyGb(buyer, gb_id);
+		
 	}
 
 	
