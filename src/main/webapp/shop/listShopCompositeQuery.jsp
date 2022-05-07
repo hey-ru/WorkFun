@@ -3,12 +3,12 @@
 <%@ page import="com.shop.model.*"%>
 <%@ page import="java.util.*"%>
 
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<ShopVO>" />
 <%
-ShopService shopSvc = new ShopService();
-List<ShopVO> list = shopSvc.getFRONTAll();
-pageContext.setAttribute("list", list);
+String yourServlet = "/shop/ShopServlet"; 
 int itemsPerPage = 10;
 %>
+
 
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -56,7 +56,7 @@ int itemsPerPage = 10;
 				</div>
 						<div class="row">
 							<div class="col-10" style="height: 60px; display: inline-block;">
-								<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/shop/ShopServlet">
+								<form class="my-1"  METHOD="post" ACTION="<%=request.getContextPath()%>/shop/ShopServlet" >
 									<div class="form-group col-2" style="display: inline-block;">
 										<select class="form-select" id="exampleFormControlSelect1"
 											style="border: gray solid 2px;" name="shop_type">
@@ -147,10 +147,10 @@ int itemsPerPage = 10;
 									</thead>
 
 
-									<%@ include file="/design/page1.file"%>
+									<%@ include file="/design/page1_ByCompositeQuery.file"%>
 									<tbody>
 		
-									<c:forEach var="shopVO" items="${list}" begin="<%=pageIndex%>"
+									<c:forEach var="shopVO" items="${listByCompositeQuery}" begin="<%=pageIndex%>"
 										end="<%=pageIndex+rowsPerPage-1%>">
 										
 										<tr>
@@ -236,7 +236,7 @@ int itemsPerPage = 10;
 								</table>
 								<div style="display:inline-block; width:50px;"></div>
 								<div style="display:inline-block; margin-bottom:10px;">
-										<%@ include file="/design/page2.file"%>
+										<%@ include file="/design/page2_ByCompositeQuery.file"%>
 								</div>
 							</div>
 						</div>

@@ -2,9 +2,8 @@ package com.shop.model;
 
 import java.util.*;
 
-import com.menu.model.MenuDAO;
-import com.menu.model.MenuJDBCDAO;
-import com.menu.model.MenuVO;
+import com.menu.model.*;
+import com.util.jdbcUtil_CompositeQuery;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,10 +21,12 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO shop (shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM shop ORDER BY shop_id DESC";
+	private static final String GET_ALL_FRONT_STMT = "SELECT * FROM shop WHERE is_disable = 0 ORDER BY shop_id DESC";
 	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? WHERE shop_id = ?";
 	private static final String GET_ONE_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop where shop_id = ?";
-	private static final String GET_BY_SETWHERE = "SELECT * FROM shop";
+	private static final String GET_BY_SETWHERE = "SELECT * FROM shop ";
 	private static final String GET_Menus_ByShop_id_STMT = "SELECT * FROM menu WHERE shop_id = ? ORDER BY menu_id";
+	private static final String GET_BY_SETWHERE_STMT = "SELECT * FROM shop s ";
 
 	@Override
 	public void insert(ShopVO shopVO) {
@@ -205,6 +206,70 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				shopVO = new ShopVO();
+				shopVO.setShop_id(rs.getInt("shop_id"));
+				shopVO.setShop_name(rs.getString("shop_name"));
+				shopVO.setShop_type(rs.getInt("shop_type"));
+				shopVO.setAddress(rs.getString("address"));
+				shopVO.setTel(rs.getString("tel"));
+				shopVO.setWebsite(rs.getString("website"));
+				shopVO.setMin_amt(rs.getInt("min_amt"));
+				shopVO.setShop_img1(rs.getBytes("shop_img1"));
+				shopVO.setShop_img2(rs.getBytes("shop_img2"));
+				shopVO.setShop_img3(rs.getBytes("shop_img3"));
+				list.add(shopVO);
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ShopVO> getNOWAll() {
+		List<ShopVO> list = new ArrayList<ShopVO>();
+		ShopVO shopVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_FRONT_STMT);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -449,6 +514,7 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 					return set;
 				}
 	
+	//同時新增店家菜單 未完成
 	@Override
 	public void insertWithMenus(ShopVO shopVO, List<MenuVO> list) {
 		Connection con = null;
@@ -535,7 +601,74 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 
 				}
 		
+	@Override
+	public List<ShopVO> getAll(Map<String, String[]> map) {
+		List<ShopVO> list = new ArrayList<ShopVO>();
+		ShopVO shopVO = null;
 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			String finalSQL = GET_BY_SETWHERE_STMT
+		          + jdbcUtil_CompositeQuery.get_WhereCondition(map)
+		          + " ORDER BY shop_id DESC ";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				shopVO = new ShopVO();
+				shopVO.setShop_id(rs.getInt("shop_id"));
+				shopVO.setShop_name(rs.getString("shop_name"));
+				shopVO.setShop_type(rs.getInt("shop_type"));
+				shopVO.setAddress(rs.getString("address"));
+				shopVO.setTel(rs.getString("tel"));
+				shopVO.setWebsite(rs.getString("website"));
+				shopVO.setMin_amt(rs.getInt("min_amt"));
+				shopVO.setShop_img1(rs.getBytes("shop_img1"));
+				shopVO.setShop_img2(rs.getBytes("shop_img2"));
+				shopVO.setShop_img3(rs.getBytes("shop_img3"));
+				list.add(shopVO);
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 	public static void main(String[] args) {
 
@@ -676,6 +809,8 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 		fis.close();
 		return buffer;
 	}
+
+
 
 
 

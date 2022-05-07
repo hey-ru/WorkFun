@@ -3,7 +3,9 @@ package com.groupbuy.model;
 import java.sql.Timestamp;
 import java.util.*;
 
-import com.groupbuylist.model.GroupBuyListVO;
+import com.groupbuylist.model.*;
+import com.shop.model.ShopService;
+
 
 
 public class GroupBuyService {
@@ -66,5 +68,10 @@ public class GroupBuyService {
 	
 	public  Set<GroupBuyListVO> getBuyerBygbid(Integer gb_id) {
 		return dao.getBuyerBygbid(gb_id);
+	}
+
+	public List<GroupBuyVO> getAll(Map<String, String[]> map) {
+		
+		return dao.getAll(map);
 	}
 }

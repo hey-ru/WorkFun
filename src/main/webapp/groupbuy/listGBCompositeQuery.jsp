@@ -4,12 +4,12 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.groupbuy.model.*"%>
 
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<GroupBuyVO>" />
 <%
-GroupBuyService groupBuySvc = new GroupBuyService();
-List<GroupBuyVO> list = groupBuySvc.getNowAll();
-pageContext.setAttribute("list", list);
+String yourServlet = "/groupbuy/GroupBuyServlet"; 
 int itemsPerPage = 10;
 %>
+
 
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -44,7 +44,8 @@ int itemsPerPage = 10;
 						<h2>🍽️ 今天我想來點...</h2>
 						<p></p>
 					</div>
-						<div class="row">
+
+				<div class="row">
 							<div class="col-10" style="height: 60px; display: inline-block;">
 								<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet">
 									<div class="form-group col-2" style="display: inline-block;">
@@ -75,13 +76,12 @@ int itemsPerPage = 10;
 							<a class="btn btn-success" href="<%=request.getContextPath()%>/shop/listAllShop.jsp" role="button">選店家開團</a>
 							</div>
 						</div>
-
-						<%@ include file="/design/page1.file"%>
+						<%@ include file="/design/page1_ByCompositeQuery.file"%>
 
 
 					<div class="row portfolio-container" data-aos="fade-up"
 						data-aos-delay="200">
-						<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>"
+						<c:forEach var="groupBuyVO" items="${listByCompositeQuery}" begin="<%=pageIndex%>"
 							end="<%=pageIndex+rowsPerPage-1%>">
 							<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 								<div class="portfolio-wrap">
@@ -119,7 +119,7 @@ int itemsPerPage = 10;
 						</c:forEach>
 					</div>
 
-					<%@ include file="/design/page2.file"%>
+					<%@ include file="/design/page2_ByCompositeQuery.file"%>
 				</div>
 			</section>
 		</main>

@@ -3,6 +3,7 @@ package com.groupbuy.model;
 import java.util.*;
 
 import com.groupbuylist.model.*;
+import com.shop.model.ShopVO;
 
 
 public interface GroupBuyDAO_interface {
@@ -16,5 +17,7 @@ public interface GroupBuyDAO_interface {
      public List<GroupBuyVO> getNowAll();
      public Set<GroupBuyListVO> getGBListBygbid(Integer gb_id);
      public Set<GroupBuyListVO> getBuyerBygbid(Integer gb_id);
+     public List<GroupBuyVO> getAll(Map<String, String[]> map);
+     
      
 }

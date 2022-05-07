@@ -3,6 +3,7 @@ package com.shop.model;
 import java.util.*;
 
 import com.menu.model.MenuVO;
+import com.secondHand.model.SecondHandVO;
 
 public interface ShopDAO_interface {
 
@@ -18,7 +19,11 @@ public interface ShopDAO_interface {
 
 	public List<ShopVO> getAll();
 	
+	public List<ShopVO> getNOWAll();
+	
 	public Set<MenuVO> getMenusByShopid(Integer shop_id);
 	
 	public void insertWithMenus(ShopVO shopVO , List<MenuVO> list);
+	
+	public List<ShopVO> getAll(Map<String, String[]> map);
 }

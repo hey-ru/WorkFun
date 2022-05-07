@@ -1,6 +1,8 @@
 package com.shop.model;
 
 import java.util.List;
+import java.util.Map;
+
 
 public class ShopService {
 
@@ -56,11 +58,20 @@ public class ShopService {
 		return dao.getAll();
 	}
 	
-	public List<ShopVO> getShopByName(String shop_name) {
-		return dao.findByShopName(shop_name);
+	public List<ShopVO> getFRONTAll() {
+		return dao.getNOWAll();
 	}
 	
-	public List<ShopVO> getShopByType(Integer shop_type) {
-		return dao.findByShopType(shop_type);
+//	public List<ShopVO> getShopByName(String shop_name) {
+//		return dao.findByShopName(shop_name);
+//	}
+//	
+//	public List<ShopVO> getShopByType(Integer shop_type) {
+//		return dao.findByShopType(shop_type);
+//	}
+
+	public List<ShopVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
+
 }
