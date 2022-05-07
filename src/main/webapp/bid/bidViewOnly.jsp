@@ -127,10 +127,10 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">當前最高出價人</div>
 										<div class="col-lg-9 col-md-8">
-											<c:if test="${secondHandVO.bidVO.bidder==0}">
+										<c:if test="${secondHandVO.bidVO.bidder==0}">
 											尚未有人出價
 										</c:if>
-											<c:if test="${secondHandVO.bidVO.bidder!=0}">
+										<c:if test="${secondHandVO.bidVO.bidder!=0}">
 											${secondHandVO.bidVO.bidder}
 										</c:if>
 										</div>
@@ -145,6 +145,10 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 
 							</div>
 							<!-- End Bordered Tabs -->
+							
+							<c:if test="${secondHandVO.bidVO.bidder == empVO.empId}">
+								<div class="col-lg-3 col-md-4 label">恭喜你得標,請與 ${secondHandVO.empVO.empName} 聯絡</div>
+							</c:if>
 							
 							bidViewOnly
 
