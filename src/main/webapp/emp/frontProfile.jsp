@@ -96,7 +96,7 @@
 
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">Email</div>
-										<div class="col-lg-9 col-md-8">${errorMsgs.empId}${errorMsgs.empName}${errorMsgs.depId}${errorMsgs.hiredate}${errorMsgs.phone}${errorMsgs.extension}</div>
+										<div class="col-lg-9 col-md-8"><font color="red">${errorMsgs.empId}${errorMsgs.empName}${errorMsgs.depId}${errorMsgs.hiredate}${errorMsgs.phone}${errorMsgs.extension}${errorMsgs.birthday}</font></div>
 									</div>
 
 								</div>

@@ -16,6 +16,7 @@ import com.permission.model.PermissionService;
 import com.permissionmapping.model.PermissionMappingService;
 import com.permissionmapping.model.PermissionMappingVO;
 import com.util.JavaMail;
+
 @MultipartConfig
 @WebServlet("/empServlet")
 public class EmpServlet extends HttpServlet {
@@ -31,9 +32,7 @@ public class EmpServlet extends HttpServlet {
 //		 Connection con=(Connection)session.getAttribute("con");
 		
 		
-		ServletContext context=getServletContext();
-	Connection con=(Connection)context.getAttribute("con");
-
+	
 		
 
 		req.setCharacterEncoding("UTF-8");
@@ -76,7 +75,7 @@ public class EmpServlet extends HttpServlet {
 				/***************************2.開始查詢資料*****************************************/
 				EmpService empSvc = new EmpService();
 //				EmpVO empVO = empSvc.getOneEmp(empId);
-				EmpVO empVO = empSvc.getOneEmp(empId,con);
+				EmpVO empVO = empSvc.getOneEmp(empId);
 				if (empVO == null) {
 					errorMsgs.put("empId","查無帳號");
 				}
@@ -116,7 +115,7 @@ public class EmpServlet extends HttpServlet {
 				/***************************2.開始查詢資料****************************************/
 				EmpService empSvc = new EmpService();
 //				EmpVO empVO = empSvc.getOneEmp(empId);
-				EmpVO empVO = empSvc.getOneEmp(empId,con);
+				EmpVO empVO = empSvc.getOneEmp(empId);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				String param = "?empId="  +empVO.getEmpId()+
@@ -240,7 +239,7 @@ public class EmpServlet extends HttpServlet {
 				/***************************2.開始修改資料*****************************************/
 				
 //				empSvc.updateEmp(newempVO);
-				empSvc.updateEmp(newempVO,con);
+				empSvc.updateEmp(newempVO);
 				
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
@@ -360,7 +359,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 						
 						
 //				empSvc.updateEmp(newempVO);
-				empSvc.updateEmp(newempVO,con);
+				empSvc.updateEmp(newempVO);
 				
 			
 				
@@ -464,7 +463,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				/***************************2.開始新增資料***************************************/
 				
 //				empSvc.addEmp(empVO);
-				empSvc.addEmp(newempVO,con);
+				empSvc.addEmp(newempVO);
 				EmpVO oldEmpVO=(EmpVO) session.getAttribute("empVO");
 				oldEmpVO=newempVO;
 				session.setAttribute("empVO", oldEmpVO);
@@ -498,7 +497,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				/***************************2.開始刪除資料***************************************/
 				EmpService empSvc = new EmpService();
 //				empSvc.deleteEmp(empId);
-				empSvc.deleteEmp(empId,con);
+				empSvc.deleteEmp(empId);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
 				String url = "/emp/listAllEmp.jsp";
@@ -571,7 +570,7 @@ return;
 					Integer empId=Integer.valueOf(empIds);
 					EmpService empSvc = new EmpService();
 //					EmpVO empVO=empSvc.login(empId,empPassword);
-					EmpVO empVO=empSvc.login(empId,empPassword,con);
+					EmpVO empVO=empSvc.login(empId,empPassword);
 					  if (empVO == null) {
 						
 							  errorMsgs.put("login","帳號密碼輸入錯誤");
@@ -644,7 +643,7 @@ return;
 					/***************************2.開始檢查帳號密碼***************************************/
 					Integer empId=Integer.valueOf(empIds);
 					EmpService empSvc = new EmpService();
-					EmpVO empVO=empSvc.login(empId,empPassword,con);
+					EmpVO empVO=empSvc.login(empId,empPassword);
 					PermissionMappingService pmSrv=new PermissionMappingService();
 					 List<Integer> empPm=pmSrv.getOneEmpPermissions(empId);
 				
@@ -798,47 +797,61 @@ return;
 		            
 		        }
 
-		   if ("deletePermission".equals(action)) { // 來自addEmp.jsp的請求  
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   //測試
+		   //
+		   
+		   
+//		   if ("testTimer".equals(action)) { // 來自addEmp.jsp的請求  
+//			   
+//
+//				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+//				
+//				
+//				req.setAttribute("errorMsgs", errorMsgs);
+//			
+//				
+//				EmpVO empVO=new EmpService().getOneEmp(Integer.valueOf(req.getParameter("empId")));
+//				String aString="改變員工狀態";
+//					
+//				TimerActionMedthod timerActionMedthod=new TimerActionMedthod();	
+//					
+//					timerActionMedthod.timerTest2(empVO,aString,2,10);
+//					
+//
+//				      String url = "/back/backtest.jsp";
+//						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+//						successView.forward(req, res);	
+//						return;
+//				
+//				    
+//		        }
+//			   
 			   
-
-				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-				req.setAttribute("errorMsgs", errorMsgs);
-			   
-			PermissionMappingService pmmSvc=new PermissionMappingService();
-			   PermissionService pmSvc=new PermissionService();
-//			List<String> allPermissionList=pmSvc.getAllPermissionName();
-			  String[] a=req.getParameterValues("permissionId");
-			  Integer empId=Integer.valueOf(req.getParameter("empId"));
-			  
-			 List<Integer> oldpm =pmmSvc.getOneEmpPermissions(empId);
-	            System.out.println(empId);
-			  for(int j=0; j < a.length; j++){
-				  System.out.println(a[j]);
-				  Integer pmId=Integer.valueOf(a[j]);
-				  if(oldpm.contains(pmId)) {
-					  pmmSvc.deleteEmpPm(empId, pmId);
-				  }
-				  else {
-						 String permissionName=pmSvc.getPermissionName(pmId);
-						  errorMsgs.put("permission","沒有"+permissionName);
-
-					  }
-				
-	  
-//		            Iterator<String> it=allPermissionList.iterator();
-//		            while (it.hasNext()) {
-//					String onePermission=it.next();
-//					if(onePermission.equals(a[j])) {
-//						System.out.println(j+1);
-//					}
-						
-					}		
-		            
-	
-		            
-		        }
-			   
-			   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
 					
 		   if ("listEmps_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
 				List<String> errorMsgs = new LinkedList<String>();
@@ -973,7 +986,7 @@ return;
 				}
 				
 				empVO.setEmpPassword(newpassword2);
-				empSvc.updateEmp(empVO,con);
+				empSvc.updateEmp(empVO);
 				
 				
 				

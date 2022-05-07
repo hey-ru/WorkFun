@@ -32,35 +32,11 @@ public class GroupBuyListService {
 		dao.updateIsPayIsPickUp(groupBuyListVO);
 
 	}
-
-	public List<GroupBuyListVO> insertAll(Map<String, String[]> map){
-
-		Set<String> menuKey= map.keySet();
-		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
-//		MenuVO menuVO = new MenuVO();
-		List<GroupBuyListVO> list = new ArrayList<GroupBuyListVO>();
-		
-//		  int count = 0;
-//          int talLength = 0;
-//          do {
-//          for (String key : menuKey) {
-//
-//          if ("qty".equals(key)) {
-//          talLength = map.get(key).length;
-//          groupBuyListVO.setQty((Integer) map.get(key)[count]);
-//          }
-//          if ("remark".equals(key)) {
-//        	  groupBuyListVO.setRemark((String) map.get(key)[count]);
-//          }
-//
-//          }
-//          count++;
-//          dao.insertItem(groupBuyListVO);
-//          list.add(groupBuyListVO);
-//          } while (count < talLength); 
-		return list; 
+//參團:下單多筆	
+	public void insertMany(List<GroupBuyListVO> listGBorder) {
+		dao.insertMany(listGBorder);
 	} 
-          
+	
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
 			Integer price, Integer qty, String remark) {
 

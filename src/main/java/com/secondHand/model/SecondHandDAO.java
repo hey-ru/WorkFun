@@ -42,6 +42,7 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
 	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand order by second_hand_id";
+	private static final String GET_ALL_DATE_STMT = "SELECT second_hand_id,create_time,update_time FROM second_hand order by second_hand_id";
 
 	@Override
 	public void insert(SecondHandVO secondHandVO) {
@@ -573,6 +574,62 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 		return list;
 	}
 
+	
+	
+	
+	public List<SecondHandVO> getAllDate() {
+		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
+		SecondHandVO secondHandVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_DATE_STMT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				secondHandVO = new SecondHandVO();
+				secondHandVO.setsecond_hand_id(rs.getInt("second_hand_id"));
+				
+				secondHandVO.setCreate_time(rs.getTimestamp("create_time"));
+				secondHandVO.setUpdate_time(rs.getTimestamp("update_time"));
+				list.add(secondHandVO);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	
+	
+	
 	public static void main(String[] args) throws Exception {
 
 		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();

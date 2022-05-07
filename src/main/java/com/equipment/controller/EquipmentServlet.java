@@ -210,8 +210,8 @@ public class EquipmentServlet extends HttpServlet {
 //			String eqNameReg = "^[\\u4e00-\\u9fa5_a-zA-Z0-9]+$";
 			if (eqName == null || eqName.trim().length() == 0) {
 				errorMsgs.put("eqName", "器材名稱: 請勿空白");
-			} 
-			
+			}
+
 //			else if (!eqName.trim().matches(eqNameReg)) {
 //				errorMsgs.put("eqName", "器材名稱: 只能是中文，英文字母、数字及_");
 //			}
@@ -224,22 +224,22 @@ public class EquipmentServlet extends HttpServlet {
 			}
 
 //			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
-			
+
 			// 0:上架 1:未歸還器材 2:維修中 3:下架
 			Integer eqStatus = null;
 			try {
 				eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
-			}catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				errorMsgs.put("eqStatus", "請選擇狀態");
 			}
-			
+
 			String introduction = req.getParameter("introduction");
-			if (introduction== null || introduction.trim().length() == 0) {
+			if (introduction == null || introduction.trim().length() == 0) {
 				errorMsgs.put("introduction", "器材介紹: 請勿空白");
-			} 
+			}
 
 			String spec = req.getParameter("spec");
-			if (spec== null || spec.trim().length() == 0) {
+			if (spec == null || spec.trim().length() == 0) {
 				errorMsgs.put("spec", "器材規格: 請勿空白");
 			}
 
@@ -275,8 +275,8 @@ public class EquipmentServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 			EquipmentService equipSvc = new EquipmentService();
-			EquipmentVO equipmentVO = equipSvc.updatEquipment(equipmentId, eqName, price, eqStatus, introduction, spec,
-					img1, img2, img3);
+			EquipmentVO equipmentVO = equipSvc.updatEquipment(equipmentId, eqName, price, eqStatus, spec, img1, img2,
+					img3);
 
 //			EqImageService equipImageSvc = new EqImageService();
 //			equipImageSvc.updateEqImage(equipmentId, image1, image2, image3);
@@ -300,8 +300,8 @@ public class EquipmentServlet extends HttpServlet {
 //			String eqNameReg = "^[\\u4e00-\\u9fa5_a-zA-Z0-9]+$";
 			if (eqName == null || eqName.trim().length() == 0) {
 				errorMsgs.put("eqName", "器材名稱: 請勿空白");
-			} 
-			
+			}
+
 //			else if (!eqName.trim().matches(eqNameReg)) {
 //				errorMsgs.put("eqName", "器材名稱: 只能是中文，英文字母、数字及_");
 //			}
@@ -313,24 +313,23 @@ public class EquipmentServlet extends HttpServlet {
 				errorMsgs.put("price", "金額請填數字");
 			}
 
-			
 //			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
-			
+
 			// 0:上架 3:下架
 			Integer eqStatus = null;
 			try {
 				eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
-			}catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				errorMsgs.put("eqStatus", "請選擇狀態");
 			}
 
-			String introduction = req.getParameter("introduction");
-			if (introduction== null || introduction.trim().length() == 0) {
-				errorMsgs.put("introduction", "器材介紹: 請勿空白");
-			} 
+//			String introduction = req.getParameter("introduction");
+//			if (introduction == null || introduction.trim().length() == 0) {
+//				errorMsgs.put("introduction", "器材介紹: 請勿空白");
+//			}
 
 			String spec = req.getParameter("spec");
-			if (spec== null || spec.trim().length() == 0) {
+			if (spec == null || spec.trim().length() == 0) {
 				errorMsgs.put("spec", "器材規格: 請勿空白");
 			}
 
@@ -362,7 +361,7 @@ public class EquipmentServlet extends HttpServlet {
 			equipmentVO.setEqName(eqName);
 			equipmentVO.setPrice(price);
 			equipmentVO.setEqStatus(eqStatus);
-			equipmentVO.setIntroduction(introduction);
+//			equipmentVO.setIntroduction(introduction);
 			equipmentVO.setSpec(spec);
 			equipmentVO.setImg1(img1);
 			equipmentVO.setImg2(img2);
@@ -381,7 +380,7 @@ public class EquipmentServlet extends HttpServlet {
 
 			/*************************** 2.開始新增資料 ***************************************/
 			EquipmentService equipSvc = new EquipmentService();
-			equipSvc.addEquipment(eqName, price, eqStatus, introduction, spec, img1, img2, img3);
+			equipSvc.addEquipment(eqName, price, eqStatus, spec, img1, img2, img3);
 
 //			System.out.println(equipSvc.getLast().getEqId());
 

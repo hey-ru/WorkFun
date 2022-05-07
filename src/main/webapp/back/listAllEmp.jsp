@@ -372,6 +372,7 @@
 		<th>頭貼</th>
 		<th>信箱</th>
 		<th>生日</th>
+		<th>狀態</th>
 		<th></th>
 		<!-- <th></th> -->
 		
@@ -400,6 +401,7 @@
 											></td>
 								<td>${empVOSearch.mail}</td>
 									<td>${empVOSearch.birthday}</td>
+										<td>${empVOSearch.empStatus}</td>
 										
 			
 			<td>

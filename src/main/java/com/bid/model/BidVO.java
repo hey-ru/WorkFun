@@ -60,4 +60,6 @@ public class BidVO implements Serializable{
 		this.empVO = empVO;
 	}
 	
+	
+	
 }

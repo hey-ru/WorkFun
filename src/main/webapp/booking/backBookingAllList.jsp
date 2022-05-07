@@ -117,8 +117,8 @@ int itemsPerPage = 10;
 							<div class="row">
 								<div class="col-sm-6">
 									<table class="table table-bordered dataTable" id="dataTable"
-										 role="grid" cellspacing="0"
-										aria-describedby="dataTable_info" style="width: 100%;">
+										role="grid" cellspacing="0" aria-describedby="dataTable_info"
+										style="width: 100%;">
 
 										<thead>
 											<tr role=" row">
@@ -133,6 +133,12 @@ int itemsPerPage = 10;
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
 													style="width: 80px;">員工編號</th>
+
+												<th class="sorting sorting_asc" tabindex="0"
+													aria-controls="dataTable" rowspan="1" colspan="1"
+													aria-sort="ascending"
+													aria-label="Name: activate to sort column descending"
+													style="width: 80px;">器材名稱</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
@@ -171,6 +177,7 @@ int itemsPerPage = 10;
 												<tr>
 													<td>${bookingVO.bookingId}</td>
 													<td>${bookingVO.empId}</td>
+													<td>${bookingVO.equipmentVO.eqName}</td>
 													<td>${bookingVO.startDate}</td>
 													<td>${bookingVO.endDate}</td>
 
@@ -182,44 +189,50 @@ int itemsPerPage = 10;
 													<%-- 															<c:when test="${bookingVO.returnStatus == 3}">逾期歸還(需罰金)</c:when> --%>
 													<%-- 															<c:when test="${bookingVO.returnStatus == 4}">未歸還(需罰金)</c:when> --%>
 													<%-- 														</c:choose></td> --%>
-													
-													<form method="post"	action="<%=request.getContextPath()%>/booking/booking.do">
-													
-													<td><label for="inputNumber"
-														class="col-sm-2 col-form-label"></label>
-														<div class="col-sm-10">
-															<select name="returnStatus" id="">
-																<option value="0"
-																	${(bookingVO.returnStatus==0)? 'selected':'' }>已歸還</option>
-																<option value="1"
-																	${(bookingVO.returnStatus==1)? 'selected':'' }>租借中</option>
-																<option value="2"
-																	${(bookingVO.returnStatus==2)? 'selected':'' }>未領取器材</option>
-																<option value="3"
-																	${(bookingVO.returnStatus==3)? 'selected':'' }>逾期歸還(需罰金)</option>
-																<option value="4"
-																	${(bookingVO.returnStatus==4)? 'selected':'' }>未歸還(需罰金)</option>
-																<option value="5"
-																	${(bookingVO.returnStatus==5)? 'selected':'' }>已登記預約</option>
-															</select> ${errorMsgs.returnStatus}
-														</div></td>
+
+													<form method="post"
+														action="<%=request.getContextPath()%>/booking/booking.do">
+
+														<td><label for="inputNumber"
+															class="col-sm-2 col-form-label"></label>
+															<div class="col-sm-10">
+																<select name="returnStatus" id="">
+																	<option value="0"
+																		${(bookingVO.returnStatus==0)? 'selected':'' }>已歸還</option>
+																	<option value="1"
+																		${(bookingVO.returnStatus==1)? 'selected':'' }>租借中</option>
+																	<option value="2"
+																		${(bookingVO.returnStatus==2)? 'selected':'' }>未領取器材</option>
+																	<option value="3"
+																		${(bookingVO.returnStatus==3)? 'selected':'' }>逾期歸還(需罰金)</option>
+																	<option value="4"
+																		${(bookingVO.returnStatus==4)? 'selected':'' }>未歸還(需罰金)</option>
+																	<option value="5"
+																		${(bookingVO.returnStatus==5)? 'selected':'' }>已登記預約</option>
+																</select> ${errorMsgs.returnStatus}
+															</div></td>
 
 
-													<td>${bookingVO.overdueDate}</td>
-													<td>${bookingVO.overduePrice}</td>
+														<td>${bookingVO.overdueDate}</td>
+														<td>${bookingVO.overduePrice}</td>
 
 
-													<td>
-														<div class="row mb-3">
-															<input type="hidden" name="action"	value="updateReturnStatus"> 
-															<input type="hidden" name="bookingId" value="${bookingVO.bookingId}">
-															<input type="hidden" name="returnStatus" value="${bookingVO.returnStatus}"> 
-															<input type="submit" value="儲存" class="btn btn-dark mb-2 mt-1 col"	style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
-						
-														</div>
-													</td>
+														<td>
+															<div class="row mb-3">
+																<input type="hidden" name="action"
+																	value="updateReturnStatus"> <input
+																	type="hidden" name="bookingId"
+																	value="${bookingVO.bookingId}"> <input
+																	type="hidden" name="returnStatus"
+																	value="${bookingVO.returnStatus}"> <input
+																	type="submit" value="儲存"
+																	class="btn btn-dark mb-2 mt-1 col"
+																	style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
+
+															</div>
+														</td>
 													</form>
-												
+
 												</tr>
 											</c:forEach>
 										</tbody>

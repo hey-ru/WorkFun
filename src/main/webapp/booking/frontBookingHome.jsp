@@ -22,29 +22,11 @@ pageContext.setAttribute("list", list);
 .portfolio-wrap {
 	width: 300px;
 	height: 400px;
-	display: flex;
-	background: transparent !important;
+	display: flex
 }
 
-.portfolio {
-	background: transparent !important;
-}
-
-.submitbtn {
-	margin-top: 10px;
-	background-color: transparent;
-	border: 2px solid #3399ff;
-	color: #3399ff;
-	border-radius: 10%;
-	padding: 5px 10px;
-	font-weight: bold;
-}
-
-.submitbtn:hover {
-	background-color: #3399ff;
-	border: 2px solid #3399ff;
-	color: white;
-	font-weight: bold;
+.section-title h2 {
+	margin-bottom: 0px;
 }
 </style>
 
@@ -54,21 +36,25 @@ pageContext.setAttribute("list", list);
 	<!-- ======= Header ======= -->
 
 	<%@ include file="/design/frontheader.jsp"%>
+
 	<!-- End Header -->
 
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
+
+	<!-- ======= 內容開始 ======= -->
+
+	<div style="height: var(- -header-height);"></div>
 	<main id="main">
 
 		<section id="portfolio" class="portfolio">
 			<div class="container" data-aos="fade-up">
-
 				<div class="section-title">
-					<h2>器材總覽</h2>
-
+					<h2>租 大於 買 = z 大於 b</h2>
+					<p></p>
 				</div>
 
 				<div class="row" style="justify-content: end;">
-					<div class="col-10"
+					<div class="col-9"
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1" METHOD="post"
 							ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
@@ -89,6 +75,7 @@ pageContext.setAttribute("list", list);
 							<!-- 									<option>顯示全部</option> -->
 							<!-- 								</select> -->
 							<!-- 							</div> -->
+
 							<!-- 							<div class="form-group col-3" style="display: inline-block"> -->
 							<!-- 								<input type="text" class="form-control" -->
 							<!-- 									id="exampleFormControlInput1" placeholder="輸入名稱" -->
@@ -133,7 +120,7 @@ pageContext.setAttribute("list", list);
 							<div class="portfolio-wrap">
 								<div
 									style="color: white; padding: 5px; z-index: 99; background: rgba(0, 255, 204, 0.4); height: 50px; width: 300px;">
-									<h5>${equipmentVO.equipmentId}
+									<h5>
 										<strong>${equipmentVO.eqName}</strong>
 									</h5>
 								</div>
@@ -142,36 +129,30 @@ pageContext.setAttribute("list", list);
 									<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}
 									"
 									class="img-fluid"
-									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
+									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; bottom: 0; left: 0; right: 0; margin: auto;">
+								
+								<div class="portfolio-info">
+									<div class="portfolio-links"></div>
 
+									<FORM METHOD="post"
+										ACTION="<%=request.getContextPath()%>/booking/booking.do"
+										style="margin-bottom: 0px;">
+										<input type="submit" class="btn btn-outline-warning"
+											value="點我預約"> <input type="hidden" name="bookingId"
+											value="${booking.bookingId}"> <input type="hidden"
+											name="shop_id" value="${groupBuyVO.shop_id}">
+										<%-- 												<input type="hidden" name="buyer" value="${empVO.empId}"> --%>
+										<%-- 												<input type="hidden" name="buyer_name" value="${empVO.empName}"> --%>
+										<input type="hidden" name="action" value="showGB">
+									</FORM>
 
-
-
-								<!-- 								<div class="portfolio-info"> -->
-								<%-- 									<h4>${secondHandVO.name}</h4> --%>
-								<%-- 									<p>[競標截止時間 ${secondHandVO.end_time}]</p> --%>
-								<!-- 									<div class="portfolio-links"> -->
-								<!-- 										<FORM METHOD="post" -->
-								<%-- 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" --%>
-								<!-- 											style="margin-bottom: 0px;"> -->
-								<%-- 											<c:if test="${empVO.empId == secondHandVO.saler}"> --%>
-								<!-- 												<input type="submit" value="修改" class="submitbtn"> -->
-								<%-- 											</c:if> --%>
-								<%-- 											<c:if test="${empVO.empId != secondHandVO.saler}"> --%>
-								<%-- 												<a href="<%=request.getContextPath()%>/bid/bidHome.jsp">參加競標</a> --%>
-								<%-- 											</c:if> --%>
-								<!-- 											<input type="hidden" name="second_hand_id" -->
-								<%-- 												value="${secondHandVO.second_hand_id}"> <input --%>
-								<!-- 												type="hidden" name="action" value="getOneForUpdate"> -->
-								<!-- 										</FORM> -->
-								<!-- 									</div> -->
-								<!-- 								</div> -->
+								</div>
 							</div>
 						</div>
 					</c:forEach>
 				</div>
-
-				<%@ include file="/design/page2.file"%>
+			</div>
+			<%@ include file="/design/page2.file"%>
 		</section>
 	</main>
 	<!-- End #main -->

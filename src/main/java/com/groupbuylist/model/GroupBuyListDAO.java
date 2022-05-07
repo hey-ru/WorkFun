@@ -27,35 +27,63 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 //	參團者新增一筆參團ok
 	private static final String INSERT_STMT = "INSERT INTO groupbuylist (gb_id, buyer, buyer_name, menu_id, item, "
 			+ "price, qty, remark) " + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
-	
+
 //	-- 1.查詢我的參團: 查詢各團總額及狀態(主頁查詢畫面, 依結束時間降冪排序)-->join groupbuy
 	private static final String GET_MYGB = "SELECT * "
 			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gb_id ";
-			
+
 //	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目ok	
 	private static final String DELETEMYGB = "DELETE FROM groupbuylist where buyer = ? and gb_id = ?";
 
 //	-- 2. 檢視按鈕: 查詢 我的單筆明細ok
 	private static final String GET_ONE_BYBUYER = "SELECT * FROM groupbuylist WHERE buyer = ? AND gb_id= ? GROUP BY gbList_id ";
-	
+
 //	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註ok
 	private static final String UPDATE = "UPDATE groupbuylist set qty=?, remark=? where buyer=? and gbList_id=?";
 
 //	-- 2-2. 刪除按鈕: (揪團截止前)刪除 單個品項ok
 	private static final String DELETE = "DELETE FROM groupbuylist where gbList_id = ?";
-	
 
 //	[後台]: 查詢所有參團明細ok
 	private static final String GET_ALL_STMT = "SELECT * FROM groupbuylist order by gb_id";
 
-	//PK ok
+	// PK ok
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuylist where gbList_id = ?";
-	
+
 //	[揪團管理]: 修改取貨付款
 	private static final String UPDATE_FROMGBOWNER_STMT = "UPDATE groupbuylist SET is_pay = ?, is_pickup = ? WHERE gb_id = ? AND buyer = ?";
-	
+
 //===================================================================================================	
-	
+
+//	參團者新增多筆 
+	@Override
+	public void insertMany(List<GroupBuyListVO> listGBorder) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			// 新增多筆項目
+			for (GroupBuyListVO groupBuyListVO : listGBorder) {
+				pstmt.setInt(1, groupBuyListVO.getGb_id());
+				pstmt.setInt(2, groupBuyListVO.getBuyer());
+				pstmt.setString(3, groupBuyListVO.getBuyer_name());
+				pstmt.setInt(4, groupBuyListVO.getMenu_id());
+				pstmt.setString(5, groupBuyListVO.getItem());
+				pstmt.setInt(6, groupBuyListVO.getPrice());
+				pstmt.setInt(7, groupBuyListVO.getQty());
+				pstmt.setString(8, groupBuyListVO.getRemark());
+				pstmt.executeUpdate();
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		}
+	}
+
 //	[揪團]: 修改取貨付款
 	@Override
 	public void updateIsPayIsPickUp(GroupBuyListVO groupBuyListVO) {
@@ -129,7 +157,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 	@Override
 	public List<GroupBuyListVO> getMyGB(Integer buyer) {
 		List<GroupBuyListVO> mygblist = new ArrayList<GroupBuyListVO>();
-		
+
 		GroupBuyListVO groupBuyListVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -171,7 +199,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		}
 		return mygblist;
 	}
-	
+
 //	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目 
 	public void deleteMyGb(Integer buyer, Integer gb_id) {
 
@@ -226,7 +254,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 				groupBuyListVO.setIs_pay(rs.getInt(10));
 				groupBuyListVO.setIs_pickup(rs.getInt(11));
 				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
-				
+
 				onelist.add(groupBuyListVO);
 			}
 		} catch (SQLException se) {
@@ -235,7 +263,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		}
 		return onelist;
 	}
-	
+
 //	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註
 	@Override
 	public void updateItem(GroupBuyListVO groupBuyListVO) {
@@ -435,7 +463,5 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		}
 		return list;
 	}
-
-
 
 }

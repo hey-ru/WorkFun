@@ -174,6 +174,20 @@ public class SecondHandServlet extends HttpServlet {
 				System.out.println(3);
 				
 				Integer second_hand_id = Integer.valueOf(req.getParameter("second_hand_id").trim());
+				
+				SecondHandVO newSecondHandVO = new SecondHandVO();
+				newSecondHandVO.setBid_winner(bid_winner);
+				newSecondHandVO.setDeal_price(deal_price);
+				newSecondHandVO.setName(name);
+				newSecondHandVO.setBottom_price(bottom_price);
+				newSecondHandVO.setTop_price(top_price);
+				newSecondHandVO.setStart_time(start_time);
+				newSecondHandVO.setEnd_time(end_time);
+				newSecondHandVO.setIs_deal(is_deal);
+				newSecondHandVO.setImg1(img1);
+				newSecondHandVO.setImg2(img2);
+				newSecondHandVO.setImg3(img3);
+				newSecondHandVO.setsecond_hand_id(second_hand_id);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -184,11 +198,13 @@ public class SecondHandServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始修改資料*****************************************/
+//				SecondHandService secondHandService = new SecondHandService();
+//				SecondHandVO secondHandVO = secondHandService.updateSecondHand(bid_winner, deal_price, name, bottom_price, top_price, start_time, end_time, is_deal, img1, img2, img3, second_hand_id);
 				SecondHandService secondHandService = new SecondHandService();
-				SecondHandVO secondHandVO = secondHandService.updateSecondHand(bid_winner, deal_price, name, bottom_price, top_price, start_time, end_time, is_deal, img1, img2, img3, second_hand_id);
+				secondHandService.updateSecondHand(newSecondHandVO);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("secondHandVO", secondHandVO); // 資料庫update成功後,正確的的secondHandVO物件,存入req
+				req.setAttribute("secondHandVO", newSecondHandVO); // 資料庫update成功後,正確的的secondHandVO物件,存入req
 				String url = "/secondhand/secondHandHome.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交seondHandHome.jsp
 				successView.forward(req, res);
