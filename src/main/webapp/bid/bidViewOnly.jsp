@@ -79,20 +79,6 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 											style="max-height: 100%; max-width: 100%;">
 									</button>
 								</div>
-								<!-- 								Modal -->
-								<!-- 								<div class="modal fade" id="pic3" tabindex="-1" -->
-								<!-- 									aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-								<!-- 									<div class="modal-dialog"> -->
-								<!-- 										<div class="modal-content"> -->
-								<!-- 											<div class="modal-body"> -->
-								<!-- 												<img -->
-								<%-- 													src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}" --%>
-								<!-- 													style="max-height: 100%; max-width: 100%;"> -->
-								<!-- 											</div> -->
-								<!-- 										</div> -->
-								<!-- 									</div> -->
-								<!-- 								</div> -->
-								<!-- 								Modal_end -->
 								<!-- Button trigger modal end-->
 							</div>
 						</div>
@@ -159,46 +145,9 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 
 							</div>
 							<!-- End Bordered Tabs -->
-
-							<c:if test="${secondHandVO.bidVO.bidder == empVO.empId}">
-								<br>您已經是最高出價者<br>
-							</c:if>
-							<c:if test="${secondHandVO.bidVO.bidder != empVO.empId}">
-								<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/bid/BidServlet" name="form1">
-									<div class="form-group col-3" style="display: inline-block">
-										<input type="text" class="form-control"
-											id="exampleFormControlInput1" placeholder="輸入競標金額"
-											style="border: gray solid 2px;" name="price"
-											<c:if test="${secondHandVO.bidVO.bidder==0}">
-											value="${secondHandVO.bottom_price}"
-											</c:if>
-											<c:if test="${secondHandVO.bidVO.bidder!=0}">
-											value="${secondHandVO.bidVO.price+1}"
-											</c:if>
-										>
-									</div>
-									<input type="hidden" name="bid_id" value="${secondHandVO.bidVO.bid_id}">
-									<input type="hidden" name="top_price" value="${secondHandVO.top_price}">
-									<input type="hidden" name="bidder" value="${empVO.empId}">
-									<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
-									<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block;" value="送出"></input>
-									<input type="hidden" name="action" value="update">
-								</form>
-							</c:if>
 							
-<%-- 							${empVO.empId} --%>
+							bidViewOnly
 
-							<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/bid/BidServlet"
-								name="form1">
-								<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block;" value="我要直購">
-								<input type="hidden" name="bid_id" value="${secondHandVO.bidVO.bid_id}">
-								<input type="hidden" name="top_price" value="${secondHandVO.top_price}">
-								<input type="hidden" name="bidder" value="${empVO.empId}">
-								<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
-								<input type="hidden" name="action" value="updateWithTopPrice">
-							</form>
-<%-- 							${param.second_hand_id} --%>
-<%-- 							<%=request.getParameter("second_hand_id")%> --%>
 						</div>
 					</div>
 				</div>

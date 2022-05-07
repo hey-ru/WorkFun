@@ -137,7 +137,7 @@ public class BidJDBCDAO implements BidDAO_interface {
 			pstmt.setInt(count, newBidVO.getBid_id());
 
 			pstmt.executeUpdate();
-			System.out.println("update " + (count - 2) + " data!");
+//			System.out.println("update " + (count - 2) + " data!");
 
 			// Handle any driver errors
 		} catch (Exception e) {

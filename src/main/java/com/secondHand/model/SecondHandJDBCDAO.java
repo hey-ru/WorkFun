@@ -321,7 +321,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			pstmt.setInt(count, newSecondHandVO.getsecond_hand_id());
 
 			pstmt.executeUpdate();
-			System.out.println("update " + (count - 2) + " data!");
+//			System.out.println("update " + (count - 2) + " data!");
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {

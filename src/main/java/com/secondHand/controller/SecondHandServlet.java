@@ -34,7 +34,7 @@ public class SecondHandServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println(action);
+//		System.out.println(action);
 
 		if ("getOneForUpdate".equals(action)) { // 來自secondHandHome.jsp的請求
 
