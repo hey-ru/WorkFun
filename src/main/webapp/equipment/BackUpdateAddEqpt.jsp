@@ -100,11 +100,10 @@
 									</label>
 									<div class="col-sm-10">
 										<input name="eqName" type="text" class="form-control"
-											autofocus value="${param.eqName}"><font color=#ff0000
-											>${errorMsgs.eqName}</font>										
+											autofocus value="${param.eqName}"><font color=#ff0000>${errorMsgs.eqName}</font>
 									</div>
 								</div>
-								
+
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">金額:
 									</label>
@@ -124,7 +123,7 @@
 											<option value="1" ${(param.eqStatus==1)? 'selected':'' }>未歸還器材</option>
 											<option value="2" ${(param.eqStatus==2)? 'selected':'' }>送修中</option>
 											<option value="3" ${(param.eqStatus==3)? 'selected':'' }>下架</option>
-										</select>  <font color=#ff0000>${errorMsgs.eqStatus}</font>
+										</select> <font color=#ff0000>${errorMsgs.eqStatus}</font>
 									</div>
 								</div>
 
@@ -139,7 +138,7 @@
 								<!-- 									</div> -->
 								<!-- 								</div> -->
 
-<%-- <textarea name="info">${info}</textarea> --%>
+
 
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">詳細規格:
@@ -147,8 +146,8 @@
 									<div class="col-sm-10">
 										<input name="spec1" type="hidden" id="spec1"
 											class="form-control" value="${param.spec}" />
-										<textarea  name="spec" id="spec" rows="9" cols="64" placeholder="${param.spec}"
-											class="form-control"></textarea>
+										<textarea name="spec" id="spec" rows="9" cols="64"
+											class="form-control">${param.spec}</textarea>
 										<font color=#ff0000>${errorMsgs.spec}</font>
 									</div>
 								</div>

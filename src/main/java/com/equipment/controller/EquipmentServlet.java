@@ -192,7 +192,7 @@ public class EquipmentServlet extends HttpServlet {
 					+ equipmentVO.getSpec() + "&img1=" + equipmentVO.getImg1() + "&img2=" + equipmentVO.getImg2()
 					+ "&img3=" + equipmentVO.getImg3();
 
-			String url = "/equipment/updateBackAddEqpt.jsp" + param;
+			String url = "/equipment/backUpdateAddEqpt.jsp" + param;
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
 			successView.forward(req, res);
 		}
@@ -203,6 +203,7 @@ public class EquipmentServlet extends HttpServlet {
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer equipmentId = Integer.valueOf(req.getParameter("equipmentId").trim());
+			System.out.println("equipmentId= " + equipmentId);
 
 //			Integer imageId = Integer.valueOf(req.getParameter("imageId").trim());
 
@@ -242,6 +243,7 @@ public class EquipmentServlet extends HttpServlet {
 			if (spec == null || spec.trim().length() == 0) {
 				errorMsgs.put("spec", "器材規格: 請勿空白");
 			}
+			System.out.println("spec= " + spec);
 
 			EquipmentVO oldEquipmentVO = new EquipmentService().getByEqId(equipmentId);
 
@@ -273,6 +275,7 @@ public class EquipmentServlet extends HttpServlet {
 				return;
 			}
 
+			System.out.println("成功");
 			/*************************** 2.開始修改資料 *****************************************/
 			EquipmentService equipSvc = new EquipmentService();
 			EquipmentVO equipmentVO = equipSvc.updatEquipment(equipmentId, eqName, price, eqStatus, spec, img1, img2,
@@ -283,6 +286,9 @@ public class EquipmentServlet extends HttpServlet {
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("equipmentVO", equipmentVO);
+			
+			System.out.println(equipmentVO);
+			
 			String url = "/equipment/backOneEqpt.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
