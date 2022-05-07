@@ -145,7 +145,7 @@ pageContext.setAttribute("list", list);
 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet"
 											style="margin-bottom: 0px;">
 											<c:if test="${empVO.empId == secondHandVO.saler}">
-											<input type="submit" value="修改" class="submitbtn">
+											<input type="submit" value="修改" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1")!=-1 ? "hidden":""  } >
 											</c:if>
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
@@ -154,9 +154,9 @@ pageContext.setAttribute("list", list);
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/bid/bidHome.jsp"
 											style="margin-bottom: 0px;">
-											<c:if test="${empVO.empId != secondHandVO.saler}">
-											<input type="submit" value="參加競標" class="submitbtn">
-											</c:if>
+											<c:if test="${empVO.empId != secondHandVO.saler}"> 
+											<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1")!=-1 ? "":"hidden"  } >
+											 </c:if> 	
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
 										</FORM>

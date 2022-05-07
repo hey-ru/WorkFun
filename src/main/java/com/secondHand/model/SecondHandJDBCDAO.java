@@ -31,6 +31,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
 	private static final String GET_BY_IS_DEAL = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where is_deal like \"%\"?\"%\"";
 	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand order by second_hand_id";
+	private static final String GET_ALL_DATE_STMT = "SELECT second_hand_id,is_deal,start_time,end_time FROM second_hand order by second_hand_id";
 
 	@Override
 	public void insert(SecondHandVO secondHandVO) {
@@ -646,6 +647,60 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		fis.close();
 		return buffer;
 	}
+	
+
+	public List<SecondHandVO> getAllDate() {
+		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
+		SecondHandVO secondHandVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_DATE_STMT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				secondHandVO = new SecondHandVO();
+				secondHandVO.setsecond_hand_id(rs.getInt("second_hand_id"));
+				secondHandVO.setIs_deal(rs.getInt("is_deal"));
+				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
+				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
+				list.add(secondHandVO);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	
 
 	public static void main(String[] args) throws Exception {
 
@@ -771,6 +826,14 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //			System.out.print(listSecondHandVO.getCreate_time() + ",");
 //			System.out.println(listSecondHandVO.getUpdate_time());
 //		}
+		SecondHandVO secondHandVO=new SecondHandVO();
+		SecondHandJDBCDAO secondHandJDBCDAO=new SecondHandJDBCDAO();
+	System.out.println(secondHandJDBCDAO.getById(1012).getBidVO().getBidder());	 
+		
+		System.out.println(secondHandJDBCDAO.getById(1012).getBidVO().getBidder()==0);
+		
+		
+		
 	}
 
 }

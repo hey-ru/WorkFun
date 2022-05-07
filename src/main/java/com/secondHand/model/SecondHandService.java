@@ -53,22 +53,9 @@ public class SecondHandService {
 		return secondHandVO;
 	}
 
-	public SecondHandVO updateSecondHand(Integer bid_winner, Integer deal_price, String name, Integer bottom_price, Integer top_price, Timestamp start_time, Timestamp end_time, Integer is_deal, byte[] img1, byte[] img2, byte[] img3, Integer second_hand_id) {
+	public SecondHandVO updateSecondHand(SecondHandVO secondHandVO) {
 
-		SecondHandVO secondHandVO = new SecondHandVO();
-
-		secondHandVO.setBid_winner(bid_winner);
-		secondHandVO.setDeal_price(deal_price);
-		secondHandVO.setName(name);
-		secondHandVO.setBottom_price(bottom_price);
-		secondHandVO.setTop_price(top_price);
-		secondHandVO.setStart_time(start_time);
-		secondHandVO.setEnd_time(end_time);
-		secondHandVO.setIs_deal(is_deal);
-		secondHandVO.setImg1(img1);
-		secondHandVO.setImg2(img2);
-		secondHandVO.setImg3(img3);
-		secondHandVO.setsecond_hand_id(second_hand_id);
+		
 		dao.update(secondHandVO);
 
 		return secondHandVO;
@@ -88,5 +75,8 @@ public class SecondHandService {
 	
 	public List<SecondHandVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
+	}
+	public List<SecondHandVO> getAllDate() {
+		return dao.getAllDate();
 	}
 }
