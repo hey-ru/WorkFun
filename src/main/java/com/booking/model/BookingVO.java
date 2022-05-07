@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class BookingVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer bookingId;
 	private Integer equipmentId;
 	private Integer empId;
@@ -84,5 +84,13 @@ public class BookingVO implements java.io.Serializable {
 
 	public void setOverduePrice(Integer overduePrice) {
 		this.overduePrice = overduePrice;
+	}
+
+	
+	// for join eqName from equipmentId
+	public com.equipment.model.EquipmentVO getEquipmentVO() {
+		com.equipment.model.EquipmentService equipmentSvc = new com.equipment.model.EquipmentService();
+		com.equipment.model.EquipmentVO equipmentVO = equipmentSvc.getByEqId(equipmentId);
+		return equipmentVO;
 	}
 }

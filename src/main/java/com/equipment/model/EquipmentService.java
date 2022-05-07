@@ -9,15 +9,14 @@ public class EquipmentService {
 		dao = new EquipmentJDBCDAO();
 	}
 
-	public EquipmentVO addEquipment(String eqName, Integer price, Integer eqStatus, String introduction, String spec,
-			byte[] img1, byte[] img2, byte[] img3) {
+	public EquipmentVO addEquipment(String eqName, Integer price, Integer eqStatus, String spec, byte[] img1,
+			byte[] img2, byte[] img3) {
 
 		EquipmentVO equipmentVO = new EquipmentVO();
 
 		equipmentVO.setEqName(eqName);
 		equipmentVO.setPrice(price);
 		equipmentVO.setEqStatus(eqStatus);
-		equipmentVO.setIntroduction(introduction);
 		equipmentVO.setSpec(spec);
 		equipmentVO.setImg1(img1);
 		equipmentVO.setImg2(img2);
@@ -28,7 +27,7 @@ public class EquipmentService {
 	}
 
 	public EquipmentVO updatEquipment(Integer equipmentId, String eqName, Integer price, Integer eqStatus,
-			String introduction, String spec, byte[] img1, byte[] img2, byte[] img3) {
+			 String spec, byte[] img1, byte[] img2, byte[] img3) {
 
 		EquipmentVO equipmentVO = new EquipmentVO();
 
@@ -36,7 +35,6 @@ public class EquipmentService {
 		equipmentVO.setEqName(eqName);
 		equipmentVO.setPrice(price);
 		equipmentVO.setEqStatus(eqStatus);
-		equipmentVO.setIntroduction(introduction);
 		equipmentVO.setSpec(spec);
 		equipmentVO.setImg1(img1);
 		equipmentVO.setImg2(img2);

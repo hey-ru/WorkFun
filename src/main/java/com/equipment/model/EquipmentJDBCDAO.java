@@ -14,7 +14,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
 
-	private static final String INSERT = "INSERT INTO equipment (eq_name,price,eq_status,introduction,spec,img1,img2,img3) VALUES (?,?,?,?,?,?,?,?)";
+	private static final String INSERT = "INSERT INTO equipment (eq_name,price,eq_status,spec,img1,img2,img3) VALUES (?,?,?,?,?,?,?)";
 	private static final String UPDATE = "UPDATE equipment set ";
 	private static final String DELETE_BY_EQID = "DELETE FROM equipment where equipment_id = ?";
 	private static final String DELETE_BY_EQNAME = "DELETE FROM equipment where eq_name = ?";
@@ -39,11 +39,10 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			pstmt.setString(1, equipmentVO.getEqName());
 			pstmt.setInt(2, equipmentVO.getPrice());
 			pstmt.setInt(3, equipmentVO.getEqStatus());
-			pstmt.setString(4, equipmentVO.getIntroduction());
-			pstmt.setString(5, equipmentVO.getSpec());
-			pstmt.setBytes(6, equipmentVO.getImg1());
-			pstmt.setBytes(7, equipmentVO.getImg2());
-			pstmt.setBytes(8, equipmentVO.getImg3());
+			pstmt.setString(4, equipmentVO.getSpec());
+			pstmt.setBytes(5, equipmentVO.getImg1());
+			pstmt.setBytes(6, equipmentVO.getImg2());
+			pstmt.setBytes(7, equipmentVO.getImg3());
 			
 
 			pstmt.executeUpdate();
@@ -101,9 +100,9 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			if (newequipment.getEqStatus() != null) {
 				sb.append("eq_status=?, ");
 			}
-			if (newequipment.getIntroduction() != null) {
-				sb.append("introduction=?, ");
-			}
+//			if (newequipment.getIntroduction() != null) {
+//				sb.append("introduction=?, ");
+//			}
 			if (newequipment.getSpec() != null) {
 				sb.append("spec=?, ");
 			}
@@ -145,10 +144,10 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 				pstmt.setInt(count, newequipment.getEqStatus());
 			}
 
-			if (newequipment.getIntroduction() != null) {
-				count++;
-				pstmt.setString(count, newequipment.getIntroduction());
-			}
+//			if (newequipment.getIntroduction() != null) {
+//				count++;
+//				pstmt.setString(count, newequipment.getIntroduction());
+//			}
 
 			if (newequipment.getSpec() != null) {
 				count++;

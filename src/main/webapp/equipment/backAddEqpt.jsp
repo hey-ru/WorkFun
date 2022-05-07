@@ -9,6 +9,10 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+
+
+
+
 <title>新增器材商品</title>
 
 <!-- Favicons -->
@@ -58,13 +62,12 @@
 
 
 <body>
-
 	<script type="text/javascript">
 	function changeText(){
-		document.getElementById("introduction").value=document.getElementById("introduction1").value;
+		document.getElementById("spec").value=document.getElementById("spec1").value;
 	}
 </script>
-	
+
 	<!-- ======= Header ======= -->
 
 	<!-- End Header -->
@@ -89,8 +92,8 @@
 									</label>
 									<div class="col-sm-10">
 										<input name="eqName" type="text" class="form-control"
-											autofocus value="${param.eqName}">
-										${errorMsgs.eqName}<br>
+											autofocus value="${param.eqName}"><font color=#ff0000
+											>${errorMsgs.eqName}</font>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -98,7 +101,7 @@
 									</label>
 									<div class="col-sm-10">
 										<input name="price" type="text" class="form-control"
-											value="${param.price}"> ${errorMsgs.price}<br>
+											value="${param.price}"> <font color=#ff0000>${errorMsgs.price}</font>
 									</div>
 								</div>
 
@@ -110,7 +113,7 @@
 											<option value="" selected>請選擇狀態</option>
 											<option value="0" ${(param.eqStatus==0)? 'selected':'' }>上架</option>
 											<option value="3" ${(param.eqStatus==3)? 'selected':'' }>下架</option>
-										</select> ${errorMsgs.eqStatus}
+										</select> <font color=#ff0000>${errorMsgs.eqStatus}</font>
 									</div>
 								</div>
 
@@ -124,26 +127,25 @@
 								<!-- 									</div> -->
 								<!-- 								</div> -->
 
-								<div class="row mb-3">
-									<label for="inputText" class="col-sm-2 col-form-label">器材介紹:
-									</label>
-									<div class="col-sm-10">
-										<input name="introduction1" type="hidden" id="introduction1"
-											class="form-control" value="${param.introduction}">
-										${errorMsgs.introduction}<br>
-										<textarea name="introduction" id="introduction"
-											class="form-control" ></textarea>
-									</div>
-								</div>
+<!-- 								<div class="row mb-3"> -->
+<!-- 									<label for="inputText" class="col-sm-2 col-form-label">器材介紹: -->
+<!-- 									</label> -->
+<!-- 									<div class="col-sm-10"> -->
+<!-- 										<input name="introduction1" type="hidden" id="introduction1" -->
+<%-- 											class="form-control" value="${param.introduction}"> --%>
+<%-- 										${errorMsgs.introduction}<br> --%>
+<!-- 										<textarea name="introduction" id="introduction" -->
+<!-- 											class="form-control"></textarea> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 
 
 								<div class="row mb-3">
 									<label for="inputText" class="col-sm-2 col-form-label">詳細規格:
 									</label>
 									<div class="col-sm-10">
-										<input name="spec" type="text" class="form-control"
-											value="${param.name}"> ${errorMsgs.name}<br>
-										<textarea name="text" class="form-control" cols="84" rows="10"></textarea>
+										<input type="hidden" name="spec1" id="spec1" class="form-control" value="${param.spec}"/> 
+										<textarea name="spec" id="spec" rows="9" cols="64" class="form-control"></textarea><font color=#ff0000>${errorMsgs.spec}</font>
 									</div>
 								</div>
 
@@ -236,8 +238,8 @@ try {
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
 	height: 151px; /* height:  151px; */
 }
-</style>
 
+</style>
 <script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
