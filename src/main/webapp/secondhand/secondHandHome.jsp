@@ -8,6 +8,7 @@
 SecondHandService secondHandSvc = new SecondHandService();
 List<SecondHandVO> list = secondHandSvc.getAll();
 pageContext.setAttribute("list", list);
+int itemsPerPage = 9;
 %>
 
 <!DOCTYPE html>
@@ -69,9 +70,6 @@ pageContext.setAttribute("list", list);
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1">
-							<%
-							int itemsPerPage = 9;
-							%>
 							<%@ include file="/design/page1.file"%>
 <!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
 <%-- 								<jsp:useBean id="secondHandSvc1" scope="page" --%>
@@ -145,7 +143,7 @@ pageContext.setAttribute("list", list);
 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet"
 											style="margin-bottom: 0px;">
 											<c:if test="${empVO.empId == secondHandVO.saler}">
-											<input type="submit" value="修改" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1")!=-1 ? "hidden":""  } >
+											<input type="submit" value="修改" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("0") != -1 ? "" : "hidden"} >
 											</c:if>
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
@@ -155,7 +153,7 @@ pageContext.setAttribute("list", list);
 											ACTION="<%=request.getContextPath()%>/bid/bidHome.jsp"
 											style="margin-bottom: 0px;">
 											<c:if test="${empVO.empId != secondHandVO.saler}"> 
-											<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1")!=-1 ? "":"hidden"  } >
+											<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1") != -1 ? "" : "hidden"} >
 											 </c:if> 	
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
