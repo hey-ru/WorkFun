@@ -14,7 +14,8 @@ public class EmpService {
 	private EmpDAO_interface dao;
 
 	public EmpService() {
-		dao = new EmpDAO();
+		//dao = new EmpDAO();
+		dao = new EmpJDBCDAO();
 	}
 
 	public EmpVO addEmp(EmpVO empVO) {
