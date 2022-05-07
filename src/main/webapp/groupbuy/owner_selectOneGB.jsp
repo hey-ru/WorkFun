@@ -123,7 +123,9 @@
 										</thead>
 
 										<!-- ========================= 表格內容 ========================= -->
+										<c:if test="${groupBuyListVOs} != null}">
 										<tbody>
+										
 										<c:forEach var="groupBuyListVO" items="${groupBuyListVOs}">
 										<c:if test="${(groupBuyListVO.buyer) == (GBbuyer.buyer)}">
 													<tr>
@@ -135,6 +137,7 @@
 										</c:if>
 										</c:forEach>			
 										</tbody>
+										</c:if>
 									</table>
 									</div>
 								</div>									

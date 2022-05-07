@@ -26,11 +26,12 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO groupbuy (shop_id,shop_name,gb_owner,start_time,end_time,arr_time,min_amt) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM groupbuy order by gb_id";
-	private static final String UPDATEARRTIME = "UPDATE groupbuy set arr_time=? where gb_id = ?";
+	private static final String UPDATE_ARRTIME_STMT = "UPDATE groupbuy set arr_time=? where gb_id = ?";
+	private static final String UPDATE_GBSTSATUS_STMT = "UPDATE groupbuy SET gb_status = ? WHERE gb_id = ?;";
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuy where gb_id = ?";
 	private static final String GET_GBLIST_BYGB_ID_STMT = "SELECT * FROM groupbuylist WHERE gb_id = ?";
 	private static final String GET_NOW_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_status = 0 ORDER BY end_time";
-	private static final String GET_MY_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_owner=? ORDER BY gb_status";
+	private static final String GET_MY_ALL_STMT = "SELECT * FROM groupbuy WHERE gb_owner=? ORDER BY gb_status, end_time DESC";
 	private static final String GET_BUYER_BYGB_ID_STMT = "SELECT buyer, buyer_name, sum(price*qty) AS total, is_pay, is_pickup FROM groupbuylist WHERE gb_id = ? GROUP BY buyer";
 	
 	@Override
@@ -89,7 +90,7 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATEARRTIME);
+			pstmt = con.prepareStatement(UPDATE_ARRTIME_STMT);
 
 			pstmt.setTimestamp(1, groupBuyVO.getArr_time());
 			pstmt.setInt(2, groupBuyVO.getGb_id());
@@ -478,6 +479,45 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 					}
 					return set;
 				}
+
+	@Override
+	public void updateGBStatusBygbId(Integer gb_id,Integer gb_status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_GBSTSATUS_STMT);
+
+			pstmt.setInt(1, gb_status);
+			pstmt.setInt(2, gb_id);
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		
+	}
 
 	
 

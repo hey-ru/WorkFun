@@ -104,12 +104,13 @@ int itemsPerPage = 10;
 										</thead>
 
 
-											<%@ include file="/design/page1.file"%>
+											<%@ include file="/groupbuy/page1.file"%>
 
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
 											<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>"
 										end="<%=pageIndex+rowsPerPage-1%>">
+										<c:if test="${groupBuyVO.gb_status != 1}">
 													<tr>
 														<td>${groupBuyVO.gb_id}</td>
 														<td>${groupBuyVO.shop_name}</td>
@@ -154,6 +155,7 @@ int itemsPerPage = 10;
 														</td>
 
 													</tr>
+													</c:if>
 
 												</c:forEach>
 										</tbody>

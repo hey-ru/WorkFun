@@ -78,7 +78,7 @@ public class GroupBuyServlet extends HttpServlet {
 				/***************************2.開始查詢資料*****************************************/
 				GroupBuyService groupBuySvc = new GroupBuyService();
 				GroupBuyVO groupBuyVO = groupBuySvc.getOneGB(gb_id);
-				Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);				
+				Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);		
 				Set<GroupBuyListVO> groupBuyListVOs = groupBuySvc.getGroupBuyListBygbid(gb_id);
 				
 				
