@@ -68,7 +68,7 @@
 								<div class="row mb-3">
 									<label for="inputStartTime" class="col-sm-2 col-form-label">起標時間</label>
 									<div class="col-sm-10">
-										<input name="start_time" id="f_date1" type="text"
+										<input name="start_time" id="start_time" type="text"
 											class="form-control" value="${param.start_time}"/>
 											${errorMsgs.start_time}<br>
 									</div>
@@ -76,7 +76,7 @@
 								<div class="row mb-3">
 									<label for="inputEndTime" class="col-sm-2 col-form-label">結標時間</label>
 									<div class="col-sm-10">
-										<input name="end_time" id="f_date2" type="text"
+										<input name="end_time" id="end_time" type="text"
 											class="form-control" value="${param.end_time}"/>
 											${errorMsgs.end_time}<br>
 									</div>
@@ -140,16 +140,18 @@
 </body>
 
 
-
+<!-- start_time = new java.sql.Timestamp(((long)(System.currentTimeMillis())/60000)*60000-((((long)(System.currentTimeMillis())/60000)*60000)%900000)+900000); -->
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
 <% 
+  long currentTimeMillis = ((System.currentTimeMillis())/60000)*60000 - ((((System.currentTimeMillis())/60000)*60000)%900000);
+  long min = 60*1000;
   java.sql.Timestamp start_time = null;
   try {
 	    start_time = java.sql.Timestamp.valueOf(request.getParameter("start_time").trim());
    } catch (Exception e) {
-	    start_time = new java.sql.Timestamp(((long)(System.currentTimeMillis())/60000)*60000-((((long)(System.currentTimeMillis())/60000)*60000)%900000)+900000);
+	    start_time = new java.sql.Timestamp(currentTimeMillis+min*15);
    }
 %>
 <% 
@@ -157,7 +159,7 @@
   try {
 	    end_time = java.sql.Timestamp.valueOf(request.getParameter("end_time").trim());
    } catch (Exception e) {
-	    end_time = new java.sql.Timestamp(((long)(System.currentTimeMillis())/60000)*60000-((((long)(System.currentTimeMillis())/60000)*60000)%900000)+1800000);
+	    end_time = new java.sql.Timestamp(currentTimeMillis+min*15*13);
    }
 %>
 <link rel="stylesheet" type="text/css"
@@ -178,20 +180,32 @@
 
 <script>
         $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
+        $('#start_time').datetimepicker({
  	       theme: '',              //theme: 'dark',
 	       timepicker:true,       //timepicker:true,
 	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
 		   value: '<%=start_time%>', // value:   new Date(),
+		   onShow:function(){
+			   this.setOptions({
+				minDate:0,
+				minTime:0,
+				maxDate:$('#end_time').val()?$('#end_time').val():false
+			   })
+		   }
         });
-        $('#f_date2').datetimepicker({
+        $('#end_time').datetimepicker({
   	       theme: '',              //theme: 'dark',
  	       timepicker:true,       //timepicker:true,
  	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: '<%=end_time%>', // value:   new Date(),
-	});
+ 		  onShow:function(){
+			   this.setOptions({
+				   minDate:$('#start_time').val()?$('#start_time').val():false
+			   })
+			  }
+		});
 </script>
 
 </html>

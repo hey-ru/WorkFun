@@ -4,6 +4,10 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.secondHand.model.*"%>
 
+<%
+int itemsPerPage = 9;
+%>
+
 <jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<SecondHandVO>" />
 
 <!DOCTYPE html>
@@ -64,18 +68,18 @@
 				<div class="row" style="justify-content: end;">
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
-						<form class="my-1">
-							<%
-							int itemsPerPage = 9;
-							%>
+						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1">
+							
 							<%@ include file="/design/page1_ByCompositeQuery.file" %>
 							<div class="form-group col-2" style="display: inline-block;">
 								<jsp:useBean id="secondHandSvc1" scope="page"
 									class="com.secondHand.model.SecondHandService" />
 								<select class="form-control" id="exampleFormControlSelect1"
 									style="border: gray solid 2px;" name="is_deal">
-									<option value="0">競標中</option>
-									<option value="1">已成交</option>
+									<option value="1">競標中</option>
+									<option value="0">未開始</option>
+									<option value="2">已成交</option>
+									<option value="3">流標</option>
 									<option value="">顯示全部</option>
 								</select>
 							</div>

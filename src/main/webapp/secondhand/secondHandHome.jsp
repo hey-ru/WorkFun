@@ -8,6 +8,7 @@
 SecondHandService secondHandSvc = new SecondHandService();
 List<SecondHandVO> list = secondHandSvc.getAll();
 pageContext.setAttribute("list", list);
+int itemsPerPage = 9;
 %>
 
 <!DOCTYPE html>
@@ -69,9 +70,6 @@ pageContext.setAttribute("list", list);
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1">
-							<%
-							int itemsPerPage = 9;
-							%>
 							<%@ include file="/design/page1.file"%>
 <!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
 <%-- 								<jsp:useBean id="secondHandSvc1" scope="page" --%>
