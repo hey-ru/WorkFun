@@ -143,7 +143,7 @@ int itemsPerPage = 9;
 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet"
 											style="margin-bottom: 0px;">
 											<c:if test="${empVO.empId == secondHandVO.saler}">
-											<input type="submit" value="修改" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1")!=-1 ? "hidden":""  } >
+											<input type="submit" value="修改" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("0") != -1 ? "" : "hidden"} >
 											</c:if>
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
@@ -153,7 +153,7 @@ int itemsPerPage = 9;
 											ACTION="<%=request.getContextPath()%>/bid/bidHome.jsp"
 											style="margin-bottom: 0px;">
 											<c:if test="${empVO.empId != secondHandVO.saler}"> 
-											<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1")!=-1 ? "":"hidden"  } >
+											<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1") != -1 ? "" : "hidden"} >
 											 </c:if> 	
 											<input type="hidden"
 												name="second_hand_id" value="${secondHandVO.second_hand_id}">
