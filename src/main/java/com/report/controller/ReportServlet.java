@@ -21,6 +21,7 @@ import javax.servlet.http.Part;
 
 import com.report.model.ReportService;
 import com.report.model.ReportVO;
+import com.report_comment.model.Report_CommentVO;
 
 @WebServlet("/reportServlet")
 @MultipartConfig
@@ -52,7 +53,6 @@ public class ReportServlet extends HttpServlet{
 			/***************************2.開始查詢資料****************************************/
 			ReportService repSvc = new ReportService();
 			ReportVO repVO = repSvc.getOneReport(report_id);
-			System.out.println(repVO.getReport_image());
 			/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				String url = "/report/listOneReport.jsp";
 				req.setAttribute("reportVO", repVO);
@@ -276,7 +276,6 @@ public class ReportServlet extends HttpServlet{
 		try {
 			/***************************1.接收請求參數****************************************/
 			Integer handler = Integer.valueOf(req.getParameter("handler"));
-			System.out.println(handler);
 			/***************************2.開始查詢資料****************************************/
 //			ReportService repSvc = new ReportService();
 //			List<ReportVO> repVO = repSvc.getHandler(handler);
@@ -297,11 +296,23 @@ public class ReportServlet extends HttpServlet{
 		}
 	}
 	
-	if("getOne_forUpdate".equals(action)) {
-		
+	if("getOne_forComment".equals(action)) {
+		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+		Integer report_id = Integer.valueOf(req.getParameter("report_id"));
+
+		/***************************2.開始查詢資料*****************************************/
+		ReportService repSvc = new ReportService();
+		ReportVO repVO = repSvc.getComment(report_id);
+
+		/***************************3.查詢完成,準備轉交(Send the Success view)************/
+
+		String url = "/report/backListOne.jsp";
+		req.setAttribute("repVO", repVO);
+		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+		successView.forward(req, res);
 	}
-	
 }
+
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
 		//System.out.println("header=" + header); // 測試用

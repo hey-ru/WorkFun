@@ -157,8 +157,8 @@ int itemsPerPage = 10;
 																			test="${reportVO.status==4}">已完成</c:if></td>
 																			<c:if test="${empVO.empId==reportVO.handler}">
 																	<td><a
-																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forUpdate">
-																			<button type="button" value="getOne_forUpdate"
+																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forComment">
+																			<button type="button" value="getOne_forComment"
 																				class="btn btn-info">處理此回報</button>
 																	</a></td>
 														</c:if>

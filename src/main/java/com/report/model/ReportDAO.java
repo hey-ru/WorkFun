@@ -13,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.report_comment.model.Report_CommentVO;
+
 public class ReportDAO implements ReportDAO_interface {
 
 	private static DataSource ds = null;
@@ -259,6 +261,24 @@ public class ReportDAO implements ReportDAO_interface {
 	public void insertComment(ReportVO reportVO) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Report_CommentVO> TestComment(Integer report_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReportVO> handleReport(Integer report_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ReportVO findReport(Integer report_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

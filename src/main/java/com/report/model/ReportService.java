@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.Part;
 
+import com.report_comment.model.Report_CommentVO;
+
 
 public class ReportService{
 	private ReportDAO_interface dao;
@@ -73,5 +75,13 @@ public class ReportService{
 	public List<ReportVO> getHandler(Integer handler){
 		return dao.getHandler(handler);
 	}
-	
+		
+	public ReportVO getComment(Integer report_id) {
+		ReportVO  reportVO = dao.findReport(report_id);
+		
+		List<Report_CommentVO> list = dao.TestComment(report_id);
+		reportVO.setRecVO(list);
+		
+			return reportVO;
+		}
 }
