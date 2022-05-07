@@ -33,7 +33,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gb_id ";
 			
 //	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目ok	
-	private static final String DELETEMYGB = "DELETE FROM groupbuy where buyer = ? and gb_id = ?";
+	private static final String DELETEMYGB = "DELETE FROM groupbuylist where buyer = ? and gb_id = ?";
 
 //	-- 2. 檢視按鈕: 查詢 我的單筆明細ok
 	private static final String GET_ONE_BYBUYER = "SELECT * FROM groupbuylist WHERE buyer = ? AND gb_id= ? GROUP BY gbList_id ";

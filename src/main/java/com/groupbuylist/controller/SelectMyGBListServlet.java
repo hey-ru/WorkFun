@@ -1,10 +1,10 @@
 package com.groupbuylist.controller;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,11 +33,14 @@ public class SelectMyGBListServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html;charset=utf-8");
 		String action = req.getParameter("action");
 		System.out.println(action);
 
-//		 查看個人參團明細, Session
-		if ("get_buyerlist".equals(action)) { // 來自selectMenu_page.jsp的請求
+// 來自buyer_selsectGB.jsp的請求
+		
+//		(1)查看個人參團明細
+		if ("get_buyerlist".equals(action)) { 
 
 			/*************************** 1.接收請求參數 ****************************************/
 			Integer buyer = Integer.valueOf(req.getParameter("buyer"));
@@ -48,8 +51,12 @@ public class SelectMyGBListServlet extends HttpServlet {
 			GroupBuyListService gbListSvc = new GroupBuyListService();
 			List<GroupBuyListVO> list  = gbListSvc.getOne(buyer, gb_id);
 			
+			GroupBuyService groupBuySvc = new GroupBuyService();
+			Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);				
+			
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("buyerlist", list);
+			req.setAttribute("GBbuyers", GBbuyers);
 			System.out.println(list.toString());
 			
 			String url = "/groupbuylist/buyer_selectOneGB.jsp";
@@ -57,6 +64,40 @@ public class SelectMyGBListServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
+		
+//		(2)退出揪團
+		if("deleteMyGb".equals(action)) {
+			
+			/*************************** 1.接收請求參數 ****************************************/
+			Integer buyer = Integer.valueOf(req.getParameter("buyer"));
+			Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
+			
+			/***************************2.開始刪除資料***************************************/
+			GroupBuyListService gbListSvc = new GroupBuyListService();
+			gbListSvc.deleteMyGb(buyer, gb_id);
+			System.out.println("完成刪除");
+			
+			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
+			PrintWriter out = res.getWriter();
+			out.print("<script type='text/javascript'>alert('取消成功!');</script>");
+			
+			RequestDispatcher successView = req.getRequestDispatcher("/groupbuylist/buyer_selectGB.jsp");// 刪除成功後,轉交回送出刪除的來源網頁
+			successView.forward(req, res);
+			
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 

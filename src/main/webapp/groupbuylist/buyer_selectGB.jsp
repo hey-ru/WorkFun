@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import ="java.util.*"%>
+<%@ page import ="java.sql.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.groupbuylist.model.*"%>
 <%@ page import="com.groupbuy.model.*"%>
 
@@ -98,10 +101,10 @@ int itemsPerPage = 6;
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
 													></th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
-													></th>
+<!-- 												<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+<!-- 													rowspan="1" colspan="1" -->
+<!-- 													aria-label="Salary: activate to sort column ascending" -->
+<!-- 													></th> -->
 											</tr>
 										</thead>	
 
@@ -144,10 +147,31 @@ int itemsPerPage = 6;
 																<input type="hidden" name="action" value="get_buyerlist">										
 															</FORM>															
 														</td>
-														<td><a href="buyer_3_updateGb.html"><button
-																	type="button" class="btn btn-success btn-sm">編輯</button></a></td>
-														<td><input type="submit"
-															class="btn btn-secondary btn-sm" value="退出"></td>
+<!-- 														<td><a href="buyer_3_updateGb.html"><button -->
+<!-- 																	type="button" class="btn btn-success btn-sm">編輯</button></a> -->
+<!-- 														</td> -->
+														<td>
+															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
+																onSubmit="javascript:return window.confirm('確定不參加嗎？')">
+																<input type="hidden" name="gb_id" value="${mygb.gb_id}">
+																<input type="hidden" name="buyer" value="${empVO.empId}">
+																<input type="hidden" name="action" value="deleteMyGb">
+																
+																<!-- 判斷截止時間是否小於現在時間,若是disabled button -->					
+<!-- 																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團" -->
+<%-- 																${mygb.groupBuyVO.end_time lt now ? 'disabled="disabled"' : ''}/> --%>
+
+																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團"
+																${mygb.groupBuyVO.gb_status eq 0 ? '' : 'disabled="disabled"'}/>
+																
+																<jsp:useBean id="now" class="java.util.Date" />
+																<c:out value="${mygb.groupBuyVO.end_time lt now}"/>   
+																
+																
+															</FORM>	
+														</td>
+														
+														
 													</tr>
 													<!-- 揪團截止不能取消及編輯 -->
 												</c:forEach>
