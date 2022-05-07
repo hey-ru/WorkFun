@@ -120,8 +120,8 @@ int itemsPerPage = 6;
 														<td>${mygb.price*mygb.qty}</td>
 														<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
 														<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}</td>
-														<td>${mygb.groupBuyVO.start_time}</td>
-														<td>${mygb.groupBuyVO.end_time}</td>
+														<td><fmt:formatDate value="${mygb.groupBuyVO.start_time}" pattern="yyyy-MM-dd HH:mm"/></td>
+														<td><fmt:formatDate value="${mygb.groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/></td>
 														<td>		
 														<c:choose>
 														    <c:when test="${mygb.groupBuyVO.gb_status == 0}">
@@ -160,14 +160,11 @@ int itemsPerPage = 6;
 																<!-- 判斷截止時間是否小於現在時間,若是disabled button -->					
 <!-- 																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團" -->
 <%-- 																${mygb.groupBuyVO.end_time lt now ? 'disabled="disabled"' : ''}/> --%>
-
+<%-- 																	<jsp:useBean id="now" class="java.util.Date" /> --%>
+<%-- 																	<c:out value="${mygb.groupBuyVO.end_time lt now}"/>  --%>
+																<!-- 判斷截止時間是否為揪團中-->	  
 																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團"
 																${mygb.groupBuyVO.gb_status eq 0 ? '' : 'disabled="disabled"'}/>
-																
-																<jsp:useBean id="now" class="java.util.Date" />
-																<c:out value="${mygb.groupBuyVO.end_time lt now}"/>   
-																
-																
 															</FORM>	
 														</td>
 														
