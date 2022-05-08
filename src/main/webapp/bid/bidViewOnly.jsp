@@ -147,10 +147,8 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 							<!-- End Bordered Tabs -->
 							
 							<c:if test="${secondHandVO.bidVO.bidder == empVO.empId}">
-								<div class="col-lg-9 col-md-4 label">恭喜你得標,請與 ${secondHandVO.empVO2.empName} 聯絡</div>
+								<div class="col-lg-9 col-md-4 label">恭喜你得標,請與 ${secondHandVO.empVO1.empName} 聯絡</div>
 							</c:if>
-							
-							bidViewOnly
 
 						</div>
 					</div>

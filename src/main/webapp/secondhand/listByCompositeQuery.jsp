@@ -116,26 +116,28 @@ int itemsPerPage = 9;
 									<h4>${secondHandVO.name}</h4>
 									<p>[競標開始時間 ${secondHandVO.start_time}]</p>
 									<p>[競標截止時間 ${secondHandVO.end_time}]</p>
-									<div class="portfolio-links">
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet"
-											style="margin-bottom: 0px;">
-											<c:if test="${empVO.empId == secondHandVO.saler}">
-											<input type="submit" value="修改" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("0") != -1 ? "" : "hidden"} >
-											</c:if>
-											<input type="hidden"
-												name="second_hand_id" value="${secondHandVO.second_hand_id}">
-											<input type="hidden" name="action" value="getOneForUpdate">
-										</FORM>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/bid/bidHome.jsp"
-											style="margin-bottom: 0px;">
-											<c:if test="${empVO.empId != secondHandVO.saler}"> 
-											<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1") != -1 ? "" : "hidden"} >
-											 </c:if> 	
-											<input type="hidden"
-												name="second_hand_id" value="${secondHandVO.second_hand_id}">
-										</FORM>
+									<div class="portfolio-links" style="display:flex;">
+										<c:if test="${empVO.empId == secondHandVO.saler}">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" style="margin-bottom: 0px; margin-right: 5px;">
+												<input type="submit" value="修改" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("0") != -1 ? "" : "hidden"} >
+												<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
+												<input type="hidden" name="action" value="getOneForUpdate">
+											</FORM>
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidViewOnly.jsp" style="margin-bottom: 0px; margin-right: 5px;">
+												<input type="submit" value="查看商品" class="submitbtn" >
+												<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
+											</FORM>
+										</c:if>
+										<c:if test="${empVO.empId != secondHandVO.saler}"> 
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidHome.jsp" style="margin-bottom: 0px; margin-right: 5px;">
+													<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1") != -1 ? "" : "hidden"} >
+													<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
+											</FORM>
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidViewOnly.jsp" style="margin-bottom: 0px; margin-right: 5px;">
+												<input type="submit" value="查看商品" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1") != -1 ? "hidden" : ""} >
+												<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
+											</FORM>
+										</c:if>
 									</div>
 								</div>
 							</div>

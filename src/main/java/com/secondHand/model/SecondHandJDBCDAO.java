@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +111,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			pstmt.setBytes(8, secondHandVO.getImg2());
 			pstmt.setBytes(9, secondHandVO.getImg3());
 
-			Statement stmt = con.createStatement();
+//			Statement stmt = con.createStatement();
 
 			pstmt.executeUpdate();
 
@@ -661,16 +660,6 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		return list;
 	}
 
-	// for img
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
-		return buffer;
-	}
-	
-
 	public List<SecondHandVO> getAllDate() {
 		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
 		SecondHandVO secondHandVO = null;
@@ -721,11 +710,18 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		return list;
 	}
 	
-	
+//	for img
+	public static byte[] getPictureByteArray(String path) throws IOException {
+		FileInputStream fis = new FileInputStream(path);
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		fis.close();
+		return buffer;
+	}
 	
 
-	public static void main(String[] args) throws Exception {
-
+//	public static void main(String[] args) throws Exception {
+//
 //		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();
 //
 //		String fileName = "/Users/ryan/Coding/CGA101/secondHand_pic/木木梟.jpeg";
@@ -848,14 +844,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //			System.out.print(listSecondHandVO.getCreate_time() + ",");
 //			System.out.println(listSecondHandVO.getUpdate_time());
 //		}
-		SecondHandVO secondHandVO=new SecondHandVO();
-		SecondHandJDBCDAO secondHandJDBCDAO=new SecondHandJDBCDAO();
-	System.out.println(secondHandJDBCDAO.getById(1012).getBidVO().getBidder());	 
-		
-		System.out.println(secondHandJDBCDAO.getById(1012).getBidVO().getBidder()==0);
-		
-		
-		
-	}
+//		SecondHandVO secondHandVO=new SecondHandVO();
+//		SecondHandJDBCDAO secondHandJDBCDAO=new SecondHandJDBCDAO();
+//		System.out.println(secondHandJDBCDAO.getById(1012).getBidVO().getBidder());
+//		System.out.println(secondHandJDBCDAO.getById(1012).getBidVO().getBidder()==0);
+//	}
 
 }
