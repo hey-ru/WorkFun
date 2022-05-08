@@ -185,11 +185,11 @@ public class BookingServlet extends HttpServlet {
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer bookingId = Integer.valueOf(req.getParameter("bookingId").trim());
-			System.out.println("bookingId= "+bookingId);
+			System.out.println("bookingId= " + bookingId);
 
 			Integer returnStatus = Integer.valueOf(req.getParameter("returnStatus").trim());
-			System.out.println("returnStatus= "+returnStatus);
-			
+			System.out.println("returnStatus= " + returnStatus);
+
 			/*************************** 2.開始修改資料 *****************************************/
 			BookingService bookingSvc = new BookingService();
 			BookingVO bookingVO = bookingSvc.updateReturnStatus(bookingId, returnStatus);
@@ -200,5 +200,31 @@ public class BookingServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
+
+		if ("showeEuipment".equals(action)) {
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+			System.out.println("進來了");
+			Integer eqipmentId = Integer.valueOf(req.getParameter("eqipmentId"));
+			System.out.println("eqipmentId");
+			
+			/*************************** 2.開始查詢資料 *****************************************/
+			EquipmentService equipmentSvc = new EquipmentService();
+			EquipmentVO equipmentVO = equipmentSvc.getByEqId(eqipmentId);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+			HttpSession session = req.getSession();
+			session.setAttribute("equipmentVO", equipmentVO);
+			System.out.println(equipmentVO.toString());
+
+			String url = "/booking/bookingHome.jsp";
+
+			// 成功轉交 bookingHome.jsp
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+
+		}
+
 	}
 }

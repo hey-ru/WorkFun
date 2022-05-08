@@ -1,4 +1,5 @@
-<%@page import="java.io.PrintWriter"%>
+<%@page import="com.equipment.model.EquipmentVO"%>
+<%@page import="com.equipment.model.EquipmentService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -6,11 +7,11 @@
 <%@ page import="com.booking.model.*"%>
 
 <%
-Integer bookingId = Integer.valueOf(request.getParameter("bookingId"));
+Integer equipmentId = Integer.valueOf(request.getParameter("equipmentId"));
 
-BookingService bookingService = new BookingService();
-BookingVO bookingVO = bookingService.getByBookingId(bookingId);
-pageContext.setAttribute("bookingVO", bookingVO);
+EquipmentService equipmentSvc = new EquipmentService();
+EquipmentVO equipmentVO = equipmentSvc.getByEqId(equipmentId);
+pageContext.setAttribute("equipmentVO", equipmentVO);
 %>
 
 <!DOCTYPE html>
