@@ -16,7 +16,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	String passwd = "cga101-03";
 
 	// 新增一筆預約單
-	private static final String INSERT = "INSERT INTO booking (emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price) VALUES (?,?,?,?,?,?,?)";
+	private static final String INSERT_BOOKING = "INSERT INTO booking (emp_id,equipment_id,start_date,end_date,return_status) VALUES (?,?,?,?,?)";
 
 	// 刪除預約單
 	private static final String DELETE = "DELETE FROM booking where booking_id=?";
@@ -43,7 +43,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	private static final String UPDATE_RETURNSTATUS = "UPDATE booking set ";
 
 	@Override
-	public void insert(BookingVO bookingVO) {
+	public void insertBooking(BookingVO bookingVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -51,15 +51,14 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT);
+			pstmt = con.prepareStatement(INSERT_BOOKING);
 
 			pstmt.setInt(1, bookingVO.getEmpId());
 			pstmt.setInt(2, bookingVO.getEquipmentId());
 			pstmt.setTimestamp(3, bookingVO.getStartDate());
 			pstmt.setTimestamp(4, bookingVO.getEndDate());
 			pstmt.setInt(5, bookingVO.getReturnStatus());
-			pstmt.setTimestamp(6, bookingVO.getOverdueDate());
-			pstmt.setInt(7, bookingVO.getOverduePrice());
+
 
 			pstmt.executeUpdate();
 

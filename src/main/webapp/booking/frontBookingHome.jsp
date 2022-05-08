@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.booking.model.*"%>
+
 
 <%
 EquipmentService equipmentSvc = new EquipmentService();
@@ -137,10 +137,9 @@ pageContext.setAttribute("list", list);
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
 										style="margin-bottom: 0px;">
-										<input type="submit" class="btn btn-outline-warning"
-											value="點我預約"> <input type="hidden" name="equipmentId"
-											value="${equipmentVO.equipmentId}"> <input type="hidden"
-											name="action" value="showEquipment">
+										<input type="submit" class="btn btn-outline-warning"value="點我預約"> 
+										<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
+										<input type="hidden" name="action" value="showEquipment">
 
 									</FORM>
 
