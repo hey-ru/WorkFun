@@ -47,9 +47,16 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 						<div
 							class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
+<!-- 							<div> -->
+<!-- 								<img -->
+<%-- 								src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}" --%>
+<!-- 								alt="Profile" style="max-width:100%; max-height:100%" id="showPic"> -->
+<!-- 							</div> -->
+							
 							<img
-								src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}"
-								alt="Profile" style="width: 365px;" id="showPic">
+ 								src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}"
+								alt="Profile" style="max-height: 420px;" id="showPic">
+							
 							<div class="row" style="margin-top: 10px;">
 								<!-- Button trigger modal -->
 								<div class="col-sm-3" style="height: 100px; width: 100px;">
@@ -120,7 +127,7 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 									<p class="col-lg-3 col-md-4 label">${secondHandVO.name}</p>
 
 									<h5 class="card-title">拍賣人</h5>
-									<p class="small fst-italic">${secondHandVO.empVO.empName}</p>
+									<p class="small fst-italic">${secondHandVO.empVO1.empName}</p>
 
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">起標價</div>
@@ -145,7 +152,7 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 											尚未有人出價
 										</c:if>
 											<c:if test="${secondHandVO.bidVO.bidder!=0}">
-											${secondHandVO.bidVO.bidder}
+											${secondHandVO.empVO2.empName}
 										</c:if>
 										</div>
 									</div>
