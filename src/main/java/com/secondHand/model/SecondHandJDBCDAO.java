@@ -660,16 +660,6 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		return list;
 	}
 
-	// for img
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
-		return buffer;
-	}
-	
-
 	public List<SecondHandVO> getAllDate() {
 		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
 		SecondHandVO secondHandVO = null;
@@ -720,7 +710,14 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 		return list;
 	}
 	
-	
+//	for img
+	public static byte[] getPictureByteArray(String path) throws IOException {
+		FileInputStream fis = new FileInputStream(path);
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		fis.close();
+		return buffer;
+	}
 	
 
 //	public static void main(String[] args) throws Exception {
