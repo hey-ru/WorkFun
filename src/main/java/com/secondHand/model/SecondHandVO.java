@@ -1,6 +1,5 @@
 package com.secondHand.model;
 
-import java.sql.Blob;
 import java.sql.Timestamp;
 
 import com.bid.model.BidVO;
@@ -10,7 +9,7 @@ import com.emp.model.EmpVO;
 
 public class SecondHandVO implements java.io.Serializable {
 
-	private static long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	private Integer second_hand_id;
 	private Integer saler;
 	private Integer bid_winner;
