@@ -17,9 +17,9 @@ public interface GroupBuyListDAO_interface {
     
     public void updateIsPayIsPickUp(GroupBuyListVO groupBuyListVO);
     
-    
     //萬用複合查詢(傳入參數型態Map)(回傳 List)
     public List<GroupBuyListVO> getAll(Map<String, String[]> map);
+	
     
 }
 

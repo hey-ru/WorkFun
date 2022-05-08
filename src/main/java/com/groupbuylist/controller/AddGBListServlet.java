@@ -56,7 +56,7 @@ public class AddGBListServlet extends HttpServlet {
 			String[] remark = req.getParameterValues("remark");
 
 			for (int i = 0; i < gb_id.length; i++) {
-					if (!qty[i].equals("0")) {
+					if (!"0".equals(qty[i])) {
 						groupBuyListVO = new GroupBuyListVO();
 						groupBuyListVO.setGb_id(Integer.valueOf(gb_id[i]));
 						groupBuyListVO.setBuyer(Integer.valueOf(buyer[i]));
@@ -69,8 +69,6 @@ public class AddGBListServlet extends HttpServlet {
 
 						orderlist.add(groupBuyListVO);
 				}
-					System.out.println(!qty[i].equals("0"));
-					System.out.println(qty[i]);
 			}
 
 //				if (!errorMsgs.isEmpty()) {
@@ -80,16 +78,14 @@ public class AddGBListServlet extends HttpServlet {
 //					return; //程式中斷
 //				}
 
-			/***************************
-			 * 2-2.開始新增資料
-			 *****************************************/
+			/*************************** 2.開始新增資料 ***************************/
 			GroupBuyListService gblistSvc = new GroupBuyListService();
 			gblistSvc.insertMany(orderlist);
 
 			System.out.println(orderlist.toString());
 			System.out.println("新增完成");
 
-			/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
+			/********************* 3.新增完成,準備轉交(Send the Success view) *************/
 			String url = "/groupbuy/gbHome.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 			successView.forward(req, res);

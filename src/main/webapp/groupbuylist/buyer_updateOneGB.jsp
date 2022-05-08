@@ -69,10 +69,10 @@ int itemsPerPage = 10;
 													aria-label="Office: activate to sort column ascending">數量</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">金額</th>
+													aria-label="Office: activate to sort column ascending">備註</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">備註</th>
+													aria-label="Office: activate to sort column ascending"></th>
 											</tr>
 										</thead>
 
@@ -82,22 +82,35 @@ int itemsPerPage = 10;
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
 											<c:forEach var="blist" items="${buyerlist}">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet">
 												<tr>
 													<td>${blist.gbList_id}</td>
 													<td>${blist.item}</td>
 													<td>${blist.price}</td>
-													<td>${blist.qty}</td>
-													<td>${blist.price*blist.qty}</td>
-													<td>${blist.remark}</td>
+													<td><input type="number" min="0" max="10" 
+       													name="qty" value="${blist.qty}"></td>
+													<td><input type="text" name="remark" size="15"
+														value="${blist.remark}"></td>
+												<!-- 編輯品項 -->
+													<td>
+													<input type="submit" class="btn btn-success btn-sm" value="送出修改"> 
+													<input type="hidden" name="buyer" value="${empVO.empId}">
+													<input type="hidden" name="gbList_id" value="${blist.gbList_id}">
+													<input type="hidden" name="gb_id" value="${blist.gb_id}">
+													<input type="hidden" name="action" value="updateItem">
+													</td>
 												</tr>
+											</FORM>
 											</c:forEach>
 										</tbody>
+											
+											
 									</table>
 
 								</div>
 							</div>
 
-<%-- 									<%@ include file="/design/page2.file"%> --%>
+<%-- 										<%@ include file="/design/page2.file"%> --%>
 
 						</div>
 					</div>

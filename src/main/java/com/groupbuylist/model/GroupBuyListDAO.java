@@ -29,14 +29,16 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 			+ "price, qty, remark) " + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 
 //	-- 1.查詢我的參團: 查詢各團總額及狀態(主頁查詢畫面, 依結束時間降冪排序)-->join groupbuy
-	private static final String GET_MYGB = "SELECT * "
-			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gb_id ";
-
+	private static final String GET_MYGB = "SELECT gb_id, SUM(price*qty) AS TOTAL, is_pay, is_pickup "
+			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gb_id desc ";
+//	-- 1. 計算我的各團總額
+	private static final String GET_MYGB_Total = "SELECT gb_id, SUM(price*qty) AS TOTAL FROM groupbuylist WHERE buyer=? GROUP BY gb_id; ";
+	
 //	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目ok	
 	private static final String DELETEMYGB = "DELETE FROM groupbuylist where buyer = ? and gb_id = ?";
 
 //	-- 2. 檢視按鈕: 查詢 我的單筆明細ok
-	private static final String GET_ONE_BYBUYER = "SELECT * FROM groupbuylist WHERE buyer = ? AND gb_id= ? GROUP BY gbList_id ";
+	private static final String GET_ONE_BYBUYER = "SELECT * FROM groupbuylist WHERE buyer = ? AND gb_id= ? AND qty>0 GROUP BY gbList_id ";
 
 //	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註ok
 	private static final String UPDATE = "UPDATE groupbuylist set qty=?, remark=? where buyer=? and gbList_id=?";
@@ -172,24 +174,11 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 
 			while (rs.next()) {
 				groupBuyListVO = new GroupBuyListVO();
-//						groupBuyListVO.setGb_id(rs.getInt(1));
-//						groupBuyListVO.setTotal(rs.getInt(2));
-//						groupBuyListVO.setIs_pay(rs.getInt(3));
-//						groupBuyListVO.setIs_pickup(rs.getInt(4));
-//						groupBuyListVO.setTotal(rs.getInt(5));
-//						groupBuyListVO.setGbList_upd(rs.getTimestamp(6));
-				groupBuyListVO.setGbList_id(rs.getInt(1));
-				groupBuyListVO.setGb_id(rs.getInt(2));
-				groupBuyListVO.setBuyer(rs.getInt(3));
-				groupBuyListVO.setBuyer_name(rs.getString(4));
-				groupBuyListVO.setMenu_id(rs.getInt(5));
-				groupBuyListVO.setItem(rs.getString(6));
-				groupBuyListVO.setPrice(rs.getInt(7));
-				groupBuyListVO.setQty(rs.getInt(8));
-				groupBuyListVO.setRemark(rs.getString(9));
-				groupBuyListVO.setIs_pay(rs.getInt(10));
-				groupBuyListVO.setIs_pickup(rs.getInt(11));
-				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
+				
+				groupBuyListVO.setGb_id(rs.getInt(1));
+				groupBuyListVO.setTotal(rs.getInt(2));
+				groupBuyListVO.setIs_pay(rs.getInt(3));
+				groupBuyListVO.setIs_pickup(rs.getInt(4));
 
 				mygblist.add(groupBuyListVO);
 			}
@@ -199,6 +188,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		}
 		return mygblist;
 	}
+
 
 //	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目 
 	public void deleteMyGb(Integer buyer, Integer gb_id) {
@@ -463,5 +453,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		}
 		return list;
 	}
+
+	
 
 }

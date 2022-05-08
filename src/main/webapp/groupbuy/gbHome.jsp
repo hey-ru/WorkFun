@@ -107,8 +107,6 @@ int itemsPerPage = 10;
 												<input type="submit" class="btn btn-outline-warning" value="加入"> 
 												<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 												<input type="hidden" name="shop_id" value="${groupBuyVO.shop_id}">
-<%-- 												<input type="hidden" name="buyer" value="${empVO.empId}"> --%>
-<%-- 												<input type="hidden" name="buyer_name" value="${empVO.empName}"> --%>
 												<input type="hidden" name="action" value="showGB">
 											</FORM>
 

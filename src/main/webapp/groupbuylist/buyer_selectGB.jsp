@@ -1,3 +1,4 @@
+<%@page import="com.emp.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import ="java.util.*"%>
@@ -12,7 +13,9 @@
 Integer buyer = Integer.valueOf(request.getParameter("buyer"));
 GroupBuyListService gblistSvc = new GroupBuyListService();
 List<GroupBuyListVO> list = gblistSvc.getMyGB(buyer);
-pageContext.setAttribute("mygblist", list);
+
+HttpSession session1 = pageContext.getSession();
+session1.setAttribute("mygblist", list);
 
 int itemsPerPage = 6;
 
@@ -101,10 +104,10 @@ int itemsPerPage = 6;
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
 													></th>
-<!-- 												<th class="sorting" tabindex="0" aria-controls="dataTable" -->
-<!-- 													rowspan="1" colspan="1" -->
-<!-- 													aria-label="Salary: activate to sort column ascending" -->
-<!-- 													></th> -->
+													<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Salary: activate to sort column ascending"
+													></th>
 											</tr>
 										</thead>	
 
@@ -115,13 +118,13 @@ int itemsPerPage = 6;
 										<tbody>
 											<c:forEach var="mygb" items="${mygblist}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 													<tr>
-														<td>${mygb.gbList_id}</td>
-														<td>${mygb.groupBuyVO.shop_name}</td>
-														<td>${mygb.price*mygb.qty}</td>
-														<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
-														<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}</td>
-														<td><fmt:formatDate value="${mygb.groupBuyVO.start_time}" pattern="yyyy-MM-dd HH:mm"/></td>
-														<td><fmt:formatDate value="${mygb.groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/></td>
+													<td>${mygb.gb_id}</td>
+															<td>${mygb.groupBuyVO.shop_name}</td>
+													<td>${mygb.total}</td>
+													<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
+													<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}</td>
+															<td><fmt:formatDate value="${mygb.groupBuyVO.start_time}" pattern="yyyy-MM-dd HH:mm"/></td>
+															<td><fmt:formatDate value="${mygb.groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/></td>
 														<td>		
 														<c:choose>
 														    <c:when test="${mygb.groupBuyVO.gb_status == 0}">
@@ -141,15 +144,22 @@ int itemsPerPage = 6;
 														<td>
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
 																style="margin-bottom: 0px;">
-																<input type="submit" class="btn btn-info btn-sm" value="查看訂單" > 
 																<input type="hidden" name="gb_id" value="${mygb.gb_id}">
 																<input type="hidden" name="buyer" value="${empVO.empId}">
 																<input type="hidden" name="action" value="get_buyerlist">										
+																<input type="submit" class="btn btn-info btn-sm" value="訂單明細" > 
 															</FORM>															
 														</td>
-<!-- 														<td><a href="buyer_3_updateGb.html"><button -->
-<!-- 																	type="button" class="btn btn-success btn-sm">編輯</button></a> -->
-<!-- 														</td> -->
+														<td>
+														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
+																style="margin-bottom: 0px;">
+																<input type="hidden" name="gb_id" value="${mygb.gb_id}">
+																<input type="hidden" name="buyer" value="${empVO.empId}">
+																<input type="hidden" name="action" value="updateMyGb">
+																<input type="submit" class="btn btn-success btn-sm" value="編輯"
+																${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'}/>
+														</FORM>	
+														</td>
 														<td>
 															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
 																onSubmit="javascript:return window.confirm('確定不參加嗎？')">
@@ -157,14 +167,14 @@ int itemsPerPage = 6;
 																<input type="hidden" name="buyer" value="${empVO.empId}">
 																<input type="hidden" name="action" value="deleteMyGb">
 																
-																<!-- 判斷截止時間是否小於現在時間,若是disabled button -->					
+																<!-- 判斷截止時間是否小於現在時間,若是hidden button -->					
 <!-- 																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團" -->
 <%-- 																${mygb.groupBuyVO.end_time lt now ? 'disabled="disabled"' : ''}/> --%>
 <%-- 																	<jsp:useBean id="now" class="java.util.Date" /> --%>
 <%-- 																	<c:out value="${mygb.groupBuyVO.end_time lt now}"/>  --%>
 																<!-- 判斷截止時間是否為揪團中-->	  
-																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團"
-																${mygb.groupBuyVO.gb_status eq 0 ? '' : 'disabled="disabled"'}/>
+																<input type="submit" class="btn btn-secondary btn-sm" value="退團"
+																${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'}/>
 															</FORM>	
 														</td>
 														
