@@ -269,11 +269,6 @@ public class ReportDAO implements ReportDAO_interface {
 		return null;
 	}
 
-	@Override
-	public List<ReportVO> handleReport(Integer report_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ReportVO findReport(Integer report_id) {

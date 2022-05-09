@@ -35,13 +35,14 @@
             
             <div class="input-group mb-3" id="input-radio">
                 <span class="input-group-text" id="basic-addon2">類型</span>
+                
                 <label><input id="in0" class ="rptype" type="radio" name="report_type" value="0" ${(param.report_type=="0")? 'checked':'' }> 添購新品 </label>
 				<label><input id="in1" class ="rptype" type="radio" name="report_type" value="1" ${(param.report_type=="1")? 'checked':'' }> 損壞報修 </label>
 				<label><input id="in2" class ="rptype" type="radio" name="report_type" value="2" ${(param.report_type=="2")? 'checked':'' }> 軟硬體問題 </label>
 				<label><input id="in3" class ="rptype" type="radio" name="report_type" value="3" ${(param.report_type=="3")? 'checked':'' }> 其他 </label>
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">接收者</span>
+                <span class="input-group-text" id="basic-addon1">處理人</span>
                <input readonly type="hidden" class="form-control" aria-label="Username" id="inputhandler" name="handler"
                     aria-describedby="basic-addon1" value="${param.handler}">
                      <span  class="form-control" aria-label="Username" id="inputfake" 

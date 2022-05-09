@@ -161,6 +161,11 @@ int itemsPerPage = 10;
 																			<button type="button" value="getOne_forComment"
 																				class="btn btn-info">處理此回報</button>
 																	</a></td>
+																	<td><a
+																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forModify">
+																			<button type="button" value="getOne_forModify"
+																				class="btn btn-info">轉發此回報</button>
+																	</a></td>
 														</c:if>
 																</tr>
 															</c:forEach>

@@ -20,5 +20,4 @@ public interface ReportDAO_interface {
     public void handleComment(ReportVO reportVO);
     public ReportVO findReport(Integer report_id);
     public List<Report_CommentVO> TestComment(Integer report_id);
-    public List<ReportVO> handleReport(Integer report_id);
 }

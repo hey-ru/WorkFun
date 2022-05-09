@@ -18,7 +18,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>WorkFunBack</title>
+    <title>BackForwardReport</title>
 
 </head>
 
@@ -59,6 +59,7 @@
   <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
   		
          <main style="height: 120vh; border:3px red solid;">
+                       
                         <div
                             style="border:3px blue solid;width:900px;position:absolute; height:630px; top:15%; right:5%;">
                             <div class="input-group mb-3" style="margin-top: 0px;">
@@ -66,20 +67,27 @@
                                  <span style="border:3px lightyellow solid;">${repVO.title}</span>
                                     
                             </div>
-
+	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/reportCommentServlet" name="formUpdate" enctype="multipart/form-data">
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon2">類型</span>
-                                <span><c:if test="${repVO.report_type==0}">添購新品</c:if>
-													<c:if test="${repVO.report_type==1}">損壞報修</c:if>
-													<c:if test="${repVO.report_type==2}">軟硬體問題</c:if>
-													<c:if test="${repVO.report_type==3}">其他</c:if></span>
+                                 <div class="input-group mb-3" id="input-radio">
+               					 <span class="input-group-text" id="basic-addon2">類型</span>
+               					 <span><c:if test="${repVO.report_type==0}">添購新品			</c:if>
+													<c:if test="${repVO.report_type==1}">損壞報修		</c:if>
+													<c:if test="${repVO.report_type==2}">軟硬體問題		</c:if>
+													<c:if test="${repVO.report_type==3}">其他		</c:if></span>
+               					 <label><input id="in0" class ="rptype" type="radio" name="report_type" value="0" ${(param.report_type=="0")? 'checked':'' }> 添購新品 </label>
+								 <label><input id="in1" class ="rptype" type="radio" name="report_type" value="1" ${(param.report_type=="1")? 'checked':'' }> 損壞報修 </label>
+							 	 <label><input id="in2" class ="rptype" type="radio" name="report_type" value="2" ${(param.report_type=="2")? 'checked':'' }> 軟硬體問題 </label>
+							 	 <label><input id="in3" class ="rptype" type="radio" name="report_type" value="3" ${(param.report_type=="3")? 'checked':'' }> 其他 </label>
+            				</div>
                                 <span class="input-group-text" id="basic-addon2">處理狀況</span>
                                <span><c:if test="${repVO.status==0}">已發送</c:if>
 													<c:if test="${repVO.status==1}">處理中</c:if>
 													<c:if test="${repVO.status==2}">待確認</c:if>
 													<c:if test="${repVO.status==3}">取消</c:if>
 													<c:if test="${repVO.status==4}">已完成</c:if></span>
-                              
+                              <input class="form-control"  type="hidden"
+                   						 aria-describedby="basic-addon1" name="status" value="${1}">
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">回報建立時間</span>
@@ -97,7 +105,8 @@
                                 
                                 <span class="input-group-text" id="basic-addon2">處理人</span>
                               <span>${repVO.empVO2.empName}</span>
-                                  
+               					<input type="hidden" class="form-control" aria-label="Username" id="inputhandler" name="handler"
+                    				aria-describedby="basic-addon1" value="${param.handler}">
                             </div>
                             <label for="basic-url" class="form-label">回報內容</label>
                             <div class="input-group mb-3" style=" height:200px">
@@ -117,7 +126,7 @@
                                 <textarea class="form-control" aria-label="With textarea">${recVO.comment}</textarea>
                             </div>
                             </c:forEach>
-                            <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/reportCommentServlet" name="formAdd" enctype="multipart/form-data">
+                            
                                 <div class="input-group">
 								 <input class="form-control" aria-label="Username" type="hidden"
                    						 aria-describedby="basic-addon1" name="report_id" value="${repVO.report_id}">
@@ -126,11 +135,9 @@
                     						aria-describedby="basic-addon1" name="comment" value="${param.comment}">
                     						<p style="color :red">${errorMsgs.comment}</p>
                     			</div>
-                    		<div class="input-group">
-                 	 			<label class="input-group-text" for="inputGroupFile01">Upload</label>
-                				<input type="file" value="${param.report_image}" name="report_comment_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:150px; width:150px" id="pic" />
-                				<input type="text" style="display:none;" name="action" value="insert">
-								<button type="submit" value="送出新增">送出</button>
+                    		<div class="input-group">       				
+                				<input type="text" style="display:none;" name="action" value="update">
+								<button type="submit" value="送出修改/轉發">送出</button>
                             </div> 
                             </FORM>
                         </div>
@@ -148,6 +155,20 @@
         </a>
      
 <%@ include file="/design/backjs.jsp"%>
+<script>
+$('.rptype').click( function(e){
+	console.log(e.target.value);
+    if(e.target.value==0){
+    	$('#inputhandler').val('1019');
+    }else if(e.target.value==1){
+    	$('#inputhandler').val('1017');
+    }else if(e.target.value==2){
+        	$('#inputhandler').val('1016');
+    }else if(e.target.value==3){
+            	$('#inputhandler').val('1017');
+    }
+});
+</script>
 
 </body>
 
