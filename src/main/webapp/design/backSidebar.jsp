@@ -123,7 +123,7 @@
                 <div id="collapseSex" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.html">下架店家菜單</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/back/backmain_Shop.jsp">下架店家菜單</a>
                         <a class="collapse-item" href="<%=request.getContextPath()%>/groupbuy/gbBack.jsp">下架揪團</a>
                     </div>
                 </div>

@@ -23,6 +23,7 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT * FROM shop ORDER BY shop_id DESC";
 	private static final String GET_ALL_FRONT_STMT = "SELECT * FROM shop WHERE is_disable = 0 ORDER BY shop_id DESC";
 	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? WHERE shop_id = ?";
+	private static final String UPDATE_Shop_Status = "UPDATE shop set is_disable= ? WHERE shop_id = ?";
 	private static final String GET_ONE_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop where shop_id = ?";
 	private static final String GET_BY_SETWHERE = "SELECT * FROM shop ";
 	private static final String GET_Menus_ByShop_id_STMT = "SELECT * FROM menu WHERE shop_id = ? ORDER BY menu_id";
@@ -809,10 +810,50 @@ public class ShopJDBCDAO implements ShopDAO_interface {
 		fis.close();
 		return buffer;
 	}
-
-
-
-
-
 	
-}
+	
+	//後台上下架店家
+	@Override
+	public void updateShopStatus(ShopVO shopVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE_Shop_Status);
+
+			pstmt.setInt(1, shopVO.getIs_disable());
+			pstmt.setInt(2, shopVO.getShop_id());
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+		
+	}
+
