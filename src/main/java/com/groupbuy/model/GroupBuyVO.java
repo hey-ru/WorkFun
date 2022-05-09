@@ -2,6 +2,8 @@ package com.groupbuy.model;
 
 import java.sql.Timestamp;
 
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 import com.groupbuylist.model.GroupBuyListService;
 import com.groupbuylist.model.GroupBuyListVO;
 import com.shop.model.*;
@@ -17,7 +19,7 @@ public class GroupBuyVO implements java.io.Serializable {
 	private Integer gb_status;
 	private Integer min_amt;
 	private ShopVO shopVO;
-	
+	private EmpVO empVO;//buyer	
 	
 	
 	@Override
@@ -87,6 +89,11 @@ public class GroupBuyVO implements java.io.Serializable {
 		ShopService shopSvc = new ShopService();
 		ShopVO shopVO = shopSvc.getOneShop(shop_id);
 		return shopVO;
+	}
+	public EmpVO getEmpVO() {
+		EmpService empSvc = new EmpService();
+		EmpVO empVO = empSvc.getOneEmp(gb_owner);
+		return empVO;
 	}
 
 }

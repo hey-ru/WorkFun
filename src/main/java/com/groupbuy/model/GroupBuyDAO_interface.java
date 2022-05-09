@@ -10,7 +10,7 @@ public interface GroupBuyDAO_interface {
 
 	 public void insert(GroupBuyVO groupBuyVO);
      public void updateArrTime(GroupBuyVO groupBuyVO);
-     public void updateGBStatusBygbId(Integer gb_id,Integer gb_status);
+     public void updateGBStatusBygbId(GroupBuyVO groupBuyVO);
      public GroupBuyVO findByPrimaryKey(Integer gb_id);
      public List<GroupBuyVO> getAll();
      public List<GroupBuyVO> getMyGBAll(Integer gb_owner);

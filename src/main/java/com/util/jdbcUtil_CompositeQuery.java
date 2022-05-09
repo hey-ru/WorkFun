@@ -16,7 +16,7 @@ public class jdbcUtil_CompositeQuery {
 		String aCondition = null;
 
 //		if ("is_deal".equals(columnName) || "sal".equals(columnName) || "comm".equals(columnName) || "deptno".equals(columnName)) // 原本樣子
-		if ("is_deal".equals(columnName) || "shop_type".equals(columnName) || "gb_status".equals(columnName) || "is_disable".equals(columnName)) // 用於其他
+		if ("is_deal".equals(columnName) || "shop_type".equals(columnName) || "gb_status".equals(columnName) || "is_disable".equals(columnName) || "buyer".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
 //		else if ("name".equals(columnName) || "job".equals(columnName)) // 原本樣子
 		else if ("name".equals(columnName)) // 用於varchar

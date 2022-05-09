@@ -104,7 +104,7 @@ int itemsPerPage = 10;
 										</thead>
 
 
-											<%@ include file="/groupbuy/page1.file"%>
+											<%@ include file="/design/page1.file"%>
 
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>

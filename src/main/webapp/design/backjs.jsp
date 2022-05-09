@@ -11,4 +11,5 @@
         <!-- Custom scripts for all pages-->
         <script src="<%=request.getContextPath()%>/assets/js/sb-admin-2.min.js"></script>
         
+         <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
         

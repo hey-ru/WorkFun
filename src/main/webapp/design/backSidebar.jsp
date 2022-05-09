@@ -124,7 +124,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
                         <a class="collapse-item" href="buttons.html">下架店家菜單</a>
-                        <a class="collapse-item" href="cards.html">下架揪團</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/groupbuy/gbBack.jsp">下架揪團</a>
                     </div>
                 </div>
             </li>

@@ -586,7 +586,7 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 	}
 	
 	@Override
-	public void updateGBStatusBygbId(Integer gb_id, Integer gb_status) {
+	public void updateGBStatusBygbId(GroupBuyVO groupBuyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -597,11 +597,8 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 
 			pstmt = con.prepareStatement(UPDATE_GBSTSATUS_STMT);
 
-			pstmt.setInt(1, gb_status);
-			pstmt.setInt(2, gb_id);
-
-
-			
+			pstmt.setInt(1, groupBuyVO.getGb_status());
+			pstmt.setInt(2, groupBuyVO.getGb_id());			
 
 			pstmt.executeUpdate();
 
@@ -635,9 +632,7 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 
 		GroupBuyJDBCDAO dao = new GroupBuyJDBCDAO();
 		
-		//修改狀態
-		dao.updateGBStatusBygbId(1012, 2);
-		
+			
 		
 		// 查詢參團資訊
 //		Set<GroupBuyListVO> set = dao.getBuyerBygbid(1001);
