@@ -179,32 +179,31 @@
 </style>
 
 <script>
-        $.datetimepicker.setLocale('zh');
-        $('#start_time').datetimepicker({
- 	       theme: '',              //theme: 'dark',
-	       timepicker:true,       //timepicker:true,
-	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
-		   value: '<%=start_time%>', // value:   new Date(),
-		   onShow:function(){
-			   this.setOptions({
-				minDate:0,
-				minTime:0,
-				maxDate:$('#end_time').val()?$('#end_time').val():false
-			   })
-		   }
-        });
-        $('#end_time').datetimepicker({
-  	       theme: '',              //theme: 'dark',
- 	       timepicker:true,       //timepicker:true,
- 	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=end_time%>', // value:   new Date(),
- 		  onShow:function(){
-			   this.setOptions({
-				   minDate:$('#start_time').val()?$('#start_time').val():false
-			   })
-			  }
+		$.datetimepicker.setLocale('zh');
+		$('#start_time').datetimepicker({
+			theme: '',              //theme: 'dark',
+			timepicker:true,       //timepicker:true,
+			step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
+			format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+			value: '<%=start_time%>', // value:   new Date(),
+			onShow:function(){
+				this.setOptions({
+					minDate:0,
+					maxDate:$('#end_time').val()?$('#end_time').val():false
+				})
+			}
+		});
+		$('#end_time').datetimepicker({
+			theme: '',              //theme: 'dark',
+			timepicker:true,       //timepicker:true,
+			step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
+			format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+			value: '<%=end_time%>', // value:   new Date(),
+			onShow:function(){
+				this.setOptions({
+					minDate:$('#start_time').val()?$('#start_time').val():false
+				})
+			}
 		});
 </script>
 

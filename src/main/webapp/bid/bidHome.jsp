@@ -173,7 +173,7 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 							<c:if test="${secondHandVO.bidVO.bidder != empVO.empId}">
 								<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/bid/BidServlet" name="form1">
 									<div class="form-group col-3" style="display: inline-block">
-										<input type="text" class="form-control"
+										<input type="number" class="form-control"
 											id="exampleFormControlInput1" placeholder="輸入競標金額"
 											style="border: gray solid 2px;" name="price"
 											<c:if test="${secondHandVO.bidVO.bidder==0}">
