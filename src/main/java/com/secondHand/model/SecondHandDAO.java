@@ -37,12 +37,15 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO second_hand (saler,name,bottom_price,top_price,start_time,end_time,img1,img2,img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 //	private static final String DELETE = "DELETE FROM second_hand where second_hand_id = ?";
-	private static final String UPDATE = "UPDATE second_hand set bid_winner=?, deal_price=?, name=?, bottom_price=?, top_price=?, start_time=?, end_time=?, is_deal=?, img1=?, img2=?, img3=? where second_hand_id = ?";
-//	private static final String UPDATE = "UPDATE second_hand set";
-	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
+//	private static final String UPDATE = "UPDATE second_hand set bid_winner=?, deal_price=?, name=?, bottom_price=?, top_price=?, start_time=?, end_time=?, is_deal=?, img1=?, img2=?, img3=? where second_hand_id = ?";
+	private static final String UPDATE = "UPDATE second_hand set ";// StringBuilder
+//	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
+//	private static final String GET_BY_ID = "SELECT e.emp_name as saler_name,b.bid_id as bid_id,b.bidder as bidder,b.price as bid_price,sh.second_hand_id,sh.saler,sh.bid_winner,sh.deal_price,sh.name,sh.bottom_price,sh.top_price,sh.start_time,sh.end_time,sh.is_deal,sh.img1,sh.img2,sh.img3,sh.create_time,sh.update_time FROM second_hand sh join emp e on sh.saler = e.emp_id join bid b on sh.second_hand_id = b.second_hand_id where sh.second_hand_id = ?";
+	private static final String GET_BY_ID = "SELECT e1.emp_name as saler_name,e2.emp_name as bidder_name,b.bid_id as bid_id,b.bidder as bidder,b.price as bid_price,sh.* FROM second_hand sh JOIN emp e1 on e1.emp_id = sh.saler JOIN bid b on sh.second_hand_id = b.second_hand_id LEFT JOIN emp e2 on e2.emp_id = b.bidder WHERE sh.second_hand_id = ?";
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
+	private static final String GET_BY_IS_DEAL = "SELECT second_hand_id,saler,name,start_time,end_time,is_deal,img1 FROM second_hand where is_deal = ?";
 	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand order by second_hand_id";
-	private static final String GET_ALL_DATE_STMT = "SELECT second_hand_id,create_time,update_time FROM second_hand order by second_hand_id";
+	private static final String GET_ALL_DATE_STMT = "SELECT second_hand_id,is_deal,start_time,end_time FROM second_hand order by second_hand_id";
 
 	@Override
 	public void insert(SecondHandVO secondHandVO) {
@@ -443,6 +446,64 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<SecondHandVO> getByIsDeal(Integer is_deal) {
+		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
+		SecondHandVO secondHandVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_BY_IS_DEAL);
+
+			pstmt.setInt(1, is_deal);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				secondHandVO = new SecondHandVO();
+				secondHandVO.setsecond_hand_id(rs.getInt("second_hand_id"));
+				secondHandVO.setSaler(rs.getInt("saler"));
+				secondHandVO.setName(rs.getString("name"));
+				secondHandVO.setStart_time(rs.getTimestamp("start_time"));
+				secondHandVO.setEnd_time(rs.getTimestamp("end_time"));
+				secondHandVO.setIs_deal(rs.getInt("is_deal"));
+				secondHandVO.setImg1(rs.getBytes("img1"));
+				list.add(secondHandVO);
+			}
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 	@Override
 	public List<SecondHandVO> getAll() {
@@ -573,9 +634,6 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 		}
 		return list;
 	}
-
-	
-	
 	
 	public List<SecondHandVO> getAllDate() {
 		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
@@ -624,35 +682,31 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 			}
 		}
 		return list;
-	}
+	}	
 	
-	
-	
-	
-	
-	public static void main(String[] args) throws Exception {
-
-		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();
-
-		String fileName = "/Users/ryan/Coding/CGA101/secondHand_pic/燒燒果實_1.jpg";
-		File file = new File(fileName);
-		FileInputStream fis = new FileInputStream(file);
-		byte[] buffer = new byte[(int) file.length()];
-		fis.read(buffer);
-		fis.close();
-
-		ByteBuffer src = ByteBuffer.wrap(buffer);
-		ByteBuffer base64encoded = Base64.getEncoder().encode(src);
-
-		String fileName1 = "/Users/ryan/Coding/CGA101/secondHand_pic/燒燒果實_2.jpg";
-		File file1 = new File(fileName1);
-		FileInputStream fis1 = new FileInputStream(file1);
-		byte[] buffer1 = new byte[(int)file1.length()];
-		fis1.read(buffer1);
-		fis1.close();
-		
-		ByteBuffer src1 = ByteBuffer.wrap (buffer1);
-		ByteBuffer base64encoded1 = Base64.getEncoder().encode(src1);
+//	public static void main(String[] args) throws Exception {
+//
+//		SecondHandJDBCDAO dao = new SecondHandJDBCDAO();
+//
+//		String fileName = "/Users/ryan/Coding/CGA101/secondHand_pic/燒燒果實_1.jpg";
+//		File file = new File(fileName);
+//		FileInputStream fis = new FileInputStream(file);
+//		byte[] buffer = new byte[(int) file.length()];
+//		fis.read(buffer);
+//		fis.close();
+//
+//		ByteBuffer src = ByteBuffer.wrap(buffer);
+//		ByteBuffer base64encoded = Base64.getEncoder().encode(src);
+//
+//		String fileName1 = "/Users/ryan/Coding/CGA101/secondHand_pic/燒燒果實_2.jpg";
+//		File file1 = new File(fileName1);
+//		FileInputStream fis1 = new FileInputStream(file1);
+//		byte[] buffer1 = new byte[(int)file1.length()];
+//		fis1.read(buffer1);
+//		fis1.close();
+//		
+//		ByteBuffer src1 = ByteBuffer.wrap (buffer1);
+//		ByteBuffer base64encoded1 = Base64.getEncoder().encode(src1);
 //		
 //		
 //		String fileName2 = "/Users/ryan/Coding/CGA101/secondHand_pic/火紅眼_3.jpg";
@@ -755,5 +809,5 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 //			System.out.print(listSecondHandVO.getCreate_time() + ",");
 //			System.out.println(listSecondHandVO.getUpdate_time());
 //		}
-	}
+//	}
 }

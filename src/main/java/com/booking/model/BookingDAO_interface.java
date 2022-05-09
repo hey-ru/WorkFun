@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface BookingDAO_interface {
 	// 新增預約單
-	public void insert(BookingVO bookingVO);
+	public void insertBooking(BookingVO bookingVO);
 
 	// 更改預約單日期
 	public void updateDate(BookingVO bookingVO);

@@ -65,8 +65,12 @@ public class SecondHandService {
 		return dao.getById(second_hand_id);
 	}
 	
-	public List<SecondHandVO> getALLByName(String name){
+	public List<SecondHandVO> getAllByName(String name){
 		return dao.getByName(name);
+	}
+	
+	public List<SecondHandVO> getAllByIsDeal(Integer is_deal){
+		return dao.getByIsDeal(is_deal);
 	}
 
 	public List<SecondHandVO> getAll() {

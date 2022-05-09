@@ -370,7 +370,7 @@ public class SecondHandServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				SecondHandService secondHandService = new SecondHandService();
-				List<SecondHandVO> list = secondHandService.getALLByName(name);
+				List<SecondHandVO> list = secondHandService.getAllByName(name);
 				for (SecondHandVO secondHandVO : list) {
 					System.out.println(secondHandVO.toString());
 				}

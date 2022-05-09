@@ -13,20 +13,17 @@ public class BookingService {
 		dao = new BookingJDBCDAO();
 	}
 
-	public BookingVO addBooking(Integer bookingId, Integer equipmentId, Integer empId, Timestamp startDate,
-			Timestamp endDate, Integer returnStatus, Timestamp overdueDate, Integer overduePrice) {
+	public BookingVO addBooking(Integer equipmentId, Integer empId, Timestamp startDate, Timestamp endDate,
+			Integer returnStatus) {
 
 		BookingVO bookingVO = new BookingVO();
 
-		bookingVO.setBookingId(bookingId);
 		bookingVO.setEquipmentId(equipmentId);
 		bookingVO.setEmpId(empId);
 		bookingVO.setStartDate(startDate);
 		bookingVO.setEndDate(endDate);
 		bookingVO.setReturnStatus(returnStatus);
-		bookingVO.setOverdueDate(overdueDate);
-		bookingVO.setOverduePrice(overduePrice);
-		dao.insert(bookingVO);
+		dao.insertBooking(bookingVO);
 
 		return bookingVO;
 	}
@@ -44,7 +41,7 @@ public class BookingService {
 	}
 
 	public BookingVO updateReturnStatus(Integer bookingId, Integer returnStatus) {
-		
+
 		BookingVO bookingVO = new BookingVO();
 
 		bookingVO.setBookingId(bookingId);

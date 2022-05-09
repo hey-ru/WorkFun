@@ -1,6 +1,7 @@
 package com.booking.controller;
 
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -179,17 +180,17 @@ public class BookingServlet extends HttpServlet {
 		}
 
 		if ("updateReturnStatus".equals(action)) {
-			System.out.println("111111111");
+//			System.out.println("111111111");
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer bookingId = Integer.valueOf(req.getParameter("bookingId").trim());
-			System.out.println("bookingId= "+bookingId);
+//			System.out.println("bookingId= " + bookingId);
 
 			Integer returnStatus = Integer.valueOf(req.getParameter("returnStatus").trim());
-			System.out.println("returnStatus= "+returnStatus);
-			
+//			System.out.println("returnStatus= " + returnStatus);
+
 			/*************************** 2.開始修改資料 *****************************************/
 			BookingService bookingSvc = new BookingService();
 			BookingVO bookingVO = bookingSvc.updateReturnStatus(bookingId, returnStatus);
@@ -200,5 +201,40 @@ public class BookingServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
+
+		if ("insert".equals(action)) {
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+		}
+
+		System.out.println("我進來了");
+		
+//		Integer bookingId = Integer.valueOf(req.getParameter("bookingId").trim());
+
+		Integer equipmentId = Integer.valueOf(req.getParameter("equipmentId").trim());
+
+		System.out.println(equipmentId);
+		
+		Integer empId = Integer.valueOf(req.getParameter("empId").trim());
+		
+		System.out.println(empId);
+
+		Timestamp startDate = Timestamp.valueOf(req.getParameter("startDate").trim());
+
+		System.out.println(startDate);
+		
+		Timestamp endDate = Timestamp.valueOf(req.getParameter("endDate").trim());
+
+		Integer returnStatus = Integer.valueOf(req.getParameter("returnStatus").trim());
+
+		/*************************** 2.開始新增資料 ***************************************/
+		BookingService bookingSvc = new BookingService();
+		bookingSvc.addBooking(equipmentId, empId, startDate, endDate, returnStatus);
+
+		System.out.println(bookingSvc.toString());
+		
+		String url = "/booking/bookingList.jsp";
+		RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+		successView.forward(req, res);
 	}
 }

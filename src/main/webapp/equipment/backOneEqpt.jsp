@@ -74,7 +74,7 @@ td {
 												</div>
 						<div class="col-1" style="height: 20px; display: inline-block;">
 							<a
-								href="<%=request.getContextPath()%>/equipment/equipmentHome.jsp"><strong>回器材列表</strong></a>
+								href="<%=request.getContextPath()%>/equipment/backEquipmentHome.jsp"><strong>回器材列表</strong></a>
 						</div>
 					</div>
 				</div>
@@ -108,15 +108,15 @@ td {
 										aria-label="Office: activate to sort column ascending"
 										style="width: 100px;">狀態</th>
 
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Age: activate to sort column ascending"
-										style="width: 200px;">器材介紹</th>
+<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+<!-- 										rowspan="1" colspan="1" -->
+<!-- 										aria-label="Age: activate to sort column ascending" -->
+<!-- 										style="width: 200px;">器材介紹</th> -->
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Office: activate to sort column ascending"
-										style="width: 200px;">器材規格</th>
+										style="width: 200px;">詳細規格</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
@@ -169,7 +169,7 @@ td {
 											    </c:when>
 										</c:choose></td>
 
-									<td>${equipmentVO.introduction}</td>
+<%-- 									<td>${equipmentVO.introduction}</td> --%>
 
 									<td>${equipmentVO.spec}</td>
 

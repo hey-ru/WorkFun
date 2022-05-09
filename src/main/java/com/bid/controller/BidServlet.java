@@ -33,7 +33,7 @@ public class BidServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 //		System.out.println(action);
-
+		
 		if ("update".equals(action)) { // 來自bidHome.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -55,7 +55,43 @@ public class BidServlet extends HttpServlet {
 					errorMsgs.put("price", "請輸入大於0的數字");
 				}
 				if (price >= Integer.valueOf(req.getParameter("top_price"))) {
-					errorMsgs.put("price", "若要直購請點選下方直購按鈕");
+					price = Integer.valueOf(req.getParameter("top_price").trim());
+					Integer bidder = Integer.valueOf(req.getParameter("bidder").trim());
+					Integer bid_id = Integer.valueOf(req.getParameter("bid_id").trim());
+					Integer second_hand_id = Integer.valueOf(req.getParameter("second_hand_id").trim());
+					
+					BidVO newBidVO = new BidVO();
+					newBidVO.setBidder(bidder);
+					newBidVO.setPrice(price);
+					newBidVO.setBid_id(bid_id);
+					
+					SecondHandVO newSecondHandVO = new SecondHandVO();
+					newSecondHandVO.setsecond_hand_id(second_hand_id);
+					newSecondHandVO.setBid_winner(bidder);
+					newSecondHandVO.setDeal_price(price);
+					newSecondHandVO.setIs_deal(2);
+
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						RequestDispatcher failureView = req.getRequestDispatcher("/bid/bidHome.jsp");
+						failureView.forward(req, res);
+						return; // 程式中斷
+					}
+
+					/*************************** 2.開始修改資料 *****************************************/
+					BidService bidService = new BidService();
+					bidService.updateBid(newBidVO);
+					
+					SecondHandService secondHandService = new SecondHandService();
+					secondHandService.updateSecondHand(newSecondHandVO);
+
+					/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+					String url = "/bid/bidViewOnly.jsp";
+					req.setAttribute("second_hand_id", second_hand_id);
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交bidHome.jsp
+					successView.forward(req, res);
+					
+					return;
 				}
 			}
 

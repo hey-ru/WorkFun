@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.booking.model.*"%>
+
 
 <%
 EquipmentService equipmentSvc = new EquipmentService();
@@ -130,20 +130,17 @@ pageContext.setAttribute("list", list);
 									"
 									class="img-fluid"
 									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; bottom: 0; left: 0; right: 0; margin: auto;">
-								
+
 								<div class="portfolio-info">
 									<div class="portfolio-links"></div>
 
 									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/booking/booking.do"
+										ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
 										style="margin-bottom: 0px;">
-										<input type="submit" class="btn btn-outline-warning"
-											value="點我預約"> <input type="hidden" name="bookingId"
-											value="${booking.bookingId}"> <input type="hidden"
-											name="shop_id" value="${groupBuyVO.shop_id}">
-										<%-- 												<input type="hidden" name="buyer" value="${empVO.empId}"> --%>
-										<%-- 												<input type="hidden" name="buyer_name" value="${empVO.empName}"> --%>
-										<input type="hidden" name="action" value="showGB">
+										<input type="submit" class="btn btn-outline-warning"value="點我預約"> 
+										<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
+										<input type="hidden" name="action" value="showEquipment">
+
 									</FORM>
 
 								</div>

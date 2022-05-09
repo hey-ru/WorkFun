@@ -430,4 +430,6 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		dao.updateIsPayIsPickUp(groupBuyListVO5);
 	}
 
+	
+
 }

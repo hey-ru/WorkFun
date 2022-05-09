@@ -1,5 +1,7 @@
 package com.equipment.model;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -43,7 +45,6 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			pstmt.setBytes(5, equipmentVO.getImg1());
 			pstmt.setBytes(6, equipmentVO.getImg2());
 			pstmt.setBytes(7, equipmentVO.getImg3());
-			
 
 			pstmt.executeUpdate();
 
@@ -91,31 +92,36 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 //			if (newequipment.getEquipmentId() != null) {
 //				sb.append("equipment_id=?, ");
 //			}
+
 			if (newequipment.getEqName() != null) {
 				sb.append("eq_name=?, ");
 			}
+
 			if (newequipment.getPrice() != null) {
 				sb.append("price=?, ");
 			}
+
 			if (newequipment.getEqStatus() != null) {
 				sb.append("eq_status=?, ");
 			}
+
 //			if (newequipment.getIntroduction() != null) {
 //				sb.append("introduction=?, ");
 //			}
+
 			if (newequipment.getSpec() != null) {
 				sb.append("spec=?, ");
 			}
-			
-			if(newequipment.getImg1() != null) {
+
+			if (newequipment.getImg1() != null) {
 				sb.append("img1=?, ");
 			}
-			
-			if(newequipment.getImg2() != null) {
+
+			if (newequipment.getImg2() != null) {
 				sb.append("img2=?, ");
 			}
-			
-			if(newequipment.getImg3() != null) {
+
+			if (newequipment.getImg3() != null) {
 				sb.append("img3=?, ");
 			}
 
@@ -153,22 +159,21 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 				count++;
 				pstmt.setString(count, newequipment.getSpec());
 			}
-			
+
 			if (newequipment.getImg1() != null) {
 				count++;
 				pstmt.setBytes(count, newequipment.getImg1());
 			}
-			
+
 			if (newequipment.getImg2() != null) {
 				count++;
 				pstmt.setBytes(count, newequipment.getImg2());
 			}
-			
+
 			if (newequipment.getImg3() != null) {
 				count++;
 				pstmt.setBytes(count, newequipment.getImg3());
 			}
-			
 
 			count++;
 			pstmt.setInt(count, newequipment.getEquipmentId());
@@ -176,7 +181,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			pstmt.setInt(count, newequipment.getEquipmentId());
 
 			pstmt.executeUpdate();
-			System.out.println(count);
+//			System.out.println(count);
 
 			// Handle any driver errors
 
@@ -555,13 +560,29 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		// 修改
 
 		EquipmentVO equipmentVO2 = new EquipmentVO();
-		equipmentVO2.setEquipmentId(115);
+		equipmentVO2.setEquipmentId(151);
 
-		equipmentVO2.setEqName("PSPPRO");
-		equipmentVO2.setPrice(Integer.valueOf(3));
+		equipmentVO2.setEqName("PSP PRO");
+		equipmentVO2.setPrice(Integer.valueOf(300));
 		equipmentVO2.setEqStatus(1);
 //		equipmentVO2.setIntroduction("1.新的PSP重量約189克(原為280克) 厚度18.6mm(原為23.0mm)");
-//		equipmentVO2.setSpec("●(480×272，1677萬色");
+		equipmentVO2.setSpec("●(480×272，1677萬色");
+		byte[] img1 = null;
+		byte[] img2 = null;
+		byte[] img3 = null;
+
+		try {
+			img1 = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\照片\\123.jpg");
+			img2 = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\照片\\123.jpg");
+			img3 = getPictureByteArray("C:\\Users\\Tibame_T14\\Desktop\\照片\\123.jpg");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		equipmentVO2.setImg1(img1);
+		equipmentVO2.setImg2(img2);
+		equipmentVO2.setImg3(img3);
+		dao.update(equipmentVO2);
+
 		dao.update(equipmentVO2);
 
 		// 刪除 by eqID
@@ -667,4 +688,13 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		}
 		return equipmentVO;
 	}
+
+	public static byte[] getPictureByteArray(String path) throws IOException {
+		FileInputStream fis = new FileInputStream(path);
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		fis.close();
+		return buffer;
+	}
+
 }

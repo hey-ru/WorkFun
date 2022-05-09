@@ -106,7 +106,7 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 									<p class="col-lg-3 col-md-4 label">${secondHandVO.name}</p>
 
 									<h5 class="card-title">拍賣人</h5>
-									<p class="small fst-italic">${secondHandVO.empVO.empName}</p>
+									<p class="small fst-italic">${secondHandVO.empVO1.empName}</p>
 
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">起標價</div>
@@ -131,7 +131,7 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 											尚未有人出價
 										</c:if>
 										<c:if test="${secondHandVO.bidVO.bidder!=0}">
-											${secondHandVO.bidVO.bidder}
+											${secondHandVO.empVO2.empName}
 										</c:if>
 										</div>
 									</div>
@@ -147,10 +147,8 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 							<!-- End Bordered Tabs -->
 							
 							<c:if test="${secondHandVO.bidVO.bidder == empVO.empId}">
-								<div class="col-lg-3 col-md-4 label">恭喜你得標,請與 ${secondHandVO.empVO.empName} 聯絡</div>
+								<div class="col-lg-9 col-md-4 label">恭喜你得標,請與 ${secondHandVO.empVO1.empName} 聯絡</div>
 							</c:if>
-							
-							bidViewOnly
 
 						</div>
 					</div>
