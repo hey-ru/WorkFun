@@ -12,6 +12,11 @@ public class MenuService {
 		dao = new MenuDAO(); //連線池
 	}
 
+	//一次新增多筆菜單項目
+	public void addMenuMany(List <MenuVO> listMenu){
+		dao.insertMany(listMenu);
+	}
+	
 	//主揪新增品項,金額
 	public MenuVO addMenuItem(String item, Integer price, Integer shop_id) {
 

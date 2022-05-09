@@ -46,7 +46,7 @@ public class DisableByShopServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("menuListDisable", menuListDisable);
 				System.out.println(menuListDisable.toString());
-				String url = "/back/backmain_Shop_DisableMenu.jsp";
+				String url = "/menu/backmain_Shop_DisableMenu.jsp";
 				// 成功轉交
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -74,7 +74,7 @@ public class DisableByShopServlet extends HttpServlet {
 						List<MenuVO> menuListDisable = menuService.getByShopIdDisable(shop_id);
 						req.setAttribute("menuListDisable", menuListDisable);
 						
-						String url = "/back/backmain_Shop_DisableMenu.jsp";
+						String url = "/menu/backmain_Shop_DisableMenu.jsp";
 						// 成功轉交
 						RequestDispatcher successView = req.getRequestDispatcher(url);
 						successView.forward(req, res);

@@ -90,11 +90,13 @@ int itemsPerPage = 10;
 							<!-- ============== Card Header ============== -->
 							<div class="card-header py-3" style="background-color: #E8E7D2">
 								<div class="row">
-									<div class="col-6"
-										style="height: 20px; display: inline-block;">
+									<div class="col-11" style="height: 20px; display: inline-block;">
 										<h5>
 											<strong>[後台] 菜單未上架明細</strong>
 										</h5>
+									</div>
+									<div class="col-1" style="height: 20px; display: inline-block;">
+										<a href="<%=request.getContextPath()%>/shop/backmain_Shop.jsp"><strong>回上頁</strong></a>
 									</div>
 								</div>
 							</div>
@@ -124,7 +126,7 @@ int itemsPerPage = 10;
 											</tr>
 										</thead>
 
-<%-- 										<%@ include file="/design/page1.file"%> --%>
+										<%-- 										<%@ include file="/design/page1.file"%> --%>
 										<tbody>
 
 											<c:forEach var="menu" items="${menuListDisable}">
@@ -154,7 +156,7 @@ int itemsPerPage = 10;
 									</table>
 									<div style="display: inline-block; width: 50px;"></div>
 									<div style="display: inline-block; margin-bottom: 10px;">
-<%-- 										<%@ include file="/design/page2.file"%> --%>
+										<%-- 										<%@ include file="/design/page2.file"%> --%>
 									</div>
 								</div>
 							</div>

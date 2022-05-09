@@ -532,7 +532,7 @@ public class ShopServlet extends HttpServlet {
     			System.out.println("完成上下架");
     			
     			/***************************3.變更完成,準備轉交(Send the Success view)***********/
-    			RequestDispatcher successView = req.getRequestDispatcher("/back/backmain_Shop.jsp");// 刪除成功後,轉交回送出刪除的來源網頁
+    			RequestDispatcher successView = req.getRequestDispatcher("/shop/backmain_Shop.jsp");// 刪除成功後,轉交回送出刪除的來源網頁
     			successView.forward(req, res);
     			
     		}

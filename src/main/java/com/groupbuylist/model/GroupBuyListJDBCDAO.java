@@ -41,7 +41,8 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	// PK ok
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuylist where gbList_id = ?";
 
-//	[揪團管理]: 修改取貨付款
+//	<<揪團管理>>
+//	修改取貨付款
 	private static final String UPDATE_FROMGBOWNER_STMT = "UPDATE groupbuylist SET is_pay = ?, is_pickup = ? WHERE gb_id = ? AND buyer = ?";
 
 //===================================================================================================	
