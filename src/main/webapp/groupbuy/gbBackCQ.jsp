@@ -5,13 +5,13 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.groupbuy.model.*"%>
 
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<GroupBuyVO>" />
 <%
-GroupBuyService groupBuySvc = new GroupBuyService();
-List<GroupBuyVO> list = groupBuySvc.getAll();
-pageContext.setAttribute("list", list);
-EmpService empSvc = new EmpService();
+String yourServlet = "/groupbuy/GroupBuyServlet"; 
 int itemsPerPage = 10;
+EmpService empSvc = new EmpService();
 %>
+
 
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -130,8 +130,8 @@ int itemsPerPage = 10;
 								</form>
 							</div>
 						</div>
-
-				
+					
+					
 					<div class="table-responsive">
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
@@ -172,11 +172,11 @@ int itemsPerPage = 10;
 											</tr>
 										</thead>
 										
-										<%@ include file="/design/page1.file"%>				
+										<%@ include file="/design/page1_ByCompositeQuery.file"%>				
 
 										<!-- ============== 表格內容(自行增減修改) ============== -->
 										<tbody>
-											<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>"
+											<c:forEach var="groupBuyVO" items="${listByCompositeQuery}" begin="<%=pageIndex%>"
 										end="<%=pageIndex+rowsPerPage-1%>">																												
 													<tr>
 														<td>${groupBuyVO.gb_id}</td>
@@ -211,7 +211,7 @@ int itemsPerPage = 10;
 												</c:forEach>
 										</tbody>
 									</table>
-									<%@ include file="/design/page2.file"%>
+									<%@ include file="/design/page2_ByCompositeQuery.file"%>
 
 								</div>
 							</div>

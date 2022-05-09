@@ -343,10 +343,9 @@ if ("updateGBStatus".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 				List<GroupBuyVO> list  = groupBuySvc.getAll(map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("list", list); // 資料庫取出的list物件,存入request
-				req.setAttribute("CompositeQuery", "yes");
+				req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
 //				session.setAttribute("listByCompositeQuery", list);
-				RequestDispatcher successView = req.getRequestDispatcher("/groupbuy/gbBack.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				RequestDispatcher successView = req.getRequestDispatcher("/groupbuy/gbBackCQ.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 		}
 		
