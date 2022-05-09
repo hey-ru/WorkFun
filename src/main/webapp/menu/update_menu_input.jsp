@@ -55,7 +55,8 @@
 								</tr>
 								<tr>
 									<td><label>狀態:</label></td>
-									<td><label><input type="radio" name="is_item"
+									<td><label>
+									<input type="radio" name="is_item"
 											value="1" ${(param.is_item=="1")? 'checked':'' }> 上架
 									</label> <label><input type="radio" name="is_item" value="0"
 											${(param.is_item=="0")? 'checked':'' }> 下架 </label></td>

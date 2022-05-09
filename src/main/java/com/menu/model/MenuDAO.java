@@ -25,14 +25,14 @@ public class MenuDAO implements MenuDAO_interface {
 	
 	// 前台 新增店家單品項目
 	private static final String INSERT_STMT = "INSERT INTO menu (shop_id,item,price) VALUES (?, ?, ?)";
-	// 前台 修改店家單品項目
+	// 前台 修改店家單品項目(串接寫法)
 	private static final String UPDATE = "UPDATE menu set ";
-	// 前台 由下架修改為上架
-	private static final String UPDATESTATUS = "UPDATE menu set is_item = 1 where menu_id = ?";
+	// 後台 由下架修改為上架
+	private static final String UPDATESTATUS = "UPDATE menu set is_item = 1 where menu_id = ? AND shop_id = ?";
 	// 前台 查詢一間店家菜單(上架中)
 	private static final String GET_ByShopId = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ? and is_item=1 ";
 	// 前台 查詢一間店家菜單(下架)
-	private static final String GET_ByShopId_Disable = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ? and is_item=0 ";
+	private static final String GET_ByShopId_Disable = "SELECT * FROM menu where shop_id = ? and is_item=0 ";
 	// 後台 查詢各店家菜單
 	private static final String GET_ALL_STMT = "SELECT * FROM menu ";
 	//查詢一筆菜單項目
@@ -170,6 +170,7 @@ public class MenuDAO implements MenuDAO_interface {
 			pstmt = con.prepareStatement(UPDATESTATUS);
 
 			pstmt.setInt(1, menuVO.getMenu_id());
+			pstmt.setInt(2, menuVO.getShop_id());
 
 			pstmt.executeUpdate();
 
@@ -258,7 +259,7 @@ public class MenuDAO implements MenuDAO_interface {
 		return list;
 	}
 
-	//前台 以店家查詢菜單明細(下架)
+	//後台 以店家查詢菜單明細(下架)
 	@Override
 	public List<MenuVO> getByShopIdDisable(Integer shop_id) {
 			List<MenuVO> list = new ArrayList<MenuVO>();
@@ -280,10 +281,11 @@ public class MenuDAO implements MenuDAO_interface {
 				while (rs.next()) {
 					menuVO = new MenuVO();
 					menuVO.setMenu_id(rs.getInt(1));
-					menuVO.setItem(rs.getString(2));
-					menuVO.setPrice(rs.getInt(3));
-					menuVO.setIs_item(rs.getInt(4));
-					menuVO.setMenu_upd(rs.getTimestamp(5));
+					menuVO.setShop_id(rs.getInt(2));
+					menuVO.setItem(rs.getString(3));
+					menuVO.setPrice(rs.getInt(4));
+					menuVO.setIs_item(rs.getInt(5));
+					menuVO.setMenu_upd(rs.getTimestamp(6));
 					list.add(menuVO);
 				}
 
