@@ -43,10 +43,11 @@ public class MenuService {
 	}
 	
 	//主揪查詢後可變更該項目狀態(上架或下架)
-	public MenuVO updateStatus(Integer menu_id) {
+	public MenuVO updateStatus(Integer menu_id, Integer shop_id) {
 
 		MenuVO menuVO = new MenuVO();
 		menuVO.setMenu_id(menu_id);
+		menuVO.setShop_id(shop_id);
 
 		dao.updatestatus(menuVO);
 

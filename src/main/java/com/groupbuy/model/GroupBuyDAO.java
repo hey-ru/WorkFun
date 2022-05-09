@@ -549,7 +549,7 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 				}
 
 	@Override
-	public void updateGBStatusBygbId(Integer gb_id,Integer gb_status) {
+	public void updateGBStatusBygbId(GroupBuyVO groupBuyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -558,8 +558,8 @@ public class GroupBuyDAO implements GroupBuyDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_GBSTSATUS_STMT);
 
-			pstmt.setInt(1, gb_status);
-			pstmt.setInt(2, gb_id);
+			pstmt.setInt(1, groupBuyVO.getGb_status());
+			pstmt.setInt(2, groupBuyVO.getGb_id());
 
 			pstmt.executeUpdate();
 

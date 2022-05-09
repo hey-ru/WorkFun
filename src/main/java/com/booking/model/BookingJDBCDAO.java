@@ -42,6 +42,9 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	// 後台員工修改狀態
 	private static final String UPDATE_RETURNSTATUS = "UPDATE booking set ";
 
+	// 查詢開始租借時間
+	private static final String GET_STARTDATE_BY_EQUPTID = "select equipment_id , start_date from booking where start_date >= now() and equipment_id = ?";
+
 	@Override
 	public void insertBooking(BookingVO bookingVO) {
 
@@ -58,7 +61,6 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 			pstmt.setTimestamp(3, bookingVO.getStartDate());
 			pstmt.setTimestamp(4, bookingVO.getEndDate());
 			pstmt.setInt(5, bookingVO.getReturnStatus());
-
 
 			pstmt.executeUpdate();
 
@@ -351,6 +353,64 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	}
 
 	@Override
+	public List<BookingVO> getStartDateByEqptId(Integer equipmentId) {
+
+		List<BookingVO> list = new ArrayList<BookingVO>();
+		BookingVO bookingVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_STARTDATE_BY_EQUPTID);
+			rs = pstmt.executeQuery();
+
+			pstmt.setInt(1, equipmentId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				bookingVO = new BookingVO();
+				bookingVO.setEquipmentId(rs.getInt("equipment_id"));
+				bookingVO.setStartDate(rs.getTimestamp("start_date"));
+				list.add(bookingVO);
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
 	public List<BookingVO> getAll() {
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		BookingVO bookingVO = null;
@@ -523,6 +583,12 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 //
 //		bookingVO6.setReturnStatus(3);
 //		dao.updateReturnStatus(bookingVO6);
+
+		List<BookingVO> list = dao.getStartDateByEqptId(108);
+		for (BookingVO aBooking : list) {
+			System.out.println(aBooking.getBookingId());
+			System.out.println(aBooking.getStartDate());
+		}
 
 	}
 }

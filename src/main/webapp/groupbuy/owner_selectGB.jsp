@@ -1,3 +1,4 @@
+<%@page import="com.emp.model.EmpVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -6,10 +7,9 @@
 <%@ page import="com.groupbuylist.model.*"%>
 
 <%
-//只能查詢個人參團紀錄
-Integer gb_owner = Integer.valueOf(request.getParameter("gb_owner"));
+EmpVO empVO = (EmpVO)session.getAttribute("empVO");
 GroupBuyService gbSvc = new GroupBuyService();
-List<GroupBuyVO> list = gbSvc.getMyGBAll(gb_owner);
+List<GroupBuyVO> list = gbSvc.getMyGBAll(empVO.getEmpId());
 pageContext.setAttribute("list", list);
 
 int itemsPerPage = 10;
@@ -104,7 +104,7 @@ int itemsPerPage = 10;
 										</thead>
 
 
-											<%@ include file="/groupbuy/page1.file"%>
+											<%@ include file="/design/page1.file"%>
 
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
@@ -163,7 +163,7 @@ int itemsPerPage = 10;
 								</div>
 							</div>
 
-							<%@ include file="/groupbuy/page2.file"%>
+							<%@ include file="/design/page2.file"%>
 
 
 

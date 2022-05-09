@@ -6,12 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import javax.persistence.RollbackException;
 
 import com.emp.model.EmpVO;
 import com.report_comment.model.Report_CommentVO;
@@ -33,79 +29,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	private static final String GET_ONE_COMMENT = "select r.report_id , e1.emp_name as reporterName, e2.emp_name as handlerName, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler Where r.report_id = ?";
 	private static final String GET_COMMENT = "select comment , report_comment_image , createtime from report_comment where report_id = ?";
 	
-	private static final String HANDLE_REPORT = "select e1.emp_name as reporterName, e2.emp_name as handlerName,r.report_id, rc.report_id, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title , comment , report_comment_image , createtime from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler left join report_comment rc on r.report_id = rc.report_id Where r.report_id = ?";
-	
-	@Override
-	public List<ReportVO> handleReport(Integer report_id) {
-		List<ReportVO> list = new ArrayList<ReportVO>();
-		ReportVO reportVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_COMMENT);
-
-			pstmt.setInt(1, report_id);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				reportVO = new ReportVO();
-				EmpVO empVO1 = new EmpVO();
-				EmpVO empVO2 = new EmpVO();
-				empVO1.setEmpName(rs.getString("reporterName"));
-				empVO2.setEmpName(rs.getString("handlerName"));
-				reportVO.setEmpVO1(empVO1);
-				reportVO.setEmpVO2(empVO2);
-				reportVO.setReport_id(rs.getInt("r.report_id"));
-				reportVO.setReporter(rs.getInt("reporter"));
-				reportVO.setHandler(rs.getInt("handler"));
-				reportVO.setStarttime(rs.getTimestamp("starttime"));
-				reportVO.setUpdatetime(rs.getTimestamp("updatetime"));
-				reportVO.setEndtime(rs.getTimestamp("endtime"));
-				reportVO.setContent(rs.getString("content"));
-				reportVO.setStatus(rs.getInt("status"));
-				reportVO.setReport_image(rs.getBytes("report_image"));
-				reportVO.setReport_type(rs.getInt("report_type"));
-				reportVO.setTitle(rs.getString("title"));
-				
-				list.add(reportVO);
-			}
-
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
-	
+//	private static final String HANDLE_REPORT = "select e1.emp_name as reporterName, e2.emp_name as handlerName,r.report_id, rc.report_id, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title , comment , report_comment_image , createtime from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler left join report_comment rc on r.report_id = rc.report_id Where r.report_id = ?";
 	
 	@Override
 	public List<Report_CommentVO> TestComment(Integer report_id) {

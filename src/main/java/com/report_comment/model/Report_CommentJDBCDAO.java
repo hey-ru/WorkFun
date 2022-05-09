@@ -20,15 +20,11 @@ public class Report_CommentJDBCDAO implements Report_CommentDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT * FROM report_comment where report_comment_id = ?";
 	private static final String UPDATE = "UPDATE report_comment set ";
 	
-	
+	private static final String CHANGE_TYPE = "UPDATE report set handler = ? , report_type = ? , status = ? where report_id = ?";
+	private static final String FORWARD = "INSERT INTO report_comment (report_id,comment) VALUES (? , ?)";
 	
 	@Override
-	public List<ReportVO> getHandler() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void insert(Report_CommentVO report_commentVO) {
+	public void changeType(ReportVO reportVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -36,12 +32,13 @@ public class Report_CommentJDBCDAO implements Report_CommentDAO_interface {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt = con.prepareStatement(CHANGE_TYPE);
 
-			pstmt.setInt(1, report_commentVO.getReport_id());
-			pstmt.setString(2, report_commentVO.getComment());
-			pstmt.setBytes(3, report_commentVO.getReport_comment_image());
-				
+			pstmt.setInt(1, reportVO.getHandler());
+			pstmt.setInt(2, reportVO.getReport_type());
+			pstmt.setInt(3, reportVO.getStatus());
+			pstmt.setInt(4, reportVO.getReport_id());
+		
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors
@@ -71,47 +68,65 @@ public class Report_CommentJDBCDAO implements Report_CommentDAO_interface {
 	}
 
 	@Override
-	public void update(Report_CommentVO report_commentVO) {
+	public void forward(Report_CommentVO report_CommentVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int count = 0;
+		
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			
-			Report_CommentVO oldreport_comment = findByPrimaryKey(report_commentVO.getReport_comment_id());
-			System.out.println(oldreport_comment.getReport_comment_id());
-			StringBuilder sb=new StringBuilder();
-			sb.append(UPDATE);
+			pstmt = con.prepareStatement(FORWARD);
 
-			if(report_commentVO.getReport_comment_image() !=null) {
-				sb.append("comment_image=?,");
-			}
-			
-			if(report_commentVO.getComment() !=null) {
-				sb.append("comment=?,");
-			}
-			
-			sb.append("report_comment_id=?");
-			sb.append(" where report_comment_id=?");
-			
-			pstmt = con.prepareStatement(sb.toString());
-			
-			if(report_commentVO.getComment() !=null) {
-				count++;
-				pstmt.setString(count, report_commentVO.getComment());
-			}
-			if(report_commentVO.getReport_comment_image() !=null) {
-				count++;
-				pstmt.setBytes(count, report_commentVO.getReport_comment_image());
-			}
-			count++;
-			pstmt.setInt(count,report_commentVO.getReport_comment_id()); 
-			count++;
-			pstmt.setInt(count,report_commentVO.getReport_comment_id()); 
-
+			pstmt.setInt(1, report_CommentVO.getReport_id());
+			pstmt.setString(2, report_CommentVO.getComment());
+		
 			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+
+	@Override
+	public void insert(Report_CommentVO report_commentVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setInt(1, report_commentVO.getReport_id());
+			pstmt.setString(2, report_commentVO.getComment());
+			pstmt.setBytes(3, report_commentVO.getReport_comment_image());
+				
+			pstmt.executeUpdate();
+
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -248,7 +263,6 @@ public class Report_CommentJDBCDAO implements Report_CommentDAO_interface {
 
 		return list;
 	}
-
 
 //	public static void main(String[] args) throws Exception {
 //		report_commentJDBCDAO dao = new report_commentJDBCDAO();

@@ -70,46 +70,6 @@ public class Report_CommentDAO implements Report_CommentDAO_interface {
 	}
 		
 	@Override
-	public void update(Report_CommentVO report_commentVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
-
-			pstmt.setInt(1, report_commentVO.getReport_id());
-			pstmt.setString(2, report_commentVO.getComment());
-			pstmt.setTimestamp(3, report_commentVO.getCreatetime());
-			pstmt.setBytes(4, report_commentVO.getReport_comment_image());
-
-			pstmt.executeUpdate();
-
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-
-	}
-		
-	@Override
 	public Report_CommentVO findByPrimaryKey(Integer report_comment_id) {
 		Report_CommentVO report_commentVO = null;
 		Connection con = null;
@@ -211,9 +171,15 @@ public class Report_CommentDAO implements Report_CommentDAO_interface {
 	}
 
 	@Override
-	public List<ReportVO> getHandler() {
+	public void changeType(ReportVO reportVO) {
 		// TODO Auto-generated method stub
-		return null;
+		
+	}
+
+	@Override
+	public void forward(Report_CommentVO report_CommentVO) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

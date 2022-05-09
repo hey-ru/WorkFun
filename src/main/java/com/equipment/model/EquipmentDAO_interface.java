@@ -1,6 +1,9 @@
 package com.equipment.model;
 
 import java.util.List;
+import java.util.Map;
+
+import com.secondHand.model.SecondHandVO;
 
 public interface EquipmentDAO_interface {
 	// 新增器材
@@ -29,4 +32,8 @@ public interface EquipmentDAO_interface {
 	
 	// 最後一筆資料
 	public EquipmentVO getLast();
+	
+	
+	// 萬用查詢
+	public List<EquipmentVO> getAllQuery(Map<String, String[]> map); 
 }

@@ -46,13 +46,17 @@ public class ReportCommentServlet extends HttpServlet{
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
+					System.out.println(report_id);
 					String comment = req.getParameter("comment");
-					String commentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_)]*$";
+					System.out.println(comment);
+					String commentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
 					if (comment == null || comment.trim().length() == 0) {
 						errorMsgs.put("comment","處理訊息: 請勿空白");
 					} else if(!comment.trim().matches(commentReg)) { //以下練習正則(規)表示式(regular-expression)
-						errorMsgs.put("comment","回報內容: 只能是中、英文字母、數字");
+						errorMsgs.put("comment","處理訊息: 只能是中、英文字母、數字");
 		            }
+					
+					System.out.println(errorMsgs);
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						RequestDispatcher failureView = req
@@ -62,20 +66,26 @@ public class ReportCommentServlet extends HttpServlet{
 					}
 					/***************************2.開始新增資料***************************************/
 					Report_CommentService repcomSvc= new Report_CommentService();
+					byte[] report_comment_image = null;	
 					Part part = req.getPart("report_comment_image");
-					byte[]report_comment_image = repcomSvc.Image(part);
-	
+					
+					if(part !=null) {
+					report_comment_image = repcomSvc.Image(part);
+					}else { 
+						report_comment_image = null;
+					}
+					System.out.println(report_comment_image);
 					Report_CommentVO report_commentVO = repcomSvc.addReport_Comment(report_id,comment,report_comment_image);
-
+					
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/report/bakListAll.jsp";
+					String url = "/report/backListAll.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					/***************************其他可能的錯誤處理**********************************/
 				} catch (Exception e) {
 					errorMsgs.put("Exception",e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/report/addReport.jsp");
+							.getRequestDispatcher("/report/backListOne.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -114,33 +124,17 @@ public class ReportCommentServlet extends HttpServlet{
 					try {
 						/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 						Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
-					
+						System.out.println(report_id);
 						Integer handler = Integer.valueOf(req.getParameter("handler").trim());
-
-						Integer reporter = Integer.valueOf(req.getParameter("reporter").trim());
-				
+						System.out.println(handler);
 						Integer report_type = Integer.valueOf(req.getParameter("report_type").trim());
-					
-						String title = req.getParameter("title");
-					
-						String content = req.getParameter("content");
-					
-
-						ReportVO oldreportVO = new ReportService().getOneReport(report_id);
-									
-						byte[] report_image = oldreportVO.getReport_image();
+						System.out.println(report_type);
+						Integer status = Integer.valueOf(req.getParameter("status"));
+						System.out.println(status);
+						String comment = req.getParameter("comment");
 						
-						Part part = req.getPart("report_image");
+						Report_CommentService recSvc = new Report_CommentService();
 						
-				
-						String filename1 = getFileNameFromPart(part);
-							if (filename1!= null && part.getContentType()!=null) {
-								report_image = getByteArrayFromPart(part);
-							}
-						
-							ReportService repSvc = new ReportService();
-
-							
 						if (!errorMsgs.isEmpty()) {
 							RequestDispatcher failureView = req
 									.getRequestDispatcher("/report/updateReport.jsp");
@@ -149,24 +143,23 @@ public class ReportCommentServlet extends HttpServlet{
 						}
 						
 						/***************************2.開始修改資料*****************************************/
-						ReportVO reportVO = repSvc.updateReport(title,report_type,reporter,handler,content,report_image,report_id);
+						ReportVO reportVO = recSvc.changeType(handler,report_type,status,report_id);
+						Report_CommentVO report_CommentVO = recSvc.forward(report_id, comment);
 						
 						/***************************3.修改完成,準備轉交(Send the Success view)*************/
 						req.setAttribute("reportVO", reportVO); // 資料庫update成功後,正確的的empVO物件,存入req
-						String url = "/report/listAllReport.jsp";
+						String url = "/report/backListAll.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 						successView.forward(req, res);
 
 						/***************************其他可能的錯誤處理*************************************/
 					} catch (Exception e) {
-						errorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
-						RequestDispatcher failureView = req
-								.getRequestDispatcher("/report/updateReport.jsp");
-						failureView.forward(req, res);
+//						errorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
+//						RequestDispatcher failureView = req
+//								.getRequestDispatcher("/report/backForwardReport.jsp");
+//						failureView.forward(req, res);
 					}
 				}
-			
-			
 	}
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");

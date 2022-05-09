@@ -26,4 +26,7 @@ public interface BookingDAO_interface {
 	
 	// 查詢預約單所有欄位
 	public List<BookingVO> getAll(); 
+	
+	// 查詢開始租借時間
+	public List<BookingVO> getStartDateByEqptId (Integer equipmentId);
 }

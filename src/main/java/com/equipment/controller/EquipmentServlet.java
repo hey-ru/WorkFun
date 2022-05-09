@@ -3,7 +3,9 @@ package com.equipment.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,8 @@ import com.eq_image.model.EqImageService;
 import com.eq_image.model.EqImageVO;
 import com.equipment.model.EquipmentService;
 import com.equipment.model.EquipmentVO;
+import com.secondHand.model.SecondHandService;
+import com.secondHand.model.SecondHandVO;
 
 @WebServlet("/equipment/equipment.do")
 @MultipartConfig
@@ -204,6 +208,7 @@ public class EquipmentServlet extends HttpServlet {
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer equipmentId = Integer.valueOf(req.getParameter("equipmentId").trim());
+
 			System.out.println("equipmentId= " + equipmentId);
 
 //			Integer imageId = Integer.valueOf(req.getParameter("imageId").trim());
@@ -213,6 +218,8 @@ public class EquipmentServlet extends HttpServlet {
 			if (eqName == null || eqName.trim().length() == 0) {
 				errorMsgs.put("eqName", "器材名稱: 請勿空白");
 			}
+
+			System.out.println("eqName=" + eqName);
 
 //			else if (!eqName.trim().matches(eqNameReg)) {
 //				errorMsgs.put("eqName", "器材名稱: 只能是中文，英文字母、数字及_");
@@ -235,10 +242,10 @@ public class EquipmentServlet extends HttpServlet {
 				errorMsgs.put("eqStatus", "請選擇狀態");
 			}
 
-			String introduction = req.getParameter("introduction");
-			if (introduction == null || introduction.trim().length() == 0) {
-				errorMsgs.put("introduction", "器材介紹: 請勿空白");
-			}
+//			String introduction = req.getParameter("introduction");
+//			if (introduction == null || introduction.trim().length() == 0) {
+//				errorMsgs.put("introduction", "器材介紹: 請勿空白");
+//			}
 
 			String spec = req.getParameter("spec");
 			if (spec == null || spec.trim().length() == 0) {
@@ -266,7 +273,7 @@ public class EquipmentServlet extends HttpServlet {
 
 			Part pic3 = req.getPart("img3");
 			String filename3 = getFileNameFromPart(pic3);
-			if (filename3 != null && pic1.getContentType() != null) {
+			if (filename3 != null && pic3.getContentType() != null) {
 				img3 = getByteArrayFromPart(pic3);
 			}
 
@@ -442,6 +449,40 @@ public class EquipmentServlet extends HttpServlet {
 			successView.forward(req, res);
 
 		}
+
+		if ("listByCompositeQuery".equals(action)) { // 來自secondHandHome.jsp的複合查詢請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			/*************************** 1.將輸入資料轉為Map **********************************/
+			// 採用Map<String,String[]> getParameterMap()的方法
+			// 注意:an immutable java.util.Map
+			// Map<String, String[]> map = req.getParameterMap();
+			HttpSession session = req.getSession();
+			Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
+
+			// 以下的 if 區塊只對第一次執行時有效
+			if (req.getParameter("whichPage") == null) {
+				Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+				session.setAttribute("map", map1);
+				map = map1;
+			}
+
+			/*************************** 2.開始複合查詢 ***************************************/
+			EquipmentService equipmentService = new EquipmentService();
+			List<EquipmentVO> list = equipmentService.getAllQuery(map);
+
+			System.out.println("list= " + list);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
+//				session.setAttribute("listByCompositeQuery", list);
+			RequestDispatcher successView = req.getRequestDispatcher("/equipment/backEquipmentHome.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+			successView.forward(req, res);
+		}
+
 	}
 
 	// 取出上傳檔案名稱

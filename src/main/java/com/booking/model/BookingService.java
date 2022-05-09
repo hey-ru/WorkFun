@@ -70,4 +70,8 @@ public class BookingService {
 	public List<BookingVO> getByEmpId(Integer empId) {
 		return dao.getByEmpId(empId);
 	}
+	
+	public List<BookingVO> getStartDateByEqptId(Integer equipmentId){
+		return dao.getStartDateByEqptId(equipmentId);
+	}
 }

@@ -77,10 +77,13 @@
                               </c:if>
                             </div>
 
+                           <c:forEach var="recVO" items="${reportVO.recVO}">
                             <div class="input-group">
                                 <span class="input-group-text">處理訊息</span>
-                                <textarea class="form-control" aria-label="With textarea">Test</textarea>
+                                <span class="input-group-text"><fmt:formatDate value="${recVO.createtime}" pattern="yyyy-MM-dd HH:mm "/></span>
+                                <textarea class="form-control" aria-label="With textarea">${recVO.comment}</textarea>
                             </div>
+                            </c:forEach>
                         </div>
                     </main>
     <!-- ======= Footer ======= -->

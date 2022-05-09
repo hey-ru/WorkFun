@@ -179,7 +179,8 @@ left:0;
 				<div class="row mb-3">
 					<label for="start_time" class="col-sm-2 col-form-label">開始時間</label>
 					<div class="col-sm-5">
-						<input name="start_time" id="start_time" type="text" class="form-control-plaintext" readonly autocomplete="off" value="${param.start_time}"/>
+						<input name="start_time" id="start_time" type="text" class="form-control-plaintext" 
+						readonly autocomplete="off" value="${param.start_time}"/>
 					</div>
 					<div class="col-sm-4">${errorMsgs.start_time}</div>
 				</div>
@@ -233,6 +234,7 @@ left:0;
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <script>
+
         $.datetimepicker.setLocale('zh');
         $('#start_time').datetimepicker({
  	       theme: '',              //theme: 'dark',
@@ -244,7 +246,7 @@ left:0;
 			   this.setOptions({
 				minDate:0,
 				minTime:0,
-			    maxDate:$('#end_time').val()?$('#end_time').val():false
+				maxDate:$('#end_time').val()?$('#end_time').val():false
 			   })
 		   }
         });
@@ -256,6 +258,7 @@ left:0;
  		   //value: '${end_time}', // value:   new Date(),
  		  onShow:function(){
  			   this.setOptions({
+ 				
  			    minDate:$('#start_time').val()?$('#start_time').val():false,
  			    maxDate:$('#arr_time').val()?$('#arr_time').val():false,
  			   })

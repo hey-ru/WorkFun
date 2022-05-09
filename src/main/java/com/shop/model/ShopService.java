@@ -50,6 +50,23 @@ public class ShopService {
 		return shopVO;
 	}
 
+	public ShopVO updateShopStatus(Integer is_disable, Integer shop_id) {
+		ShopVO shopVO = new ShopVO();
+		
+		if(is_disable==0) {
+			shopVO.setIs_disable(1);
+
+		}else if(is_disable==1){
+			shopVO.setIs_disable(0);
+		};
+		
+		shopVO.setShop_id(shop_id);
+		dao.updateShopStatus(shopVO);
+
+		return shopVO;
+	}
+	
+	
 	public ShopVO getOneShop(Integer shop_id) {
 		return dao.findByPrimaryKey(shop_id);
 	}

@@ -34,7 +34,7 @@ public class GroupBuyService {
 		return groupBuyVO;
 	}
 
-	public GroupBuyVO updateArrTime(Integer gb_id,Timestamp arr_time) {
+	public void updateArrTime(Integer gb_id,Timestamp arr_time) {
 		GroupBuyVO groupBuyVO = new GroupBuyVO();
 
 		groupBuyVO.setGb_id(gb_id);
@@ -42,9 +42,18 @@ public class GroupBuyService {
 
 		dao.updateArrTime(groupBuyVO);
 
-		return groupBuyVO;
 	}
 
+	public void updateGBStatusBygbId(Integer gb_id,Integer gb_status) {
+		GroupBuyVO groupBuyVO = new GroupBuyVO();
+
+		groupBuyVO.setGb_id(gb_id);
+		groupBuyVO.setGb_status(gb_status);
+
+		dao.updateGBStatusBygbId(groupBuyVO);
+
+	}
+	
 	public GroupBuyVO getOneGB(Integer gb_id) {
 		return dao.findByPrimaryKey(gb_id);
 	}

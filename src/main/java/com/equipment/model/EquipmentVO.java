@@ -97,3 +97,6 @@ public class EquipmentVO implements Serializable {
 		this.spec = spec;
 	}
 }
+
+
+

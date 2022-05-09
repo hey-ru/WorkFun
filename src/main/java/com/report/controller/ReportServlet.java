@@ -49,10 +49,10 @@ public class ReportServlet extends HttpServlet{
 		try {
 			/***************************1.接收請求參數****************************************/
 			Integer report_id = Integer.valueOf(req.getParameter("report_id"));
-			
+			System.out.println(report_id);
 			/***************************2.開始查詢資料****************************************/
 			ReportService repSvc = new ReportService();
-			ReportVO repVO = repSvc.getOneReport(report_id);
+			ReportVO repVO = repSvc.getComment(report_id);
 			/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				String url = "/report/listOneReport.jsp";
 				req.setAttribute("reportVO", repVO);
@@ -70,7 +70,6 @@ public class ReportServlet extends HttpServlet{
 	}
 	
 	  if ("insert".equals(action)) { // 來自addReport.jsp的請求  
-		  System.out.println("123");
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -311,8 +310,26 @@ public class ReportServlet extends HttpServlet{
 		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 		successView.forward(req, res);
 	}
+
+
+	if("getOne_forModify".equals(action)) {
+		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+		Integer report_id = Integer.valueOf(req.getParameter("report_id"));
+
+		/***************************2.開始查詢資料*****************************************/
+		ReportService repSvc = new ReportService();
+		ReportVO repVO = repSvc.getComment(report_id);
+
+		/***************************3.查詢完成,準備轉交(Send the Success view)************/
+
+		String url = "/report/backForwardReport.jsp";
+		req.setAttribute("repVO", repVO);
+		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+		successView.forward(req, res);
+	}
 }
 
+	
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
 		//System.out.println("header=" + header); // 測試用

@@ -17,6 +17,46 @@ int orderNumber = 1;
 
 
 <style>
+main {
+  max-width: 700px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 30px;
+  background-color: #AAC789;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+/* 購物車 start */
+
+table {
+  background-color: #fff;
+  width: 100%;
+  border-radius: 5px;
+}
+
+thead tr {
+  background-color: #BADBB2;
+}
+
+thead td {
+  padding: 7px;
+}
+
+tbody td {
+  padding: 7px;
+}
+
+.selectAll {
+  padding: 10px;
+  color: white;
+  background-color: #2B735B;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+/* 購物車 end */
+
 </style>
 
 </head>
@@ -28,31 +68,29 @@ int orderNumber = 1;
 
 		<!-- ====================== 內容開始 ====================== -->
 		<main id="main" class="main">
-			<div class="card shadow mb-4">
+			<div >
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="card-header py-3" style="background-color: #BADBB2">
 					<div class="row">
-						<div class="col-11" style="height: 20px; display: inline-block;">
-							<h5>
-								<strong>填寫揪團單</strong>
-							</h5>
+						<div class="col-9" style="height: 20px; display: inline-block;">
+							<h3>
+								<strong>填寫訂單</strong>
+							</h3>
 						</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
-							<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>回揪團主頁</strong></a>
+						<div class="col-3" style="height: 20px; display: inline-block;">
+							<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>瀏覽其他團</strong></a>
 						</div>
 					</div>
 				</div>
 
 				<!-- ============== Card Body ============== -->
 				<div class="card-body">
-					<div class="table-responsive">
-						<div id="dataTable_wrapper"
-							class="dataTables_wrapper dt-bootstrap4">
+<!-- 					<div class="table-responsive"> -->
+<!-- 						<div id="dataTable_wrapper" -->
+<!-- 							class="dataTables_wrapper dt-bootstrap4"> -->
 
-
-
-							<div class="row">
-								<div class="col-sm-6">
+<!-- 							<div class="row"> -->
+								<div class="col-sm-12">
 								
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/groupbuylist/addGBList">
@@ -66,7 +104,7 @@ int orderNumber = 1;
 													<th scope="col">品項</th>
 													<th scope="col">單價</th>
 													<th scope="col">數量</th>
-													<th scope="col">金額</th>
+													<th scope="col">小計</th>
 													<th scope="col">備註</th>
 												</tr>
 											</thead>
@@ -84,7 +122,7 @@ int orderNumber = 1;
 														name="menu_id" value="${menu.menu_id}" /></td>
 													<td>${menu.item}<input type="hidden" name="item"
 														value="${menu.item}" /></td>
-													<!-- 價格 -->
+													<!-- 單價 -->
 													<td>${menu.price}<input type="hidden" name="price"
 														value="${menu.price}" /></td>
 													<!-- 數量 -->
@@ -100,15 +138,15 @@ int orderNumber = 1;
 											</c:forEach>
 										</table>
 										<input type="hidden" name="action" value="insert2GBlist">
-										<input type="submit" class="btn btn-warning" value="下單">
+										<input type="submit" class="selectAll" value="火速下單ヽ(●´∀`●)ﾉ">
 									</FORM>
 									
-								</div>
-							</div>
+<!-- 								</div> -->
+<!-- 							</div> -->
 							
 							
 							
-						</div>
+<!-- 						</div> -->
 					</div>
 				</div>
 				<!-- ============== Card Body ============== -->

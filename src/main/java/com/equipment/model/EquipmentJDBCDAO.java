@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.util.jdbcUtil_CompositeQuery;
 
 public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -21,10 +24,12 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	private static final String DELETE_BY_EQID = "DELETE FROM equipment where equipment_id = ?";
 	private static final String DELETE_BY_EQNAME = "DELETE FROM equipment where eq_name = ?";
 	private static final String GET_LAST = "SELECT * FROM equipment ORDER BY equipment_id DESC LIMIT 0 , 1";
-	private static final String GET_ALL_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_name like ?";
+	private static final String GET_ALL_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
 	private static final String GET_BY_EQUIPMENTID = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where equipment_id = ?";
 	private static final String GET_BY_EQSTATUS = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_status = ?";
 	private static final String GET_ALL = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec,img1,img2,img3 FROM equipment";
+
+	private static final String GET_ALL_QUERY = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
 
 	@Override
 	public void insert(EquipmentVO equipmentVO) {
@@ -313,7 +318,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_BY_EQNAME);
 
-			pstmt.setString(1, "%" + eqName + "%");
+			pstmt.setString(1, eqName);
 
 			rs = pstmt.executeQuery();
 
@@ -323,8 +328,11 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 				equipmentVO.setEqName(rs.getString("eq_name"));
 				equipmentVO.setPrice(rs.getInt("price"));
 				equipmentVO.setEqStatus(rs.getInt("eq_status"));
-				equipmentVO.setIntroduction(rs.getString("introduction"));
+//				equipmentVO.setIntroduction(rs.getString("introduction"));
 				equipmentVO.setSpec(rs.getString("spec"));
+				equipmentVO.setImg1(rs.getBytes("img1"));
+				equipmentVO.setImg2(rs.getBytes("img2"));
+				equipmentVO.setImg3(rs.getBytes("img3"));
 				list.add(equipmentVO);
 			}
 
@@ -486,6 +494,7 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 
 	@Override
 	public EquipmentVO getByEqStatus(Integer eqStatus) {
+		
 		EquipmentVO equipmentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -628,8 +637,15 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 //			System.out.println(aEquipment.getSpec() + ", ");
 //			System.out.println();
 //		}
+	
+//		List<EquipmentVO> list = dao.getAllQuery("benq");
+//		for(EquipmentVO listEquipmentVO : list) {
+//			System.out.println(listEquipmentVO.toString());
+//		}
+//		
 	}
 
+	
 	@Override
 	public EquipmentVO getLast() {
 
@@ -697,4 +713,67 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		return buffer;
 	}
 
+	@Override
+	public List<EquipmentVO> getAllQuery(Map<String, String[]> map) {
+		List<EquipmentVO> list = new ArrayList<EquipmentVO>();
+		EquipmentVO equipmentVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			String finalSQL = "select * from equipment " + jdbcUtil_CompositeQuery.get_WhereCondition(map)
+					+ "order by equipment_id";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				equipmentVO = new EquipmentVO();
+				equipmentVO.setEquipmentId(rs.getInt("equipment_id"));
+				equipmentVO.setEqName(rs.getString("eq_name"));
+				equipmentVO.setPrice(rs.getInt("price"));
+				equipmentVO.setEqStatus(rs.getInt("eq_status"));
+//			equipmentVO.setIntroduction(rs.getString("introduction"));
+				equipmentVO.setSpec(rs.getString("spec"));
+				equipmentVO.setImg1(rs.getBytes("img1"));
+				equipmentVO.setImg2(rs.getBytes("img2"));
+				equipmentVO.setImg3(rs.getBytes("img3"));
+				list.add(equipmentVO);
+			}
+
+			// Handle any SQL errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 }
