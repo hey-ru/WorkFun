@@ -1,6 +1,6 @@
 package com.shop.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.Arrays;
 
 public class ShopVO implements java.io.Serializable {

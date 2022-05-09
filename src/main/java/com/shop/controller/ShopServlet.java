@@ -8,10 +8,13 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import com.groupbuylist.model.GroupBuyListService;
 import com.menu.model.MenuService;
 import com.secondHand.model.SecondHandService;
 import com.secondHand.model.SecondHandVO;
 import com.shop.model.*;
+
+import lombok.val;
 
 
 @WebServlet("/shop/ShopServlet")
@@ -516,6 +519,33 @@ public class ShopServlet extends HttpServlet {
     				successView.forward(req, res);
     		}
 		
+//        	[後台]修改店家狀態:上下架
+        	if("updateShopStatus".equals(action)) {
+    			
+    			/*************************** 1.接收請求參數 ****************************************/
+        		Integer is_disable = Integer.valueOf(req.getParameter("is_disable"));
+    			Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
+    			
+    			/***************************2.開始變更資料***************************************/
+    			ShopService shopSvc = new ShopService();
+    			shopSvc.updateShopStatus(is_disable, shop_id);
+    			System.out.println("完成上下架");
+    			
+    			/***************************3.變更完成,準備轉交(Send the Success view)***********/
+    			RequestDispatcher successView = req.getRequestDispatcher("/back/backmain_Shop.jsp");// 刪除成功後,轉交回送出刪除的來源網頁
+    			successView.forward(req, res);
+    			
+    		}
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
 		
 //		if ("delete".equals(action)) { // 來自listAllEmp.jsp
 //

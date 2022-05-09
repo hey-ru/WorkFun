@@ -1,11 +1,10 @@
-<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.menu.model.*"%>
-<%@ page import="java.util.List"%>
+<%@ page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-ArrayList<MenuVO> menuListDisable = (ArrayList<MenuVO>) request.getAttribute("menuListDisable"); 
+List<MenuVO> menuListDisable = (List<MenuVO>) request.getAttribute("menuListDisable"); 
 %>
 
 
@@ -81,14 +80,14 @@ th, td {
 		<th>品項</th>
 		<th>價格</th>
 		<th>狀態</th>
-		<th></th>
+		<th>變更狀態</th>
 	</tr>
 
 	<c:forEach var="menu" items="${menuListDisable}">		
 		<tr>
-			<td><c:out value="${menu.menu_id}" /></td>
-			<td><c:out value="${menu.item}" /></td>
-			<td><c:out value="${menu.price}" /></td>
+			<td>${menu.menu_id}</td>
+			<td>${menu.item}</td>
+			<td>${menu.price}</td>
 			<td>
 			<c:if test="${menu.is_item==1}"> <c:out value="上架"/> </c:if>
 			<c:if test="${menu.is_item==0}"> <c:out value="下架"/> </c:if>

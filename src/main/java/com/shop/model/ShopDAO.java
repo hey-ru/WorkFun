@@ -26,14 +26,53 @@ public class ShopDAO implements ShopDAO_interface {
 	}
 
 	private static final String INSERT_STMT = "INSERT INTO shop (shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM shop ORDER BY shop_id DESC";
+	private static final String GET_ALL_STMT = "SELECT * FROM shop ORDER BY shop_upd DESC";
 	private static final String GET_ALL_FRONT_STMT = "SELECT * FROM shop WHERE is_disable = 0 ORDER BY shop_id DESC";
 	private static final String UPDATE = "UPDATE shop set shop_name=?, shop_type=?, address=?, tel=?, website=?, min_amt=?, shop_img1=?, shop_img2=?, shop_img3=? WHERE shop_id = ?";
+	private static final String UPDATE_Shop_Status = "UPDATE shop set is_disable= ? WHERE shop_id = ?";
 	private static final String GET_ONE_STMT = "SELECT shop_id,shop_name,shop_type,address,tel,website,min_amt,shop_img1,shop_img2,shop_img3,is_disable,shop_upd FROM shop where shop_id = ?";
 	private static final String GET_BY_SETWHERE = "SELECT * FROM shop ";
 	private static final String GET_Menus_ByShop_id_STMT = "SELECT * FROM menu WHERE shop_id = ? ORDER BY menu_id";
 	private static final String GET_BY_SETWHERE_STMT = "SELECT * FROM shop s ";
 	
+	//後台上下架店家
+	@Override
+	public void updateShopStatus(ShopVO shopVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_Shop_Status);
+
+			pstmt.setInt(1, shopVO.getIs_disable());
+			pstmt.setInt(2, shopVO.getShop_id());
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
 	//同時新增店家菜單 未完成
 	@Override
 	public void insertWithMenus(ShopVO shopVO, List<MenuVO> list) {
@@ -299,6 +338,8 @@ public class ShopDAO implements ShopDAO_interface {
 				shopVO.setShop_img1(rs.getBytes("shop_img1"));
 				shopVO.setShop_img2(rs.getBytes("shop_img2"));
 				shopVO.setShop_img3(rs.getBytes("shop_img3"));
+				shopVO.setIs_disable(rs.getInt("is_disable"));
+				shopVO.setShop_upd(rs.getTimestamp("shop_upd"));
 				list.add(shopVO);
 			}
 

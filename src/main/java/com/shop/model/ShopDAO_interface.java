@@ -26,4 +26,6 @@ public interface ShopDAO_interface {
 	public void insertWithMenus(ShopVO shopVO , List<MenuVO> list);
 	
 	public List<ShopVO> getAll(Map<String, String[]> map);
+
+	public void updateShopStatus(ShopVO shopVO);
 }
