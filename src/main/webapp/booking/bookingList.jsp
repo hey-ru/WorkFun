@@ -3,6 +3,7 @@
 <%@page import="com.emp.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <%
@@ -125,8 +126,8 @@ pageContext.setAttribute("list", list);
 												<td>${bookingVO.bookingId}</td>
 												<td>${empVO.empId}</td>
 												<td>${bookingVO.equipmentVO.eqName}</td>
-												<td>${bookingVO.startDate}</td>
-												<td>${bookingVO.endDate}</td>
+												<td><fmt:formatDate value="${bookingVO.startDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+												<td><fmt:formatDate value="${bookingVO.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 
 												<td><c:choose>
 														<c:when test="${bookingVO.returnStatus == 0}">已歸還</c:when>
@@ -134,7 +135,7 @@ pageContext.setAttribute("list", list);
 														<c:when test="${bookingVO.returnStatus == 2}">未領取器材</c:when>
 														<c:when test="${bookingVO.returnStatus == 3}">逾期歸還(需罰金)</c:when>
 														<c:when test="${bookingVO.returnStatus == 4}">未歸還(需罰金)</c:when>
-														<c:when test="${bookingVO.returnStatus == 5}">使商品損壞(需罰金)</c:when>
+														<c:when test="${bookingVO.returnStatus == 5}">已登記預約</c:when>
 													</c:choose></td>
 
 												<%-- 											<td>${bookingVO.returnStatus}</td> --%>

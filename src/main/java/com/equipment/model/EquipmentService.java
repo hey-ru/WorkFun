@@ -1,6 +1,9 @@
 package com.equipment.model;
 
 import java.util.List;
+import java.util.Map;
+
+import com.secondHand.model.SecondHandVO;
 
 public class EquipmentService {
 	private EquipmentDAO_interface dao;
@@ -71,4 +74,9 @@ public class EquipmentService {
 	public EquipmentVO getLast() {
 		return dao.getLast();
 	}
+
+	public List<EquipmentVO> getAllQuery(Map<String, String[]> map) {
+		return dao.getAllQuery(map);
+	}
+
 }

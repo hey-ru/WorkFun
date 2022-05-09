@@ -69,7 +69,15 @@
 
 	<!-- End Header -->
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-	<main id="main" class="main">
+<!-- 	<main id="main" class="main"> -->
+<%-- 	<c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
 
 		<section class="section">
 			<div class="row">
