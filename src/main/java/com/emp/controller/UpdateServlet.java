@@ -146,20 +146,11 @@ public class UpdateServlet extends HttpServlet {
 			}
 		
 
-			Part empProfile=req.getPart("empProfile");
-			
-	
-	
-			
-			
-			
-			byte[] headimg=empSvc.getByteArrayFromPart(empProfile);
-			
 			
 		
 			empVO.setEmpName(empName);
 			empVO.setDepId(depId);
-//			oldempVO.setHiredate(hiredate);
+
 			empVO.setPhone(phone);
 			empVO.setExtension(extension);
 			empVO.setHobby(hobby);
@@ -168,7 +159,7 @@ public class UpdateServlet extends HttpServlet {
 				empVO.setEmpPassword(empPassword);
 			}
 			
-			empVO.setEmpProfile(headimg);
+
 		
 		
 			empVO.setMail(mail);
