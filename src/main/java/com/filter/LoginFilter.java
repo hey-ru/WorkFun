@@ -76,8 +76,8 @@ public class LoginFilter extends HttpFilter implements Filter {
 		if (empVO == null) {
 //			session.setAttribute("location", req.getRequestURI());
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath() + "/login/login.jsp");
-		
+	res.sendRedirect(req.getContextPath() + "/login/login.jsp");
+	
 			return;
 		} else {
 			chain.doFilter(request, response);

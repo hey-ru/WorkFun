@@ -2,10 +2,12 @@ package com.emp.model;
 
 import java.sql.Date;
 
+import com.core.Core;
 
 
 
-public class EmpVO {
+
+public class EmpVO extends Core{
 	private Integer empId;
 	private Integer depId;
 	private String empName;
@@ -104,9 +106,9 @@ public class EmpVO {
 	public void setEmpStatus(Byte empStatus) {
 		this.empStatus = empStatus;
 	}
-	 public com.dep.model.DepVO getDeptVO() {
+	 public com.dep.model.DepVO getDepVO() {
 		    com.dep.model.DepService deptSvc = new com.dep.model.DepService();
-		    com.dep.model.DepVO deptVO = deptSvc.getOneDept(depId);
+		    com.dep.model.DepVO deptVO = deptSvc.getOneDep(depId);
 		    return deptVO;
 	    }
 	 @Override

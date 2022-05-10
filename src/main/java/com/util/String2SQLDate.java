@@ -33,7 +33,11 @@ public static java.sql.Date strToDate(String strDate) {
 	
 //}
 
-
+public static void main(String[] args) {
+	String stri="2021-2-2";
+	 String stri2=stri.replaceAll("\\pP","");//完全清除標點
+     System.out.println(stri2);
+}
 
 
 

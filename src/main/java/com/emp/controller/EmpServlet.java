@@ -1,22 +1,32 @@
 package com.emp.controller;
 
-import java.io.*;
-import java.sql.Connection;
-import java.util.*;
-import static com.util.String2SQLDate.*;
 import static com.util.JavaMail.genAuthCode;
+import static com.util.String2SQLDate.strToDate;
 
-import javax.servlet.*;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
-import com.emp.model.*;
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 import com.permission.model.PermissionService;
 import com.permissionmapping.model.PermissionMappingService;
-import com.permissionmapping.model.PermissionMappingVO;
 import com.util.JavaMail;
-
 @MultipartConfig
 @WebServlet("/empServlet")
 public class EmpServlet extends HttpServlet {
@@ -256,10 +266,12 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-		
+			EmpService empSvc = new EmpService();
 		
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer empId = Integer.valueOf(req.getParameter("empId").trim());
+				EmpVO oldempVO=empSvc.getOneEmp(empId);
+				
 				String empName = req.getParameter("empName");
 				String empPassword = req.getParameter("empPassword");
 				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -270,12 +282,12 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 	            }
 				Integer depId = Integer.valueOf(req.getParameter("depId").trim());
 
-				java.sql.Date hiredate = null;
-				try {
-					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-				} catch (IllegalArgumentException e) {
-					errorMsgs.put("hiredate","請輸入日期");
-				}
+//				java.sql.Date hiredate = null;
+//				try {
+//					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+//				} catch (IllegalArgumentException e) {
+//					errorMsgs.put("hiredate","請輸入日期");
+//				}
 				
 //				if (req.getParameter("hiredate").trim() == null || req.getParameter("hiredate").trim().trim().length() == 0) {
 //					errorMsgs.put("hiredate","雇用日期請勿空白");
@@ -312,7 +324,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("birthday","請輸入生日");
 				}
-				EmpService empSvc = new EmpService();
+			
 
 				Part empProfile=req.getPart("empProfile");
 				
@@ -323,24 +335,24 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				
 				byte[] headimg=empSvc.getByteArrayFromPart(empProfile);
 				
-				EmpVO newempVO = new EmpVO();
-				newempVO.setEmpId(empId);
-				newempVO.setEmpName(empName);
-				newempVO.setDepId(depId);
-				newempVO.setHiredate(hiredate);
-				newempVO.setPhone(phone);
-				newempVO.setExtension(extension);
-				newempVO.setHobby(hobby);
-				newempVO.setSkill(skill);
+				
+				oldempVO.setEmpId(empId);
+				oldempVO.setEmpName(empName);
+				oldempVO.setDepId(depId);
+//				oldempVO.setHiredate(hiredate);
+				oldempVO.setPhone(phone);
+				oldempVO.setExtension(extension);
+				oldempVO.setHobby(hobby);
+				oldempVO.setSkill(skill);
 				if(empPassword != null ) {
-					newempVO.setEmpPassword(empPassword);
+					oldempVO.setEmpPassword(empPassword);
 				}
 				
-					newempVO.setEmpProfile(headimg);
+				oldempVO.setEmpProfile(headimg);
 			
 			
-				newempVO.setMail(mail);
-				newempVO.setBirthday(birthday);
+				oldempVO.setMail(mail);
+				oldempVO.setBirthday(birthday);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -353,13 +365,13 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				
 				EmpVO empVO=(EmpVO) session.getAttribute("empVO");
 						System.out.println(empVO.getExtension());
-						empVO=newempVO;
+						empVO=oldempVO;
 						System.out.println(empVO.getExtension());
 						session.setAttribute("empVO", empVO);
 						
 						
 //				empSvc.updateEmp(newempVO);
-				empSvc.updateEmp(newempVO);
+				empSvc.updateEmp(oldempVO);
 				
 			
 				
@@ -434,7 +446,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("birthday","請輸入生日");
 				}
-				
+				String password=req.getParameter("birthday").trim().replaceAll("\\pP","");//完全清除標點
 
 				EmpVO newempVO = new EmpVO();
 				newempVO.setEmpName(empName);
@@ -444,7 +456,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				newempVO.setExtension(extension);
 				newempVO.setHobby(hobby);
 				newempVO.setSkill(skill);
-				newempVO.setEmpPassword(req.getParameter("hiredate").replace("[\\pP\\p{Punct}]",""));
+				newempVO.setEmpPassword(password);
 				newempVO.setEmpProfile(headimg);
 				newempVO.setMail(mail);
 				newempVO.setBirthday(birthday);
@@ -464,9 +476,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				
 //				empSvc.addEmp(empVO);
 				empSvc.addEmp(newempVO);
-				EmpVO oldEmpVO=(EmpVO) session.getAttribute("empVO");
-				oldEmpVO=newempVO;
-				session.setAttribute("empVO", oldEmpVO);
+			
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/back/listAllEmp.jsp";
@@ -698,7 +708,7 @@ return;
 			  Integer empId=Integer.valueOf(req.getParameter("empId"));
 			  
 			 List<Integer> oldpm =pmmSvc.getOneEmpPermissions(empId);
-			 System.out.println("原本權限"+oldpm);
+		//	 System.out.println("原本權限"+oldpm);
 	         
 			 
 			 
@@ -706,7 +716,7 @@ return;
 				 
 				 if(oldpm==null) {
 					 
-					 System.out.println("先後都沒有權限");
+					// System.out.println("先後都沒有權限");
 					 String url = "/back/permission.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 						successView.forward(req, res);	
@@ -719,7 +729,7 @@ return;
 				
 				 
 				 
-				 System.out.println("消除全部權限");
+				// System.out.println("消除全部權限");
 				 
 				  Iterator<Integer> it=oldpm.iterator();
 				  while (it.hasNext()) {
@@ -747,10 +757,10 @@ return;
 					  Integer pmId=Integer.valueOf(newpm[j]);
 					  if(!oldpm.contains(pmId)) {
 						  pmmSvc.addpmId2emp(empId,pmId);
-						  System.out.println("加入權限"+pmId);
+						//  System.out.println("加入權限"+pmId);
 					  }
 					  else {
-						System.out.println("權限重複"+pmId);
+					//	System.out.println("權限重複"+pmId);
 					}
 					 
 							
@@ -763,7 +773,7 @@ return;
 					
 			if(!Arrays.asList(newpm).contains(aString)) {
 				pmmSvc.deleteEmpPm(empId,aInteger);
-				System.out.println("刪除權限"+aInteger);
+				//System.out.println("刪除權限"+aInteger);
 			}
 					
 					
@@ -859,21 +869,21 @@ return;
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
 
+				try {
 					
 					/***************************1.將輸入資料轉為Map**********************************/ 
 					//採用Map<String,String[]> getParameterMap()的方法 
 					//注意:an immutable java.util.Map 
 					//Map<String, String[]> map = req.getParameterMap();
 					
-					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");//還沒有此物件，他會創建一個空的mapp
+					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
 					
 					// 以下的 if 區塊只對第一次執行時有效
-					if (req.getParameter("whichPage") == null){                                              //map在規格書說明接到,getParameterMap()在這裡接到的map不允許改變，需要洗掉 aka 轉型成HashMap
-						Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());  //不轉成<HashMap> 不給儲存在session裡面。
+					if (req.getParameter("whichPage") == null){
+						Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
 						session.setAttribute("map",map1);
 						map = map1;
 					} 
-					
 					
 					/***************************2.開始複合查詢***************************************/
 					EmpService empSvc = new EmpService();
@@ -881,8 +891,16 @@ return;
 					
 					/***************************3.查詢完成,準備轉交(Send the Success view)************/
 					req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-					RequestDispatcher successView = req.getRequestDispatcher("/back/searchEmp.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+					RequestDispatcher successView = req.getRequestDispatcher("/back/empCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 					successView.forward(req, res);
+					
+					/***************************其他可能的錯誤處理**********************************/
+				} catch (Exception e) {
+					errorMsgs.add(e.getMessage());
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back/empCompositeQuery.jsp");
+					failureView.forward(req, res);
+				}
 			}
 		   
 		   
@@ -996,6 +1014,57 @@ return;
 			
 		        }
 		   
+		   
+		   if ("frontchangepassword".equals(action)) { // 來自addEmp.jsp的請求  
+			   EmpService empSvc=new EmpService();
+
+				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+	EmpVO sessEmpVO=(EmpVO)session.getAttribute("empVO");
+		
+	String nowpassword=req.getParameter("nowpassword");
+	
+	
+	if(!sessEmpVO.getEmpPassword().equals(nowpassword)) {
+		errorMsgs.put("nowpassword","密碼錯誤");
+	}
+	
+	
+	
+	
+				String newpassword1=req.getParameter("newpassword1");
+				
+			
+				String newpassword2=req.getParameter("newpassword2");
+//				EmpVO empVO=empSvc.getOneEmp(empId);
+				if (newpassword1 == null || newpassword1.trim().length() == 0 || newpassword2 == null || newpassword2.trim().length() == 0) {
+					errorMsgs.put("password","密碼請勿空白");
+				}
+				if(!newpassword1.equals(newpassword2)) {
+					errorMsgs.put("comparepassword","密碼不一致");
+					
+				}
+				
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/login/reset.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				EmpVO empVO=new EmpVO();
+				empVO.setEmpId(sessEmpVO.getEmpId());
+//				sessEmpVO.setEmpPassword(newpassword2);
+				empVO.setEmpPassword(newpassword2);
+				empSvc.updateEmp(sessEmpVO);
+				
+				
+				
+				  RequestDispatcher successView = req.getRequestDispatcher("/emp/empfront.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+					successView.forward(req, res);
+				
+			
+		        }
 		   
 		   
 		   

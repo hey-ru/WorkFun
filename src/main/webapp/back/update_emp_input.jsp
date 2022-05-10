@@ -315,15 +315,15 @@
 										value="${param.empProfile}" class="form-control"
 										id="inputGroupFile01">
 								</div>
-								<jsp:useBean id="deptSvc" scope="page"
+								<jsp:useBean id="depSvc" scope="page"
 									class="com.dep.model.DepService" />
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="basic-addon2">部門</span> <select
 										size="1" name="depId" class="input-group-text"
 										id="basic-addon3">
-										<c:forEach var="deptVO" items="${deptSvc.all}">
-											<option value="${deptVO.depId}"
-												${(param.depId==deptVO.depId)? 'selected':'' }>${deptVO.depName}
+										<c:forEach var="depVO" items="${depSvc.all}">
+											<option value="${depVO.depId}"
+												${(param.depId==depVO.depId)? 'selected':'' }>${depVO.depName}
 										</c:forEach>
 
 									</select> <span class="input-group-text" id="basic-addon2">雇用日期</span> <input

@@ -338,7 +338,7 @@
 													value="${empVO.empName}" class="form-control"
 													aria-label="Username" aria-describedby="basic-addon1">${errorMsgs.empName}
 											</div>
-											<jsp:useBean id="deptSvc" scope="page"
+											<jsp:useBean id="depSvc" scope="page"
 												class="com.dep.model.DepService" />
 										</div>
 										<div class="row mb-3">
@@ -346,9 +346,9 @@
 											<div class="col-md-8 col-lg-9">
 												<select size="1" name="depId" class="input-group-text"
 													id="basic-addon3">
-													<c:forEach var="deptVO" items="${deptSvc.all}">
-														<option value="${deptVO.depId}"
-															${(empVO.depId==deptVO.depId)? 'selected':'' }>${deptVO.depName}
+													<c:forEach var="depVO" items="${depSvc.all}">
+														<option value="${depVO.depId}"
+															${(empVO.depId==depVO.depId)? 'selected':'' }>${depVO.depName}
 													</c:forEach>
 
 												</select>

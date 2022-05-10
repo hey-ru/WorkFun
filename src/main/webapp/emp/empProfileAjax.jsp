@@ -104,8 +104,7 @@
 								<div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
 									<!-- Profile Edit Form -->
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
-							enctype="multipart/form-data">
+									
 										<div class="row mb-3">
 											<label for="profileImage"
 												class="col-md-4 col-lg-3 col-form-label">Profile
@@ -117,12 +116,9 @@
 												
 											>
 											<div class="row mb-3">
-											<label for="about" class="col-md-4 col-lg-3 col-form-label">編號</label>
+											<label for="about" class="col-md-4 col-lg-3 col-form-label">編號${empVO.empId}</label>
 											<div class="col-md-8 col-lg-9">
-												<input type="hidden" name="empId" size="45"
-													value="${empVO.empId}" class="form-control"
-													aria-label="Recipient's username"
-													aria-describedby="basic-addon2">
+												
 													<%-- <input
 										type="hidden" name="hiredate" size="45" id="f_date2"
 										value="${empVO.hiredate}" class="form-control"
@@ -136,7 +132,7 @@
 
 											<div class="col-md-8 col-lg-9">
 											
-												<input type="file" name="empProfile" size="45"
+												<input type="file" name="empProfile" size="45" id="empProfile"
 												 class="form-control"
 													id="inputGroupFile01">
 												<div class="pt-2">
@@ -153,7 +149,7 @@
 											<label for="fullName"
 												class="col-md-4 col-lg-3 col-form-label">名字</label>
 											<div class="col-md-8 col-lg-9">
-												<input type="TEXT" name="empName" size="45"
+												<input type="TEXT" name="empName" size="45" id="empName"
 													value="${empVO.empName}" class="form-control"
 													aria-label="Username" aria-describedby="basic-addon1">${errorMsgs.empName}
 											</div>
@@ -166,7 +162,7 @@
 												<select size="1" name="depId" class="input-group-text"
 													id="basic-addon3">
 													<c:forEach var="depVO" items="${depSvc.all}">
-														<option value="${depVO.depId}"
+														<option id="depId" value="${depVO.depId}"
 															${(empVO.depId==depVO.depId)? 'selected':'' }>${depVO.depName}
 													</c:forEach>
 
@@ -178,7 +174,7 @@
 										<div class="row mb-3">
 											<label for="about" class="col-md-4 col-lg-3 col-form-label">手機</label>
 											<div class="col-md-8 col-lg-9">
-												<input type="TEXT" name="phone" size="45"
+												<input type="TEXT" name="phone" size="45" id="phone"
 													value="${empVO.phone}" class="form-control" placeholder=""
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
@@ -188,7 +184,7 @@
 										<div class="row mb-3">
 											<label for="company" class="col-md-4 col-lg-3 col-form-label">分機</label>
 											<div class="col-md-8 col-lg-9">
-												<input type="TEXT" name="extension" size="45"
+												<input type="TEXT" name="extension" size="45" id="extension"
 													value="${empVO.extension}" class="form-control"
 													 aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
@@ -198,7 +194,7 @@
 										<div class="row mb-3">
 											<label for="Job" class="col-md-4 col-lg-3 col-form-label">興趣</label>
 											<div class="col-md-8 col-lg-9">
-												<input type="TEXT" name="hobby" size="45"
+												<input type="TEXT" name="hobby" size="45" id="hobby"
 													value="${empVO.hobby}" class="form-control" 
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
@@ -210,7 +206,7 @@
 										<div class="row mb-3">
 											<label for="Address" class="col-md-4 col-lg-3 col-form-label">專長</label>
 											<div class="col-md-8 col-lg-9">
-												<input type="TEXT" name="skill" size="45"
+												<input type="TEXT" name="skill" size="45" id="skill"
 													value="${empVO.skill}" class="form-control"
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
@@ -220,7 +216,7 @@
 										<div class="row mb-3">
 											<label for="Phone" class="col-md-4 col-lg-3 col-form-label">信箱</label>
 											<div class="col-md-8 col-lg-9">
-												<input type="TEXT" name="mail" size="45"
+												<input type="TEXT" name="mail" size="45" id="mail"
 													value="${empVO.mail}" class="form-control"
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
@@ -230,7 +226,7 @@
 										<div class="row mb-3">
 											<label for="Email" class="col-md-4 col-lg-3 col-form-label">生日</label>
 											<div class="col-md-8 col-lg-9">
-												<input type="TEXT" name="birthday" size="45"
+												<input type="TEXT" name="birthday" size="45" id="birthday"
 													value="${empVO.birthday}" class="form-control"
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
@@ -245,11 +241,12 @@
 
 
 										<div class="text-center">
-											<input type="hidden" name="action" value="updateFront">
-											<button type="submit" class="input-group-text"
-												id="basic-addon2">Save Changes</button>
+										 <a onclick="update123()" class="btn btn-primary btn-user btn-block">
+                                            update
+                                        </a>
+                                        <a id="message"></a>
 										</div>
-									</form>
+								
 									<!-- End Profile Edit Form -->
 
 								</div>
@@ -336,7 +333,7 @@
 
 										<div class="text-center">
 											<button type="submit" class="btn btn-primary">Change
-												Password</button>
+												Password</button><br> 
 										</div>
 										<input type="hidden" name="action" value="frontchangepassword">
 									</form>
@@ -362,6 +359,91 @@
             <%@ include file="/design/frontfooter.jsp" %>
                 <!-- ======= js ======= -->
                 <%@ include file="/design/frontjs.jsp" %>
+
+
+				<script>
+			function update123(){
+			
+$.ajax({
+
+url:"UpdateServlet",
+type:"post",
+   
+data:{
+empProfile:$("#empProfile").val(),
+empName:$("#empName").val(),
+depId:$("#depId").val(),
+phone:$("#phone").val(),
+extension:$("#extension").val(),
+hobby:$("#hobby").val(),
+skill:$("#skill").val(),
+mail:$("#mail").val(),
+birthday:$("#birthday").val(),
+
+},
+success: function (empVOJSON) {
+ let empVO=JSON.parse(empVOJSON);
+  if (empVO.successful === false) {
+                            document.getElementById("message").innerHTML = empVO.message
+
+
+                        }
+						else{
+							alerts("updated")
+						}
+                      
+
+
+
+	
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+				};
+
+
+				
+				
+				
+				
+				
+				</script>
+				
 
         </body>
 

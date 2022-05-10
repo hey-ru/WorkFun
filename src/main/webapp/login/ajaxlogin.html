@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8"  >
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js">
+
+
+    </script>
+</head>
+
+
+
+<!--    <form method="post" action="../login/empServlet" enctype="multipart/form-data"></form> -->
+
+<input type="text" id="empId">
+
+
+<input type="text" id="empPassword">
+
+
+
+<button onclick="login()">登入</button>
+
+
+<h1 id="test"></h1>
+
+
+<!-- Bootstrap core JavaScript-->
+
+
+<script>
+
+
+    function login() {
+
+        $.ajax(
+            {
+                url: "empServlet",
+                // url: "/Users/lin/CGA101-3/WorkFun/src/main/java/com/emp/controller/AjaxEmpServlet",
+                type: "post",
+                data: {
+                    empId: $("#empId").val(),
+                    empPassword: $("#empPassword").val(),
+                    action: "login"
+
+                },
+                success: function (empVOJSON) {
+                    /* 	window.location.href="../home/home.jsp";   */
+                    let empVO = JSON.parse(empVOJSON);
+                    // let empVO = JSON.stringify(empVOJSON)
+                    console.log(empVOJSON);
+                    /*       console.log(empVO.successful) */
+
+                    if (empVO.successful === false) {
+                        document.getElementById("test").innerHTML = empVO.message;
+
+
+                    }
+                    else {
+
+
+
+                         window.location.href = "../home/home.jsp"; 
+                    }
+
+
+
+
+                },
+                error: function () {
+                    alert("失敗");
+                },
+
+
+            }
+
+
+
+
+        )
+
+    };
+
+
+</script>
+
+
+</body>
+
+</html>
