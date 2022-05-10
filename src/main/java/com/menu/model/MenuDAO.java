@@ -7,6 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.groupbuylist.model.GroupBuyListVO;
 
 import java.sql.*;
 
@@ -33,10 +34,38 @@ public class MenuDAO implements MenuDAO_interface {
 	private static final String GET_ByShopId = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ? and is_item=1 ";
 	// 前台 查詢一間店家菜單(下架)
 	private static final String GET_ByShopId_Disable = "SELECT * FROM menu where shop_id = ? and is_item=0 ";
+	// 用品名查詢店家及揪團
+	private static final String GET_ShopAndGB = "SELECT shop_name, gb_owner FROM groupbuy WHERE item LIKE = ? ";
 	// 後台 查詢各店家菜單
 	private static final String GET_ALL_STMT = "SELECT * FROM menu ";
 	//查詢一筆菜單項目
 	private static final String GET_ONE_STMT = " SELECT menu_id, shop_id, item, price, is_item, menu_upd FROM menu where menu_id = ?";
+
+	//===================================================================================================	
+
+//	主揪一次新增多筆菜單
+	@Override
+	public void insertMany(List<MenuVO> listMenu) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			// 新增多筆項目
+			for (MenuVO menuVO : listMenu) {
+				pstmt.setInt(1, menuVO.getShop_id());
+				pstmt.setString(2, menuVO.getItem());
+				pstmt.setInt(3, menuVO.getPrice());
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		}
+	}
+	
 	// 前台 新增店家單品項目
 	@Override
 	public void insert(MenuVO menuVO) {

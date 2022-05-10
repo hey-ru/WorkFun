@@ -61,7 +61,7 @@
             <div class="input-group mb-3" style=" height:150px">
                 <input id="cent" type="hidden" class="form-control" aria-label="Recipient's username" name="content1"
                     aria-describedby="basic-addon2" value="${param.content}">
-                   <textarea name="content" rows="20" cols="50" id="tarea"></textarea>
+                   <textarea name="content" rows="20" cols="50" id="tarea" style="height:150px;width:1000px"></textarea>
                    <p style="color :red">${errorMsgs.content}</p>
                    
             </div>

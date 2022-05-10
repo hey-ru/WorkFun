@@ -35,6 +35,10 @@ public class GroupBuyListService {
 	public void insertMany(List<GroupBuyListVO> listGBorder) {
 		dao.insertMany(listGBorder);
 	} 
+//參團:修改多筆	
+		public void updateMany(List<GroupBuyListVO> listGBorder) {
+			dao.updateMany(listGBorder);
+	} 
 	
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
 			Integer price, Integer qty, String remark) {
@@ -97,7 +101,7 @@ public class GroupBuyListService {
 	}
 	
 	//萬用查詢
-//	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
-//		return dao.getAll(map);
-//	}
+	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
 }

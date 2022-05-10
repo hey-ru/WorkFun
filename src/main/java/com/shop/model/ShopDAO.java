@@ -73,22 +73,19 @@ public class ShopDAO implements ShopDAO_interface {
 		}
 
 	}
-	//同時新增店家菜單 未完成
+		
 	@Override
-	public void insertWithMenus(ShopVO shopVO, List<MenuVO> list) {
+	public Integer insert(ShopVO shopVO) {
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		Integer next_shop_id = null;
 
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
-			// 1●設定於 pstm.executeUpdate()之前
-    		con.setAutoCommit(false);
-			
-    		// 先新增店家
-    		String cols[] = {"SHOP_ID"};
-			pstmt = con.prepareStatement(INSERT_STMT , cols);
+			pstmt = con.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS);
+
 			pstmt.setString(1, shopVO.getShop_name());
 			pstmt.setInt(2, shopVO.getShop_type());
 			pstmt.setString(3, shopVO.getAddress());
@@ -98,87 +95,13 @@ public class ShopDAO implements ShopDAO_interface {
 			pstmt.setBytes(7, shopVO.getShop_img1());
 			pstmt.setBytes(8, shopVO.getShop_img2());
 			pstmt.setBytes(9, shopVO.getShop_img3());
-			Statement stmt=	con.createStatement();
+
 			pstmt.executeUpdate();
-			//掘取對應的自增主鍵值
-			String next_shop_id = null;
 			ResultSet rs = pstmt.getGeneratedKeys();
+			
 			if (rs.next()) {
-				next_shop_id = rs.getString(1);
-				System.out.println("自增主鍵值= " + next_shop_id +"(剛新增成功的部門編號)");
-			} else {
-				System.out.println("未取得自增主鍵值");
+				next_shop_id = rs.getInt(1);
 			}
-			rs.close();
-			// 再同時新增菜單
-						MenuJDBCDAO dao = new MenuJDBCDAO();
-						System.out.println("list.size()-A="+list.size());
-						for (MenuVO aMenu : list) {
-							aMenu.setShop_id(new Integer(next_shop_id)) ;
-							//dao.insertWithShop(aMenu,con);
-						}
-						// 2●設定於 pstm.executeUpdate()之後
-						con.commit();
-						con.setAutoCommit(true);
-
-					
-					} catch (SQLException se) {
-						if (con != null) {
-							try {
-								// 3●設定於當有exception發生時之catch區塊內
-								System.err.print("Transaction is being ");
-								System.err.println("rolled back-由-shop");
-								con.rollback();
-							} catch (SQLException excep) {
-								throw new RuntimeException("rollback error occured. "
-										+ excep.getMessage());
-							}
-						}
-						throw new RuntimeException("A database error occured. "
-								+ se.getMessage());
-						// Clean up JDBC resources
-					} finally {
-						if (pstmt != null) {
-							try {
-								pstmt.close();
-							} catch (SQLException se) {
-								se.printStackTrace(System.err);
-							}
-						}
-						if (con != null) {
-							try {
-								con.close();
-							} catch (Exception e) {
-								e.printStackTrace(System.err);
-							}
-						}
-					}
-	}
-	
-	
-	
-	@Override
-	public void insert(ShopVO shopVO) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
-
-			pstmt.setString(1, shopVO.getShop_name());
-			pstmt.setInt(2, shopVO.getShop_type());
-			pstmt.setString(3, shopVO.getAddress());
-			pstmt.setString(4, shopVO.getTel());
-			pstmt.setString(5, shopVO.getWebsite());
-			pstmt.setInt(6, shopVO.getMin_amt());
-			pstmt.setBytes(7, shopVO.getShop_img1());
-			pstmt.setBytes(8, shopVO.getShop_img2());
-			pstmt.setBytes(9, shopVO.getShop_img3());
-
-			pstmt.executeUpdate();
 
 			// Handle any SQL errors
 		} catch (SQLException se) {
@@ -200,6 +123,8 @@ public class ShopDAO implements ShopDAO_interface {
 				}
 			}
 		}
+		
+		return next_shop_id;
 
 	}
 

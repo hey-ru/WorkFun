@@ -17,7 +17,7 @@
                                 <a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"> 瀏覽揪團 </a>
                                 <a href="<%=request.getContextPath()%>/shop/listAllShop.jsp">查詢店家</a>
                                 <a href="<%=request.getContextPath()%>/groupbuy/owner_selectGB.jsp">查詢揪團</a>
-                                <a href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp?buyer=${empVO.empId}">查詢參團</a>
+                                <a href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp">查詢參團</a>
                             </div>
                         </div>
                     </li>
@@ -36,6 +36,7 @@
                             <div class="dropdown-content">
                                 <a href="<%=request.getContextPath()%>/report/listAllReport.jsp">回報首頁</a>
                                 <a href="<%=request.getContextPath()%>/report/addReport.jsp">新增回報</a>
+                                <a href="<%=request.getContextPath()%>/report/listOwnReport.jsp">查看自己回報</a>
                             </div>
                         </div>
                     </li>

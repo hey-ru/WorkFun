@@ -1007,20 +1007,39 @@ return list;
 
 		String aCondition = null;
 		StringBuilder sb=new StringBuilder();
+		
+if(columnName.contains("emp")||columnName.contains("dep")||columnName.contains("emp") )		
+{
 sb.append(columnName);
 sb.insert(3,"_");
+}
 
+else if(columnName.contains("hire"))	
+{
+	sb.append(columnName);
+	sb.insert(4,"_");
+}
+else if(columnName.contains("resign"))	
+{
+	sb.append(columnName);
+	sb.insert(5,"_");
+}
+else {
+	sb.append(columnName);
+}
+	
 String colString=sb.toString();
 System.out.println(colString);
 System.out.println(value);
 
 
-		if ("emp_Id".equals(colString)  ) // 用於其他
+		if ("emp_Id".equals(colString)|| "dep_Id".equals(colString) ) // 用於其他
 			aCondition = colString + "=" + value;
-		else if ("emp_Name".equals(colString) ) // 用於varchar
+		else if ("emp_Name".equals(colString)||"phone".equals(colString)||"extension".equals(colString)||"mail".equals(colString) ) // 用於varchar
 			aCondition = colString + " like '%" + value + "%'";
-		else if ("dep_Id".equals(colString))  
-			aCondition = colString + "=" + value;
+		
+		else if ("hiredate".equals(columnName))                          // 用於date
+			aCondition = columnName + "=" + "'"+ value +"'";  
 			// 用於date
 //			aCondition = colString + "=" + "'"+ value +"'";                          //for 其它DB  的 date
 //		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
@@ -1028,7 +1047,44 @@ System.out.println(value);
 		return aCondition + " ";
 	}
 
-	public static String get_WhereCondition(Map<String, String[]> map) {
+	
+	
+//	public  String get_aCondition_For_myDB(String columnName, String value) {
+//
+//		String aCondition = null;
+//
+//		if ("empno".equals(columnName) || "sal".equals(columnName) || "comm".equals(columnName) || "deptno".equals(columnName)) // 用於其他
+//			aCondition = columnName + "=" + value;
+//		else if ("ename".equals(columnName) || "job".equals(columnName)) // 用於varchar
+//			aCondition = columnName + " like '%" + value + "%'";
+//		else if ("hiredate".equals(columnName))                          // 用於date
+//			aCondition = columnName + "=" + "'"+ value +"'";                          //for 其它DB  的 date
+////		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
+//		
+//		return aCondition + " ";
+//	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String get_WhereCondition(Map<String, String[]> map) {
 		Set<String> keys = map.keySet();
 		StringBuffer whereCondition = new StringBuffer();
 		int count = 0;

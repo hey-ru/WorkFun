@@ -14,6 +14,8 @@ public interface ReportDAO_interface {
 //    public void delete(Integer report_id);
     public List<ReportVO> find(Integer handler,Integer status,Integer report_type);
     public ReportVO findByPrimaryKey(Integer report_id);
+    public List<ReportVO> getOwnReport(Integer reporter);
+    
     public List<ReportVO> getAll();
     public List<ReportVO> getAll(Map<String, String[]> map); 
     public List<ReportVO> getHandler(Integer handler);

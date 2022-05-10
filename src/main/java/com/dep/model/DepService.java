@@ -22,7 +22,7 @@ public class DepService {
 		return dao.getAll();
 	}
 
-	public DepVO getOneDept(Integer deptno) {
+	public DepVO getOneDep(Integer deptno) {
 		return dao.findByPrimaryKey(deptno);
 	}
 	public void updateDep(DepVO depVO) {
@@ -46,10 +46,10 @@ public class DepService {
 //		depser.getAll();
 		
 		
-		
-		DepVO dep1=depser.getOneDept(11);
-		
-		System.out.println(dep1.getDepName());
+//		
+//		DepVO dep1=depser.getOneDept(11);
+//		
+//		System.out.println(dep1.getDepName());
 	
 //		List<DepVO> list = depser.getAll();
 //		for (DepVO aEmp : list) {

@@ -2,7 +2,11 @@ package com.menu.model;
 
 import java.util.*;
 
+import com.groupbuylist.model.GroupBuyListVO;
+
 public interface MenuDAO_interface {
+	
+	 public void insertMany(List<MenuVO> listMenu); 
 
 	 public void insert(MenuVO menuVO); //前台 新增店家單品項目
 	 

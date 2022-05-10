@@ -60,7 +60,7 @@ public class DepServlet extends HttpServlet {
 				
 				/***************************2.開始查詢資料*****************************************/
 				DepService empSvc = new DepService();
-				DepVO depVO = empSvc.getOneDept(depId);
+				DepVO depVO = empSvc.getOneDep(depId);
 				if (depVO == null) {
 					errorMsgs.put("depno","查無資料");
 				}
@@ -99,7 +99,7 @@ public class DepServlet extends HttpServlet {
 				
 				/***************************2.開始查詢資料****************************************/
 				DepService depSvc = new DepService();
-				DepVO depVO = depSvc.getOneDept(depId);
+				DepVO depVO = depSvc.getOneDep(depId);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				String param = "?depId="  +depVO.getDepId()+

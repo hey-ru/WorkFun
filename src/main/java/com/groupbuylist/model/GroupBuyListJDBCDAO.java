@@ -41,10 +41,56 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 	// PK ok
 	private static final String GET_ONE_STMT = "SELECT * FROM groupbuylist where gbList_id = ?";
 
-//	[揪團管理]: 修改取貨付款
+//	<<揪團管理>>
+//	修改取貨付款
 	private static final String UPDATE_FROMGBOWNER_STMT = "UPDATE groupbuylist SET is_pay = ?, is_pickup = ? WHERE gb_id = ? AND buyer = ?";
 
 //===================================================================================================	
+
+//	參團者修改多筆  ok
+	@Override
+	public void updateMany(List<GroupBuyListVO> listGBorder) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+
+			// 新增多筆項目
+			for (GroupBuyListVO groupBuyListVO : listGBorder) {
+
+				pstmt.setInt(1, groupBuyListVO.getQty());
+				pstmt.setString(2, groupBuyListVO.getRemark());
+				pstmt.setInt(3, groupBuyListVO.getBuyer());
+				pstmt.setInt(4, groupBuyListVO.getGbList_id());
+				pstmt.addBatch();
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 
 //	參團者新增多筆  ok
 	@Override
@@ -429,7 +475,5 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		groupBuyListVO5.setIs_pickup(1);
 		dao.updateIsPayIsPickUp(groupBuyListVO5);
 	}
-
-	
 
 }

@@ -33,8 +33,9 @@ public class SecondHandRun implements Runnable {
 		//System.out.println(secondHandVO.getStart_time());
 			if(secondHandVO.getIs_deal()==0) {
 				
+				
 		if(secondHandVO.getStart_time().before(new Timestamp(new GregorianCalendar().getTime().getTime()))) {
-			System.out.println(secondHandVO.getStart_time().before(new Timestamp(new GregorianCalendar().getTime().getTime())));
+			//System.out.println(secondHandVO.getStart_time().before(new Timestamp(new GregorianCalendar().getTime().getTime())));
 			secondHandVO.setIs_deal(1);
 			secondHandService.updateSecondHand(secondHandVO);
 		}
@@ -43,10 +44,10 @@ public class SecondHandRun implements Runnable {
 			if(secondHandVO.getIs_deal()==1) {
 				if(secondHandVO.getEnd_time().before(new Timestamp(new GregorianCalendar().getTime().getTime()))) {
 				//	System.out.println(secondHandVO.getStart_time().before(new Timestamp(new GregorianCalendar().getTime().getTime())));
-				//	System.out.println("設定成1");
+					
 					if(secondHandService.getOneById(second_hand_id).getBidVO().getBidder()==0) {
 					
-				//	System.out.println("設定成3");
+					System.out.println("設定成3");
 					
 					secondHandVO.setIs_deal(3);
 					secondHandService.updateSecondHand(secondHandVO);
@@ -56,7 +57,7 @@ public class SecondHandRun implements Runnable {
 					else {
 						secondHandVO.setIs_deal(2);
 						secondHandService.updateSecondHand(secondHandVO);
-					//	System.out.println("設定成2");
+						System.out.println("設定成2");
 						secondHandVO.setBid_winner(secondHandService.getOneById(second_hand_id).getBidVO().getBidder());
 						secondHandVO.setDeal_price(secondHandService.getOneById(second_hand_id).getBidVO().getPrice());
 					

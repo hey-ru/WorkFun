@@ -455,7 +455,8 @@ public class EquipmentServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+	
+//			System.out.println("進來了");
 			/*************************** 1.將輸入資料轉為Map **********************************/
 			// 採用Map<String,String[]> getParameterMap()的方法
 			// 注意:an immutable java.util.Map
@@ -474,13 +475,62 @@ public class EquipmentServlet extends HttpServlet {
 			EquipmentService equipmentService = new EquipmentService();
 			List<EquipmentVO> list = equipmentService.getAllQuery(map);
 
-			System.out.println("list= " + list);
+//			System.out.println("list= " + list);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
 //				session.setAttribute("listByCompositeQuery", list);
-			RequestDispatcher successView = req.getRequestDispatcher("/equipment/backEquipmentHome.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+			RequestDispatcher successView = req.getRequestDispatcher("/equipment/listEquipmentCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 			successView.forward(req, res);
+		}
+
+		if ("listSecondHandsByName".equals(action)) { 
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+//			try {
+
+			/*************************** 1.接收請求參數 ****************************************/
+			String eqName = new String(req.getParameter("eq_name"));
+			
+			System.out.println(eqName);
+
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/backEquipmentHome.jsp");
+				failureView.forward(req, res);
+				return;// 程式中斷
+			}
+
+			/*************************** 2.開始查詢資料 ****************************************/
+			EquipmentService equipmentService = new EquipmentService();
+			List<EquipmentVO> list = equipmentService.getAllByEqName(eqName);
+			for (EquipmentVO equipmentVO : list) {
+				System.out.println(equipmentVO.toString());
+			}
+
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/equipment/backEquipmentHome.jsp");
+				failureView.forward(req, res);
+				return;// 程式中斷
+			}
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("list", list); // 資料庫取出的list物件,存入request
+
+			String url = "/equipment/getAllByName.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+			successView.forward(req, res);
+
+			/*************************** 其他可能的錯誤處理 **********************************/
+//			} catch (Exception e) {
+//				errorMsgs.put("Exception", e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/addSecondHand.jsp");
+//				failureView.forward(req, res);
+//				System.out.println("error");
+//			}		
 		}
 
 	}

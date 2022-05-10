@@ -43,9 +43,7 @@ public class AddGBListServlet extends HttpServlet {
 //					errorMsgs.put("remark", "備註: 只能是中、日、英文字母、數字、_、-和()");
 //				}
 
-			GroupBuyListVO groupBuyListVO;
-			List<GroupBuyListVO> orderlist = new ArrayList<>();
-
+			//取得參數
 			String[] gb_id = req.getParameterValues("gb_id");
 			String[] buyer = req.getParameterValues("buyer");
 			String[] buyer_name = req.getParameterValues("buyer_name");
@@ -54,6 +52,10 @@ public class AddGBListServlet extends HttpServlet {
 			String[] price = req.getParameterValues("price");
 			String[] qty = req.getParameterValues("qty");
 			String[] remark = req.getParameterValues("remark");
+			
+			GroupBuyListVO groupBuyListVO;
+			List<GroupBuyListVO> orderlist = new ArrayList<>();
+			
 
 			for (int i = 0; i < gb_id.length; i++) {
 					if (!"0".equals(qty[i])) {
@@ -83,10 +85,10 @@ public class AddGBListServlet extends HttpServlet {
 			gblistSvc.insertMany(orderlist);
 
 			System.out.println(orderlist.toString());
-			System.out.println("新增完成");
+			System.out.println("新增訂單完成");
 
 			/********************* 3.新增完成,準備轉交(Send the Success view) *************/
-			String url = "/groupbuy/gbHome.jsp";
+			String url = "/groupbuylist/buyer_selectGB.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 			successView.forward(req, res);
 			System.out.println(gb_id + "參團新增成功!");

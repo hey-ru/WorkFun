@@ -12,7 +12,7 @@ public class ShopService {
 		dao = new ShopDAO();
 	}
 
-	public ShopVO addShop(String shop_name, Integer shop_type, String address, String tel, String website,
+	public Integer addShop(String shop_name, Integer shop_type, String address, String tel, String website,
 			Integer min_amt, byte[] shop_img1, byte[] shop_img2, byte[] shop_img3) {
 
 		ShopVO shopVO = new ShopVO();
@@ -26,9 +26,10 @@ public class ShopService {
 		shopVO.setShop_img1(shop_img1);
 		shopVO.setShop_img2(shop_img2);
 		shopVO.setShop_img3(shop_img3);
-		dao.insert(shopVO);
+		
+		Integer shop_id = dao.insert(shopVO);
 
-		return shopVO;
+		return shop_id;
 	}
 
 	public ShopVO updateShop(Integer shop_id, String shop_name, Integer shop_type, String address, String tel,

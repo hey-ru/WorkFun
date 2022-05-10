@@ -168,7 +168,7 @@ int itemsPerPage = 10;
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													>修改揪團狀態</th>
+													>變更揪團狀態</th>
 											</tr>
 										</thead>
 										

@@ -87,14 +87,6 @@ public class ShopServlet extends HttpServlet {
 				String url = "/shop/listOneShop.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
-
-//				/***************************其他可能的錯誤處理*************************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception","無法取得資料:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/shop/select_page.jsp");
-//				failureView.forward(req, res);
-//			}
 		}
 		
 		
@@ -103,7 +95,6 @@ public class ShopServlet extends HttpServlet {
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-//			try {
 				/***************************1.接收請求參數****************************************/
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
 				
@@ -125,14 +116,6 @@ public class ShopServlet extends HttpServlet {
 				String url = "/shop/update_shop_input.jsp"+param;
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
-
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception","無法取得要修改的資料:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/shop/listAllShop.jsp");
-//				failureView.forward(req, res);
-//			}
 		}
 		
 		
@@ -141,7 +124,6 @@ public class ShopServlet extends HttpServlet {
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 		
-//			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
 				
@@ -232,13 +214,6 @@ public class ShopServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
-//				/***************************其他可能的錯誤處理*************************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/update_emp_input.jsp");
-//				failureView.forward(req, res);
-//			}
 		}
 
         if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
@@ -246,7 +221,6 @@ public class ShopServlet extends HttpServlet {
         	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-//			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 	
 				String shop_name = req.getParameter("shop_name");
@@ -261,14 +235,17 @@ public class ShopServlet extends HttpServlet {
 				//(0: 飲料, 1: 中式 2: 異國, 3: 小吃, 4: 素食 5:其他 )
 				
 				String placecode = req.getParameter("placecode").trim();
-				String city = req.getParameter("city").trim();
-				String dist = req.getParameter("dist").trim();
+				String city = req.getParameter("city");
+				String dist = req.getParameter("dist");
 				String addressend = req.getParameter("address").trim();
 				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$";
 				if ((addressend.trim().length() != 0) && !(addressend.trim().matches(addressReg))) { 
 					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_");
 	            }
-				String address = placecode+city+dist+addressend;
+				String address = null;
+				if (addressend.trim().length() != 0) {
+				address = placecode+city+dist+addressend;
+				}
 				
 				String tel = req.getParameter("tel");
 				String telReg = "(\\d{2,3}-?|\\(\\d{2,3}\\)-?)\\d{3,4}-?\\d{4}|09\\d{2}-?(\\d{6}|-\\d{3}-\\d{3})";
@@ -334,157 +311,18 @@ public class ShopServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				ShopService shopSvc = new ShopService();
-				shopSvc.addShop(shop_name, shop_type, address, tel, website,
+				Integer shop_id = shopSvc.addShop(shop_name, shop_type, address, tel, website,
 						min_amt, shop_img1, shop_img2, shop_img3);
 				
+				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/shop/listAllShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				
+				String url = "/menu/addMenu.jsp?shop_id="+ shop_id;
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交AddMenu.jsp
 				successView.forward(req, res);				
 				
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception","新資料失敗:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/shop/addShop.jsp");
-//				failureView.forward(req, res);
-//			}
 }
         
-        	if ("insertShopMenu".equals(action)) { // 來自addEmp.jsp的請求  
-			
-        	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			
-//			try {
-				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-				/**shop**/
-				String shop_name = req.getParameter("shop_name");
-				String shop_nameReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\(\\-\\)]*$";
-				if (shop_name == null || shop_name.trim().length() == 0) {
-					errorMsgs.put("shop_name","店家名稱: 請勿空白");
-				} else if(!shop_name.trim().matches(shop_nameReg)) {
-					errorMsgs.put("shop_name","店家: 店家: 只能是中、英文字母、數字、_、-和()");
-	            }
-				
-				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());
-				//(0: 飲料, 1: 中式 2: 異國, 3: 小吃, 4: 素食 5:其他 )
-				
-				String placecode = req.getParameter("placecode").trim();
-				String city = req.getParameter("city").trim();
-				String dist = req.getParameter("dist").trim();
-				String addressend = req.getParameter("address").trim();
-				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$";
-				if ((addressend.trim().length() != 0) && !(addressend.trim().matches(addressReg))) { 
-					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_");
-	            }
-				String address = placecode+city+dist+addressend;
-				
-				String tel = req.getParameter("tel");
-				String telReg = "(\\d{2,3}-?|\\(\\d{2,3}\\)-?)\\d{3,4}-?\\d{4}|09\\d{2}-?(\\d{6}|-\\d{3}-\\d{3})";
-				if (tel == null || tel.trim().length() == 0) {
-					errorMsgs.put("tel","電話:請至少留一個電話或手機號碼");
-				} else if(!tel.trim().matches(telReg)) { 
-					errorMsgs.put("tel","電話:請再確認一下號碼");
-	            }
-				
-				String website = req.getParameter("website");
-				
-				Integer min_amt = 0;
-				String min_amtstr = req.getParameter("min_amt").trim();
-				if(min_amtstr.trim().length() != 0) {
-					try {
-						min_amt = Integer.valueOf(min_amtstr);
-					} catch (NumberFormatException e) {
-						errorMsgs.put("min_amt","外送低消請填數字");
-					}
-				}
-				
-				byte[] shop_img1 = null;
-				byte[] shop_img2 = null;
-				byte[] shop_img3 = null;
-				
-				Part pic1 = req.getPart("shop_img1");
-				String filename1 = getFileNameFromPart(pic1);
-					if (filename1!= null && pic1.getContentType()!=null) {
-						shop_img1 = getByteArrayFromPart(pic1);
-					}
-				
-		        Part pic2 = req.getPart("shop_img2");
-				String filename2 = getFileNameFromPart(pic2);
-					if (filename2!= null && pic2.getContentType()!=null) {
-						shop_img2 = getByteArrayFromPart(pic2);
-					}
-				
-				Part pic3 = req.getPart("shop_img3");
-				String filename3 = getFileNameFromPart(pic3);
-					if (filename3!= null && pic3.getContentType()!=null) {
-						shop_img3 = getByteArrayFromPart(pic3);
-					}
-							
-
-				ShopVO shopVO = new ShopVO();
-				shopVO.setShop_name(shop_name);
-				shopVO.setShop_type(shop_type);
-				shopVO.setAddress(address);
-				shopVO.setTel(tel);
-				shopVO.setWebsite(website);
-				shopVO.setMin_amt(min_amt);
-				shopVO.setShop_img1(shop_img1);
-				shopVO.setShop_img2(shop_img2);
-				shopVO.setShop_img3(shop_img3);
-				
-				/**menu**/
-				//品項
-				String item = req.getParameter("item");
-				String itemReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
-				if (item == null || item.trim().length() == 0) {
-					errorMsgs.put("item", "品項: 請勿空白");
-				} else if (!item.trim().matches(itemReg)) { // 正則(規)表示式(regular-expression)
-					errorMsgs.put("item", "品項: 只能是中、日、英文字母、數字、_、-和()");
-				}
-				//價格
-				Integer price = null;
-				try {
-					price = Integer.valueOf(req.getParameter("price").trim());
-				} catch (NumberFormatException e) {
-					errorMsgs.put("price", "價格請填數字");
-				}
-				
-				// 店家編號FK shop_id
-				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
-				System.out.println(shop_id);
-				
-				
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/shop/addShopMenu.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-				
-				/***************************2.開始新增資料***************************************/
-				ShopService shopSvc = new ShopService();
-				shopSvc.addShop(shop_name, shop_type, address, tel, website,
-						min_amt, shop_img1, shop_img2, shop_img3);
-				
-				MenuService menuService = new MenuService();
-				menuService.addMenuItem(item, price, shop_id);
-				
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/shop/listAllShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);				
-				
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception","新資料失敗:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/shop/addShop.jsp");
-//				failureView.forward(req, res);
-//			}
-}
         	//複合查詢
         	if ("listByCompositeQuery".equals(action)) { 
     			List<String> errorMsgs = new LinkedList<String>();
@@ -532,49 +370,10 @@ public class ShopServlet extends HttpServlet {
     			System.out.println("完成上下架");
     			
     			/***************************3.變更完成,準備轉交(Send the Success view)***********/
-    			RequestDispatcher successView = req.getRequestDispatcher("/back/backmain_Shop.jsp");// 刪除成功後,轉交回送出刪除的來源網頁
+    			RequestDispatcher successView = req.getRequestDispatcher("/shop/backmain_Shop.jsp");// 刪除成功後,轉交回送出刪除的來源網頁
     			successView.forward(req, res);
     			
     		}
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-		
-//		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
-//			req.setAttribute("errorMsgs", errorMsgs);
-//	
-//			try {
-//				/***************************1.接收請求參數***************************************/
-//				Integer empno = new Integer(req.getParameter("empno"));
-//				
-//				/***************************2.開始刪除資料***************************************/
-//				EmpService empSvc = new EmpService();
-//				empSvc.deleteEmp(empno);
-//				
-//				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-//				String url = "/emp/listAllEmp.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-//				successView.forward(req, res);
-//				
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/listAllEmp.jsp");
-//				failureView.forward(req, res);
-//			}
-//		}
 	
 	}
 

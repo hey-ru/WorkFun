@@ -18,45 +18,43 @@ int orderNumber = 1;
 
 <style>
 main {
-  max-width: 700px;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 30px;
-  background-color: #AAC789;
-  padding: 30px;
-  border-radius: 10px;
+	max-width: 700px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 30px;
+	background-color: #AAC789;
+	padding: 30px;
+	border-radius: 10px;
 }
 
 /* 購物車 start */
-
 table {
-  background-color: #fff;
-  width: 100%;
-  border-radius: 5px;
+	background-color: #fff;
+	width: 100%;
+	border-radius: 5px;
 }
 
 thead tr {
-  background-color: #BADBB2;
+	background-color: #BADBB2;
 }
 
 thead td {
-  padding: 7px;
+	padding: 7px;
 }
 
 tbody td {
-  padding: 7px;
+	padding: 7px;
 }
 
 .selectAll {
-  padding: 10px;
-  color: white;
-  background-color: #2B735B;
-  text-decoration: none;
-  border-radius: 4px;
+	padding: 10px;
+	color: white;
+	background-color: #2B735B;
+	text-decoration: none;
+	border-radius: 4px;
 }
 
 /* 購物車 end */
-
 </style>
 
 </head>
@@ -68,7 +66,7 @@ tbody td {
 
 		<!-- ====================== 內容開始 ====================== -->
 		<main id="main" class="main">
-			<div >
+			<div>
 				<!-- ============== Card Header ============== -->
 				<div class="card-header py-3" style="background-color: #BADBB2">
 					<div class="row">
@@ -85,68 +83,58 @@ tbody td {
 
 				<!-- ============== Card Body ============== -->
 				<div class="card-body">
-<!-- 					<div class="table-responsive"> -->
-<!-- 						<div id="dataTable_wrapper" -->
-<!-- 							class="dataTables_wrapper dt-bootstrap4"> -->
+					<div class="col-sm-12">
 
-<!-- 							<div class="row"> -->
-								<div class="col-sm-12">
-								
-									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/groupbuylist/addGBList">
-										<table class="table table-hover" style="text-align: center;">
-											<thead>
-												<tr>
-													<th scope="col"></th>
-													<th scope="col"></th>
-													<th scope="col"></th>
-													<th scope="col">編號</th>
-													<th scope="col">品項</th>
-													<th scope="col">單價</th>
-													<th scope="col">數量</th>
-													<th scope="col">小計</th>
-													<th scope="col">備註</th>
-												</tr>
-											</thead>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/groupbuylist/addGBList">
+							<table class="table table-hover" style="text-align: center;">
+								<thead>
+									<tr>
+										<th scope="col"></th>
+										<th scope="col"></th>
+										<th scope="col"></th>
+										<th scope="col">編號</th>
+										<th scope="col">品項</th>
+										<th scope="col">單價</th>
+										<th scope="col">數量</th>
+										<th scope="col">小計</th>
+										<th scope="col">備註</th>
+									</tr>
+								</thead>
 
-											<c:forEach var="menu" items="${menuList}">
+								<c:forEach var="menu" items="${menuList}">
 
-												<tr class="order" data-price="${menu.price}">
-													<td><input type="hidden" name="gb_id"
-														value="${groupBuyVO.gb_id}"></td>
-													<td><input type="hidden" name="buyer"
-														value="${empVO.empId}"></td>
-													<td><input type="hidden" name="buyer_name"
-														value="${empVO.empName}"></td>
-													<td><%=orderNumber++%><input type="hidden"
-														name="menu_id" value="${menu.menu_id}" /></td>
-													<td>${menu.item}<input type="hidden" name="item"
-														value="${menu.item}" /></td>
-													<!-- 單價 -->
-													<td>${menu.price}<input type="hidden" name="price"
-														value="${menu.price}" /></td>
-													<!-- 數量 -->
-													<td><input type="number" class="quantity" min="0"
-														max="10" name="qty" value="0"></td>
-													<!-- 金額 -->
-													<td>$<span id="total">0</span></td>
+									<tr class="order" data-price="${menu.price}">
+										<td><input type="hidden" name="gb_id"
+											value="${groupBuyVO.gb_id}"></td>
+										<td><input type="hidden" name="buyer"
+											value="${empVO.empId}"></td>
+										<td><input type="hidden" name="buyer_name"
+											value="${empVO.empName}"></td>
+										<td><%=orderNumber++%><input type="hidden" name="menu_id"
+											value="${menu.menu_id}" /></td>
+										<td>${menu.item}<input type="hidden" name="item"
+											value="${menu.item}" /></td>
+										<!-- 單價 -->
+										<td>${menu.price}<input type="hidden" name="price"
+											value="${menu.price}" /></td>
+										<!-- 數量 -->
+										<td><input type="number" class="quantity" required
+											min="0" max="100" name="qty" value="0"></td>
+										<!-- 小計 -->
+										<td>$<span id="total">0</span></td>
+										<!-- "備註: 只能是中、日、英文字母、數字、_、-和()" -->
+										<td><input type="text" name="remark"
+											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
+											size="15" value="${param.remark}"></td>
+									</tr>
 
-													<td><input type="text" name="remark" size="15"
-														value="${param.remark}"></td>
-												</tr>
+								</c:forEach>
+							</table>
+							<input type="hidden" name="action" value="insert2GBlist">
+							<input type="submit" class="selectAll" value="火速下單ヽ(●´∀`●)ﾉ">
+						</FORM>
 
-											</c:forEach>
-										</table>
-										<input type="hidden" name="action" value="insert2GBlist">
-										<input type="submit" class="selectAll" value="火速下單ヽ(●´∀`●)ﾉ">
-									</FORM>
-									
-<!-- 								</div> -->
-<!-- 							</div> -->
-							
-							
-							
-<!-- 						</div> -->
 					</div>
 				</div>
 				<!-- ============== Card Body ============== -->

@@ -12,6 +12,21 @@ List<MenuVO> list = (List<MenuVO>) request.getAttribute("menuList");
 <html>
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
+<style>
+th {
+	vertical-align: middle;
+	text-align: center;
+}
+
+td {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.table-responsive {
+	overflow-x:hidden;
+}
+</style>
 
 </head>
 
@@ -38,7 +53,7 @@ List<MenuVO> list = (List<MenuVO>) request.getAttribute("menuList");
 				</div>
 				
 				<!-- 新增菜單請求 -->
-				<div style="text-align:right; margin:10px">
+				<div class="col-6" style="text-align:right; margin:10px">
 					<a
 						href="${pageContext.request.contextPath}/menu/addMenu.jsp?shop_id=${param.shop_id}">
 						<button type="button" class="btn btn-info btn">新增項目</button>
