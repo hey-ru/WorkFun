@@ -176,33 +176,64 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 	
 //       1.以下為某一天之前的日期無法選擇
-         var somedate1 = new Date();
-         $('#f_date1').datetimepicker({
-        	 step: 1,
-        	 format:'Y-m-d H:i:s',
-             beforeShowDay: function(date) {
+//          var somedate1 = new Date();
+//          $('#f_date1').datetimepicker({
+//         	 step: 1,
+//         	 format:'Y-m-d H:i:s',
+//              beforeShowDay: function(date) {
             	 
-           	  if (  date.getYear() <  somedate1.getYear() || 
-    		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-    		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-                 ) {
-                      return [false, ""]
-                 }
-                 return [true, ""];
-         }});
+//            	  if (  date.getYear() <  somedate1.getYear() || 
+//     		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+//     		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//                  ) {
+//                       return [false, ""]
+//                  }
+//                  return [true, ""];
+//          }});
          
-         var somedate1 = new Date();
+         $.datetimepicker.setLocale('zh');
+         $('#f_date1').datetimepicker({
+ 	       theme: '',              //theme: 'dark',
+ 	       timepicker:false,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+<%--  		   value: '<%=hiredate%>', // value:   new Date(), --%>
+            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+            //startDate:	            '2017/07/10',  // 起始日
+            //minDate:               '-1970-01-01', // 去除今日(不含)之前
+            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+         });
+         
+         $.datetimepicker.setLocale('zh');
          $('#f_date2').datetimepicker({
-        	 format:'Y-m-d H:i:s',
-             beforeShowDay: function(date) {
-           	  if (  date.getYear() <  somedate1.getYear() || 
-    		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-    		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-                 ) {
-                      return [false, ""]
-                 }
-                 return [true, ""];
-         }});
+ 	       theme: '',              //theme: 'dark',
+ 	       timepicker:false,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+<%--  		   value: '<%=hiredate%>', // value:   new Date(), --%>
+            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+            //startDate:	            '2017/07/10',  // 起始日
+            //minDate:               '-1970-01-01', // 去除今日(不含)之前
+            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+         });
+         
+         
+         
+         
+         
+         
+//          var somedate1 = new Date();
+//          $('#f_date2').datetimepicker({
+//         	 format:'Y-m-d H:i:s',
+//              beforeShowDay: function(date) {
+//            	  if (  date.getYear() <  somedate1.getYear() || 
+//     		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+//     		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//                  ) {
+//                       return [false, ""]
+//                  }
+//                  return [true, ""];
+//          }});
 
 
 		

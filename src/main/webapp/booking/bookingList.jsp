@@ -3,7 +3,7 @@
 <%@page import="com.emp.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <%
@@ -92,7 +92,7 @@ pageContext.setAttribute("list", list);
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 100px;">預約截止日</th>
+													style="width: 100px;">預約歸還日</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
@@ -124,10 +124,13 @@ pageContext.setAttribute("list", list);
 
 											<tr>
 												<td>${bookingVO.bookingId}</td>
-												<td>${empVO.empId}</td>
+												<td>${empVO.empId} (${empVO.empName})</td>
 												<td>${bookingVO.equipmentVO.eqName}</td>
-												<td><fmt:formatDate value="${bookingVO.startDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-												<td><fmt:formatDate value="${bookingVO.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+												<td><fmt:formatDate value="${bookingVO.startDate}"
+														pattern="yyyy-MM-dd" /></td>
+												<td><fmt:formatDate value="${bookingVO.endDate}"
+														pattern="yyyy-MM-dd" /></td>
+
 
 												<td><c:choose>
 														<c:when test="${bookingVO.returnStatus == 0}">已歸還</c:when>
@@ -139,10 +142,42 @@ pageContext.setAttribute("list", list);
 													</c:choose></td>
 
 												<%-- 											<td>${bookingVO.returnStatus}</td> --%>
+												<%-- 											<c:if test="${bookingVO.dateDiff > 0 && bookingVO.dateDiff < 4}"> --%>
+												<%-- 												<td>${bookingVO.dateDiff}</td> --%>
+												<%-- 											</c:if> --%>
 
-												<td>${bookingVO.overdueDate}</td>
-												<td>${bookingVO.overduePrice}</td>
+												<td><c:if test="${bookingVO.returnStatus == 1}">
+														<c:choose>
+															<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
+															<c:when test="${bookingVO.dateDiff == 1}">逾期 1 天</c:when>
+															<c:when test="${bookingVO.dateDiff == 2}">逾期 2 天</c:when>
+															<c:when test="${bookingVO.dateDiff == 3}">逾期 3 天</c:when>
+															<c:when test="${bookingVO.dateDiff > 3}">逾期 3 天以上</c:when>
+														</c:choose>
+													</c:if></td>
+
+												
+<%-- 												<c:if test="${bookingVO.returnStatus == 1}"> --%>
+<%-- 													<td>罰金$ ${bookingVO.dateDiff * bookingVO.equipmentVO.price * 0.2}</td> --%>
+<%-- 												</c:if> --%>
+												
+														<td><c:if test="${bookingVO.returnStatus == 1}">
+														<c:choose>
+															<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
+															<c:when test="${bookingVO.dateDiff == 1}">罰金$ ${1 * bookingVO.equipmentVO.price * 0.3}</c:when>
+															<c:when test="${bookingVO.dateDiff == 2}">罰金$ ${2 * bookingVO.equipmentVO.price * 0.3}</c:when>
+															<c:when test="${bookingVO.dateDiff == 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.3}</c:when>
+															<c:when test="${bookingVO.dateDiff > 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.3}</c:when>
+														</c:choose>
+													</c:if></td>
+												
+												
+												
+												
+												
+											
 											</tr>
+
 
 										</c:forEach>
 

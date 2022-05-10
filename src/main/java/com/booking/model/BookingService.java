@@ -71,6 +71,10 @@ public class BookingService {
 		return dao.getByEmpId(empId);
 	}
 	
+	public List<BookingVO> getOverdueDate(Integer empId) {
+		return dao.getOverdueDate(empId);
+	}
+	
 	public List<BookingVO> getStartDateByEqptId(Integer equipmentId){
 		return dao.getStartDateByEqptId(equipmentId);
 	}

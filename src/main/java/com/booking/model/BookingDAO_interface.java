@@ -29,4 +29,8 @@ public interface BookingDAO_interface {
 	
 	// 查詢開始租借時間
 	public List<BookingVO> getStartDateByEqptId (Integer equipmentId);
+	
+	// 查詢逾期天數
+	public List<BookingVO> getOverdueDate(Integer empId);
+	
 }

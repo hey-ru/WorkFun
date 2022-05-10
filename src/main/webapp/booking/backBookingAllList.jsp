@@ -1,13 +1,19 @@
+<%@page import="com.emp.model.*"%>
 <%@page import="java.util.List"%>
 <%@page import="com.booking.model.BookingService"%>
 <%@page import="com.booking.model.BookingVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
 BookingService bookingSvc = new BookingService();
 List<BookingVO> list = bookingSvc.getAll();
 pageContext.setAttribute("list", list);
+
+EmpService empSvc = new EmpService();
+
+
 int itemsPerPage = 10;
 %>
 
@@ -43,6 +49,7 @@ int itemsPerPage = 10;
 		<!-- Sidebar -->
 		<%@ include file="/design/backSidebar.jsp"%>
 		<!-- End of Sidebar -->
+
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -108,6 +115,21 @@ int itemsPerPage = 10;
 				<!-- 					</div> -->
 				<!-- 				</div> -->
 
+						<div class="col-11 row" style="height: 60px; display: inline-block;">
+							
+								<form class="my-1 col-6" METHOD="post" ACTION="<%=request.getContextPath()%>/booking/boooking.do" name="formsearch">
+									<div class="form-groupf" style="display: inline-block">
+										<input type="text" class="form-control"
+											id="booking_id" placeholder="查詢訂單編號"
+											style="border: gray solid 2px;" name="booking_id">
+									</div>
+									<input type="hidden" name="action" value="listByCompositeQueryBack">
+									<button type="submit" class="btn btn-dark mb-2 mt-1 col-2"
+										style="display: inline-block;">搜尋</button>
+								</form>
+							</div>
+						</div>
+
 
 				<div class="card-body">
 					<div class="table-responsive">
@@ -126,44 +148,44 @@ int itemsPerPage = 10;
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 100px;">預約單編號</th>
+													>預約單編號</th>
 
 												<th class="sorting sorting_asc" tabindex="0"
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 80px;">員工編號</th>
+													>員工編號</th>
 
 												<th class="sorting sorting_asc" tabindex="0"
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 80px;">器材名稱</th>
+													>器材名稱</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 100px;">預約起訖日</th>
+													>預約起訖日</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 100px;">預約截止日</th>
+													>預約歸還日</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 80px;">預約狀態</th>
+													>預約狀態</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 80px;">逾期天數</th>
+													>逾期天數</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 80px;">逾期罰金</th>
+													>逾期罰金</th>
 
 											</tr>
 
@@ -178,8 +200,13 @@ int itemsPerPage = 10;
 													<td>${bookingVO.bookingId}</td>
 													<td>${bookingVO.empId}</td>
 													<td>${bookingVO.equipmentVO.eqName}</td>
-													<td>${bookingVO.startDate}</td>
-													<td>${bookingVO.endDate}</td>
+													<td><fmt:formatDate value="${bookingVO.startDate}"
+															pattern="yyyy-MM-dd" /></td>
+													<td><fmt:formatDate value="${bookingVO.endDate}"
+															pattern="yyyy-MM-dd" /></td>
+
+													<%-- 													<td>${bookingVO.startDate}</td> --%>
+													<%-- 													<td>${bookingVO.endDate}</td> --%>
 
 													<%-- 													<td><c:choose> --%>
 													<%-- 															<c:when test="${bookingVO.returnStatus == 5}">已登記預約</c:when> --%>
@@ -209,34 +236,40 @@ int itemsPerPage = 10;
 																		${(bookingVO.returnStatus==4)? 'selected':'' }>未歸還(需罰金)</option>
 																	<option value="5"
 																		${(bookingVO.returnStatus==5)? 'selected':'' }>已登記預約</option>
-																</select> ${errorMsgs.returnStatus}
-															</div></td>
-
-
-														<td>${bookingVO.overdueDate}</td>
-														<td>${bookingVO.overduePrice}</td>
-
-
-														<td>
-															<div class="row mb-3">
-																<input type="hidden" name="action"
-																	value="updateReturnStatus"> <input
+																</select> ${errorMsgs.returnStatus} <input type="hidden"
+																	name="action" value="updateReturnStatus"> <input
 																	type="hidden" name="bookingId"
 																	value="${bookingVO.bookingId}"> <input
 																	type="hidden" name="returnStatus"
 																	value="${bookingVO.returnStatus}"> <input
 																	type="submit" value="儲存"
-																	class="btn btn-dark mb-2 mt-1 col"
-																	style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
-
-															</div>
-														</td>
+																	class="btn-info"
+																	>
 													</form>
+												
 
-												</tr>
+
+													<td>${bookingVO.overdueDate}</td>
+													<td>${bookingVO.overduePrice}</td>
+
+					
+														<!-- 															<div class="row mb-3"> --> <!-- 																<input type="hidden" name="action" -->
+														<!-- 																	value="updateReturnStatus"> <input -->
+														<!-- 																	type="hidden" name="bookingId" --> <%-- 																	value="${bookingVO.bookingId}"> <input --%>
+														<!-- 																	type="hidden" name="returnStatus" -->
+														<%-- 																	value="${bookingVO.returnStatus}"> <input --%>
+														<!-- 																	type="submit" value="儲存" --> <!-- 																	class="btn btn-dark mb-2 mt-1 col" -->
+														<!-- 																	style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;"> -->
+
+														<!-- 															</div> --> <!-- 														</td> -->
+														<!-- 													</form> -->
+
+												
 											</c:forEach>
 										</tbody>
 									</table>
+									<%@ include file="/design/page2.file"%>
+									
 								</div>
 							</div>
 						</div>
