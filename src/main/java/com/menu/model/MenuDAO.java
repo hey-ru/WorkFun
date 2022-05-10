@@ -34,6 +34,8 @@ public class MenuDAO implements MenuDAO_interface {
 	private static final String GET_ByShopId = "SELECT menu_id, item, price, is_item, menu_upd FROM menu where shop_id = ? and is_item=1 ";
 	// 前台 查詢一間店家菜單(下架)
 	private static final String GET_ByShopId_Disable = "SELECT * FROM menu where shop_id = ? and is_item=0 ";
+	// 用品名查詢店家及揪團
+	private static final String GET_ShopAndGB = "SELECT shop_name, gb_owner FROM groupbuy WHERE item LIKE = ? ";
 	// 後台 查詢各店家菜單
 	private static final String GET_ALL_STMT = "SELECT * FROM menu ";
 	//查詢一筆菜單項目

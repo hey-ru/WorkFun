@@ -16,6 +16,13 @@ int itemsPerPage = 10;
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
 
+<style>
+.table-responsive {
+	overflow-x: hidden;
+}
+</style>
+
+
 </head>
 
 <body>

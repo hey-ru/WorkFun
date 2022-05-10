@@ -88,7 +88,7 @@ public class AddGBListServlet extends HttpServlet {
 			System.out.println("新增訂單完成");
 
 			/********************* 3.新增完成,準備轉交(Send the Success view) *************/
-			String url = "/groupbuy/gbHome.jsp";
+			String url = "/groupbuylist/buyer_selectGB.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 			successView.forward(req, res);
 			System.out.println(gb_id + "參團新增成功!");
