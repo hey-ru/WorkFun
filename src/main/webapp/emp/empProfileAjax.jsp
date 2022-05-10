@@ -363,14 +363,15 @@
 
 				<script>
 			function update123(){
-			
+		
 $.ajax({
 
 url:"UpdateServlet",
 type:"post",
    
 data:{
-empProfile:$("#empProfile").val(),
+	/* empProfile:$("#empProfile").val(), */
+ 	/* empProfile:$("#empProfile")[0].files[0],  */
 empName:$("#empName").val(),
 depId:$("#depId").val(),
 phone:$("#phone").val(),
@@ -389,7 +390,7 @@ success: function (empVOJSON) {
 
                         }
 						else{
-							alerts("updated")
+							alert("updated")
 						}
                       
 

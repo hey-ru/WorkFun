@@ -1,79 +1,90 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emp.model.*"%>
 
-<%-- ¸U¥Î½Æ¦X¬d¸ß-¥i¥Ñ«È¤áºİselect_page.jspÀH·N¼W´î¥ô¦ó·Q¬d¸ßªºÄæ¦ì --%>
-<%-- ¦¹­¶¥u§@¬°½Æ¦X¬d¸ß®É¤§µ²ªG½m²ß¡A¥iµø»İ­n¦A¼W¥[¤À­¶¡B°e¥X­×§ï¡B§R°£¤§¥\¯à--%>
+<%-- è¬ç”¨è¤‡åˆæŸ¥è©¢-å¯ç”±å®¢æˆ¶ç«¯select_page.jspéš¨æ„å¢æ¸›ä»»ä½•æƒ³æŸ¥è©¢çš„æ¬„ä½ --%>
+<%-- æ­¤é åªä½œç‚ºè¤‡åˆæŸ¥è©¢æ™‚ä¹‹çµæœç·´ç¿’ï¼Œå¯è¦–éœ€è¦å†å¢åŠ åˆ†é ã€é€å‡ºä¿®æ”¹ã€åˆªé™¤ä¹‹åŠŸèƒ½--%>
 
-<jsp:useBean id="listEmps_ByCompositeQuery" scope="request" type="java.util.List<EmpVO>" /> <!-- ©óEL¦¹¦æ¥i¬Ù²¤ -->
+<jsp:useBean id="listEmps_ByCompositeQuery" scope="request" type="java.util.List<EmpVO>" /> <!-- æ–¼ELæ­¤è¡Œå¯çœç•¥ -->
 <jsp:useBean id="depSvc" scope="page" class="com.dep.model.DepService" />
 
+<!DOCTYPE html>
+<html lang="en">
 
-<html>
-<head><title>½Æ¦X¬d¸ß - listEmps_ByCompositeQuery.jsp</title>
+<head>
+<%@ include file="/design/backcss.jsp"%>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
+    <title>WorkFunBack</title>
 
 <style>
-  table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
-</style>
+.img-fluid {
+    max-width: 70px;
+    height: auto;
+}
 
+</style>
 </head>
-<body bgcolor='white'>
 
-<h4>
-¡¸¸U¥Î½Æ¦X¬d¸ß  - ¥i¥Ñ«È¤áºİ select_page.jsp ÀH·N¼W´î¥ô¦ó·Q¬d¸ßªºÄæ¦ì<br>
-¡¸¦¹­¶§@¬°½Æ¦X¬d¸ß®É¤§µ²ªG½m²ß¡A<font color=red>¤w¼W¥[¤À­¶¡B°e¥X­×§ï¡B§R°£¤§¥\¯à</font></h4>
-<table id="table-1">
-	<tr><td>
-		 <h3>©Ò¦³­û¤u¸ê®Æ - listAllEmp.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
-	</td></tr>
-</table>
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+<%@ include file="/design/backSidebar.jsp"%>
+		<!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav bg-dark ml-auto">
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item no-arrow">
+                         <a href="<%=request.getContextPath()%>/home/home.jsp"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Back Home</a>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- å…§å®¹æ”¾é€™ -->
 
 
-<table>
+
+<table class="table table-striped table-bordered table-hover"
+                                                id="dataTables-example">
 	<tr>
-		<th>­û¤u½s¸¹</th>
-		<th>­û¤u©m¦W</th>
-		<th>³¡ªù</th>
-		<th>¶±¥Î¤é´Á</th>
-		<th>Â÷Â¾¤é´Á</th>
-		<th>¤â¾÷</th>
-		<th>¤À¾÷</th>
-		<th>¿³½ì</th>
-		<th>±Mªø</th>
-		<th>ÀY¶K</th>
-		<th>«H½c</th>
-		<th>¥Í¤é</th>
-		<th>ª¬ºA</th>
+		<th>å“¡å·¥ç·¨è™Ÿ</th>
+		<th>å“¡å·¥å§“å</th>
+		<th>éƒ¨é–€</th>
+		<th>é›‡ç”¨æ—¥æœŸ</th>
+		<th>é›¢è·æ—¥æœŸ</th>
+		<th>æ‰‹æ©Ÿ</th>
+		<th>åˆ†æ©Ÿ</th>
+		<th>èˆˆè¶£</th>
+		<th>å°ˆé•·</th>
+		<th>é ­è²¼</th>
+		<th>ä¿¡ç®±</th>
+		<th>ç”Ÿæ—¥</th>
+		<th>ç‹€æ…‹</th>
 		<th></th>
 	</tr>
 	<%@ include file="/back/page1_ByCompositeQuery.file" %>
@@ -98,15 +109,15 @@
 											></td>
 								<td>${empVO.mail}</td>
 									<td>${empVO.birthday}</td>
-										<td>${empVO.empStatus}</td>
+									
                 
 		
 						<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="­×§ï"> 
+			     <input type="submit" value="ä¿®æ”¹"> 
 			     <input type="hidden" name="empId"      value="${empVO.empId}">
-			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--°e¥X¥»ºô­¶ªº¸ô®|µ¹Controller-->
-			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--°e¥X·í«e¬O²Ä´X­¶µ¹Controller-->
+			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--é€å‡ºæœ¬ç¶²é çš„è·¯å¾‘çµ¦Controller-->
+			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--é€å‡ºç•¶å‰æ˜¯ç¬¬å¹¾é çµ¦Controller-->
 			     <input type="hidden" name="action"	    value="getOne_For_Update"></FORM>
 			</td>
 			
@@ -115,9 +126,21 @@
 </table>
 <%@ include file="/back/page2_ByCompositeQuery.file" %>
 
-<br>¥»ºô­¶ªº¸ô®|:<br><b>
-   <font color=blue>request.getServletPath():</font> <%=request.getServletPath()%><br>
-   <font color=blue>request.getRequestURI(): </font> <%=request.getRequestURI()%> </b>
+                    <!-- /.container-fluid -->
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- End of Content Wrapper -->
+        </div>
+        <!-- End of Page Wrapper -->
+	</div>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+     
+<%@ include file="/design/backjs.jsp"%>
 
 </body>
+
 </html>
