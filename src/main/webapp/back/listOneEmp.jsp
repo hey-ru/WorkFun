@@ -346,7 +346,7 @@
 		<tr>
 			<td>${empVO.empId}</td>
 			<td>${empVO.empName}</td>
-			<td>${empVO.depId}-[${empVO.deptVO.depName}]</td>
+			<td>${empVO.depId}-[${empVO.depVO.depName}]</td>
 			
 			<td>${empVO.hiredate}</td>
 				<td>${empVO.resigndate}</td>

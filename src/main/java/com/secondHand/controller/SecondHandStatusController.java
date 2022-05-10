@@ -2,6 +2,7 @@ package com.secondHand.controller;
 import static com.util.TimerThreadPool.TIMERSERVICE;
 
 import java.io.IOException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.Servlet;
@@ -20,7 +21,8 @@ public class SecondHandStatusController extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
-		TIMERSERVICE.scheduleAtFixedRate(new SecondHandRun(),0,10,TimeUnit.SECONDS);
+		 TIMERSERVICE.scheduleAtFixedRate(new SecondHandRun(),0,10,TimeUnit.SECONDS);
+		
 	}
 	/**
 	 * @see Servlet#destroy()

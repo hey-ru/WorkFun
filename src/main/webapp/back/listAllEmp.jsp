@@ -327,26 +327,59 @@
                     <div id="page-inner">
 
 
-  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1">
+  <%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1">
 
         <b>輸入員工編號:</b>
-        <input type="text" name="empId" value="7001"><br>
+        <input type="text" name="empId" value=""><br>
            
        <b>輸入員工姓名:</b>
-       <input type="text" name="empName" value="KING"><br>
+       <input type="text" name="empName" value=""><br>
   <jsp:useBean id="depSvc" scope="page" class="com.dep.model.DepService" />
        <b>選擇部門:</b>
        <select size="1" name="depId" >
           <option value="">
-         <c:forEach var="deptVO" items="${depSvc.all}" > 
-          <option value="${deptVO.depId}">${deptVO.depName}
+         <c:forEach var="depVO" items="${depSvc.all}" > 
+          <option value="${depVO.depId}">${depVO.depName}
          </c:forEach>   
        </select><br>
           		        
         <input type="submit" value="送出">
         <input type="hidden" name="action" value="listEmps_ByCompositeQuery">
      </FORM>
-
+ --%>
+  <jsp:useBean id="depSvc" scope="page" class="com.dep.model.DepService" />
+ <li>   
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1">
+        <b><font color=blue>萬用複合查詢:</font></b> <br>
+       <!--  <b>輸入員工編號:</b>
+        <input type="text" name="empId" value=""><br> -->
+           
+     <!--   <b>輸入員工姓名:</b>
+       <input type="text" name="empName" value=""><br> -->
+            <b>輸入員工分機:</b>
+       <input type="text" name="extension" value=""><br>
+       
+       
+      <!--  <b>輸入員工職位:</b>
+       <input type="text" name="" value="PRESIDENT"><br> -->
+    
+       <b>選擇部門:</b>
+       <select size="1" name="depId" >
+          <option value="">
+         <c:forEach var="depVO" items="${depSvc.all}" > 
+          <option value="${depVO.depId}">${depVO.depName}
+         </c:forEach>   
+       </select><br>
+           
+       <b>雇用日期:</b>
+	   <input name="hiredate" id="f_date1" type="text"> 
+		        
+        <input type="submit" value="送出">
+        <input type="hidden" name="action" value="listEmps_ByCompositeQuery">
+     </FORM>
+  </li>
+ 
+ 
 
                         <div class="row">
                             <div class="col-md-12">
@@ -384,7 +417,7 @@
 		<tr>
 			<td>${empVOSearch.empId}</td>
 			<td>${empVOSearch.empName}</td>
-			<td>${empVOSearch.depId}-[${empVOSearch.deptVO.depName}]</td>
+			<td>${empVOSearch.depId}-[${empVOSearch.depVO.depName}]</td>
 
 			<td>${empVOSearch.hiredate}</td>
 				<td>${empVOSearch.resigndate}</td>
