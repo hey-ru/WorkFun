@@ -75,6 +75,10 @@ public class ReportService{
 	public List<ReportVO> getHandler(Integer handler){
 		return dao.getHandler(handler);
 	}
+	
+	public List<ReportVO> getOwn(Integer reporter){
+		return dao.getOwnReport(reporter);
+	}
 		
 	public ReportVO getComment(Integer report_id) {
 		ReportVO  reportVO = dao.findReport(report_id);

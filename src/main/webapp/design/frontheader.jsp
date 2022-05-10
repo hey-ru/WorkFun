@@ -36,6 +36,7 @@
                             <div class="dropdown-content">
                                 <a href="<%=request.getContextPath()%>/report/listAllReport.jsp">回報首頁</a>
                                 <a href="<%=request.getContextPath()%>/report/addReport.jsp">新增回報</a>
+                                <a href="<%=request.getContextPath()%>/report/listOwnReport.jsp">查看自己回報</a>
                             </div>
                         </div>
                     </li>
