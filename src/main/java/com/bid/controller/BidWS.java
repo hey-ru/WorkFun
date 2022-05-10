@@ -14,6 +14,8 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.bid.model.BidService;
 import com.bid.model.BidVO;
 import com.secondHand.model.SecondHandService;
@@ -35,8 +37,8 @@ public class BidWS {
 		connectedSessions.add(userSession);
 		String text = String.format("Session ID = %s, connected; userId = %s", userSession.getId(), userId);
 		System.out.println(text);
-		System.out.println("Username : " + userName);
-		System.out.println("Bid_id : " + bidId);
+		System.out.println("(servlet-open) Username : " + userName);
+		System.out.println("(servlet-open) Bid_id : " + bidId);
 	}
 
 	@OnMessage
@@ -47,18 +49,38 @@ public class BidWS {
 				session.getAsyncRemote().sendText(data);
 //				推送資訊同時,可以在這邊new一個service,將資訊更新至資料庫
 		}
-//		System.out.println("User ID received: " + userId);
-//		System.out.println("UserId received: " + userId);
-//		System.out.println("UserName received: " + userName);
-//		System.out.println("BidId received: " + bidId);
 		System.out.println("Data received: " + data);
-//		SecondHandService secondHandService = new SecondHandService();
 		
-//		BidVO bidVO = new BidVO();
-//
-//		
-//		BidService bidService = new BidService();
-//		bidService.updateBid(bidVO);
+		String bidId;
+		bidId = StringUtils.substringAfter(data, "bidId\":");
+		bidId = StringUtils.substringBefore(bidId, ",");
+		System.out.println("(servlet-message) bidId : " + bidId);
+		
+		String userId;
+		userId = StringUtils.substringAfter(data, "userId\":");
+		userId = StringUtils.substringBefore(userId, ",");
+		System.out.println("(servlet-message) userId : " + userId);
+		
+//		String userName;
+//		userName = StringUtils.substringAfter(data, "userName\":\"");
+//		userName = StringUtils.substringBefore(userName, "\",");
+//		System.out.println("(servlet-message) userName : " + userName);
+
+		String price;
+		price = StringUtils.substringAfter(data, "price\":\"");
+		price = StringUtils.substringBefore(price, "\"");
+		System.out.println("(servlet-message) price : " + price);
+
+		
+		
+		BidVO bidVO = new BidVO();
+		bidVO.setBid_id(Integer.parseInt(bidId));
+		bidVO.setBidder(Integer.parseInt(userId));
+		bidVO.setPrice(Integer.parseInt(price));
+		
+		
+		BidService bidService = new BidService();
+		bidService.updateBid(bidVO);
 	}
 
 	@OnClose
