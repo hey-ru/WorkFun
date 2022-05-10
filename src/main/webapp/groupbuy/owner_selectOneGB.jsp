@@ -38,37 +38,42 @@
 							<h5>
 								<strong>查詢揪團</strong>
 							</h5>
+								
 						</div>
 						<div class="col-1" style="height: 20px; display: inline-block;">
 							<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>回揪團主頁</strong></a>
 						</div>
 					</div>
 				</div>
+				
 
 				<!-- ============== Card Body ============== -->
 				<div class="card-body">
-					<div class="table-responsive">
+					<div class="table-responsive ">
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
-
-						<FORM METHOD="post" style="padding:0px 20px;margin-bottom:30px;" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
+						<div class="row">
+						<FORM METHOD="post" class="col-7" style="padding:0px 20px;margin-bottom:30px;" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
 						<h4> ${groupBuyVO.gb_id} &nbsp;&nbsp;&nbsp; ${groupBuyVO.shop_name}</h4>
 						
 							<div class="row mb-3">
-							<label for="arr_time" class="col-sm-1 col-form-label">到貨時間:</label>
-							<div class="col-sm-5">
+							<label for="arr_time" class="col-sm-2 col-form-label">到貨時間:</label>
+							<div class="col-sm-9">
 								<input name="arr_time" id="arr_time" type="text" class="form-control-plaintext" style="width:250px; border:1px solid gray; display:inline-block;" autocomplete="off" value="${groupBuyVO.arr_time}"/>
 								<input type="submit" value="送出修改到貨時間" style="display:inline-block;margin-left:30px;">
 							</div>
-							</div>
+								</div>
 							
 							<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 							<input type="hidden" name="end_time" value="${groupBuyVO.end_time}">
 							<input type="hidden" name="action" value="updateArrTime">
-							
-							
-						</FORM>		
-								
+						</FORM>	
+						<div class="col-2" style="height:40px;">
+						<button type="button" id="showtable" class="btn btn-info">摺疊/展開</button>	
+						</div>
+						
+						</div>
+<%-- 						<c:set var="GBtotal" value="0"></c:set>			 --%>
 						<c:forEach var="GBbuyer" items="${GBbuyers}">
 						<div class="card fw-bolder">							
 							<div class="card-body bg-white text-dark">
@@ -77,6 +82,7 @@
 									<h5> ${GBbuyer.buyer} &nbsp;&nbsp;&nbsp; ${GBbuyer.buyer_name}</h5></div>
 									 
 									<div class="col-2">總金額: ${GBbuyer.total}</div>
+									
 									<form class="col-8 row" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet">
 									<div class="col-4"><label>付款狀況: </label>
 										<input type="radio" name="is_pay" value="0" ${(GBbuyer.is_pay=="0")? 'checked':'' }> 未付款 
@@ -162,6 +168,13 @@
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <script>
+
+$(function(){
+	$("#showtable").click(function(){
+	$(".table").slideToggle("fast");
+	});
+	});
+
         $.datetimepicker.setLocale('zh');
         $('#arr_time').datetimepicker({
     	       theme: '',              //theme: 'dark',
