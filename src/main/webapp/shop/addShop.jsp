@@ -11,6 +11,9 @@
      th{
      width:80px;
      }
+     body{
+     min-height:100%;
+     }
     </style>
 
 
@@ -20,9 +23,23 @@
             <div class="wrapper">
                 <!-- ======= Header ======= -->
                 <%@ include file="/design/frontheader.jsp" %>
+                <div style="height: var(--header-height);"></div>
+			<div>
 
-                    <!-- ======= 內容開始 ======= -->
-                   <div style="height: var(--header-height); margin-bottom:10px;"></div>
+				<!-- ============== Card Header ============== -->
+				<div class="card-header py-3" style="background-color: #b0c4de">
+					<div class="row">
+						<div class="col-11" style="height: 20px; display: inline-block;">
+							<h5>
+								<strong>店家資訊</strong>
+							</h5>
+						</div>
+						<div class="col-1" style="height: 20px; display: inline-block;">
+							<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp"><strong>回店家列表</strong></a>
+						</div>
+					</div>
+				</div>
+                   
     <div class="row" style="margin:0;">               
    <div class="col-6">                
    <FORM METHOD="post" style="padding:0px 20px;" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/shop/ShopServlet" name="form1">
@@ -98,17 +115,19 @@
 </div>
 <div class="col-1"></div>
 <div class="col-4">
-<div style="height:150px;padding:5px;">
+<div style="height:140px;padding:5px;">
 <img id="pic1" style="max-height:100%;">
 </div>
-<div style="height:150px;padding:5px;">
+<div style="height:140px;padding:5px;">
 <img id="pic2" style="max-height:100%;">
 </div>
-<div style="height:150px;padding:5px;">
+<div style="height:140px;padding:5px;">
 <img id="pic3" style="max-height:100%;">
 </div>
 </div>          
-      </div>             
+      </div>     
+      </div>
+        
 
                     <!-- ======= 內容結束 ======= -->
 

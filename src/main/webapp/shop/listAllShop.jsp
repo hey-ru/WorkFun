@@ -85,7 +85,7 @@ td {
 						</form>
 					</div>
 					<div class="col-2 mt-2" style="left: 0;">
-						<a href='${pageContext.request.contextPath}/shop/addShopMenu.jsp'><button
+						<a href='${pageContext.request.contextPath}/shop/addShop.jsp'><button
 								type="button" class="btn btn-warning btn-lg">新增店家</button></a>
 					</div>
 				</div>
@@ -201,7 +201,7 @@ td {
 												ACTION="<%=request.getContextPath()%>/menu/selectmenubyshop"
 												style="margin-bottom: 0px;">
 												<button class="btn">
-													<i class="fa fa-bars"></i> Menu
+													<i class="bi bi-list"></i> Menu
 												</button>
 												<!-- 													<input type="submit" value="查看菜單" style="margin-bottom: 0px;">  -->
 												<input type="hidden" name="shop_id"
