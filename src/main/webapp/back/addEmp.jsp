@@ -127,9 +127,11 @@
 									<label class="input-group-text" for="inputGroupFile01">大頭照</label>
 									<input type="file" name="empProfile" size="45"
 										value="${param.empProfile}" class="form-control"
-										id="inputGroupFile01" required="required">
+										id="profile" required="required">
+									
 								</div>
-
+	<div><img id="profileimg"></div>
+	
 
 								<div class="input-group mb-3">
 
@@ -267,6 +269,19 @@
         //              return [true, ""];
         //      }});
         
+</script>
+<script>
+document.getElementById("profile").onchange = addImg;
+function addImg(e) {
+	 let url = URL.createObjectURL(e.target.files[0])
+	let profileimg=document.getElementById("profileimg");
+    profileimg.setAttribute("src",url);
+  profileimg.setAttribute("width", 200)
+                profileimg.setAttribute("length", 200)
+	
+}
+
+
 </script>
 </body>
 
