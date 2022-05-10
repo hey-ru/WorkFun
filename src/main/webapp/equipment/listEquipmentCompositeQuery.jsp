@@ -4,12 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 
+
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<EquipmentVO>" />
 <%
-EquipmentService equipSvc = new EquipmentService();
-List<EquipmentVO> list = equipSvc.getAll();
-pageContext.setAttribute("list", list);
+String yourServlet = "/equipment/equipment.do"; 
 int itemsPerPage = 10;
 %>
+
 
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -148,7 +149,6 @@ td {
 									value="${param.eqName}">
 							</div>
 							<input type="hidden" name="action" value="listByCompositeQuery">
-<!-- 							<input type="hidden" name="is_disable" value="0"> -->
 							<button type="submit" class="btn btn-dark mb-2 mt-1 col"
 								style="display: inline-block; width: 100px;">搜尋</button>
 						</form>
@@ -166,7 +166,7 @@ td {
 			</div>
 
 			<div class="page1">
-				<%@ include file="/design/page1.file"%>
+				<%@ include file="/design/page1_ByCompositeQuery.file"%>
 			</div>
 
 
@@ -234,10 +234,9 @@ td {
 						</thead>
 
 
-						<%-- 							<%@ include file="/design/page1.file"%> --%>
 						<tbody>
 
-							<c:forEach var="equipmentVO" items="${list}"
+							<c:forEach var="equipmentVO" items="${listByCompositeQuery}"
 								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 								<tr>
@@ -295,7 +294,7 @@ td {
 						</tbody>
 					</table>
 
-					<%@ include file="/design/page2.file"%>
+					<%@ include file="/design/page2_ByCompositeQuery.file"%>
 				</div>
 			</div>
 
@@ -317,6 +316,7 @@ td {
 	</a>
 
 	<%@ include file="/design/backjs.jsp"%>
+	
 
 </body>
 

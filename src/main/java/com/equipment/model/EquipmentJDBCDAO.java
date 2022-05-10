@@ -24,12 +24,13 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	private static final String DELETE_BY_EQID = "DELETE FROM equipment where equipment_id = ?";
 	private static final String DELETE_BY_EQNAME = "DELETE FROM equipment where eq_name = ?";
 	private static final String GET_LAST = "SELECT * FROM equipment ORDER BY equipment_id DESC LIMIT 0 , 1";
-	private static final String GET_ALL_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
 	private static final String GET_BY_EQUIPMENTID = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where equipment_id = ?";
 	private static final String GET_BY_EQSTATUS = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment where eq_status = ?";
 	private static final String GET_ALL = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec,img1,img2,img3 FROM equipment";
 
-	private static final String GET_ALL_QUERY = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
+	private static final String GET_ALL_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
+
+	//	private static final String GET_ALL_QUERY = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
 
 	@Override
 	public void insert(EquipmentVO equipmentVO) {
