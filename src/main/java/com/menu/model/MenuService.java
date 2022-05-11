@@ -1,5 +1,6 @@
 package com.menu.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MenuService {
@@ -13,8 +14,24 @@ public class MenuService {
 	}
 
 	//一次新增多筆菜單項目
-	public void addMenuMany(List <MenuVO> listMenu){
-		dao.insertMany(listMenu);
+	public void addMenuMany(String[] newitem, String[] newprice, Integer shop_id){
+		
+		/*************************** 2. 輸入格式的錯誤處理 - 開始新增資料 *****************************************/
+
+		MenuVO menuVO;
+		List<MenuVO> menuAddlist = new ArrayList<>();
+
+		for (int i = 0; i < newitem.length; i++) {
+			menuVO = new MenuVO();
+			menuVO.setShop_id(Integer.valueOf(shop_id));
+			menuVO.setItem(newitem[i]);
+			menuVO.setPrice(Integer.valueOf(newprice[i]));
+			menuAddlist.add(menuVO);
+		}
+		dao.insertMany(menuAddlist);
+		
+		System.out.println(menuAddlist.toString());
+		System.out.println("新增多筆菜單完成");
 	}
 	
 	//主揪新增品項,金額

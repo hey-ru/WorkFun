@@ -76,7 +76,7 @@
 
 	<!-- ======= 內容結束 ======= -->
 	<!-- ======= Footer ======= -->
-	<%@ include file="/design/frontfooter.jsp"%>
+<%-- 	<%@ include file="/design/frontfooter.jsp"%> --%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
 </body>

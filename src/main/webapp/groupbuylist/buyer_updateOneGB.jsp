@@ -54,78 +54,60 @@ int orderNumber = 1;
 			</div>
 			<!-- ============== Card Body ============== -->
 			<div class="card-body">
-				<div class="col-sm-6">
+				<div class="col-12">
 
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet">
-						<table class="table table-bordered dataTable" id="dataTable"
-							role="grid" aria-describedby="dataTable_info"
-							style="cellspacing: 0; width: 100%">
-
+						<table class="table table-striped">
 							<!-- ========================= 表頭 ========================= -->
 							<thead>
-								<tr role=" row">
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Office: activate to sort column ascending">編號</th>
-
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Position: activate to sort column ascending">品項</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Position: activate to sort column ascending">單價</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Office: activate to sort column ascending">數量</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Office: activate to sort column ascending">備註</th>
-
+								<tr>
+								<th scope="col">編號</th>
+								<th scope="col">品項</th>
+								<th scope="col">單價</th>
+								<th scope="col">數量</th>
+								<th scope="col">備註</th>
 								</tr>
 							</thead>
 
 							<!-- ========================= 表格內容 ========================= -->
 
 							<c:forEach var="blist" items="${buyerlist}">
-
 								<input type="hidden" name="gbList_id" value="${blist.gbList_id}">
-								<input type="hidden" name="gb_id" size="5"
-									value="${blist.gb_id}">
-								<input type="hidden" name="buyer" size="5"
-									value="${blist.buyer}">
-								<input type="hidden" name="buyer_name" size="5"
-									value="${hidden.buyer_name}">
-								<input type="hidden" name="menu_id" size="5"
-									value="${blist.menu_id}" />
+				<input type="hidden" name="gb_id" value="${blist.gb_id}">
+								<input type="hidden" name="buyer" value="${blist.buyer}">
+<%-- 				<input type="hidden" name="buyer_name" value="${blist.buyer_name}"> --%>
+<%-- 				<input type="hidden" name="menu_id" value="${blist.menu_id}"> --%>
+				
+<%-- 				<input type="hidden" name="item" value="${blist.item}"> --%>
+<%-- 				<input type="hidden" name="price" value="${blist.price}"> --%>
+<%-- 				<input type="hidden" name="is_pay" value="${blist.is_pay}"> --%>
+<%-- 				<input type="hidden" name="is_pickup" value="${blist.is_pickup}"> --%>
+
 								<tr>
 									<td><%=orderNumber++%></td>
-									<td>${blist.item}<input type="hidden" name="item"
-										value="${blist.item}" /></td>
+									<td>${blist.item}</td>
 									<!-- 單價 -->
-									<td>${blist.price}<input type="hidden" name="price"
-										value="${blist.price}" /></td>
+									<td>${blist.price}</td>
 									<!-- 數量 -->
 									<td><input type="number" required min="0" max="100"
-										name="qty" value="${blist.qty}"> <!-- 備註 -->
+										name="qty" value="${blist.qty}"> 
+									<!-- 備註 -->
 									<td><input type="text" name="remark"
 										pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
 										size="15" value="${blist.remark}"></td>
 								</tr>
 							</c:forEach>
 						</table>
-						<!-- 編輯品項 -->
 						<input type="hidden" name="action" value="updateMany"> <input
-							type="submit" class="btn btn-success btn-sm" value="修改完畢! 送出訂單">
+							type="submit" class="btn btn-success"
+							onClick="alert('已完成訂單修改')" value="送出訂單">
 					</FORM>
-
 
 				</div>
 			</div>
 		</main>
 		<!-- ======= 內容結束 ======= -->
-
-
 
 	</div>
 	<!-- ======= Footer ======= -->

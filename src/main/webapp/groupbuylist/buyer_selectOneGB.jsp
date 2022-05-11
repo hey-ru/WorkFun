@@ -43,76 +43,63 @@ int itemsPerPage = 10;
 							</h5>
 						</div>
 						<div class="col-1" style="height: 20px; display: inline-block;">
-							<a href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp?buyer=${empVO.empId}"><strong>回查詢參團</strong></a>
+							<a
+								href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp?buyer=${empVO.empId}"><strong>回查詢參團</strong></a>
 						</div>
 					</div>
 				</div>
 
 				<!-- ============== Card Body ============== -->
 				<div class="card-body">
-					<div class="table-responsive">
-						<div id="dataTable_wrapper"
-							class="dataTables_wrapper dt-bootstrap4">
+				<div class="col-sm-6">
+					<table class="table table-striped">
 
-							<div class="row">
-								<div class="col-sm-6">
-									<table class="table table-bordered dataTable" id="dataTable"
-										width="100%" cellspacing="0" role="grid"
-										aria-describedby="dataTable_info" style="width: 100%">
-										<!-- ========================= 表頭 ========================= -->
-										<thead>
-											<tr role=" row">
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending">編號</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending">品項</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending">單價</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">數量</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">金額</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">備註</th>
-											</tr>
-										</thead>
+						<!-- ========================= 表頭 ========================= -->
+						<thead>
+							<tr role=" row">
+								<th class="sorting" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="1"
+									aria-label="Position: activate to sort column ascending">編號</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="1"
+									aria-label="Position: activate to sort column ascending">品項</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="1"
+									aria-label="Position: activate to sort column ascending">單價</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="1"
+									aria-label="Office: activate to sort column ascending">數量</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="1"
+									aria-label="Office: activate to sort column ascending">金額</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="1"
+									aria-label="Office: activate to sort column ascending">備註</th>
+							</tr>
+						</thead>
 
+						<%-- 										<%@ include file="/design/page1.file"%> --%>
 
-<%-- 										<%@ include file="/design/page1.file"%> --%>
-
-										<!-- ========================= 表格內容 ========================= -->
-										<tbody>
-											<c:forEach var="blist" items="${buyerlist}">
-												<tr>
-													<td>${blist.gbList_id}</td>
-													<td>${blist.item}</td>
-													<td>${blist.price}</td>
-													<td>${blist.qty}</td>
-													<td>${blist.price*blist.qty}</td>
-													<td>${blist.remark}</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-
-								</div>
-							</div>
-
-<%-- 									<%@ include file="/design/page2.file"%> --%>
-
-						</div>
-					</div>
+						<!-- ========================= 表格內容 ========================= -->
+						<tbody>
+							<c:forEach var="blist" items="${buyerlist}">
+								<tr>
+									<td>${blist.gbList_id}</td>
+									<td>${blist.item}</td>
+									<td>${blist.price}</td>
+									<td>${blist.qty}</td>
+									<td>${blist.price*blist.qty}</td>
+									<td>${blist.remark}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
+				<%-- 									<%@ include file="/design/page2.file"%> --%>
+			</div>
+			</div>
 		</main>
 		<!-- ======= 內容結束 ======= -->
-
-
 
 	</div>
 	<!-- ======= Footer ======= -->
