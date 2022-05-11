@@ -163,7 +163,7 @@ int count=0;
 			
 //			pstmt = con.prepareStatement(UPDATE);
 			EmpVO oldemp = findByPrimaryKey(newemp.getEmpId());
-			System.out.println(oldemp.getEmpId());
+	
 		StringBuilder sb=new StringBuilder();
 			sb.append(UPDATE);
 			if (newemp.getDepId() != null ) {

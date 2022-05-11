@@ -7,6 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import static com.util.ConnectionPool.getConectPool;
+
 //import org.graalvm.compiler.core.common.alloc.Trace;
 
 import java.io.FileInputStream;
@@ -17,11 +19,8 @@ import java.io.OutputStream;
 import java.sql.*;
 import java.sql.Date;
 
-public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
-	String userid = "cga101-03";
-	String passwd = "cga101-03";
+public class Announcement_mappingDAO implements Announcement_mappingDAO_interface {
+	
 
 	private static final String INSERT_STMT = "call InsertRecord(?,?) ";
 	private static final String GET_ALL_STMT = "select announcement_id,announcementImg_id,announcementImg FROM announcement_mapping order by announcement_id ";
@@ -36,10 +35,9 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 		PreparedStatement pstmt = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
+		
 
 			
 			pstmt.setInt(1, announcement_mappingVO.getAnnouncement_id());
@@ -57,10 +55,7 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		}  finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -85,8 +80,8 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
+		
 			pstmt = con.prepareStatement(UPDATE);
 		
 
@@ -103,9 +98,6 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			try {
 				con.close();
@@ -139,8 +131,8 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
+			
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, announcement_id);
@@ -152,10 +144,7 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		}  finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -182,8 +171,8 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
+			
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, announcement_id);
@@ -266,8 +255,8 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
 			// FROM emp order by emp_id";
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = getConectPool().getConnection();
+			
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -289,10 +278,7 @@ Announcement_mappingVO.setAnnouncementImg(rs.getBytes("announcementImg"));
 		} catch (SQLException se) {
 //			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		}  finally {
 			if (rs != null) {
 				try {
 					rs.close();
