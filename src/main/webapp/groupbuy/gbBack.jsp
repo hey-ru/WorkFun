@@ -244,6 +244,13 @@ int itemsPerPage = 10;
      
 <%@ include file="/design/backjs.jsp"%>
 
+<script type="text/javascript">
+$("tbody tr").css("background-color", function(index) {
+    return index%2==0?"rgba(211,211,211,0.4)":"";
+});
+
+</script>
+
 </body>
 
 </html>

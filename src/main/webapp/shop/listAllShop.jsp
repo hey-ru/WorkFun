@@ -258,7 +258,12 @@ td {
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
 
+<script type="text/javascript">
+$("tbody tr").css("background-color", function(index) {
+    return index%2==0?"rgba(255,255,224,0.5)":"";
+});
 
+</script>
 
 </body>
 

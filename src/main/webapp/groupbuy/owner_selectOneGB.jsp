@@ -19,6 +19,15 @@
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
 	height: 151px; /* height:  151px; */
 }
+ .table-responsive {
+    	overflow-x: hidden;
+	}
+	.table {
+	width:70%;
+	}
+th,td{
+	width:200px; 
+ } 
 </style>
 
 </head>
@@ -69,11 +78,14 @@
 							<input type="hidden" name="action" value="updateArrTime">
 						</FORM>	
 						<div class="col-2" style="height:40px;">
+		
+						</div>
+						<div class="col-2" style="height:40px;">
 						<button type="button" id="showtable" class="btn btn-info">摺疊/展開</button>	
 						</div>
 						
 						</div>
-<%-- 						<c:set var="GBtotal" value="0"></c:set>			 --%>
+
 						<c:forEach var="GBbuyer" items="${GBbuyers}">
 						<div class="card fw-bolder">							
 							<div class="card-body bg-white text-dark">
@@ -81,7 +93,7 @@
 								<div class="card-title col-3">
 									<h5> ${GBbuyer.buyer} &nbsp;&nbsp;&nbsp; ${GBbuyer.buyer_name}</h5></div>
 									 
-									<div class="col-2">總金額: ${GBbuyer.total}</div>
+									<div class="col-2 atotal">總金額: ${GBbuyer.total}</div>
 									
 									<form class="col-8 row" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet">
 									<div class="col-4"><label>付款狀況: </label>
@@ -104,7 +116,7 @@
 								
 								
 									<table class="table table-bordered dataTable" id="dataTable"
-										 role="grid" aria-describedby="dataTable_info" style="width: 70% cellspacing:0;">
+										 role="grid" aria-describedby="dataTable_info" style="cellspacing:0;">
 										<!-- ========================= 表頭 ========================= -->
 										<thead>
 											<tr role=" row">
@@ -112,19 +124,19 @@
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 20px;">商品</th>
+													>商品</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 20px;">數量</th>
+													>數量</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 20px;">金額</th>
+													>金額</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
-													style="width: 20px;">備註</th>
+													>備註</th>
 											</tr>
 										</thead>
 
@@ -174,6 +186,11 @@ $(function(){
 	$(".table").slideToggle("fast");
 	});
 	});
+	
+$("tbody tr").css("background-color", function(index) {
+    return index%2==0?"rgba(211,211,211,0.5)":"";
+});
+
 
         $.datetimepicker.setLocale('zh');
         $('#arr_time').datetimepicker({
@@ -188,6 +205,8 @@ $(function(){
    		   })
    		  }
   	});
+        
+       
 
          
  </script>
