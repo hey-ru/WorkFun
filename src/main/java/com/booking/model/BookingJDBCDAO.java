@@ -29,10 +29,10 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	private static final String GET_BY_STATUS = "SELECT booking_id,emp_id,equipment_id,start_date,end_date,return_status,overdue_date,overdue_price from booking where return_status=?";
 
 	// 員工查詢自己預約單
-	private static final String GET_BY_EMPID = "SELECT booking_id,equipment_id,emp_id,start_date,end_date,return_status, overdue_date, overdue_price, timestampdiff(day,end_date , current_timestamp()) as dateDiff from booking  where emp_id = ? order by start_date desc;";
+	private static final String GET_BY_EMPID = "SELECT booking_id,equipment_id,emp_id,start_date,end_date,return_status, overdue_date, overdue_price, timestampdiff(day,end_date , current_timestamp()) as dateDiff from booking  where emp_id = ? order by start_date desc";
 
 	// 查詢預約單所有欄位
-	private static final String GET_ALL = "SELECT * from booking  order by return_status desc , start_date>=now()";
+	private static final String GET_ALL = "SELECT booking_id,equipment_id,emp_id,start_date,end_date,return_status, overdue_date, overdue_price, timestampdiff(day,end_date , current_timestamp()) as dateDiff from booking  order by start_date desc";
 
 	// 員工查詢自己預約單
 	private static final String GET_BY_RETURNSTATUS = "SELECT booking_id,start_date,end_date,return_status from booking where return_status=?";
@@ -442,6 +442,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 				bookingVO.setReturnStatus(rs.getInt("return_status"));
 				bookingVO.setOverdueDate(rs.getTimestamp("overdue_date"));
 				bookingVO.setOverduePrice(rs.getInt("overdue_price"));
+				bookingVO.setDateDiff(rs.getLong("dateDiff"));//差異天數
 				list.add(bookingVO);
 			}
 		} catch (ClassNotFoundException e) {
