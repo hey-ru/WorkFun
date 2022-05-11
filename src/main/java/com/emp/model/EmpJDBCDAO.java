@@ -25,7 +25,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
-	private static final String LOGIN_STMT = "select * from emp where emp_id = ? and emp_password = ? ";
+	private static final String LOGIN_STMT = "select * from emp where mail = ? and emp_password = ? ";
 	
 	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT emp_id,dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
@@ -693,7 +693,7 @@ return empVO;
 		}
 return empVO;
 	}
-	public EmpVO selectForLogin(Integer empId, String password) {
+	public EmpVO selectForLogin(String mail, String password) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		EmpVO empVO = null;
@@ -711,7 +711,7 @@ return empVO;
 		
 			
 
-			pstmt.setInt(1, empId);
+			pstmt.setString(1, mail);
 			pstmt.setString(2, password);
 		
 //			pstmt.setInt(14, empVO.getEmpId());
@@ -756,7 +756,7 @@ return empVO;
 		}
 return empVO;
 	}
-	public EmpVO selectForLogin(Integer empId, String password,Connection oneConnection) {
+	public EmpVO selectForLogin(String mail, String password,Connection oneConnection) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		EmpVO empVO = null;
@@ -774,7 +774,7 @@ return empVO;
 		
 			
 
-			pstmt.setInt(1, empId);
+			pstmt.setString(1, mail);
 			pstmt.setString(2, password);
 		
 //			pstmt.setInt(14, empVO.getEmpId());
