@@ -5,7 +5,11 @@
 <%@ page import="com.report.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	ReportVO reportVO = (ReportVO) request.getAttribute("reportVO");
+	ReportVO repVO = (ReportVO) request.getAttribute("repVO");
+	request.setAttribute("repVO",repVO);
+	ReportVO repVO2 = (ReportVO) request.getAttribute("repVO2");
+	request.setAttribute("repVO2", repVO2);
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -31,59 +35,68 @@
 				style="border: 3px blue solid; width: 900px; position: absolute; height: 630px; top: 45%; margin-top: -160px; margin-left: 14%;">
 				<div class="input-group mb-3" style="margin-top: 0px;">
 					<span class="input-group-text" id="basic-addon1">標題</span> <input
-						type="TEXT" name="title" size="45" value="${param.title}" />
+						type="TEXT" name="title" size="45" value="${repVO.title}" />
+						<p style="color :red">${errorMsgs.title}</p>
 
 				</div>
 
 				<div class="input-group mb-3">
-					<span class="input-group-text" id="basic-addon2">類型</span> <input
-						type="TEXT" name="report_type" size="45" value="${param.report_type}" />
+					<span class="input-group-text" id="basic-addon2">類型</span>
+					 <span><c:if test="${repVO.report_type==0}">添購新品</c:if>
+													<c:if test="${repVO.report_type==1}">損壞報修</c:if>
+													<c:if test="${repVO.report_type==2}">軟硬體問題</c:if>
+													<c:if test="${repVO.report_type==3}">其他</c:if></span>
 
 					<span class="input-group-text" id="basic-addon2">處理狀況</span>
 					<span>
-					<c:if test="${param.status==0}">已發送</c:if>
-					<c:if test="${param.status==1}">處理中</c:if>
-					<c:if test="${param.status==2}">待確認</c:if>
-					<c:if test="${param.status==3}">取消</c:if>
-					<c:if test="${param.status==4}">已完成</c:if></span>
+					<c:if test="${repVO.status==0}">已發送</c:if>
+					<c:if test="${repVO.status==1}">處理中</c:if>
+					<c:if test="${repVO.status==2}">待確認</c:if>
+					<c:if test="${repVO.status==3}">取消</c:if>
+					<c:if test="${repVO.status==4}">已完成</c:if></span>
 
 				</div>
 				<div class="input-group mb-3">
 					<span class="input-group-text" >回報建立時間</span>
-					<span>${param.starttime}</span>
+					<span><fmt:formatDate value="${repVO.starttime}" pattern="yyyy-MM-dd HH:mm "/></span>
 					<span class="input-group-text">回報最新編輯時間</span>
-					<span>${param.updatetime}</span>
+					<span><fmt:formatDate value="${repVO.updatetime}" pattern="yyyy-MM-dd HH:mm "/></span>
 					<span class="input-group-text" >回報結束時間</span>
-					<span>${param.endtime}</span>
+					<span><fmt:formatDate value="${repVO.endtime}" pattern="yyyy-MM-dd HH:mm "/></span>
 				</div>
 				<div class="input-group mb-3">
-					<span class="input-group-text" id="basic-addon2">回報人</span> <input name="reporter" value="${param.reporter}" />
+					<span class="input-group-text" id="basic-addon2">回報人</span> <span>${repVO.empVO1.empName}</span>
+					<input type="hidden" name="reporter" value="${repVO.reporter}" />
 
-					<span class="input-group-text" id="basic-addon2">處理人</span> <input name="handler" value="${param.handler}" />
-
+					<span class="input-group-text" id="basic-addon2">處理人</span> <span>${repVO.empVO2.empName}</span>
+					<input type="hidden" name="reporter" value="${repVO.handler}" />
 				</div>
 				<label for="basic-url" class="form-label">回報內容</label>
 				<div class="input-group mb-3" style="height: 200px">
 					<input type="TEXT" class="form-control" aria-label="With textarea"
-						name="content" size="200" value="${param.content}" />
+						name="content" size="200" value="${repVO.content}" />
+						<p style="color :red">${errorMsgs.content}</p>
 				</div>
 
 				<div class="input-group mb-3">
 					<label class="input-group-text" for="inputGroupFile01">回報圖片</label>
-					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${param.report_id}&table=report&pic=report_image" style="width:100px; height:100px;"> 
+					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${repVO.report_id}&table=report&pic=report_image" style="width:100px; height:100px;"> 
 					<label class="input-group-text" for="inputGroupFile01">Upload</label> 
-						<input type="file" value="${param.report_image}" name="report_image"
+						<input type="file" value="${repVO.report_image}" name="report_image"
 						accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:150px; width:150px" id="pic" /> 
 						<input type="file" style="display: none;" name="report_image" value="update">
 				</div>
 
-				<div class="input-group">
-					<span class="input-group-text">處理訊息</span>
-					<textarea class="form-control" aria-label="With textarea">Test</textarea>
-				</div>
+				<c:forEach var="recVO" items="${repVO2.recVO}">
+                            <div class="input-group">
+                                <span class="input-group-text">處理訊息</span>
+                                <span class="input-group-text"><fmt:formatDate value="${recVO.createtime}" pattern="yyyy-MM-dd HH:mm "/></span>
+                                <textarea class="form-control" aria-label="With textarea">${recVO.comment}</textarea>
+                            </div>
+                            </c:forEach>
 			</div>
 			<input type="hidden" name="action" value="update"> 
-			<input type="hidden" name="report_id" value="${param.report_id}">
+			<input type="hidden" name="report_id" value="${repVO.report_id}">
 			<button type="submit" value="送出修改" style="margin-top: 600px;">送出修改</button>
 		</FORM>
 	</main>

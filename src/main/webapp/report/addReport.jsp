@@ -21,22 +21,22 @@
 
     <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
     
-    <main style="height: 120vh; border:3px red solid; margin-top:80px;">
+    <main style="height: 120vh; margin-top:80px;">
     <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/reportServlet" name="formAdd" enctype="multipart/form-data">
         <div
-            style="border:3px blue solid;width:900px;position:absolute; height:650px; top:50%; margin-top:-175px;margin-left: 10%;">
+            style="width:900px;position:absolute; height:650px; top:50%; margin-top:-175px;margin-left: 13%;">
              <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">回報者</span>
                 <input readonly class="form-control" aria-label="Username" type="hidden"
                     aria-describedby="basic-addon1" name="reporter" value="${empVO.empId}">
-                    <span>${empVO.empName}</span>
+                    <span style="margin-left:30px">${empVO.empName}</span>
 
             </div>
             
             <div class="input-group mb-3" id="input-radio">
                 <span class="input-group-text" id="basic-addon2">類型</span>
                 
-                <label><input id="in0" class ="rptype" type="radio" name="report_type" value="0" ${(param.report_type=="0")? 'checked':'' }> 添購新品 </label>
+                <label style="margin-left:30px"><input id="in0" class ="rptype" type="radio" name="report_type" value="0" ${(param.report_type=="0")? 'checked':'' } CHECKED> 添購新品 </label>
 				<label><input id="in1" class ="rptype" type="radio" name="report_type" value="1" ${(param.report_type=="1")? 'checked':'' }> 損壞報修 </label>
 				<label><input id="in2" class ="rptype" type="radio" name="report_type" value="2" ${(param.report_type=="2")? 'checked':'' }> 軟硬體問題 </label>
 				<label><input id="in3" class ="rptype" type="radio" name="report_type" value="3" ${(param.report_type=="3")? 'checked':'' }> 其他 </label>
@@ -61,14 +61,15 @@
             <div class="input-group mb-3" style=" height:150px">
                 <input id="cent" type="hidden" class="form-control" aria-label="Recipient's username" name="content1"
                     aria-describedby="basic-addon2" value="${param.content}">
-                   <textarea name="content" rows="20" cols="50" id="tarea" style="height:150px;width:1000px"></textarea>
-                   <p style="color :red">${errorMsgs.content}</p>
+                   <textarea name="content" rows="20" cols="50" id="tarea" style="height:150px;width:1000px"></textarea><span style="color :red">${errorMsgs.content}</span>
                    
             </div>
-
+            <div style="height:10px">
+            
+            </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupFile01">Upload</label>
-                <input type="file" value="${param.report_image}" name="report_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:150px; width:150px" id="pic" />
+                <input type="file" value="${param.report_image}" name="report_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:200px; width:200px; padding:5px"  id="pic" />
                 <input type="text" style="display:none;" name="action" value="insert">
 				<button type="submit" value="送出新增">送出</button>
             </div>

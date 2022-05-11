@@ -282,5 +282,29 @@ public class ReportDAO implements ReportDAO_interface {
 		return null;
 	}
 
+	@Override
+	public void reject(ReportVO reportVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void complete(ReportVO reportVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cancel(ReportVO reportVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void allCompleted(ReportVO reportVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
  

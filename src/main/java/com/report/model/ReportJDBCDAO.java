@@ -22,16 +22,189 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	private static final String GET_OWN = "select e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler WHERE reporter = ? ORDER BY starttime DESC";
 	
 	private static final String GET_ONE_STMT = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler where report_id = ?";
-	private static final String UPDATE = "UPDATE report set title=?,report_type=?,reporter=?,handler=?,content=?,report_image=? where report_id= ?";
+	private static final String UPDATE = "UPDATE report set title=?,content=?,report_image=? where report_id= ?";
 	private static final String GET_KEYWORD = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler ORDER BY starttime DESC";
 	private static final String GET_HANDLER = "SELECT e1.emp_name as reporterName, e2.emp_name as handlerName, report_id, reporter, handler, starttime, updatetime, endtime, content, status, report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler Where r.handler = ? ORDER BY starttime DESC";
 	private static final String HANDLE_COMMENT = "select e1.emp_name as reporterName, e2.emp_name as handlerName,r.report_id, rc.report_id, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title, comment, report_comment_image from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler join report_comment rc on r.report_id  = rc.report_id ORDER BY starttime DESC";
 	private static final String INSERT_COMMENT = "INSERT INTO report_comment (report_id,comment,report_comment_image) VALUES (?, ?, ?)";
 	
 	private static final String GET_ONE_COMMENT = "select r.report_id , e1.emp_name as reporterName, e2.emp_name as handlerName, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler Where r.report_id = ?";
-	private static final String GET_COMMENT = "select comment , report_comment_image , createtime from report_comment where report_id = ?";
+	private static final String GET_COMMENT = "select report_comment_id , comment , report_comment_image , createtime from report_comment where report_id = ?";
+	
+	private static final String REJECT = "update report set status = 1 where report_id = ?";
+	private static final String COMPLETE = "update report set status = 2 where report_id = ?";
+	private static final String CANCEL = "update report set status = 3 where report_id = ?";
+	private static final String ALL_COMPLETED = "update report set status = 4 where report_id = ?";
 	
 //	private static final String HANDLE_REPORT = "select e1.emp_name as reporterName, e2.emp_name as handlerName,r.report_id, rc.report_id, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title , comment , report_comment_image , createtime from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler left join report_comment rc on r.report_id = rc.report_id Where r.report_id = ?";
+	
+	@Override
+	public void reject(ReportVO reportVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(REJECT);
+			
+			pstmt.setInt(1, reportVO.getReport_id());
+		
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
+
+	}
+
+	@Override
+	public void complete(ReportVO reportVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(COMPLETE);
+			
+			pstmt.setInt(1, reportVO.getReport_id());
+		
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
+
+	}
+
+	@Override
+	public void cancel(ReportVO reportVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(CANCEL);
+			
+			pstmt.setInt(1, reportVO.getReport_id());
+		
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
+
+	}
+
+	@Override
+	public void allCompleted(ReportVO reportVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(ALL_COMPLETED);
+			
+			pstmt.setInt(1, reportVO.getReport_id());
+		
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
+
+	}
 	
 	@Override
 	public List<ReportVO> getOwnReport(Integer reporter) {
@@ -123,6 +296,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 
 			while (rs.next()) {
 				recVO = new Report_CommentVO();
+				recVO.setReport_comment_id(rs.getInt("report_comment_id"));
 				recVO.setComment(rs.getString("comment"));
 				recVO.setReport_comment_image(rs.getBytes("report_comment_image"));
 				recVO.setCreatetime(rs.getTimestamp("createtime"));
@@ -427,99 +601,17 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	public void update(ReportVO reportVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-//		int count = 0;
 		try {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 
-//			ReportVO oldreport = findByPrimaryKey(reportVO.getReport_id());
-//			System.out.println(oldreport.getReport_id());
-//			StringBuilder sb = new StringBuilder();
-//			sb.append(UPDATE);
-//
-//			if (reportVO.getHandler() != null) {
-//				sb.append("handler=?, ");
-//			}
-//			if (reportVO.getUpdatetime() != null) {
-//				sb.append("updatetime=?,");
-//			}
-//			if (reportVO.getEndtime() != null) {
-//				sb.append("endtime=?, ");
-//			}
-//			if (reportVO.getContent() != null) {
-//				sb.append("content=?, ");
-//			}
-//			if (reportVO.getStatus() != null) {
-//				sb.append("status=?, ");
-//			}
-//			if (reportVO.getReport_image() != null) {
-//				sb.append("report_image=?, ");
-//			}
-//			if (reportVO.getReport_type() != null) {
-//				sb.append("report_type=?, ");
-//			}
-//			if (reportVO.getTitle() != null) {
-//				sb.append("title=?, ");
-//			}
-//			sb.append("report_id =?");
-//			sb.append(" where report_id=?");
-//
-//			pstmt = con.prepareStatement(sb.toString());
-//
-//			if (reportVO.getHandler() != null) {
-//				count++;
-//				pstmt.setInt(count, reportVO.getHandler());
-//			}
-//
-//			if (reportVO.getUpdatetime() != null) {
-//				count++;
-//				pstmt.setTimestamp(count, reportVO.getUpdatetime());
-//			}
-//			if (reportVO.getEndtime() != null) {
-//				count++;
-//				pstmt.setTimestamp(count, reportVO.getEndtime());
-//			}
-//
-//			if (reportVO.getContent() != null) {
-//				count++;
-//				pstmt.setString(count, reportVO.getContent());
-//			}
-//
-//			if (reportVO.getStatus() != null) {
-//				count++;
-//				pstmt.setInt(count, reportVO.getStatus());
-//			}
-//
-//			if (reportVO.getReport_image() != null) {
-//				count++;
-//				pstmt.setBytes(count, reportVO.getReport_image());
-//			}
-//
-//			if (reportVO.getReport_type() != null) {
-//				count++;
-//				pstmt.setInt(count, reportVO.getReport_type());
-//			}
-//			
-//			if (reportVO.getTitle() != null) {
-//				count++;
-//				pstmt.setString(count,reportVO.getTitle());
-//			}
-//
-//			count++;
-//			pstmt.setInt(count, reportVO.getReport_id());
-//			count++;
-//			pstmt.setInt(count, reportVO.getReport_id());
-
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1, reportVO.getTitle());
-			pstmt.setInt(2, reportVO.getReport_type());
-			pstmt.setInt(3, reportVO.getReporter());
-			pstmt.setInt(4, reportVO.getHandler());
-			pstmt.setString(5, reportVO.getContent());
-			pstmt.setBytes(6, reportVO.getReport_image());
-			pstmt.setInt(7, reportVO.getReport_id());
+			pstmt.setString(2, reportVO.getContent());
+			pstmt.setBytes(3, reportVO.getReport_image());
+			pstmt.setInt(4, reportVO.getReport_id());
 		
 			pstmt.executeUpdate();
 
@@ -862,104 +954,6 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 		}
 		return list;
 	}
-	
-//	public static void main(String[] args) throws Exception {
-//		ReportJDBCDAO rep = new ReportJDBCDAO();
-//		 ReportService repSvc = new ReportService();
-//		    Set<ReportVO> set = rep.handleReport(1032);
-		    
-//		    for(ReportVO repa : set) {
-//		    	for(Report_CommentVO rec : repa.getRecVO2()) {
-//				System.out.println(rec.getComment());
-//				System.out.println(rec.getCreatetime());
-//				System.out.println(rec.getReport_comment_image());
-//		    	}
-//		    }
-//	}
-		
-//		reportVO repVO = new reportVO();
-//
-//		Long datetime = System.currentTimeMillis();
-//        Timestamp timestamp = new Timestamp(datetime);
-//        FileInputStream in = new FileInputStream("C:\\Users\\Tibame_T14\\Desktop\\tomcat2.gif");
-//		byte[] buf = new byte[in.available()];
-//		in.read(buf);
-//		Insert
-//      repVO.setReporter(1002);
-//		repVO.setHandler(1017);
-//		repVO.setStarttime(timestamp);
-//		repVO.setUpdatetime(timestamp);
-//		repVO.setEndtime(null);
-//		repVO.setContent("");
-//		repVO.setStatus(0);
-//		repVO.setReport_image(null);
-//		repVO.setReport_type(1);
-//		dao.insert(repVO);
-//		
-//		in.close();
-
-// 		Update-------------------------------------------------------
-//		ReportVO repVO = new ReportVO();
-//		repVO.setTitle("測試更新");
-//		repVO.setReporter(1005);
-//		repVO.setHandler(1020);
-//		repVO.setStarttime(timestamp);
-//		repVO.setUpdatetime(timestamp);
-//		repVO.setEndtime(null);
-//		repVO.setContent("Test");
-//		repVO.setStatus(1);
-//		repVO.setReport_image(null);
-//		repVO.setReport_type(2);
-//		repVO.setReport_id(1001);
-//		dao.update(repVO);
-
-//		in.close();
-
-//-select------------------------------------------
-//		reportVO reportVO3 = dao.findByPrimaryKey(1001);
-//		System.out.println(reportVO3.getHandler());
-//		System.out.println(reportVO3.getReporter());
-//		System.out.println(reportVO3.getContent());
-//		System.out.println(reportVO3.getStarttime());
-//		System.out.println(reportVO3.getUpdatetime());
-//		System.out.println(reportVO3.getEndtime());
-//		System.out.println(reportVO3.getStatus());
-//		System.out.println(reportVO3.getReport_type());
-//		System.out.println(reportVO3.getReport_image());
-//		System.out.println(reportVO3.getReport_id());
-
-//-selectALL-------------------------------
-//		List<reportVO> list = dao.getAll();
-//		for(reportVO rep : list) {
-//			System.out.println(rep.getHandler());
-//			System.out.println(rep.getReporter());
-//			System.out.println(rep.getContent());
-//			System.out.println(rep.getStarttime());
-//			System.out.println(rep.getUpdatetime());
-//			System.out.println(rep.getEndtime());
-//			System.out.println(rep.getStatus());
-//			System.out.println(rep.getReport_type());
-//			System.out.println(rep.getReport_image());
-//			System.out.println(rep.getReport_id());
-//		}
-
-//----getKEYWORD------------------------------------	
-		//repVO.setHandler(1017);
-//		
-//		List<reportVO> list = dao.find(1017,0,0);
-//		for (reportVO rep1 : list) {
-//			System.out.println(rep1.getHandler());
-//			System.out.println(rep1.getReporter());
-//			System.out.println(rep1.getContent());
-//			System.out.println(rep1.getStarttime());
-//			System.out.println(rep1.getUpdatetime());
-//			System.out.println(rep1.getEndtime());
-//			System.out.println(rep1.getStatus());
-//			System.out.println(rep1.getReport_type());
-//			System.out.println(rep1.getReport_image());
-//			System.out.println(rep1.getReport_id());
-//		}
-//	}
 		
 }
 
