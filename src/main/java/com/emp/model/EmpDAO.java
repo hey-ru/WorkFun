@@ -130,7 +130,8 @@ return 1;
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -293,7 +294,8 @@ int count=0;
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -301,7 +303,13 @@ int count=0;
 					se.printStackTrace(System.err);
 				}
 			}
-			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 return 1;
 	}
@@ -450,7 +458,8 @@ int count=0;
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -458,7 +467,13 @@ int count=0;
 					se.printStackTrace(System.err);
 				}
 			}
-			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 return 1;
 	}
@@ -744,7 +759,8 @@ return empVO;
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -752,7 +768,13 @@ return empVO;
 					se.printStackTrace(System.err);
 				}
 			}
-		
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 return empVO;
 	}

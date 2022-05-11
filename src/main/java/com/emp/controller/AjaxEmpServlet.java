@@ -115,13 +115,13 @@ public class AjaxEmpServlet extends HttpServlet {
 					      String empVOJSON=new Gson().toJson(empVO);
 					   
 					      res.getWriter().write(empVOJSON);
-					      String location=(String)session.getAttribute("location");
-					      if (location != null) {
-					           session.removeAttribute("location");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-					           res.sendRedirect(location);            
-					           return;
-					         }
-					   					   
+//					      String location=(String)session.getAttribute("location");
+//					      if (location != null) {
+//					           session.removeAttribute("location");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+//					           res.sendRedirect(location);            
+//					           return;
+//					         }
+//					   					   
 					    //  String url = "login.jsp"; foward
 //					      res.sendRedirect(req.getContextPath() + "/home/home.jsp");
 					      return;

@@ -364,9 +364,9 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				/***************************2.開始修改資料*****************************************/
 				
 				EmpVO empVO=(EmpVO) session.getAttribute("empVO");
-						System.out.println(empVO.getExtension());
+						
 						empVO=oldempVO;
-						System.out.println(empVO.getExtension());
+				
 						session.setAttribute("empVO", empVO);
 						
 						
