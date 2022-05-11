@@ -7,15 +7,35 @@
 </head>
 
 <body>
+
+    <input id="img" type="file" name="img">
+    <input type="button" οnclick="ajaxFileUpload()" value="upload" />
+    <span id="filespan"></span>
     <script>
-        window.load(
-            alert("87")
-        )
+
 
 
 
 
     </script>
 </body>
+<script type="text/javascript" src="js/jquery-1.4.3.js"></script>
+<script type="text/javascript" src="js/ajaxfileupload.js"></script>
+<script type="text/javascript">
+    function ajaxFileUpload() {
+        $.ajaxFileUpload
+            (
+                {
+                    url: 'UploadImgServlet', //你处理上传文件的服务端
+                    secureuri: false,
+                    fileElementId: 'img',//name和id的名字
+                    dataType: 'text',//返回值类型，可以是个简单的text
+                    success: function (data) {
+                        $('#filespan').text(data);
+                    }
+                });
+    }
+</script>
+
 
 </html>

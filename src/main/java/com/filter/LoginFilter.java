@@ -72,7 +72,7 @@ public class LoginFilter extends HttpFilter implements Filter {
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		EmpVO empVO =(EmpVO) session.getAttribute("empVO");
-		System.out.println(empVO);
+	
 		if (empVO == null) {
 //			session.setAttribute("location", req.getRequestURI());
 			session.setAttribute("location", req.getRequestURI());

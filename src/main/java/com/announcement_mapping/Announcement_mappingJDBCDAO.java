@@ -1,4 +1,4 @@
-package com.announcement.model;
+package com.announcement_mapping;
 
 import java.util.*;
 
@@ -16,20 +16,20 @@ import java.io.OutputStream;
 import java.sql.*;
 import java.sql.Date;
 
-public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
+public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
 
-	private static final String INSERT_STMT = "INSERT INTO announcement (announcer,announcement_title,announcement_content) VALUES (?,?,?) ";
-	private static final String GET_ALL_STMT = "select announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement order by announcement_id ";
-	private static final String GET_ONE_STMT = "SELECT announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement where announcement_id = ? ";
-	private static final String DELETE = "DELETE FROM announcement where announcement_id = ?  ;";
-	private static final String UPDATE = "UPDATE announcement set announcement_title=?  where announcement_content = ? ";
+	private static final String INSERT_STMT = "INSERT INTO announcement_mapping (announcement_id,announcementImg_id,announcementImg) VALUES (?,?,?) ";
+	private static final String GET_ALL_STMT = "select announcement_id,announcementImg_id,announcementImg FROM announcement_mapping order by announcement_id ";
+	private static final String GET_ONE_STMT = "SELECT *  FROM announcement_mapping where announcement_id = ? ";
+	private static final String DELETE = "DELETE FROM announcement_mapping where announcement_id = ? and announcementImg_id = ? ;";
+	private static final String UPDATE = "UPDATE permission_mapping set announcementImg=?  where announcement_id = ? and announcementImg_id = ? ";
 
 	@Override
-	public void insert(AnnouncementVO announcementVO) {
+	public void insert(Announcement_mappingVO announcement_mappingVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -41,10 +41,9 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			
-			pstmt.setInt(1, announcementVO.getAnnouncer());
-			pstmt.setString(2, announcementVO.getAnnouncement_title());
-			pstmt.setString(3, announcementVO.getAnnouncement_content());
-
+			pstmt.setInt(1, announcement_mappingVO.getAnnouncement_id());
+			pstmt.setInt(2, announcement_mappingVO.getAnnouncementImg_id());
+			pstmt.setBytes(3, announcement_mappingVO.getAnnouncementImg());
 			pstmt.executeUpdate();
 //			ResultSet rs = pstmt.getGeneratedKeys();
 //			if (rs.next()) {
@@ -79,7 +78,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 
 	}
 
-	public int update(AnnouncementVO announcement) {
+	public int update(Announcement_mappingVO announcement_mappingVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -88,22 +87,13 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
-			AnnouncementVO oldPermission = findByPrimaryKey(announcement.getAnnouncement_id());
+		
 
-			if (announcement.getAnnouncement_title() != null) {
-				pstmt.setString(1, announcement.getAnnouncement_title());
-			} else {
-				pstmt.setString(1, oldPermission.getAnnouncement_title());
+			if (announcement_mappingVO.getAnnouncementImg() != null) {
+				pstmt.setBytes(1, announcement_mappingVO.getAnnouncementImg());
+			} 
 
-			}
-			if (announcement.getAnnouncement_content() != null) {
-				pstmt.setString(2, announcement.getAnnouncement_content());
-			} else {
-				pstmt.setString(2, oldPermission.getAnnouncement_content());
-			}
-			
-
-			pstmt.setInt(3, announcement.getAnnouncement_id());
+			pstmt.setInt(2, announcement_mappingVO.getAnnouncementImg_id());
 
 			pstmt.executeUpdate();
 
@@ -141,7 +131,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 		return 1;
 	}
 
-	public void delete(Integer Announcement_id) {
+	public void delete(Integer announcement_id,Integer announcementImg_id) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -152,9 +142,9 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setInt(1, Announcement_id);
+			pstmt.setInt(1, announcement_id);
 
-		
+			pstmt.setInt(2, announcementImg_id);
 
 			pstmt.executeUpdate();
 
@@ -182,10 +172,10 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 		}
 
 	}
-
-	public AnnouncementVO findByPrimaryKey(Integer Announcement_id) {
-		
-		AnnouncementVO announcementVO = null;
+//
+	public List<Announcement_mappingVO> findByPrimaryKey(Integer announcement_id) {
+		List<Announcement_mappingVO> list= new ArrayList<Announcement_mappingVO>();
+		Announcement_mappingVO Announcement_mappingVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -195,21 +185,21 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, Announcement_id);
+			pstmt.setInt(1, announcement_id);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 
-				announcementVO = new AnnouncementVO();
+				Announcement_mappingVO = new Announcement_mappingVO();
 								
-								announcementVO.setAnnouncement_id(rs.getInt("announcement_id"));
-								announcementVO.setAnnouncer(rs.getInt("announcer_id"));
-								announcementVO.setAnnouncement_title(rs.getString("announcer_title"));
-								announcementVO.setAnnouncement_content(rs.getString("announcer_content"));
-								announcementVO.setAnnouncement_time(rs.getTimestamp("announcer_time"));
-								announcementVO.setAnnouncement_status(rs.getByte("announcer_status"));
+								Announcement_mappingVO.setAnnouncement_id(announcement_id);
+								Announcement_mappingVO.setAnnouncementImg_id(rs.getInt("announcementImg_id"));
 
+								Announcement_mappingVO.setAnnouncementImg(rs.getBytes("announcementImg"));
+								list.add(Announcement_mappingVO);
+
+							
 								
 							}
 			
@@ -260,12 +250,12 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 //			}
 
 		}
-		return announcementVO;
+		return list;
 	}
 
-	public List<AnnouncementVO> getAll() {
-		List<AnnouncementVO> list = new ArrayList<AnnouncementVO>();
-		AnnouncementVO announcementVO = null;
+	public List<Announcement_mappingVO> getAll() {
+		List<Announcement_mappingVO> list = new ArrayList<Announcement_mappingVO>();
+		Announcement_mappingVO Announcement_mappingVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -282,16 +272,15 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 
 			while (rs.next()) {
 
-announcementVO = new AnnouncementVO();
-announcementVO.setAnnouncement_id(rs.getInt("announcement_id"));
-announcementVO.setAnnouncer(rs.getInt("announcer_id"));
-announcementVO.setAnnouncement_title(rs.getString("announcer_title"));
-announcementVO.setAnnouncement_content(rs.getString("announcer_content"));
-announcementVO.setAnnouncement_time(rs.getTimestamp("announcer_time"));
-announcementVO.setAnnouncement_status(rs.getByte("announcer_status"));
+Announcement_mappingVO = new Announcement_mappingVO();
+				
 
+Announcement_mappingVO.setAnnouncementImg_id(rs.getInt("announcementImg_id"));
+Announcement_mappingVO.setAnnouncement_id(rs.getInt("announcement_id"));
 
-				list.add(announcementVO); // Store the row in the list
+Announcement_mappingVO.setAnnouncementImg(rs.getBytes("announcementImg"));
+
+				list.add(Announcement_mappingVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
@@ -330,75 +319,75 @@ announcementVO.setAnnouncement_status(rs.getByte("announcer_status"));
 
 	public static void main(String[] args) throws IOException {
 
-		AnnouncementJDBCDAO dao = new AnnouncementJDBCDAO();
-//		AnnouncementVO AnnouncementVO1 = new AnnouncementVO();
+		Announcement_mappingJDBCDAO dao = new Announcement_mappingJDBCDAO();
+//		Announcement_mappingVO Announcement_mappingVO1 = new Announcement_mappingVO();
 //
-//		AnnouncementVO1.setPermissionId(3);
-//		AnnouncementVO1.setEmpId(1007);
-//		dao.insert(AnnouncementVO1);
-//		AnnouncementVO1.setHiredate(new Date(1991-1900,6,19));
-////		AnnouncementVO1.setResigndate(4, AnnouncementVO.getResign_date());
-//		AnnouncementVO1.setPhone("0912323234");
-//		AnnouncementVO1.setExtension("043098753");
-//		AnnouncementVO1.setEmpPassword("19940619");
-//		AnnouncementVO1.setHobby("playtheball2");
-//		AnnouncementVO1.setSkill("sleepuntilafternoon2");
-//		AnnouncementVO1.setEmpProfile(buf);
-//		AnnouncementVO1.setMail("oldma123n2@gmail.com");
-//		AnnouncementVO1.setBirthday(new Date(1971-1900,3,12));
-//		AnnouncementVO1.setEmpStatus((byte)1);
+//		Announcement_mappingVO1.setPermissionId(3);
+//		Announcement_mappingVO1.setEmpId(1007);
+//		dao.insert(Announcement_mappingVO1);
+//		Announcement_mappingVO1.setHiredate(new Date(1991-1900,6,19));
+////		Announcement_mappingVO1.setResigndate(4, Announcement_mappingVO.getResign_date());
+//		Announcement_mappingVO1.setPhone("0912323234");
+//		Announcement_mappingVO1.setExtension("043098753");
+//		Announcement_mappingVO1.setEmpPassword("19940619");
+//		Announcement_mappingVO1.setHobby("playtheball2");
+//		Announcement_mappingVO1.setSkill("sleepuntilafternoon2");
+//		Announcement_mappingVO1.setEmpProfile(buf);
+//		Announcement_mappingVO1.setMail("oldma123n2@gmail.com");
+//		Announcement_mappingVO1.setBirthday(new Date(1971-1900,3,12));
+//		Announcement_mappingVO1.setEmpStatus((byte)1);
 		
 //		System.out.println("成功");
 
-//		AnnouncementVO1.setEname("");
-//		AnnouncementVO1.setJob("MANAGER");
-//		AnnouncementVO1.setHiredate(java.sql.Date.valueOf("2005-01-01"));
-//		AnnouncementVO1.setSal(new Double(50000));
-//		AnnouncementVO1.setComm(new Double(500));
-//		AnnouncementVO1.setDeptno(10);
+//		Announcement_mappingVO1.setEname("");
+//		Announcement_mappingVO1.setJob("MANAGER");
+//		Announcement_mappingVO1.setHiredate(java.sql.Date.valueOf("2005-01-01"));
+//		Announcement_mappingVO1.setSal(new Double(50000));
+//		Announcement_mappingVO1.setComm(new Double(500));
+//		Announcement_mappingVO1.setDeptno(10);
 
 		// private static final String UPDATE = "UPDATE emp set dep_id=?, emp_name=?,
 		// hire_date=?, resign_date=?, phone=?, extension=?, emp_password=?, hobby=?,
 		// skill=?, emp_profile=?, mail=?, birthday=?, emp_status=?, where emp_id = ?";
 
 //		
-//		AnnouncementVO AnnouncementVO2 = new AnnouncementVO();
-//		AnnouncementVO2.setPermissionId(1);
+//		Announcement_mappingVO Announcement_mappingVO2 = new Announcement_mappingVO();
+//		Announcement_mappingVO2.setPermissionId(1);
 ////		
-//		AnnouncementVO2.setPermissionName("田園風格");
+//		Announcement_mappingVO2.setPermissionName("田園風格");
 ////	
 //		System.out.println("成功");
 ////		
-//		dao.update(AnnouncementVO2);
+//		dao.update(Announcement_mappingVO2);
 
 //		
 //		dao.delete(1007,3);
 
-//		AnnouncementVO AnnouncementVO3 = dao.findByPrimaryKey(2);
-//		System.out.print(AnnouncementVO3.getPermissionId());
-//		System.out.print(AnnouncementVO3.getPermissionName() + ",");
-//		System.out.print(AnnouncementVO3.getEmpPassword() + ",");
-//		System.out.print(AnnouncementVO3.getHiredate() + ",");
-//		System.out.print(AnnouncementVO3.getResigndate() + ",");
-//		System.out.print(AnnouncementVO3.getPhone() + ",");
-//		System.out.print(AnnouncementVO3.getEmpProfile() + "Test,");
-//		System.out.print(AnnouncementVO3.getExtension() + ",");
-//		System.out.println(AnnouncementVO3.getMail());
+//		Announcement_mappingVO Announcement_mappingVO3 = dao.findByPrimaryKey(2);
+//		System.out.print(Announcement_mappingVO3.getPermissionId());
+//		System.out.print(Announcement_mappingVO3.getPermissionName() + ",");
+//		System.out.print(Announcement_mappingVO3.getEmpPassword() + ",");
+//		System.out.print(Announcement_mappingVO3.getHiredate() + ",");
+//		System.out.print(Announcement_mappingVO3.getResigndate() + ",");
+//		System.out.print(Announcement_mappingVO3.getPhone() + ",");
+//		System.out.print(Announcement_mappingVO3.getEmpProfile() + "Test,");
+//		System.out.print(Announcement_mappingVO3.getExtension() + ",");
+//		System.out.println(Announcement_mappingVO3.getMail());
 //		System.out.println("---------------------");
 //	FileOutputStream fout=new FileOutputStream("/Users/lin/tomcat.gif");
-//	fout.write(AnnouncementVO3.getEmpProfile());
+//	fout.write(Announcement_mappingVO3.getEmpProfile());
 //	fout.close();
-//		Set<AnnouncementVO> set=dao.findByPrimaryKey(1001);
+//		Set<Announcement_mappingVO> set=dao.findByPrimaryKey(1001);
 //	
-//		for (AnnouncementVO aEmp : set) {
+//		for (Announcement_mappingVO aEmp : set) {
 //			System.out.print(aEmp.getEmpId() + ",");
 //			System.out.print(aEmp.getPermissionId() + ",");
 //			
 //		
 //			System.out.println();
 //		}
-//		List<AnnouncementVO> list = dao.getAll();
-//		for (AnnouncementVO aEmp : list) {
+//		List<Announcement_mappingVO> list = dao.getAll();
+//		for (Announcement_mappingVO aEmp : list) {
 //			System.out.print(aEmp.getEmpId() + ",");
 //			System.out.print(aEmp.getDepId() + ",");
 //			System.out.print(aEmp.getEmpName() + ",");
