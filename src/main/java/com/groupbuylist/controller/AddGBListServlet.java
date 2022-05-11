@@ -43,35 +43,15 @@ public class AddGBListServlet extends HttpServlet {
 //					errorMsgs.put("remark", "備註: 只能是中、日、英文字母、數字、_、-和()");
 //				}
 
-			//取得參數
-			String[] gb_id = req.getParameterValues("gb_id");
-			String[] buyer = req.getParameterValues("buyer");
-			String[] buyer_name = req.getParameterValues("buyer_name");
+			// 取得參數
+			String gb_id = req.getParameter("gb_id");
+			String buyer = req.getParameter("buyer");
+			String buyer_name = req.getParameter("buyer_name");
 			String[] menu_id = req.getParameterValues("menu_id");
 			String[] item = req.getParameterValues("item");
 			String[] price = req.getParameterValues("price");
 			String[] qty = req.getParameterValues("qty");
 			String[] remark = req.getParameterValues("remark");
-			
-			GroupBuyListVO groupBuyListVO;
-			List<GroupBuyListVO> orderlist = new ArrayList<>();
-			
-
-			for (int i = 0; i < gb_id.length; i++) {
-					if (!"0".equals(qty[i])) {
-						groupBuyListVO = new GroupBuyListVO();
-						groupBuyListVO.setGb_id(Integer.valueOf(gb_id[i]));
-						groupBuyListVO.setBuyer(Integer.valueOf(buyer[i]));
-						groupBuyListVO.setBuyer_name(buyer_name[i]);
-						groupBuyListVO.setMenu_id(Integer.valueOf(menu_id[i]));
-						groupBuyListVO.setItem(item[i]);
-						groupBuyListVO.setPrice(Integer.valueOf(price[i]));
-						groupBuyListVO.setQty(Integer.valueOf(qty[i]));
-						groupBuyListVO.setRemark(remark[i]);
-
-						orderlist.add(groupBuyListVO);
-				}
-			}
 
 //				if (!errorMsgs.isEmpty()) {
 //					RequestDispatcher failureView = req
@@ -82,10 +62,7 @@ public class AddGBListServlet extends HttpServlet {
 
 			/*************************** 2.開始新增資料 ***************************/
 			GroupBuyListService gblistSvc = new GroupBuyListService();
-			gblistSvc.insertMany(orderlist);
-
-			System.out.println(orderlist.toString());
-			System.out.println("新增訂單完成");
+			gblistSvc.insertMany(gb_id, buyer, buyer_name, menu_id, item, price, qty, remark);
 
 			/********************* 3.新增完成,準備轉交(Send the Success view) *************/
 			String url = "/groupbuylist/buyer_selectGB.jsp";

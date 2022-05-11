@@ -82,6 +82,10 @@ tbody td {
 				</div>
 
 				<!-- ============== Card Body ============== -->
+
+
+
+
 				<div class="card-body">
 					<div class="col-sm-12">
 
@@ -90,9 +94,6 @@ tbody td {
 							<table class="table table-hover" style="text-align: center;">
 								<thead>
 									<tr>
-										<th scope="col"></th>
-										<th scope="col"></th>
-										<th scope="col"></th>
 										<th scope="col">編號</th>
 										<th scope="col">品項</th>
 										<th scope="col">單價</th>
@@ -105,12 +106,6 @@ tbody td {
 								<c:forEach var="menu" items="${menuList}">
 
 									<tr class="order" data-price="${menu.price}">
-										<td><input type="hidden" name="gb_id"
-											value="${groupBuyVO.gb_id}"></td>
-										<td><input type="hidden" name="buyer"
-											value="${empVO.empId}"></td>
-										<td><input type="hidden" name="buyer_name"
-											value="${empVO.empName}"></td>
 										<td><%=orderNumber++%><input type="hidden" name="menu_id"
 											value="${menu.menu_id}" /></td>
 										<td>${menu.item}<input type="hidden" name="item"
@@ -131,6 +126,9 @@ tbody td {
 
 								</c:forEach>
 							</table>
+							<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
+							<input type="hidden" name="buyer" value="${empVO.empId}">
+							<input type="hidden" name="buyer_name" value="${empVO.empName}">
 							<input type="hidden" name="action" value="insert2GBlist">
 							<input type="submit" class="selectAll" value="火速下單ヽ(●´∀`●)ﾉ">
 						</FORM>
