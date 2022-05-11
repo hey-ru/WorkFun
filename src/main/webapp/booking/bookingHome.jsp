@@ -32,6 +32,9 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
@@ -140,7 +143,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 								
 								<input type="hidden" name="returnStatus" value="${bookingVO.returnStatus}"> 
 								<input type="hidden" name="action" value="insert"> 
-								<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block;" value="我要預約">
+								<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block;" value="我要預約" onclick='alertTest()'>
 							</form>
 
 						</div>
@@ -173,23 +176,20 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 		$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}')
 	});
 	
+	
+    function alertTest() {
+        Swal.fire(
+            "預約成功", //標題 
+            "記得領取器材哦 ! WorkFun 提醒您", //訊息內容(可省略)
+            "success" //圖示(可省略) success/info/warning/error/question
+            //圖示範例：https://sweetalert2.github.io/#icons
+        );
+    }
+	
+	
+	
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 	
-//       1.以下為某一天之前的日期無法選擇
-//          var somedate1 = new Date();
-//          $('#f_date1').datetimepicker({
-//         	 step: 1,
-//         	 format:'Y-m-d H:i:s',
-//              beforeShowDay: function(date) {
-            	 
-//            	  if (  date.getYear() <  somedate1.getYear() || 
-//     		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-//     		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-//                  ) {
-//                       return [false, ""]
-//                  }
-//                  return [true, ""];
-//          }});
          
          $.datetimepicker.setLocale('zh');
          $('#f_date1').datetimepicker({
@@ -217,26 +217,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
             //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
          });
          
-         
-         
-         
-         
-         
-//          var somedate1 = new Date();
-//          $('#f_date2').datetimepicker({
-//         	 format:'Y-m-d H:i:s',
-//              beforeShowDay: function(date) {
-//            	  if (  date.getYear() <  somedate1.getYear() || 
-//     		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-//     		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-//                  ) {
-//                       return [false, ""]
-//                  }
-//                  return [true, ""];
-//          }});
-
-
-		
+ 
 
 	</script>
 </body>
