@@ -80,14 +80,21 @@ public class GroupBuyServlet extends HttpServlet {
 				/***************************2.開始查詢資料*****************************************/
 				GroupBuyService groupBuySvc = new GroupBuyService();
 				GroupBuyVO groupBuyVO = groupBuySvc.getOneGB(gb_id);
-				Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);		
+				Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);
+				Integer sumTotal;
+				sumTotal = GBbuyers.stream()
+		    			.mapToInt(e -> e.getTotal() )
+		    			.sum();
+				
+				
 				Set<GroupBuyListVO> groupBuyListVOs = groupBuySvc.getGroupBuyListBygbid(gb_id);
 				
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("groupBuyVO", groupBuyVO);
 				req.setAttribute("GBbuyers", GBbuyers);
-				req.setAttribute("groupBuyListVOs", groupBuyListVOs); 
+				req.setAttribute("groupBuyListVOs", groupBuyListVOs);
+				req.setAttribute("sumTotal", sumTotal);
 				String url = "/groupbuy/owner_selectOneGB.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);

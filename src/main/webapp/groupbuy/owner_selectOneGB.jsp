@@ -78,6 +78,7 @@ th,td{
 							<input type="hidden" name="action" value="updateArrTime">
 						</FORM>	
 						<div class="col-2" style="height:40px;">
+						<h4><span>總金額: </span><span> ${sumTotal}</span></h4>
 		
 						</div>
 						<div class="col-2" style="height:40px;">
@@ -144,7 +145,7 @@ th,td{
 										<tbody>
 										
 										<c:forEach var="groupBuyListVO" items="${groupBuyListVOs}">
-										<c:if test="${(groupBuyListVO.buyer) == (GBbuyer.buyer)}">
+										<c:if test="${(groupBuyListVO.buyer) == (GBbuyer.buyer) && (groupBuyListVO.qty) > 0}">
 													<tr>
 														<td>${groupBuyListVO.item}</td>
 														<td>${groupBuyListVO.qty}</td>
