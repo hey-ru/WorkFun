@@ -26,8 +26,8 @@ int itemsPerPage = 10;
             text-align: center;
         height:100px;
         }
-        .table-responsive {
-    	overflow-x: ;
+  body {
+	overflow-x:hidden;
 }
     </style>
 </head>
@@ -82,9 +82,9 @@ int itemsPerPage = 10;
 								</form>
 							</div>
 							<div class="col-2 mt-2" style="left: 0;">
-								<a  href='${pageContext.request.contextPath}/shop/addShopMenu.jsp'><button type="button"
-										class="btn btn-warning btn-lg">新增店家</button></a>
-							</div>
+						<a href='${pageContext.request.contextPath}/shop/addShop.jsp'><button
+								type="button" class="btn btn-warning btn-lg">新增店家</button></a>
+					</div>
 						</div>
 
 						<div class="row">

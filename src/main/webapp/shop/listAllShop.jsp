@@ -28,8 +28,8 @@ td {
 	height: 100px;
 }
 
-.table-responsive {
-	overflow-x:;
+body {
+	overflow-x:hidden;
 }
 </style>
 </head>
@@ -58,8 +58,7 @@ td {
 				</div>
 				<div class="row">
 					<div class="col-10" style="height: 60px; display: inline-block;">
-						<form class="my-1" METHOD="post"
-							ACTION="<%=request.getContextPath()%>/shop/ShopServlet">
+						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/shop/ShopServlet">
 							<div class="form-group col-2" style="display: inline-block;">
 								<select class="form-select" id="exampleFormControlSelect1"
 									style="border: gray solid 2px;" name="shop_type">
