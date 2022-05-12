@@ -16,13 +16,15 @@ public class jdbcUtil_CompositeQuery {
 		String aCondition = null;
 
 //		if ("is_deal".equals(columnName) || "sal".equals(columnName) || "comm".equals(columnName) || "deptno".equals(columnName)) // 原本樣子
-		if ("is_deal".equals(columnName) || "shop_type".equals(columnName) || "gb_status".equals(columnName) || "is_disable".equals(columnName)|| "gb_id".equals(columnName) || "gb_owner".equals(columnName)  || "eq_status".equals(columnName)) // 用於其他
+		if ("is_deal".equals(columnName) || "shop_type".equals(columnName) || "gb_status".equals(columnName) || "is_disable".equals(columnName)|| "gb_id".equals(columnName) || "gb_owner".equals(columnName)  || "eq_status".equals(columnName) || "buyer".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
 //		else if ("name".equals(columnName) || "job".equals(columnName)) // 原本樣子
 		else if ("name".equals(columnName)) // 用於varchar
 			aCondition = columnName + " like '%" + value + "%'";
 		else if ("shop_name".equals(columnName)) // 用於shop
 			aCondition = " s." + columnName + " like '%" + value + "%'";
+		else if ("g.gb_status".equals(columnName)) // 用於groupbuylist查詢歷史訂單(非揪團中>0)
+			aCondition = columnName + ">" + value;
 		else if ("hiredate".equals(columnName))                          // 用於date
 			aCondition = columnName + "=" + "'"+ value +"'";                          //for 其它DB  的 date
 //		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
