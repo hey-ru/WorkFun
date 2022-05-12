@@ -546,10 +546,10 @@ return;
 
 //				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-					String empIds = (req.getParameter("empId"));
+					String mail = (req.getParameter("mail"));
 				
-					if (empIds == null || empIds.trim().length() == 0) {
-						errorMsgs.put("empId","帳號請勿空白");
+					if (mail == null || mail.trim().length() == 0) {
+						errorMsgs.put("mail","帳號請勿空白");
 					}
 				
 					
@@ -577,10 +577,10 @@ return;
 					}
 					
 					/***************************2.開始檢查帳號密碼***************************************/
-					Integer empId=Integer.valueOf(empIds);
+					
 					EmpService empSvc = new EmpService();
 //					EmpVO empVO=empSvc.login(empId,empPassword);
-					EmpVO empVO=empSvc.login(empId,empPassword);
+					EmpVO empVO=empSvc.login(mail,empPassword);
 					  if (empVO == null) {
 						
 							  errorMsgs.put("login","帳號密碼輸入錯誤");
@@ -620,10 +620,10 @@ return;
 
 //				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-					String empIds = (req.getParameter("empId"));
+					String mail = (req.getParameter("mail"));
 				
-					if (empIds == null || empIds.trim().length() == 0) {
-						errorMsgs.put("empId","帳號請勿空白");
+					if (mail == null || mail.trim().length() == 0) {
+						errorMsgs.put("mail","帳號請勿空白");
 					}
 				
 					
@@ -651,11 +651,10 @@ return;
 					}
 					
 					/***************************2.開始檢查帳號密碼***************************************/
-					Integer empId=Integer.valueOf(empIds);
+					
 					EmpService empSvc = new EmpService();
-					EmpVO empVO=empSvc.login(empId,empPassword);
-					PermissionMappingService pmSrv=new PermissionMappingService();
-					 List<Integer> empPm=pmSrv.getOneEmpPermissions(empId);
+					EmpVO empVO=empSvc.login(mail,empPassword);
+				
 				
 					 
 //				EmpVO empVO=empSvc.login(empId,empPassword);
@@ -671,7 +670,8 @@ return;
 					  }
 					
 					  else {
-					
+							PermissionMappingService pmSrv=new PermissionMappingService();
+							 List<Integer> empPm=pmSrv.getOneEmpPermissions(empVO.getEmpId());
 						  session.setAttribute("empPm", empPm); //hint 特別標記 用來取得permission
 					      session.setAttribute("empVO", empVO);   //*工作1: 才在session內做已經登入過的標識
 					      String location=(String)session.getAttribute("location");

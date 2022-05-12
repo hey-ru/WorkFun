@@ -5,7 +5,7 @@
 <%@ page import="com.report.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%ReportVO repVO = (ReportVO) request.getAttribute("repVO"); 
-
+	request.setAttribute("repVO", repVO);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,12 +58,11 @@
                     <!-- 內容放這 -->
   <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
   		
-         <main style="height: 120vh; border:3px red solid;">
-                        <div
-                            style="border:3px blue solid;width:900px;position:absolute; height:630px; top:15%; right:5%;">
+         <main style="height: 120vh">
+                       
                             <div class="input-group mb-3" style="margin-top: 0px;">
                                 <span class="input-group-text" id="basic-addon1">標題</span>
-                                 <span style="border:3px lightyellow solid;">${repVO.title}</span>
+                                 <span>${repVO.title}</span>
                                     
                             </div>
 
@@ -107,7 +106,7 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupFile01">回報圖片</label>                              
                              <c:if test="${repVO.report_image!=null}">
-                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${param.report_id}&table=report&pic=report_image" style="width:100px; height:100px;">
+                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${repVO.report_id}&table=report&pic=report_image" style="width:100px; height:100px;">
                               </c:if>
                             </div>
                             <c:forEach var="recVO" items="${repVO.recVO}">
@@ -115,6 +114,10 @@
                                 <span class="input-group-text">處理訊息</span>
                                 <span class="input-group-text"><fmt:formatDate value="${recVO.createtime}" pattern="yyyy-MM-dd HH:mm "/></span>
                                 <textarea class="form-control" aria-label="With textarea">${recVO.comment}</textarea>
+                             <c:if test="${recVO.report_comment_image!=null}">
+                                <label class="input-group-text" for="inputGroupFile01">處理圖片</label>                              
+                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_comment_id&id=${recVO.report_comment_id}&table=report_comment&pic=report_comment_image" style="width:150px; height:150px;">
+                              </c:if>		
                             </div>
                             </c:forEach>
                             <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/reportCommentServlet" name="formAdd" enctype="multipart/form-data">
@@ -123,17 +126,18 @@
                    						 aria-describedby="basic-addon1" name="report_id" value="${repVO.report_id}">
                                 <span class="input-group-text">處理訊息</span>
                             	<input class="form-control" aria-label="Username" type="text"
-                    						aria-describedby="basic-addon1" name="comment" value="${param.comment}">
-                    						<p style="color :red">${errorMsgs.comment}</p>
+                    						aria-describedby="basic-addon1" name="comment" value="${recVO.comment}">
+                    						<p style="color :red">${errorMsgs.comment}</p>	
+                    			
                     			</div>
-                    		<div class="input-group">
+                    		<div class="input-group mb-3">
                  	 			<label class="input-group-text" for="inputGroupFile01">Upload</label>
-                				<input type="file" value="${param.report_image}" name="report_comment_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:150px; width:150px" id="pic" />
+                				<input type="file" value="${recVO.report_comment_image}" name="report_comment_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:150px; width:150px" id="pic" />
                 				<input type="text" style="display:none;" name="action" value="insert">
 								<button type="submit" value="送出新增">送出</button>
                             </div> 
                             </FORM>
-                        </div>
+                       
                     </main>
 
                 <!-- End of Main Content -->

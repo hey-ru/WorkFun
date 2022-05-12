@@ -16,8 +16,8 @@ public interface EmpDAO_interface {
           public List<EmpVO> getAllDAO(Map<String, String[]> map);
           public List<EmpVO> getAllDAO();
           public List<EmpVO> getAllDAO(Connection con);
-      	EmpVO selectForLogin(Integer empId, String password);
-     	EmpVO selectForLogin(Integer empId, String password,Connection con);
+      	EmpVO selectForLogin(String mail, String password);
+     	EmpVO selectForLogin(String mail, String password,Connection con);
         public EmpVO findbymailandbirthday(String mail,java.sql.Date birthday);
         public EmpVO findbymailandbirthday(String mail,java.sql.Date birthday,Connection con);
      	

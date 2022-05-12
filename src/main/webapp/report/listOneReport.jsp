@@ -29,7 +29,7 @@
                             style="border:3px blue solid;width:900px;position:absolute; height:630px; top:45%; margin-top:-160px;margin-left: 14%;">
                             <div class="input-group mb-3" style="margin-top: 0px;">
                                 <span class="input-group-text" id="basic-addon1">標題</span>
-                                 <span style="border:3px lightyellow solid;">${reportVO.title}</span>
+                                 <span>${reportVO.title}</span>
                                     
                             </div>
 

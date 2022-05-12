@@ -42,16 +42,12 @@ public class ReportService{
 		return reportVO;
 	}
 	
-	public ReportVO updateReport(String title , Integer report_type,
-			Integer reporter,Integer handler, String content,
+	public ReportVO updateReport(String title ,String content,
 			byte[] report_image ,Integer report_id) {
 
 		ReportVO reportVO = new ReportVO();
 		
 		reportVO.setTitle(title);
-		reportVO.setReport_type(report_type);
-		reportVO.setReporter(reporter);
-		reportVO.setHandler(handler);
 		reportVO.setContent(content);
 		reportVO.setReport_image(report_image);
 		reportVO.setReport_id(report_id);
@@ -62,6 +58,14 @@ public class ReportService{
 	
 	public ReportVO getOneReport(Integer report_id) {
 		return dao.findByPrimaryKey(report_id);
+	}
+	
+	public ReportVO comment(Integer report_id) {
+		
+		ReportVO reportVO = new ReportVO();
+		List<Report_CommentVO> list = dao.TestComment(report_id);
+		reportVO.setRecVO(list);
+		return reportVO;
 	}
 
 	public List<ReportVO> getAll() {
@@ -88,4 +92,45 @@ public class ReportService{
 		
 			return reportVO;
 		}
+	
+	public ReportVO complete(Integer report_id) {
+
+		ReportVO reportVO = new ReportVO();
+		
+		reportVO.setReport_id(report_id);
+		dao.complete(reportVO);
+
+		return reportVO;
+	}
+	
+	public ReportVO reject(Integer report_id) {
+
+		ReportVO reportVO = new ReportVO();
+		
+		reportVO.setReport_id(report_id);
+		dao.reject(reportVO);
+
+		return reportVO;
+	}
+	
+	public ReportVO cancel(Integer report_id) {
+
+		ReportVO reportVO = new ReportVO();
+		
+		reportVO.setReport_id(report_id);
+		dao.cancel(reportVO);
+
+		return reportVO;
+	}
+	
+	public ReportVO allCompleted(Integer report_id) {
+
+		ReportVO reportVO = new ReportVO();
+		
+		reportVO.setReport_id(report_id);
+		dao.allCompleted(reportVO);
+
+		return reportVO;
+	}
+	
 }

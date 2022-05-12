@@ -54,10 +54,10 @@
                                         <div class="form-group">
                                         
                                            <input
-										type="TEXT" name="empId" size="45" value="${param.empId}"
+										type="TEXT" name="mail" size="45" value="${param.mail}"
 										class="form-control" aria-label="Username"
 										aria-describedby="basic-addon1">
-                                        </div>${errorMsgs.empId}
+                                        </div>${errorMsgs.mail}
                                       <input
 										type="text" name="empPassword" size="45" value="${param.empPassword}"
 										class="form-control" aria-label="Username"
