@@ -123,7 +123,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
                         <a class="collapse-item" href="<%=request.getContextPath()%>/shop/backmain_Shop.jsp">下架店家&菜單</a>
-                        <a class="collapse-item" href="<%=request.getContextPath()%>/groupbuy/gbBack.jsp">下架揪團</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/groupbuy/gbBack.jsp">揪團管理</a>
                     </div>
                 </div>
             </li>

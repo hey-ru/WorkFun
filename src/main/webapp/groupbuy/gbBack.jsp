@@ -84,7 +84,7 @@ int itemsPerPage = 10;
 					<div class="row">
 						<div class="col-11" style="height: 20px; display: inline-block;">
 							<h5>
-								<strong>取消揪團</strong>
+								<strong>揪團管理</strong>
 							</h5>
 						</div>
 					</div>

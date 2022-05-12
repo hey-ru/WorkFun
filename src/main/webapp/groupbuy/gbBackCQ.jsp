@@ -84,7 +84,7 @@ EmpService empSvc = new EmpService();
 					<div class="row">
 						<div class="col-11" style="height: 20px; display: inline-block;">
 							<h5>
-								<strong>取消揪團</strong>
+								<strong>揪團管理</strong>
 							</h5>
 						</div>
 					</div>
@@ -211,7 +211,7 @@ EmpService empSvc = new EmpService();
 												</c:forEach>
 										</tbody>
 									</table>
-									<%@ include file="/design/page2_ByCompositeQuery.file"%>
+									<%@ include file="/groupbuy/page2_ByCompositeQuery.file"%>
 
 								</div>
 							</div>
