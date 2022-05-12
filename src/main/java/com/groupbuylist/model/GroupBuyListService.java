@@ -38,7 +38,7 @@ public class GroupBuyListService {
 		GroupBuyListVO groupBuyListVO;
 		List<GroupBuyListVO> orderlist = new ArrayList<>();
 
-		for (int i = 0; i < gb_id.length(); i++) {
+		for (int i = 0; i < menu_id.length; i++) {
 			if (!"0".equals(qty[i])) {
 				groupBuyListVO = new GroupBuyListVO();
 				groupBuyListVO.setGb_id(Integer.valueOf(gb_id));
@@ -55,11 +55,17 @@ public class GroupBuyListService {
 			}
 		}
 		dao.insertMany(orderlist);
+		
+		System.out.println(orderlist.toString());
+		System.out.println(gb_id + "參團新增成功!");
 	}
 
 //參團:修改多筆	
-	public void updateMany(List<GroupBuyListVO> listGBorder) {
-		dao.updateMany(listGBorder);
+	public void updateMany(List<GroupBuyListVO> newOrderlist) {
+		dao.updateMany(newOrderlist);
+		
+//		System.out.println("newOrderlist"+newOrderlist.toString());
+//		System.out.println("訂單修改完成");
 	}
 
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,

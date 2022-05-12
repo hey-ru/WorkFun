@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.groupbuylist.model.GroupBuyListService;
 import com.groupbuylist.model.GroupBuyListVO;
@@ -47,6 +48,7 @@ public class AddGBListServlet extends HttpServlet {
 			String gb_id = req.getParameter("gb_id");
 			String buyer = req.getParameter("buyer");
 			String buyer_name = req.getParameter("buyer_name");
+			
 			String[] menu_id = req.getParameterValues("menu_id");
 			String[] item = req.getParameterValues("item");
 			String[] price = req.getParameterValues("price");
@@ -65,10 +67,14 @@ public class AddGBListServlet extends HttpServlet {
 			gblistSvc.insertMany(gb_id, buyer, buyer_name, menu_id, item, price, qty, remark);
 
 			/********************* 3.新增完成,準備轉交(Send the Success view) *************/
+			List<GroupBuyListVO> getOneList = gblistSvc.getOne(Integer.valueOf(buyer), Integer.valueOf(gb_id));
+			HttpSession session = req.getSession();
+			session.setAttribute("getOneList", getOneList);
+
 			String url = "/groupbuylist/buyer_selectGB.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 			successView.forward(req, res);
-			System.out.println(gb_id + "參團新增成功!");
+
 		}
 
 	}

@@ -43,7 +43,6 @@ public class SelectMyGBListServlet extends HttpServlet {
 		System.out.println(action);
 
 // 來自buyer_selectGB.jsp的請求
-		
 //		(1)查看個人參團明細
 		if ("get_buyerlist".equals(action)) { 
 
@@ -85,13 +84,13 @@ public class SelectMyGBListServlet extends HttpServlet {
 			
 			RequestDispatcher successView = req.getRequestDispatcher("/groupbuylist/buyer_selectGB.jsp");// 刪除成功後,轉交回送出刪除的來源網頁
 			successView.forward(req, res);
-			
 		}
 		
 //		(3)編輯參團-先查詢個人訂單明細
 		if("updateMyGb".equals(action)) {
 			
 			/*************************** 1.接收請求參數 ****************************************/
+			Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
 			Integer buyer = Integer.valueOf(req.getParameter("buyer"));
 			Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
 			
@@ -102,6 +101,13 @@ public class SelectMyGBListServlet extends HttpServlet {
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ***************/
 			HttpSession session = req.getSession();
 			session.setAttribute("buyerlist", list);
+			
+			//再取得一次店家菜單物件集合,以顯示於填寫揪團單畫面
+//			MenuService menuService = new MenuService();
+//			List<MenuVO> menuList = menuService.getByShopId(shop_id);
+			
+//			HttpSession session1 = req.getSession();
+//			req.setAttribute("menuList", menuList);
 			
 			//跳轉至該訂單畫面
 			String url = "/groupbuylist/buyer_updateOneGB.jsp";
@@ -114,8 +120,10 @@ public class SelectMyGBListServlet extends HttpServlet {
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			//取得參數
+			
+			Integer buyer = Integer.valueOf(req.getParameter("buyer"));
+			
 			String[] gbList_id = req.getParameterValues("gbList_id");
-			String[] buyer = req.getParameterValues("buyer");
 			String[] qty = req.getParameterValues("qty");
 			String[] remark = req.getParameterValues("remark");
 			
@@ -127,17 +135,17 @@ public class SelectMyGBListServlet extends HttpServlet {
 				oldGBListVO=gbListSvc.findByPrimaryKey(Integer.valueOf(gbList_id[i]));
 				
 					oldGBListVO.setGbList_id(Integer.valueOf(gbList_id[i]));
-					oldGBListVO.setBuyer(Integer.valueOf(buyer[i]));
+					oldGBListVO.setBuyer(buyer);
 					oldGBListVO.setQty(Integer.valueOf(qty[i]));
 					oldGBListVO.setRemark(remark[i]);
 
 					newOrderlist.add(oldGBListVO);
 			}
 			
-			/*************************** 2.開始新增資料 ***************************/
+			/*************************** 2.開始修改資料 ***************************/
 			GroupBuyListService gblistSvc = new GroupBuyListService();
 			gblistSvc.updateMany(newOrderlist);
-
+			
 			System.out.println("newOrderlist"+newOrderlist.toString());
 			System.out.println("訂單修改完成");
 
