@@ -8,7 +8,12 @@
 <%@ page import="com.groupbuylist.model.*"%>
 <%@ page import="com.groupbuy.model.*"%>
 
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<GroupBuyListVO>" />
+
 <%
+String yourServlet = "/groupbuylist/selectmygblistservlet";
+int itemsPerPage = 6;
+
 //只能查詢個人參團紀錄
 EmpVO empVO = (EmpVO) session.getAttribute("empVO");
 
@@ -16,20 +21,15 @@ EmpVO empVO = (EmpVO) session.getAttribute("empVO");
 GroupBuyListService gblistSvc = new GroupBuyListService();
 List<GroupBuyListVO> list = gblistSvc.getMyGB(empVO.getEmpId());
 
-HttpSession session1 = pageContext.getSession();
-session1.setAttribute("mygblist", list);
+// HttpSession session1 = pageContext.getSession();
+// session1.setAttribute("mygblist", list);
 
-int itemsPerPage = 6;
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
-
-<style>
-
-</style>
 
 
 </head>
@@ -40,7 +40,7 @@ int itemsPerPage = 6;
 		<%@ include file="/design/frontheader.jsp"%>
 
 		<!-- ====================== 內容開始 ====================== -->
-		<main id="main" class="main">
+			<main id="main" class="main">
 			<div class="card shadow mb-4">
 				<!-- ============== Card Header ============== -->
 				<div class="card-header py-3" style="background-color: #b0c4de">
@@ -91,7 +91,7 @@ int itemsPerPage = 6;
 <!-- 								</form> -->
 <!-- 							</div> -->
 <!-- 						</div> -->
-					
+
 					
 						<table class="table table-striped">
 							<!-- ========================= 表頭 ========================= -->
@@ -112,11 +112,11 @@ int itemsPerPage = 6;
 								</tr>
 							</thead>
 
-							<%@ include file="/design/page1.file"%>
+							<%@ include file="/design/page1_ByCompositeQuery.file"%>
 
 							<!-- ========================= 表格內容 ========================= -->
 							<tbody>
-								<c:forEach var="mygb" items="${mygblist}" begin="<%=pageIndex%>"
+								<c:forEach var="mygb" items="${listByCompositeQuery}" begin="<%=pageIndex%>"
 									end="<%=pageIndex+rowsPerPage-1%>">
 									<c:if test="${(mygb.total) > 0}">
 										<tr>
@@ -131,7 +131,7 @@ int itemsPerPage = 6;
 											<td><fmt:formatDate value="${mygb.groupBuyVO.end_time}"
 													pattern="yyyy-MM-dd HH:mm" /></td>
 											<td><fmt:formatDate value="${mygb.groupBuyVO.arr_time}"
-													pattern="yyyy-MM-dd HH:mm" /></td>
+													pattern="yyyy-MM-dd HH:mm" /></td>		
 											<td><c:choose>
 													<c:when test="${mygb.groupBuyVO.gb_status == 0}">
 														       	揪團中
@@ -146,51 +146,43 @@ int itemsPerPage = 6;
 														        揪團關閉
 														    </c:when>
 												</c:choose></td>
-<!-- 											<td> -->
-<!-- 												<FORM METHOD="post" -->
-<%-- 													ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet" --%>
-<!-- 													style="margin-bottom: 0px;"> -->
-<%-- 													<input type="hidden" name="gb_id" value="${mygb.gb_id}"> --%>
-<%-- 													<input type="hidden" name="buyer" value="${empVO.empId}"> --%>
-<!-- 													<input type="hidden" name="action" value="get_buyerlist"> -->
-<!-- 													<input type="submit" class="btn btn-info btn-sm" -->
-<!-- 														value="訂單明細" -->
-<!-- 												</FORM> -->
-<!-- 											</td> -->
 											<td>
 												<FORM METHOD="post"
 													ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
 													style="margin-bottom: 0px;">
-													<input type="hidden" name="shop_id"
-														value="${mygb.groupBuyVO.shop_id}"> <input
-														type="hidden" name="gb_id" value="${mygb.gb_id}">
-													<input type="hidden" name="buyer" value="${empVO.empId}">
-													<input type="hidden" name="action" value="updateMyGb">
-													<input type="submit" class="btn btn-success btn-sm"
-														value="編輯"
-														${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
-												</FORM>
-											</td>
-											<td>
-												<FORM METHOD="post" id="delete-confirm"
-													onclick="myAlertFunction(event)"
-													ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
-													onSubmit="javascript:return window.sweetAlert('確定不參加嗎？')">
 													<input type="hidden" name="gb_id" value="${mygb.gb_id}">
 													<input type="hidden" name="buyer" value="${empVO.empId}">
-													<input type="hidden" name="action" value="deleteMyGb">
-
-													<!-- 判斷截止時間是否小於現在時間,若是hidden button -->
-													<!-- 																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團" -->
-													<%-- 																${mygb.groupBuyVO.end_time lt now ? 'disabled="disabled"' : ''}/> --%>
-													<%-- 																	<jsp:useBean id="now" class="java.util.Date" /> --%>
-													<%-- 																	<c:out value="${mygb.groupBuyVO.end_time lt now}"/>  --%>
-													<!-- 判斷截止時間是否為揪團中-->
-													<input type="submit" onclick="myAlertFunction(event)"
-														class="btn btn-secondary btn-sm" value="退團"
-														${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
+													<input type="hidden" name="action" value="get_buyerlist">
+													<input type="submit" class="btn btn-info btn-sm"
+														value="明細"
+														${mygb.groupBuyVO.gb_status gt 0 ? '' : 'hidden="hidden"'}>
 												</FORM>
 											</td>
+<!-- 											<td> -->
+<!-- 												<FORM METHOD="post" -->
+<%-- 													ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet" --%>
+<!-- 													style="margin-bottom: 0px;"> -->
+<!-- 													<input type="hidden" name="shop_id" -->
+<%-- 														value="${mygb.groupBuyVO.shop_id}"> <input --%>
+<%-- 														type="hidden" name="gb_id" value="${mygb.gb_id}"> --%>
+<%-- 													<input type="hidden" name="buyer" value="${empVO.empId}"> --%>
+<!-- 													<input type="hidden" name="action" value="updateMyGb"> -->
+<!-- 													<input type="submit" class="btn btn-success btn-sm" -->
+<!-- 														value="編輯" -->
+<%-- 														${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} /> --%>
+<!-- 												</FORM> -->
+<!-- 											</td> -->
+<!-- 											<td> -->
+<!-- 												<FORM METHOD="post" id="delete-confirm" -->
+<!-- 													onclick="myAlertFunction(event)" -->
+<%-- 													ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet" --%>
+<!-- 													onSubmit="javascript:return window.sweetAlert('確定不參加嗎？')"> -->
+<%-- 													<input type="hidden" name="gb_id" value="${mygb.gb_id}"> --%>
+<%-- 													<input type="hidden" name="buyer" value="${empVO.empId}"> --%>
+<!-- 													<input type="hidden" name="action" value="deleteMyGb"> -->
+
+<!-- 												</FORM> -->
+<!-- 											</td> -->
 										</tr>
 										<!-- 揪團截止不能取消及編輯 -->
 									</c:if>
@@ -198,11 +190,10 @@ int itemsPerPage = 6;
 							</tbody>
 						</table>
 					</div>
+						<%@ include file="/design/page2_ByCompositeQuery.file"%>
 
-					<%@ include file="/design/page2.file"%>
 				</div>
 			</div>
-			
 		</main>
 		<!-- ======= 內容結束 ======= -->
 
@@ -213,16 +204,6 @@ int itemsPerPage = 6;
 	<%@ include file="/design/frontjs.jsp"%>
 </body>
 
-<script>
-	document.getElementById("delete-confirm").addEventListener("click",
-			function() {
-				swal({
-					title : "確定要退出? 😭😭😭",
-					icon : "warning",
-					buttons : true,
-					dangerMode : true
-				});
-			});
-</script>
+
 
 </html>

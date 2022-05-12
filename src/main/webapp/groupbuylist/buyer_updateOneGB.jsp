@@ -10,9 +10,6 @@
 //查詢個人單筆明細
 List<GroupBuyListVO> list = (List<GroupBuyListVO>) request.getAttribute("buyerlist");
 
-
-// List<MenuVO> menuList = (List<MenuVO>) request.getAttribute("menuList");
-
 int orderNumber = 1;
 %>
 
@@ -93,7 +90,7 @@ int orderNumber = 1;
 									<td><input type="number" class="quantity" required min="0" max="100"
 										name="qty" value="${blist.qty}"> 
 									<!-- 小計 -->
-										<td>$<span id="total">0</span></td>	
+										<td>$<span id="total">${blist.price*blist.qty}</span></td>	
 									<!-- 備註 -->
 									<td><input type="text" name="remark"
 										pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
