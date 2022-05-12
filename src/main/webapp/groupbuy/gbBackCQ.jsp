@@ -58,13 +58,13 @@ EmpService empSvc = new EmpService();
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-dark topbar static-top shadow">
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav bg-dark ml-auto">
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item no-arrow">
+                        <li class="nav-item no-arrow pr-4">
                          <a href="<%=request.getContextPath()%>/home/home.jsp"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Back Home</a>
                         </li>
@@ -75,10 +75,10 @@ EmpService empSvc = new EmpService();
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid pl-0">
                     <!-- 內容放這 -->
                   <main id="main" class="main">
-			<div class="card shadow mb-4">
+			<div class="card shadow">
 				<!-- ============== Card Header ============== -->
 				<div class="card-header py-3" style="background-color: #b0c4de">
 					<div class="row">

@@ -224,7 +224,7 @@ h5 {
 
 .navbar li {
   position: relative;
-  padding: 10px 0 10px 28px;
+  padding: 0px 0px 0px 28px;
 }
 
 .navbar a,
@@ -455,7 +455,7 @@ h5 {
   color: #fff;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .mobile-nav-toggle {
     display: block;
   }
@@ -1413,26 +1413,26 @@ section {
  */
 
 .qtyclass {
-	width: 40px;
-	height: 30px;
-	text-align: center;
-	border: 0;
-	border-top: 1px solid #aaa;
-	border-bottom: 1px solid #aaa;
+  width: 40px;
+  height: 30px;
+  text-align: center;
+  border: 0;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
 }
 
 input.qtyplus {
-	width: 25px;
-	height: 30px;
-	border: 1px solid #aaa;
-	background: #f8f8f8;
+  width: 25px;
+  height: 30px;
+  border: 1px solid #aaa;
+  background: #f8f8f8;
 }
 
 input.qtyminus {
-	width: 25px;
-	height: 30px;
-	border: 1px solid #aaa;
-	background: #f8f8f8;
+  width: 25px;
+  height: 30px;
+  border: 1px solid #aaa;
+  background: #f8f8f8;
 }
 
 .btn {
@@ -1507,15 +1507,18 @@ input.qtyminus {
 }
 
 button {
-    border: none;
-    background: none;
-    font: inherit;
-    cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
 }
-.icon-inner, .ionicon, svg {
-    display: block;
-    height: 100%;
-    width: 100%;
+
+.icon-inner,
+.ionicon,
+svg {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
 

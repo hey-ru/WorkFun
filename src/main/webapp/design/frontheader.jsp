@@ -3,12 +3,13 @@
 
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
+        <div class="container-fluid d-flex justify-content-between">
             <a href="<%=request.getContextPath()%>/home/home.jsp" class="logo"><img src="<%=request.getContextPath()%>/assets/img/workfun.gif" alt="" class="img-fluid"
                     style="width: 250px;"></a>
+            
 
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
+            <nav id="navbar" class="navbar order-lg-0">
+                <ul class="navbar-left">
                     <!-- 修改跳頁 -->
                     <li>
                         <div class="dropdown">
@@ -46,7 +47,6 @@
                             <div class="dropdown-content">
                                 <a href="<%=request.getContextPath()%>/booking/frontBookingHome.jsp">器材首頁</a>
                                 <a href="<%=request.getContextPath()%>/booking/bookingList.jsp">瀏覽預約單</a>
-<!--                                 <a href="#">Link 3</a> -->
                             </div>
                         </div>
                     </li>
@@ -61,31 +61,35 @@
                         </div>
                     </li>
                 </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-                <div style="margin-left: 120px;"> </div>
+                </nav>
+
+                
+<!--                 <div style="margin-left: 120px;"> </div> -->
                 <!-- 左邊icon -->
-                <div class="navbar">
-                    <ul>
-                        <li>
-                            <a href="">
-                                <i class="bi bi-chat-dots" style="font-size:25px; color: black;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href=""><i class="bi bi-chat" style="font-size:25px; color: black;"></i></a>
-                        </li>
-                        <li>
-                            <div class="dropdown">
-                                <i class="bi bi-bell" style="font-size:25px"></i>
-                                <div class="dropdown-content nav-item-right">
-                                    <a href="#">訊息一</a>
-                                    <a href="#">訊息二</a>
-                                    <a href="#">訊息三</a>
-                                </div>
-                            </div>
-                        </li>
+<!--                 <div class="navbar"> -->
+<!--                     <ul> -->
+<!--                         <li> -->
+<!--                             <a href=""> -->
+<!--                                 <i class="bi bi-chat-dots" style="font-size:25px; color: black;"></i> -->
+<!--                             </a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a href=""><i class="bi bi-chat" style="font-size:25px; color: black;"></i></a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <div class="dropdown"> -->
+<!--                                 <i class="bi bi-bell" style="font-size:25px"></i> -->
+<!--                                 <div class="dropdown-content nav-item-right"> -->
+<!--                                     <a href="#">訊息一</a> -->
+<!--                                     <a href="#">訊息二</a> -->
+<!--                                     <a href="#">訊息三</a> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                         </li> -->
 
                         <!-- 個人頁面dropdown -->
+                        <nav class="navbar order-last">
+                        <ul class="navbar-right">
                         <li class="nav-item dropdown pe-3">
 
                             <a class="nav-link nav-profile d-flex align-items-center pe-0 ; width:2px" href="#"
@@ -133,8 +137,9 @@
                         </li>
                         <!-- End Profile Nav -->
                     </ul>
-                </div>
-            </nav>
+                    </nav>
+                 <i class="bi bi-list mobile-nav-toggle"></i>
+                
         </div>
 
-    </header><!-- End Header -->
+    </header>

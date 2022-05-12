@@ -29,12 +29,12 @@
 				<!-- ============== Card Header ============== -->
 				<div class="card-header py-3" style="background-color: #b0c4de">
 					<div class="row">
-						<div class="col-11" style="height: 20px; display: inline-block;">
+						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h5>
 								<strong>店家資訊</strong>
 							</h5>
 						</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
+						<div class="col-3" style="height: 20px; display: inline-block;">
 							<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp"><strong>回店家列表</strong></a>
 						</div>
 					</div>

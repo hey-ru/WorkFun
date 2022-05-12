@@ -27,7 +27,7 @@
 	body {
 	    -ms-overflow-style: none;
 	    height: 100%;
-	 width: calc(100vw + 18px);
+	 width: calc(100vw + 20px);
 	 overflow: auto;
 	}
     </style>
