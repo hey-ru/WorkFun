@@ -68,11 +68,11 @@ tbody td {
 		<main id="main" class="main">
 			<div>
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #BADBB2">
+				<div class="card-header py-3" style="background-color: #BADBB2; margin: 15;">
 					<div class="row">
 						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h3>
-								<strong>填寫訂單</strong>
+								<strong>訂購單填寫</strong>
 							</h3>
 						</div>
 						<div class="col-3" style="height: 20px; display: inline-block;">
@@ -106,6 +106,7 @@ tbody td {
 								<c:forEach var="menu" items="${menuList}">
 
 									<tr class="order" data-price="${menu.price}">
+										
 										<td><%=orderNumber++%><input type="hidden" name="menu_id"
 											value="${menu.menu_id}" /></td>
 										<td>${menu.item}<input type="hidden" name="item"
@@ -126,11 +127,13 @@ tbody td {
 
 								</c:forEach>
 							</table>
-							<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
-							<input type="hidden" name="buyer" value="${empVO.empId}">
-							<input type="hidden" name="buyer_name" value="${empVO.empName}">
+<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
+<input type="hidden" name="buyer" value="${empVO.empId}">
+<input type="hidden" name="buyer_name" value="${empVO.empName}">
 							<input type="hidden" name="action" value="insert2GBlist">
+							<div style="TEXT-ALIGN-LAST: CENTER;">
 							<input type="submit" class="selectAll" value="火速下單ヽ(●´∀`●)ﾉ">
+							</div>
 						</FORM>
 
 					</div>
@@ -176,7 +179,7 @@ tbody td {
 		// 監聽輸入框
 		$(document).ready(function() {
 			$("input").focus(function() {
-				$(this).css("background-color", "ffd9e6");
+				$(this).css("background-color", "#FFCF78");
 			});
 			$("input").blur(function() {
 				$(this).css("background-color", "#ffffff");

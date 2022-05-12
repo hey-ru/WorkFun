@@ -29,6 +29,8 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 			+ "price, qty, remark) " + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 
 //	-- 1.查詢我的參團: 查詢各團總額及狀態(主頁查詢畫面, 依結束時間降冪排序)-->join groupbuy
+//	private static final String GET_MYGB = "SELECT gb_id, price, qty, is_pay, is_pickup "
+//			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gblist_upd desc ";
 	private static final String GET_MYGB = "SELECT gb_id, SUM(price*qty) AS TOTAL, is_pay, is_pickup "
 			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gblist_upd desc ";
 //	-- 1. 計算我的各團總額
@@ -59,7 +61,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 
 //	參團者修改多筆  ok
 	@Override
-	public void updateMany(List<GroupBuyListVO> listGBorder) {
+	public void updateMany(List<GroupBuyListVO> newOrderlist) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -67,16 +69,17 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			// 新增多筆項目
-			for (GroupBuyListVO groupBuyListVO : listGBorder) {
+			// 新增修改項目
+			for (GroupBuyListVO groupBuyListVO : newOrderlist) {
 
 				pstmt.setInt(1, groupBuyListVO.getQty());
 				pstmt.setString(2, groupBuyListVO.getRemark());
 				pstmt.setInt(3, groupBuyListVO.getBuyer());
 				pstmt.setInt(4, groupBuyListVO.getGbList_id());
-				pstmt.addBatch();
+				
+				pstmt.executeUpdate();
+				
 			}
-			pstmt.executeBatch();
 
 			// Handle any SQL errors
 		} catch (SQLException se) {
@@ -250,6 +253,8 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 				groupBuyListVO = new GroupBuyListVO();
 
 				groupBuyListVO.setGb_id(rs.getInt(1));
+//				groupBuyListVO.setPrice(rs.getInt(2));
+//				groupBuyListVO.setQty(rs.getInt(3));
 				groupBuyListVO.setTotal(rs.getInt(2));
 				groupBuyListVO.setIs_pay(rs.getInt(3));
 				groupBuyListVO.setIs_pickup(rs.getInt(4));

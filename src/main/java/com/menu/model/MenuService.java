@@ -26,6 +26,7 @@ public class MenuService {
 			menuVO.setShop_id(Integer.valueOf(shop_id));
 			menuVO.setItem(newitem[i]);
 			menuVO.setPrice(Integer.valueOf(newprice[i]));
+			
 			menuAddlist.add(menuVO);
 		}
 		dao.insertMany(menuAddlist);

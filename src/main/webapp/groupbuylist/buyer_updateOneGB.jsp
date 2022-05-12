@@ -1,3 +1,5 @@
+<%@page import="com.menu.model.MenuService"%>
+<%@page import="com.menu.model.MenuVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.List"%>
@@ -8,7 +10,9 @@
 //查詢個人單筆明細
 List<GroupBuyListVO> list = (List<GroupBuyListVO>) request.getAttribute("buyerlist");
 
-// int itemsPerPage = 10;
+
+// List<MenuVO> menuList = (List<MenuVO>) request.getAttribute("menuList");
+
 int orderNumber = 1;
 %>
 
@@ -29,11 +33,12 @@ int orderNumber = 1;
 </head>
 
 <body>
+
 	<div class="wrapper">
 
 		<%@ include file="/design/frontheader.jsp"%>
 
-
+;
 		<!-- ====================== 內容開始 ====================== -->
 		<main id="main" class="main">
 			<div class="card shadow mb-4">
@@ -54,7 +59,7 @@ int orderNumber = 1;
 			</div>
 			<!-- ============== Card Body ============== -->
 			<div class="card-body">
-				<div class="col-12">
+				<div class="col-6">
 
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet">
@@ -66,32 +71,29 @@ int orderNumber = 1;
 								<th scope="col">品項</th>
 								<th scope="col">單價</th>
 								<th scope="col">數量</th>
+								<th scope="col">小計</th>
 								<th scope="col">備註</th>
 								</tr>
 							</thead>
 
 							<!-- ========================= 表格內容 ========================= -->
 
-							<c:forEach var="blist" items="${buyerlist}">
-								<input type="hidden" name="gbList_id" value="${blist.gbList_id}">
-				<input type="hidden" name="gb_id" value="${blist.gb_id}">
-								<input type="hidden" name="buyer" value="${blist.buyer}">
-<%-- 				<input type="hidden" name="buyer_name" value="${blist.buyer_name}"> --%>
-<%-- 				<input type="hidden" name="menu_id" value="${blist.menu_id}"> --%>
-				
-<%-- 				<input type="hidden" name="item" value="${blist.item}"> --%>
-<%-- 				<input type="hidden" name="price" value="${blist.price}"> --%>
-<%-- 				<input type="hidden" name="is_pay" value="${blist.is_pay}"> --%>
-<%-- 				<input type="hidden" name="is_pickup" value="${blist.is_pickup}"> --%>
 
-								<tr>
+				<c:forEach var="blist" items="${buyerlist}">
+				
+		<input type="hidden" name="gbList_id" value="${blist.gbList_id}">
+		<input type="hidden" name="buyer" value="${blist.buyer}">
+
+								<tr class="order" data-price="${blist.price}">
 									<td><%=orderNumber++%></td>
 									<td>${blist.item}</td>
 									<!-- 單價 -->
 									<td>${blist.price}</td>
 									<!-- 數量 -->
-									<td><input type="number" required min="0" max="100"
+									<td><input type="number" class="quantity" required min="0" max="100"
 										name="qty" value="${blist.qty}"> 
+									<!-- 小計 -->
+										<td>$<span id="total">0</span></td>	
 									<!-- 備註 -->
 									<td><input type="text" name="remark"
 										pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
@@ -99,6 +101,7 @@ int orderNumber = 1;
 								</tr>
 							</c:forEach>
 						</table>
+		
 						<input type="hidden" name="action" value="updateMany"> <input
 							type="submit" class="btn btn-success"
 							onClick="alert('已完成訂單修改')" value="送出訂單">
@@ -115,11 +118,36 @@ int orderNumber = 1;
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
 
-	<script>
+		<script>
+		// 	動態顯示計算金額
+		$(document).ready(
+				function() {
+					$('.order').on(
+							'keyup',
+							'.quantity',
+							function() {
+								var price = +$(this).closest('.order').data(
+										'price');
+								var quantity = +$(this).val();
+								$(this).closest('.order').find('#total').text(
+										price * quantity);
+							});
+					$('.order').on(
+							'click',
+							'.quantity',
+							function() {
+								var price = +$(this).closest('.order').data(
+										'price');
+								var quantity = +$(this).val();
+								$(this).closest('.order').find('#total').text(
+										price * quantity);
+							});
+				});
+
 		// 監聽輸入框
 		$(document).ready(function() {
 			$("input").focus(function() {
-				$(this).css("background-color", "ffd9e6");
+				$(this).css("background-color", "#C9C9C9");
 			});
 			$("input").blur(function() {
 				$(this).css("background-color", "#ffffff");

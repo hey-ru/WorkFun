@@ -6,7 +6,7 @@
 
 <%
 //查詢個人單筆明細
-List<GroupBuyListVO> list = (List<GroupBuyListVO>) request.getAttribute("buyerlist");
+List<GroupBuyListVO> list = (List<GroupBuyListVO>) session.getAttribute("buyerlist");
 
 int itemsPerPage = 10;
 %>
