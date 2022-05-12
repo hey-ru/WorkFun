@@ -171,10 +171,19 @@ public class BookingServlet extends HttpServlet {
 //		Integer bookingId = Integer.valueOf(req.getParameter("bookingId").trim());
 			Integer equipmentId = Integer.valueOf(req.getParameter("equipmentId").trim());
 			Integer empId = Integer.valueOf(req.getParameter("empId").trim());
+			
+//			Timestamp startDate = null;
+//			String startString = req.getParameter("startDate") + " 00:00:00";
+//			Timestamp startDate = Timestamp.valueOf(startString);
+					
 			String startString = req.getParameter("startDate") + " 00:00:00";
 			Timestamp startDate = Timestamp.valueOf(startString);
+
 			String endString = req.getParameter("endDate") + " 00:00:00";
 			Timestamp endDate = Timestamp.valueOf(endString);
+
+
+
 			Integer returnStatus = 5;
 
 			/*************************** 2.開始新增資料 ***************************************/

@@ -33,4 +33,7 @@ public interface BookingDAO_interface {
 	// 查詢逾期天數
 	public List<BookingVO> getOverdueDate(Integer empId);
 	
+	// 查詢此器材所有被預約日期
+	public List<BookingVO> getBookingAllDate(Integer equipmentId);
+	
 }

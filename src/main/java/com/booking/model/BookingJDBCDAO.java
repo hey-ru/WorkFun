@@ -49,7 +49,9 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	// 計算逾時期間
 	private static final String GET_OVERDUE_DATE = "select DATEDIFF(current_timestamp(),end_date) as dateDiff from booking where emp_id =?";
 
-//	========================================================================
+	private static final String GET_BOOKING_ALL_DATE = "select start_date , end_date from booking where equipment_id = ? and end_date >= now()";
+
+	// ========================================================================
 	@Override
 	public void insertBooking(BookingVO bookingVO) {
 
@@ -324,7 +326,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 				bookingVO.setReturnStatus(rs.getInt("return_status"));
 				bookingVO.setOverdueDate(rs.getTimestamp("overdue_date"));
 				bookingVO.setOverduePrice(rs.getInt("overdue_price"));
-				bookingVO.setDateDiff(rs.getLong("dateDiff"));//差異天數
+				bookingVO.setDateDiff(rs.getLong("dateDiff"));// 差異天數
 				list.add(bookingVO);
 			}
 
@@ -442,7 +444,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 				bookingVO.setReturnStatus(rs.getInt("return_status"));
 				bookingVO.setOverdueDate(rs.getTimestamp("overdue_date"));
 				bookingVO.setOverduePrice(rs.getInt("overdue_price"));
-				bookingVO.setDateDiff(rs.getLong("dateDiff"));//差異天數
+				bookingVO.setDateDiff(rs.getLong("dateDiff"));// 差異天數
 				list.add(bookingVO);
 			}
 		} catch (ClassNotFoundException e) {
@@ -555,8 +557,64 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 			while (rs.next()) {
 				bookingVO = new BookingVO();
 				bookingVO.setEmpId(rs.getInt("empId"));
-				//bookingVO.setDateDiff(rs.getTimestamp("dateDiff"));
+				// bookingVO.setDateDiff(rs.getTimestamp("dateDiff"));
 				bookingVO.setOverdueDate(rs.getTimestamp("overdue_date"));
+				list.add(bookingVO);
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<BookingVO> getBookingAllDate(Integer equipmentId) {
+
+		List<BookingVO> list = new ArrayList<BookingVO>();
+		BookingVO bookingVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_BOOKING_ALL_DATE);
+
+			pstmt.setInt(1, equipmentId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				bookingVO = new BookingVO();
+				bookingVO.setStartDate(rs.getTimestamp("start_date"));
+				bookingVO.setEndDate(rs.getTimestamp("end_date"));
 				list.add(bookingVO);
 			}
 
@@ -637,6 +695,12 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 //			System.out.println();
 //		}
 
+		List<BookingVO> list = dao.getBookingAllDate(105);
+		for (BookingVO aBookingVO : list) {
+			System.out.println(aBookingVO.getEquipmentId());
+			System.out.println(aBookingVO.getStartDate());
+			System.out.println(aBookingVO.getEndDate());
+		}
 		// 查詢自己預約單 by 狀態
 //		BookingVO bookingVO5 = dao.getbyReturnStatus(0);
 //		System.out.println(bookingVO5.toString());
@@ -648,10 +712,5 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 //		bookingVO6.setReturnStatus(3);
 //		dao.updateReturnStatus(bookingVO6);
 
-		List<BookingVO> list = dao.getOverdueDate(1069);
-		for (BookingVO aBooking : list) {
-			System.out.println(aBooking.getEmpId());
-			System.out.println(aBooking.getOverdueDate());
-		}
 	}
 }
