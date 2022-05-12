@@ -14,15 +14,14 @@ public class GroupBuyListService {
 
 	public GroupBuyListService() {
 //		dao = new GroupBuyListJDBCDAO();
-		dao = new GroupBuyListDAO();//連線池
+		dao = new GroupBuyListDAO();// 連線池
 	}
-	
-	
+
 //揪團:修改付款取貨
-	public void updatePayPickUP(Integer gb_id, Integer buyer,Integer is_pay,Integer is_pickup) {
+	public void updatePayPickUP(Integer gb_id, Integer buyer, Integer is_pay, Integer is_pickup) {
 
 		GroupBuyListVO groupBuyListVO = new GroupBuyListVO();
-		
+
 		groupBuyListVO.setGb_id(gb_id);
 		groupBuyListVO.setBuyer(buyer);
 		groupBuyListVO.setIs_pay(is_pay);
@@ -31,15 +30,44 @@ public class GroupBuyListService {
 		dao.updateIsPayIsPickUp(groupBuyListVO);
 
 	}
+
 //參團:下單多筆	
-	public void insertMany(List<GroupBuyListVO> listGBorder) {
-		dao.insertMany(listGBorder);
-	} 
+	public void insertMany(String gb_id, String buyer, String buyer_name, String[] menu_id, String[] item,
+			String[] price, String[] qty, String[] remark) {
+
+		GroupBuyListVO groupBuyListVO;
+		List<GroupBuyListVO> orderlist = new ArrayList<>();
+
+		for (int i = 0; i < menu_id.length; i++) {
+			if (!"0".equals(qty[i])) {
+				groupBuyListVO = new GroupBuyListVO();
+				groupBuyListVO.setGb_id(Integer.valueOf(gb_id));
+				groupBuyListVO.setBuyer(Integer.valueOf(buyer));
+				groupBuyListVO.setBuyer_name(buyer_name);
+
+				groupBuyListVO.setMenu_id(Integer.valueOf(menu_id[i]));
+				groupBuyListVO.setItem(item[i]);
+				groupBuyListVO.setPrice(Integer.valueOf(price[i]));
+				groupBuyListVO.setQty(Integer.valueOf(qty[i]));
+				groupBuyListVO.setRemark(remark[i]);
+
+				orderlist.add(groupBuyListVO);
+			}
+		}
+		dao.insertMany(orderlist);
+		
+		System.out.println(orderlist.toString());
+		System.out.println(gb_id + "參團新增成功!");
+	}
+
 //參團:修改多筆	
-		public void updateMany(List<GroupBuyListVO> listGBorder) {
-			dao.updateMany(listGBorder);
-	} 
-	
+	public void updateMany(List<GroupBuyListVO> newOrderlist) {
+		dao.updateMany(newOrderlist);
+		
+//		System.out.println("newOrderlist"+newOrderlist.toString());
+//		System.out.println("訂單修改完成");
+	}
+
 	public GroupBuyListVO addGbItem(Integer gb_id, Integer buyer, String buyer_name, Integer menu_id, String item,
 			Integer price, Integer qty, String remark) {
 
@@ -81,12 +109,11 @@ public class GroupBuyListService {
 	public void deleteMyGb(Integer buyer, Integer gb_id) {
 		dao.deleteMyGb(buyer, gb_id);
 	}
-	
+
 	public List<GroupBuyListVO> getMyGB(Integer buyer) {
 		return dao.getMyGB(buyer);
 	}
-	
-	
+
 	public List<GroupBuyListVO> getOne(Integer buyer, Integer gb_id) {
 		return dao.getOne(buyer, gb_id);
 	}
@@ -97,10 +124,10 @@ public class GroupBuyListService {
 
 	public GroupBuyListVO findByPrimaryKey(Integer gbList_id) {
 		return dao.findByPrimaryKey(gbList_id);
-	
+
 	}
-	
-	//萬用查詢
+
+	// 萬用查詢
 	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
 	}

@@ -84,10 +84,10 @@ int itemsPerPage = 10;
 													rowspan="1" colspan="1"
 													aria-label="Office: activate to sort column ascending"
 													>到貨時間</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
-													>低消限制</th>
+<!-- 												<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+<!-- 													rowspan="1" colspan="1" -->
+<!-- 													aria-label="Office: activate to sort column ascending" -->
+<!-- 													>低消限制</th> -->
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
@@ -120,7 +120,7 @@ int itemsPerPage = 10;
 														</td>
 														<td><fmt:formatDate value="${groupBuyVO.arr_time}" pattern="yyyy-MM-dd HH:mm"/>
 														</td>
-														<td>${groupBuyVO.min_amt}</td>
+<%-- 														<td>${groupBuyVO.min_amt}</td> --%>
 														<td><c:choose>
 														    <c:when test="${groupBuyVO.gb_status == 0}">
 														       	揪團中
@@ -136,15 +136,6 @@ int itemsPerPage = 10;
 														    </c:when>
 														</c:choose>
 														</td>
-<!-- 														<td> -->
-<%-- 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" --%>
-<!-- 																style="margin-bottom: 0px;"> -->
-<!-- 														<input type="submit" class="btn-info" value="修改到貨時間" style="margin-bottom: 0px;">  -->
-<%-- 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}"> --%>
-<%-- 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}"> --%>
-<!-- 														<input type="hidden" name="action" value="getOne_For_Display">										 -->
-<!-- 														</FORM>	 -->
-<!-- 														</td> -->
 														<td>
 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet"
 																style="margin-bottom: 0px;">

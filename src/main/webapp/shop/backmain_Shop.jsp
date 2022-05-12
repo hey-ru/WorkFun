@@ -27,7 +27,18 @@ int itemsPerPage = 10;
 
 
 <style>
+  th{
+        vertical-align: middle;
+            text-align: center;
+        }
+        td{
+        vertical-align: middle;
+            text-align: center;
+        }
 
+     .table-responsive {
+    	overflow-x:hidden;
+		}
 </style>
 </head>
 
@@ -49,13 +60,13 @@ int itemsPerPage = 10;
 
 				<!-- Topbar -->
 				<nav
-					class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
+					class="navbar navbar-expand navbar-light bg-dark topbar static-top shadow">
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav bg-dark ml-auto">
 
 						<!-- Nav Item - User Information -->
-						<li class="nav-item no-arrow"><a
+						<li class="nav-item no-arrow pr-3"><a
 							href="<%=request.getContextPath()%>/home/home.jsp"> <i
 								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 								Back Home
@@ -67,7 +78,7 @@ int itemsPerPage = 10;
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div class="container-fluid pl-0">
 
 					<!-- ============== 內容開始 ============== -->
 					<main id="main" class="main">

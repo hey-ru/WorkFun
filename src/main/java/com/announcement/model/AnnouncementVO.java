@@ -3,47 +3,49 @@ package com.announcement.model;
 import java.sql.Timestamp;
 
 public class AnnouncementVO {
-	private Integer announcementId;
-	private Integer announcerId ;
-	private String announcementTitle;
-	private String announcementContent ;
-	private Timestamp announcementTime;
-	private Byte announcementStatus ;
-	public Integer getAnnouncementId() {
-		return announcementId;
+	private Integer announcement_id;
+	private Integer announcer ;
+	private String announcement_title;
+	private String announcement_content ;
+	private Timestamp announcement_time;
+	private Byte announcement_status ;
+	public Integer getAnnouncement_id() {
+		return announcement_id;
 	}
-	public void setAnnouncementId(Integer announcementId) {
-		this.announcementId = announcementId;
+	public void setAnnouncement_id(Integer announcement_id) {
+		this.announcement_id = announcement_id;
 	}
-	public Integer getAnnouncerId() {
-		return announcerId;
+	
+	public Integer getAnnouncer() {
+		return announcer;
 	}
-	public void setAnnouncerId(Integer announcementerId) {
-		this.announcerId = announcementerId;
+	public void setAnnouncer(Integer announcer) {
+		this.announcer = announcer;
 	}
-	public String getAnnouncementTitle() {
-		return announcementTitle;
+	public String getAnnouncement_title() {
+		return announcement_title;
 	}
-	public void setAnnouncementTitle(String announcementTitle) {
-		this.announcementTitle = announcementTitle;
+	public void setAnnouncement_title(String announcement_title) {
+		this.announcement_title = announcement_title;
 	}
-	public String getAnnouncementContent() {
-		return announcementContent;
+	public String getAnnouncement_content() {
+		return announcement_content;
 	}
-	public void setAnnouncementContent(String announcementContent) {
-		this.announcementContent = announcementContent;
+	public void setAnnouncement_content(String announcement_content) {
+		this.announcement_content = announcement_content;
 	}
-	public Timestamp getAnnouncementTime() {
-		return announcementTime;
+	public Timestamp getAnnouncement_time() {
+		return announcement_time;
 	}
-	public void setAnnouncementTime(Timestamp announcementTime) {
-		this.announcementTime = announcementTime;
+	public void setAnnouncement_time(Timestamp announcement_time) {
+		this.announcement_time = announcement_time;
 	}
-	public Byte getAnnouncementStatus() {
-		return announcementStatus;
+	public Byte getAnnouncement_status() {
+		return announcement_status;
 	}
-	public void setAnnouncementStatus(Byte announcementStatus) {
-		this.announcementStatus = announcementStatus;
+	public void setAnnouncement_status(Byte announcement_status) {
+		this.announcement_status = announcement_status;
 	}
+	
 	
 }

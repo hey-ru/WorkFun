@@ -129,6 +129,19 @@ int itemsPerPage = 10;
 																	aria-controls="dataTable" rowspan="1" colspan="1"
 																	aria-label="Salary: activate to sort column ascending"
 																	style="">回報狀態</th>
+																<th class="sorting" tabindex="0"
+																	aria-controls="dataTable" rowspan="1" colspan="1"
+																	aria-label="Salary: activate to sort column ascending"
+																	style="">處理</th>
+																<th class="sorting" tabindex="0"
+																	aria-controls="dataTable" rowspan="1" colspan="1"
+																	aria-label="Salary: activate to sort column ascending"
+																	style="">轉發</th>
+																<th class="sorting" tabindex="0"
+																	aria-controls="dataTable" rowspan="1" colspan="1"
+																	aria-label="Salary: activate to sort column ascending"
+																	style="">完成</th>	
+																	
 															</tr>
 														</thead>
 														<thead>
@@ -159,12 +172,17 @@ int itemsPerPage = 10;
 																	<td><a
 																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forComment">
 																			<button type="button" value="getOne_forComment"
-																				class="btn btn-info">處理此回報</button>
+																				class="btn btn-info">處理</button>
 																	</a></td>
 																	<td><a
 																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forModify">
 																			<button type="button" value="getOne_forModify"
-																				class="btn btn-info">轉發此回報</button>
+																				class="btn btn-info">轉發</button>
+																	</a></td>
+																	<td><a
+																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=complete">
+																			<button type="button" value="complete"
+																				class="btn btn-info">完成</button>
 																	</a></td>
 														</c:if>
 																</tr>

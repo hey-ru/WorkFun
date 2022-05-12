@@ -3,7 +3,7 @@ package com.groupbuylist.model;
 import java.util.*;
 
 import com.groupbuy.model.GroupBuyJDBCDAO;
-import com.groupbuylist.controller.jdbcUtil_CompositeQuery;
+import com.util.jdbcUtil_CompositeQuery;
 
 import java.io.IOException;
 import java.sql.*;

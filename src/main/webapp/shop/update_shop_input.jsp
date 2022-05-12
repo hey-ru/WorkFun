@@ -31,14 +31,14 @@
 			<div class="card" style="border:0px;">
 <!--                    <div style="height: var(--header-height); margin-bottom:10px;"></div> -->
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="card-header py-3" style="background-color: #99CCCC">
 					<div class="row">
-						<div class="col-11" style="height: 20px; display: inline-block;">
+						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h5>
 								<strong>修改店家資訊</strong>
 							</h5>
 						</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
+						<div class="col-3" style="height: 20px; display: inline-block;">
 							<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp"><strong>回店家列表</strong></a>
 						</div>
 					</div>
@@ -54,13 +54,17 @@
 		<td>${param.shop_id}</td>
 	</tr>
 	<tr>
-		<th>店家名稱:<font color=red><b>*</b></font></th>
-		<td><input type="TEXT" name="shop_name" size="45" 
-			 value="${param.shop_name}"/></td><td>${errorMsgs.shop_name}</td>
+		<th><label for="shop_name">店家名稱:</label><font color=red><b>*</b></font></th>
+		<td><input type="TEXT" required id="shop_name" name="shop_name" size="45" 
+			 value="${param.shop_name}"/></td>
 	</tr>
 	<tr>
-		<th>店家類型: </th>	 
-		<td><select size="1" name="shop_type" size="45">
+	<th></th>
+	<td><span id="shop_nameerror" style="color:red;">${errorMsgs.shop_name}</span></td>
+	</tr>	
+	<tr>
+		<th><label for="shop_type">店家類型: </label></th>	 
+		<td><select size="1" id="shop_type"  name="shop_type" size="45">
 				<option value="0" ${(param.shop_type==0)? 'selected':'' } >飲料
 				<option value="1" ${(param.shop_type==1)? 'selected':'' } >中式
 				<option value="2" ${(param.shop_type==2)? 'selected':'' } >異國
@@ -79,22 +83,34 @@
 		<select id="city" name="city" placeholder="請選擇縣市"></select>
 		<select id="dist" name="dist" placeholder="請選擇鄉鎮區"></select><br>
 		<input type="TEXT" id="addressend" name="addressend" size="45" placeholder="請輸入接續地址"
-			 value="${addressend}"/></td><td>${errorMsgs.address}</td>
+			 value="${addressend}"/></td>
 	</tr>
 	<tr>
-		<th>電話:<font color=red><b>*</b></font></th>
-		<td><input type="TEXT" name="tel" size="45"
+	<th></th>
+	<td><span id="addresserror" style="color:red;">${errorMsgs.address}</span></td>
+	</tr>
+	<tr>
+		<th><label for="tel">電話:</label><font color=red><b>*</b></font></th>
+		<td><input type="tel" id="tel" required name="tel" size="45"  placeholder="請輸入電話號碼或手機號碼"
 			 value="${param.tel}"/></td><td>${errorMsgs.tel}</td>
 	</tr>
 	<tr>
+	<th></th>
+	<td><span id="telerror" style="color:red;">${errorMsgs.tel}</span></td>
+	</tr>
+	<tr>
 		<th>網站: </th>
-		<td><input type="TEXT" name="website" size="45"
+		<td><input type="url" name="website" size="45"
 			 value="${param.website}"/></td><td>${errorMsgs.website}</td>
 	</tr>
 	<tr>
 		<th>低消: </th>
-		<td><input type="TEXT" name="min_amt" size="45"
+		<td><input type="number" name="min_amt" min="0" id="min_amt" size="45"
 			 value="${param.min_amt}"/></td><td>${errorMsgs.min_amt}</td>
+	</tr>
+	<tr>
+	<th></th>
+	<td><span id="min_amterror" style="color:red;">${errorMsgs.min_amt}</span></td>
 	</tr>
 	<tr>
 		<th>圖片:</th>
@@ -173,6 +189,48 @@
 		$('#city').change( function() {  
 			$('#addressend').val(''); 
 		});
+		
+		 let rule1=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$/;
+         $("#shop_name").blur(function(){
+       	  if($(this).val() == ''){
+       		  $('#shop_nameerror').text('請填入店名!')
+       	  }else if(rule1.test($(this).val())){
+                 $('#shop_nameerror').text('')
+             }else{
+                 $('#shop_nameerror').text('店家名稱:只能是中日英文字母、數字_-和()符號')
+             }
+         });
+     	
+         let rule2=/^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$/;
+         $("#addressend").blur(function(){
+       	  
+       	 if(rule2.test($(this).val())){
+                 $('#addresserror').text('')
+             }else{
+                 $('#addresserror').text('地址只能是中、英文字母、數字和_-')
+             }
+         });	
+         
+         let rule3=/(09\d{2}-?(\d{3}-?\d{3}))|((\d{2,3}|\(\d{2,3}\))-?\d{3,4}-?\d{3,4})/;
+         $("#tel").blur(function(){
+       	 if($(this).val() == ''){
+       		  $('#telerror').text('請填入電話或手機!')	        	  
+       	  }else if(rule3.test($(this).val())){
+                 $('#telerror').text('')
+             }else{
+                 $('#telerror').text('請再確認一下電話號碼')
+             }
+         });
+         
+         $("#min_amt").blur(function(){
+       	  
+       	 if($(this).val() >= 0){
+                 $('#min_amterror').text('')
+             }else{
+                 $('#min_amterror').text('請輸入0以上數字')
+             }
+         });
+     
 			
 
 </script>

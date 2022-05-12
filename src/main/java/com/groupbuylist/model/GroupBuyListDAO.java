@@ -7,7 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.groupbuylist.controller.jdbcUtil_CompositeQuery;
+import com.util.jdbcUtil_CompositeQuery;
 
 import java.sql.*;
 
@@ -23,6 +23,11 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		}
 	}
 
+	//萬用查詢
+	private static final String GET_JOIN="SELECT l.gb_id , g.shop_name, SUM(price*qty) AS TOTAL, "
+			+ "l.is_pay, l.is_pickup, g.start_time, g.end_time, g.gb_status "
+			+ "FROM groupbuylist l JOIN groupbuy g ON l.gb_id = g.gb_id";
+	
 //  <<參團管理>>
 //	參團者新增一筆參團ok
 	private static final String INSERT_STMT = "INSERT INTO groupbuylist (gb_id, buyer, buyer_name, menu_id, item, "
@@ -33,12 +38,12 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gblist_upd desc ";
 //	-- 1. 計算我的各團總額
 //	private static final String GET_MYGB_Total = "SELECT gb_id, SUM(price*qty) AS TOTAL FROM groupbuylist WHERE buyer=? GROUP BY gb_id; ";
-	
+
 //	-- 1-1. 退出按鈕: (揪團截止前)刪除 訂單所有項目ok	
 	private static final String DELETEMYGB = "DELETE FROM groupbuylist where buyer = ? and gb_id = ?";
 
 //	-- 2. 檢視按鈕: 查詢 我的單筆明細ok
-	private static final String GET_ONE_BYBUYER = "SELECT gbList_id, gb_id, buyer, buyer_name, menu_id, item, price, qty, remark FROM groupbuylist WHERE buyer = ? AND gb_id= ? AND qty>0 GROUP BY gbList_id ";
+	private static final String GET_ONE_BYBUYER = "SELECT * FROM groupbuylist WHERE buyer = ? AND gb_id= ? GROUP BY gbList_id ";
 
 //	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註ok
 	private static final String UPDATE = "UPDATE groupbuylist set qty=?, remark=? where buyer=? and gbList_id=?";
@@ -59,7 +64,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 
 //	參團者修改多筆  ok
 	@Override
-	public void updateMany(List<GroupBuyListVO> listGBorder) {
+	public void updateMany(List<GroupBuyListVO> newOrderlist) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -67,23 +72,40 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			// 新增多筆項目
-			for (GroupBuyListVO groupBuyListVO : listGBorder) {
-				
+			// 新增修改項目
+			for (GroupBuyListVO groupBuyListVO : newOrderlist) {
+
 				pstmt.setInt(1, groupBuyListVO.getQty());
 				pstmt.setString(2, groupBuyListVO.getRemark());
 				pstmt.setInt(3, groupBuyListVO.getBuyer());
 				pstmt.setInt(4, groupBuyListVO.getGbList_id());
-				pstmt.addBatch();
+				
+				pstmt.executeUpdate();
+				
 			}
-			pstmt.executeBatch();
 
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
-	
+
 //	參團者新增多筆 ok
 	@Override
 	public void insertMany(List<GroupBuyListVO> listGBorder) {
@@ -107,9 +129,25 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 				pstmt.executeUpdate();
 			}
 
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -151,7 +189,6 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 				}
 			}
 		}
-
 	}
 
 //	參團者新增一筆參團 ok
@@ -176,9 +213,25 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 			pstmt.setString(8, groupBuyListVO.getRemark());
 			pstmt.executeUpdate();
 
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -201,17 +254,35 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 
 			while (rs.next()) {
 				groupBuyListVO = new GroupBuyListVO();
-				
+
 				groupBuyListVO.setGb_id(rs.getInt(1));
+//				groupBuyListVO.setPrice(rs.getInt(2));
+//				groupBuyListVO.setQty(rs.getInt(3));
 				groupBuyListVO.setTotal(rs.getInt(2));
 				groupBuyListVO.setIs_pay(rs.getInt(3));
 				groupBuyListVO.setIs_pickup(rs.getInt(4));
 
 				mygblist.add(groupBuyListVO);
 			}
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		return mygblist;
 	}
@@ -231,9 +302,25 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 
 			pstmt.executeUpdate();
 
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -267,15 +354,31 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 				groupBuyListVO.setPrice(rs.getInt(7));
 				groupBuyListVO.setQty(rs.getInt(8));
 				groupBuyListVO.setRemark(rs.getString(9));
-//				groupBuyListVO.setIs_pay(rs.getInt(10));
-//				groupBuyListVO.setIs_pickup(rs.getInt(11));
-//				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
+				groupBuyListVO.setIs_pay(rs.getInt(10));
+				groupBuyListVO.setIs_pickup(rs.getInt(11));
+				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
 
 				onelist.add(groupBuyListVO);
 			}
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		return onelist;
 	}
@@ -309,9 +412,25 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 
 			pstmt.executeUpdate();
 
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -329,9 +448,25 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 			pstmt.setInt(1, gbList_id);
 			pstmt.executeUpdate();
 
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 
@@ -366,10 +501,27 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 				groupBuyListVO.setGbList_upd(rs.getTimestamp(12));
 
 				list.add(groupBuyListVO);
+
 			}
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		return list;
 	}
@@ -426,42 +578,36 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			String finalSQL = "select * from groupbuylist " + jdbcUtil_CompositeQuery.get_WhereCondition(map)
-					+ "order by gblist_id";
+			String finalSQL = GET_JOIN 
+					+ jdbcUtil_CompositeQuery.get_WhereCondition(map)
+					+ "GROUP BY l.gb_id ORDER BY g.end_time desc";
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				groupBuyListVO = new GroupBuyListVO();
-				groupBuyListVO.setGbList_id(rs.getInt("gblist_id"));
+//				groupBuyListVO.setGbList_id(rs.getInt("gbList_id"));
 				groupBuyListVO.setGb_id(rs.getInt("gb_id"));
-				groupBuyListVO.setBuyer(rs.getInt("buyer"));
-				groupBuyListVO.setBuyer_name(rs.getString("buyer_name"));
-				groupBuyListVO.setMenu_id(rs.getInt("menu_id"));
-				groupBuyListVO.setItem(rs.getString("item"));
-				groupBuyListVO.setPrice(rs.getInt("price"));
-				groupBuyListVO.setQty(rs.getInt("qty"));
+//				groupBuyListVO.setBuyer(rs.getInt("buyer"));
+//				groupBuyListVO.setBuyer_name(rs.getString("buyer_name"));
+//				groupBuyListVO.setMenu_id(rs.getInt("menu_id"));
+//				groupBuyListVO.setItem(rs.getString("item"));
+//				groupBuyListVO.setPrice(rs.getInt("price"));
+//				groupBuyListVO.setQty(rs.getInt("qty"));
 				groupBuyListVO.setTotal(rs.getInt("total"));
-				groupBuyListVO.setRemark(rs.getString("remark"));
+//				groupBuyListVO.setRemark(rs.getString("remark"));
 				groupBuyListVO.setIs_pay(rs.getInt("is_pay"));
 				groupBuyListVO.setIs_pickup(rs.getInt("is_pickup"));
-				groupBuyListVO.setGbList_upd(rs.getTimestamp("gbList_upd"));
+//				groupBuyListVO.setGbList_upd(rs.getTimestamp("gbList_upd"));
 
 				list.add(groupBuyListVO); // Store the row in the List
 			}
-
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -479,6 +625,4 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		}
 		return list;
 	}
-
-
 }

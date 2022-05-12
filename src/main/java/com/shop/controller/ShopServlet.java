@@ -128,30 +128,31 @@ public class ShopServlet extends HttpServlet {
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
 				
 				String shop_name = req.getParameter("shop_name");
-				String shop_nameReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\(\\-\\)]*$";
+				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
 				if (shop_name == null || shop_name.trim().length() == 0) {
 					errorMsgs.put("shop_name","店家名稱: 請勿空白");
 				} else if(!shop_name.trim().matches(shop_nameReg)) {
-					errorMsgs.put("shop_name","店家: 只能是中、英文字母、數字、_、-和()");
+					errorMsgs.put("shop_name","店家名稱:只能是中日英文字母、數字_-和()符號");
 	            }
 				
 				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());
 				//(0: 飲料, 1: 中式 2: 異國, 3: 小吃, 4: 素食 5:其他 )
 				
 				String placecode = req.getParameter("placecode").trim();
-				String city = req.getParameter("city").trim();
-				String dist = req.getParameter("dist").trim();
-				String addressend = req.getParameter("addressend").trim();
+				String city = req.getParameter("city");
+				String dist = req.getParameter("dist");
+				String addressend = req.getParameter("addressend");
 				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$";
 				if ((addressend.trim().length() != 0) && !(addressend.trim().matches(addressReg))) { 
-					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_");
+					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_-");
 	            }
-				String addressend1 = addressend.replace(city, "");
-				String addressend2 = addressend1.replace(dist, "");				
-				String address = placecode+city+dist+addressend2;
+				String address = "";
+				if (addressend.trim().length() != 0) {
+				address = placecode+city+dist+addressend;
+				}
 				
 				String tel = req.getParameter("tel");
-				String telReg = "(\\d{2,3}-?|\\(\\d{2,3}\\)-?)\\d{3,4}-?\\d{4}|09\\d{2}-?(\\d{6}|-\\d{3}-\\d{3})";
+				String telReg = "(09\\d{2}-?(\\d{3}-?\\d{3}))|((\\d{2,3}|\\(\\d{2,3}\\))-?\\d{3,4}-?\\d{3,4})";
 				if (tel == null || tel.trim().length() == 0) {
 					errorMsgs.put("tel","電話:請至少留一個電話或手機號碼");
 				} else if(!tel.trim().matches(telReg)) { 
@@ -169,7 +170,6 @@ public class ShopServlet extends HttpServlet {
 						errorMsgs.put("min_amt","外送低消請填數字");
 					}
 				}
-				
 				
 				ShopVO oldshopVO = new ShopService().getOneShop(shop_id);
 							
@@ -224,11 +224,11 @@ public class ShopServlet extends HttpServlet {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 	
 				String shop_name = req.getParameter("shop_name");
-				String shop_nameReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\(\\-\\)]*$";
+				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
 				if (shop_name == null || shop_name.trim().length() == 0) {
 					errorMsgs.put("shop_name","店家名稱: 請勿空白");
 				} else if(!shop_name.trim().matches(shop_nameReg)) {
-					errorMsgs.put("shop_name","店家: 店家: 只能是中、英文字母、數字、_、-和()");
+					errorMsgs.put("shop_name","店家名稱:只能是中日英文字母、數字_-和()符號");
 	            }
 				
 				Integer shop_type = Integer.valueOf(req.getParameter("shop_type").trim());
@@ -240,15 +240,15 @@ public class ShopServlet extends HttpServlet {
 				String addressend = req.getParameter("address").trim();
 				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$";
 				if ((addressend.trim().length() != 0) && !(addressend.trim().matches(addressReg))) { 
-					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_");
+					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_-");
 	            }
-				String address = null;
+				String address = "";
 				if (addressend.trim().length() != 0) {
 				address = placecode+city+dist+addressend;
 				}
 				
 				String tel = req.getParameter("tel");
-				String telReg = "(\\d{2,3}-?|\\(\\d{2,3}\\)-?)\\d{3,4}-?\\d{4}|09\\d{2}-?(\\d{6}|-\\d{3}-\\d{3})";
+				String telReg = "(09\\d{2}-?(\\d{3}-?\\d{3}))|((\\d{2,3}|\\(\\d{2,3}\\))-?\\d{3,4}-?\\d{3,4})";
 				if (tel == null || tel.trim().length() == 0) {
 					errorMsgs.put("tel","電話:請至少留一個電話或手機號碼");
 				} else if(!tel.trim().matches(telReg)) { 

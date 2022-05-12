@@ -26,8 +26,8 @@ int itemsPerPage = 10;
             text-align: center;
         height:100px;
         }
-        .table-responsive {
-    	overflow-x: ;
+  body {
+	overflow-x:hidden;
 }
     </style>
 </head>
@@ -42,14 +42,14 @@ int itemsPerPage = 10;
 			<div class="card shadow">
 
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="card-header py-3" style="background-color: #99CCCC">
 					<div class="row">
-						<div class="col-11" style="height: 20px; display: inline-block;">
+						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h5>
 								<strong>店家資訊</strong>
 							</h5>
 						</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
+						<div class="col-3" style="height: 20px; display: inline-block;">
 							<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp"><strong>回揪團列表</strong></a>
 						</div>
 					</div>
@@ -82,9 +82,9 @@ int itemsPerPage = 10;
 								</form>
 							</div>
 							<div class="col-2 mt-2" style="left: 0;">
-								<a  href='${pageContext.request.contextPath}/shop/addShopMenu.jsp'><button type="button"
-										class="btn btn-warning btn-lg">新增店家</button></a>
-							</div>
+						<a href='${pageContext.request.contextPath}/shop/addShop.jsp'><button
+								type="button" class="btn btn-warning btn-lg">新增店家</button></a>
+					</div>
 						</div>
 
 						<div class="row">
@@ -251,6 +251,13 @@ int itemsPerPage = 10;
 	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
+	
+<script type="text/javascript">
+$("tbody tr").css("background-color", function(index) {
+    return index%2==0?"rgba(255,255,224,0.5)":"";
+});
+
+</script>
 
 
 

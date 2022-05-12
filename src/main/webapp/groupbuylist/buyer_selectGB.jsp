@@ -11,6 +11,8 @@
 <%
 //只能查詢個人參團紀錄
 EmpVO empVO = (EmpVO) session.getAttribute("empVO");
+
+//查詢出參團人所有參團
 GroupBuyListService gblistSvc = new GroupBuyListService();
 List<GroupBuyListVO> list = gblistSvc.getMyGB(empVO.getEmpId());
 
@@ -26,9 +28,7 @@ int itemsPerPage = 6;
 <%@ include file="/design/frontmetacss.jsp"%>
 
 <style>
-.table-responsive {
-	overflow-x: hidden;
-}
+
 </style>
 
 
@@ -58,147 +58,151 @@ int itemsPerPage = 6;
 
 				<!-- ============== Card Body ============== -->
 				<div class="card-body">
-					<div class="table-responsive">
-						<div id="dataTable_wrapper"
-							class="dataTables_wrapper dt-bootstrap4">
+						<div class="row">
+							<div class="col-11 row" style="height: 60px; display: inline-block;">
+							<div class = col-8>
+							<ul class="nav nav-tabs">
+								  <li class="nav-item">
+								    <a class="nav-link" 
+								    href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp">所有參團</a>
+								  </li>
+<!-- 								  <li class="nav-item"> -->
+<!-- 								    <a class="nav-link" -->
+<%-- 								     href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet?action=listByCompositeQueryBack&buyer=${empVO.empId}&g.gb_status=0">揪團中</a> --%>
+<!-- 								  </li> -->
+								  <li class="nav-item">
+								    <a class="nav-link" 
+								    href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet?action=listByCompositeQueryBack&buyer=${empVO.empId}&g.gb_status=0">歷史訂單</a>
+								  </li>
+								</ul>
+								</div>
+								</div>
+<!-- 							<div class="col-11 row" style="height: 60px; display: inline-block;"> -->
+							
+<%-- 								<form class="my-1 col-6" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="formsearch"> --%>
+<!-- 									<div class="form-groupf" style="display: inline-block"> -->
+<!-- 										<input type="text" class="form-control" -->
+<!-- 											id="gb_id" placeholder="輸入揪團編號" -->
+<!-- 											style="border: gray solid 2px;" name="gb_id"> -->
+<!-- 									</div> -->
+<!-- 									<input type="hidden" name="action" value="listByCompositeQueryBack"> -->
+<!-- 									<button type="submit" class="btn btn-dark mb-2 mt-1 col-2" -->
+<!-- 										style="display: inline-block;">搜尋</button> -->
+<!-- 								</form> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+					
+					
+						<table class="table table-striped">
+							<!-- ========================= 表頭 ========================= -->
+							<thead>
+								<tr>
+									<th scope="col">我的參團</th>
+									<th scope="col">店家</th>
+									<th scope="col">總額</th>
+									<th scope="col">付款狀態</th>
+									<th scope="col">取貨狀態</th>
+									<th scope="col">開始時間</th>
+									<th scope="col">結束時間</th>
+									<th scope="col">取貨時間</th>
+									<th scope="col">各團狀態</th>
+									<th scope="col"></th>
+									<th scope="col"></th>
+									<th scope="col"></th>
+								</tr>
+							</thead>
 
-							<div class="row">
-								<div class="col-sm-12">
-									<table class="table table-bordered dataTable" id="dataTable"
-										width="100%" cellspacing="0" role="grid"
-										aria-describedby="dataTable_info" style="width: 100%">
-										<!-- ========================= 表頭 ========================= -->
-										<thead>
-											<tr role=" row">
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending">參團編號</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending">店家名稱</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending">總金額</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">付款狀態</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">取貨狀態</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">開始時間</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending">結束時間</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending">各團狀態</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"></th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"></th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"></th>
-											</tr>
-										</thead>
+							<%@ include file="/design/page1.file"%>
 
-
-										<%@ include file="/design/page1.file"%>
-
-										<!-- ========================= 表格內容 ========================= -->
-										<tbody>
-											<c:forEach var="mygb" items="${mygblist}"
-												begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-												<tr>
-													<td>${mygb.gb_id}</td>
-													<td>${mygb.groupBuyVO.shop_name}</td>
-													<td>${mygb.total}</td>
-													<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
-													<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}</td>
-													<td><fmt:formatDate
-															value="${mygb.groupBuyVO.start_time}"
-															pattern="yyyy-MM-dd HH:mm" /></td>
-													<td><fmt:formatDate
-															value="${mygb.groupBuyVO.end_time}"
-															pattern="yyyy-MM-dd HH:mm" /></td>
-													<td><c:choose>
-															<c:when test="${mygb.groupBuyVO.gb_status == 0}">
+							<!-- ========================= 表格內容 ========================= -->
+							<tbody>
+								<c:forEach var="mygb" items="${mygblist}" begin="<%=pageIndex%>"
+									end="<%=pageIndex+rowsPerPage-1%>">
+									<c:if test="${(mygb.total) > 0}">
+										<tr>
+											<td>${mygb.gb_id}</td>
+											<td>${mygb.groupBuyVO.shop_name}</td>
+											<td>${mygb.total}</td>
+											<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
+											<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}</td>
+											<td><fmt:formatDate
+													value="${mygb.groupBuyVO.start_time}"
+													pattern="yyyy-MM-dd HH:mm" /></td>
+											<td><fmt:formatDate value="${mygb.groupBuyVO.end_time}"
+													pattern="yyyy-MM-dd HH:mm" /></td>
+											<td><fmt:formatDate value="${mygb.groupBuyVO.arr_time}"
+													pattern="yyyy-MM-dd HH:mm" /></td>
+											<td><c:choose>
+													<c:when test="${mygb.groupBuyVO.gb_status == 0}">
 														       	揪團中
 														    </c:when>
-															<c:when test="${mygb.groupBuyVO.gb_status == 1}">
+													<c:when test="${mygb.groupBuyVO.gb_status == 1}">
 														        取消
 														    </c:when>
-															<c:when test="${mygb.groupBuyVO.gb_status == 2}">
+													<c:when test="${mygb.groupBuyVO.gb_status == 2}">
 														        揪團結束
 														    </c:when>
-															<c:when test="${mygb.groupBuyVO.gb_status == 3}">
+													<c:when test="${mygb.groupBuyVO.gb_status == 3}">
 														        揪團關閉
 														    </c:when>
-														</c:choose></td>
-													<td>
-														<FORM METHOD="post"
-															ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
-															style="margin-bottom: 0px;">
-															<input type="hidden" name="gb_id" value="${mygb.gb_id}">
-															<input type="hidden" name="buyer" value="${empVO.empId}">
-															<input type="hidden" name="action" value="get_buyerlist">
-															<input type="submit" class="btn btn-info btn-sm"
-																value="訂單明細">
-														</FORM>
-													</td>
-													<td>
-														<FORM METHOD="post"
-															ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
-															style="margin-bottom: 0px;">
-															<input type="hidden" name="gb_id" value="${mygb.gb_id}">
-															<input type="hidden" name="buyer" value="${empVO.empId}">
-															<input type="hidden" name="action" value="updateMyGb">
-															<input type="submit" class="btn btn-success btn-sm"
-																value="編輯"
-																${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
-														</FORM>
-													</td>
-													<td>
-														<FORM METHOD="post"
-															ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
-															onSubmit="javascript:return window.confirm('確定不參加嗎？')">
-															<input type="hidden" name="gb_id" value="${mygb.gb_id}">
-															<input type="hidden" name="buyer" value="${empVO.empId}">
-															<input type="hidden" name="action" value="deleteMyGb">
+												</c:choose></td>
+<!-- 											<td> -->
+<!-- 												<FORM METHOD="post" -->
+<%-- 													ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet" --%>
+<!-- 													style="margin-bottom: 0px;"> -->
+<%-- 													<input type="hidden" name="gb_id" value="${mygb.gb_id}"> --%>
+<%-- 													<input type="hidden" name="buyer" value="${empVO.empId}"> --%>
+<!-- 													<input type="hidden" name="action" value="get_buyerlist"> -->
+<!-- 													<input type="submit" class="btn btn-info btn-sm" -->
+<!-- 														value="訂單明細" -->
+<!-- 												</FORM> -->
+<!-- 											</td> -->
+											<td>
+												<FORM METHOD="post"
+													ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
+													style="margin-bottom: 0px;">
+													<input type="hidden" name="shop_id"
+														value="${mygb.groupBuyVO.shop_id}"> <input
+														type="hidden" name="gb_id" value="${mygb.gb_id}">
+													<input type="hidden" name="buyer" value="${empVO.empId}">
+													<input type="hidden" name="action" value="updateMyGb">
+													<input type="submit" class="btn btn-success btn-sm"
+														value="編輯"
+														${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
+												</FORM>
+											</td>
+											<td>
+												<FORM METHOD="post" id="delete-confirm"
+													onclick="myAlertFunction(event)"
+													ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
+													onSubmit="javascript:return window.sweetAlert('確定不參加嗎？')">
+													<input type="hidden" name="gb_id" value="${mygb.gb_id}">
+													<input type="hidden" name="buyer" value="${empVO.empId}">
+													<input type="hidden" name="action" value="deleteMyGb">
 
-															<!-- 判斷截止時間是否小於現在時間,若是hidden button -->
-															<!-- 																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團" -->
-															<%-- 																${mygb.groupBuyVO.end_time lt now ? 'disabled="disabled"' : ''}/> --%>
-															<%-- 																	<jsp:useBean id="now" class="java.util.Date" /> --%>
-															<%-- 																	<c:out value="${mygb.groupBuyVO.end_time lt now}"/>  --%>
-															<!-- 判斷截止時間是否為揪團中-->
-															<input type="submit" class="btn btn-secondary btn-sm"
-																value="退團"
-																${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
-														</FORM>
-													</td>
-
-
-												</tr>
-												<!-- 揪團截止不能取消及編輯 -->
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
-							</div>
-
-
-							<%@ include file="/design/page2.file"%>
-
-
-						</div>
+													<!-- 判斷截止時間是否小於現在時間,若是hidden button -->
+													<!-- 																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團" -->
+													<%-- 																${mygb.groupBuyVO.end_time lt now ? 'disabled="disabled"' : ''}/> --%>
+													<%-- 																	<jsp:useBean id="now" class="java.util.Date" /> --%>
+													<%-- 																	<c:out value="${mygb.groupBuyVO.end_time lt now}"/>  --%>
+													<!-- 判斷截止時間是否為揪團中-->
+													<input type="submit" onclick="myAlertFunction(event)"
+														class="btn btn-secondary btn-sm" value="退團"
+														${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
+												</FORM>
+											</td>
+										</tr>
+										<!-- 揪團截止不能取消及編輯 -->
+									</c:if>
+								</c:forEach>
+							</tbody>
+						</table>
 					</div>
+
+					<%@ include file="/design/page2.file"%>
 				</div>
 			</div>
+			
 		</main>
 		<!-- ======= 內容結束 ======= -->
 
@@ -208,5 +212,17 @@ int itemsPerPage = 6;
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
 </body>
+
+<script>
+	document.getElementById("delete-confirm").addEventListener("click",
+			function() {
+				swal({
+					title : "確定要退出? 😭😭😭",
+					icon : "warning",
+					buttons : true,
+					dangerMode : true
+				});
+			});
+</script>
 
 </html>

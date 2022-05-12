@@ -22,7 +22,7 @@ import java.sql.*;
 public class EmpDAO implements EmpDAO_interface {
 	
 	
-	private static final String LOGIN_STMT = "select * from emp where emp_id = ? and emp_password = ? ";
+	private static final String LOGIN_STMT = "select * from emp where mail = ? and emp_password = ? ";
 	private static final String FORGOT_STMT = "select * from emp where mail = ? and birthday = ? ";
 	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT emp_id,dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
@@ -130,7 +130,8 @@ return 1;
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -162,7 +163,7 @@ int count=0;
 			
 //			pstmt = con.prepareStatement(UPDATE);
 			EmpVO oldemp = findByPrimaryKey(newemp.getEmpId());
-			System.out.println(oldemp.getEmpId());
+	
 		StringBuilder sb=new StringBuilder();
 			sb.append(UPDATE);
 			if (newemp.getDepId() != null ) {
@@ -293,7 +294,8 @@ int count=0;
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -301,7 +303,13 @@ int count=0;
 					se.printStackTrace(System.err);
 				}
 			}
-			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 return 1;
 	}
@@ -450,7 +458,8 @@ int count=0;
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -458,7 +467,13 @@ int count=0;
 					se.printStackTrace(System.err);
 				}
 			}
-			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 return 1;
 	}
@@ -644,7 +659,7 @@ return empVO;
 		}
 return empVO;
 	}
-	public EmpVO selectForLogin(Integer empId, String password,Connection con) {
+	public EmpVO selectForLogin(String mail, String password,Connection con) {
 		
 		PreparedStatement pstmt = null;
 		EmpVO empVO = null;
@@ -655,7 +670,7 @@ return empVO;
 		
 			
 
-			pstmt.setInt(1, empId);
+			pstmt.setString(1, mail);
 			pstmt.setString(2, password);
 		
 //			pstmt.setInt(14, empVO.getEmpId());
@@ -744,7 +759,8 @@ return empVO;
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
-		} finally {
+		} 
+		finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -752,11 +768,17 @@ return empVO;
 					se.printStackTrace(System.err);
 				}
 			}
-		
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 return empVO;
 	}
-	public EmpVO selectForLogin(Integer empId, String password) {
+	public EmpVO selectForLogin(String mail, String password) {
 	Connection con=null;
 		PreparedStatement pstmt = null;
 		EmpVO empVO = null;
@@ -767,7 +789,7 @@ return empVO;
 		
 			
 
-			pstmt.setInt(1, empId);
+			pstmt.setString(1, mail);
 			pstmt.setString(2, password);
 		
 //			pstmt.setInt(14, empVO.getEmpId());

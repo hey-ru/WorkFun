@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.report.model.ReportJDBCDAO;
 import com.report.model.ReportService;
 import com.report.model.ReportVO;
 import com.report_comment.model.Report_CommentVO;
@@ -31,6 +32,8 @@ import com.report_comment.model.Report_CommentVO;
 		        maxRequestSize      = 1024 * 1024 * 100
 )
 public class ReportServlet extends HttpServlet{
+	ReportService repSvc = new ReportService();
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -76,9 +79,9 @@ public class ReportServlet extends HttpServlet{
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				Integer reporter = Integer.valueOf(req.getParameter("reporter").trim());
-				System.out.println(reporter);
+
 				Integer handler = Integer.valueOf(req.getParameter("handler").trim());
-				System.out.println(handler);
+
 				String content = req.getParameter("content");
 				System.out.println(content);
 				String contentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
@@ -87,7 +90,7 @@ public class ReportServlet extends HttpServlet{
 				} else if(!content.trim().matches(contentReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字! 不要加符號!!");
 	            }
-				Integer report_type = Integer.valueOf(req.getParameter("report_type").trim());
+				Integer report_type =Integer.valueOf(req.getParameter("report_type").trim());
 				
 				String title = req.getParameter("title");
 
@@ -99,12 +102,12 @@ public class ReportServlet extends HttpServlet{
 	            }
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					System.out.println(errorMsgs);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/report/addReport.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-//				System.out.println(errorMsgs);
 				byte[] report_image = null;
 				/***************************2.開始新增資料***************************************/
 				ReportService repSvc= new ReportService();
@@ -119,7 +122,7 @@ public class ReportServlet extends HttpServlet{
 //				report_image = repSvc.Image(part);
 				System.out.println(report_image);
 					ReportVO reportVO = repSvc.addReport(reporter,handler,content,
-							report_image,report_type ,title);
+							report_image,report_type,title);
 //				}
 //				System.out.println(part);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
@@ -140,22 +143,14 @@ public class ReportServlet extends HttpServlet{
 		Integer report_id = Integer.valueOf(req.getParameter("report_id"));
 		
 		/***************************2.開始查詢資料*****************************************/
-		ReportService repSvc = new ReportService();
+
 		ReportVO repVO = repSvc.getOneReport(report_id);
-		/***************************3.查詢完成,準備轉交(Send the Success view)************/
-		String param = "?report_id="  +repVO.getReport_id()+
-	       "&title="  +repVO.getTitle()+
-	       "&report_type="  +repVO.getReport_type()+
-	       "&status="+repVO.getStatus()+
-	       "&starttime="+repVO.getStarttime()+
-	       "&updatetime="   +repVO.getUpdatetime()+
-	       "&endtime=" +repVO.getEndtime()+
-			"&reporter=" +repVO.getReporter()+
-			"&handler=" +repVO.getHandler()+
-			"&content=" +repVO.getContent()+
-			"&report_image=" +repVO.getReport_image();
+		ReportVO repVO2 = repSvc.comment(report_id);
 		
-		String url = "/report/updateReport.jsp"+param;
+		/***************************3.查詢完成,準備轉交(Send the Success view)************/	
+		String url = "/report/updateReport.jsp";
+		req.setAttribute("repVO", repVO);
+		req.setAttribute("repVO2", repVO2);
 		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 		successView.forward(req, res);
 	}
@@ -163,22 +158,32 @@ public class ReportServlet extends HttpServlet{
 	if ("update".equals(action)) { // 來自updateReport.jsp的請求
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-		
+			
+			Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
+			ReportVO repVO = repSvc.getOneReport(report_id);
+			ReportVO repVO2 = repSvc.comment(report_id);
+			req.setAttribute("repVO", repVO);
+			req.setAttribute("repVO2", repVO2);
+			System.out.println(repVO);
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
-			
-				Integer handler = Integer.valueOf(req.getParameter("handler").trim());
-
-				Integer reporter = Integer.valueOf(req.getParameter("reporter").trim());
-		
-				Integer report_type = Integer.valueOf(req.getParameter("report_type").trim());
-			
+//				req.setAttribute("repVO",oldRepVO);
+				
 				String title = req.getParameter("title");
+				String titleReg = "^[(\\u4e00-\\u9fa5)_a-zA-Z0-9_\\\\n\\\\s\\\\(\\\\)]*$";
+				if (title == null || title.trim().length() == 0) {
+					errorMsgs.put("title","標題: 請勿空白");
+				} else if(!title.trim().matches(titleReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("title","標題: 只能是中、英文字母、數字");
+	            }
 			
 				String content = req.getParameter("content");
-			
-
+				String contentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
+				if (content == null || content.trim().length() == 0) {
+					errorMsgs.put("content","回報內容: 請勿空白");
+				} else if(!content.trim().matches(contentReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字");
+	            }
 				ReportVO oldreportVO = new ReportService().getOneReport(report_id);
 							
 				byte[] report_image = oldreportVO.getReport_image();
@@ -192,21 +197,9 @@ public class ReportServlet extends HttpServlet{
 					}
 				
 					ReportService repSvc = new ReportService();
-//				String titleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
-//				if (title == null || title.trim().length() == 0) {
-//					errorMsgs.put("title","標題: 請勿空白");
-//				} else if(!title.trim().matches(titleReg)) { //以下練習正則(規)表示式(regular-expression)
-//					errorMsgs.put("title","標題: 只能是中、英文字母、數字");
-//	            }
-			
-//				String contentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
-//				if (content == null || content.trim().length() == 0) {
-//					errorMsgs.put("content","回報內容: 請勿空白");
-//				} else if(!content.trim().matches(contentReg)) { //以下練習正則(規)表示式(regular-expression)
-//					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字");
-//	            }
 					
 				if (!errorMsgs.isEmpty()) {
+					
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/report/updateReport.jsp");
 					failureView.forward(req, res);
@@ -214,7 +207,7 @@ public class ReportServlet extends HttpServlet{
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				ReportVO reportVO = repSvc.updateReport(title,report_type,reporter,handler,content,report_image,report_id);
+				ReportVO reportVO = repSvc.updateReport(title,content,report_image,report_id);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("reportVO", reportVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -323,6 +316,23 @@ public class ReportServlet extends HttpServlet{
 		/***************************3.查詢完成,準備轉交(Send the Success view)************/
 
 		String url = "/report/backForwardReport.jsp";
+		req.setAttribute("repVO", repVO);
+		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+		successView.forward(req, res);
+	}
+	
+	if("complete".equals(action)) {
+		/***************************1.接收請求參數**********************/
+		Integer report_id = Integer.valueOf(req.getParameter("report_id"));
+		System.out.println(report_id);
+		/***************************2.開始更改回報狀態*****************************************/
+		ReportService repSvc = new ReportService();
+		ReportVO repVO = new ReportVO();
+		repSvc.complete(report_id);
+		
+		/***************************3.完成後 重整一次backListAll(Send the Success view)************/
+
+		String url = "/report/backListAll.jsp";
 		req.setAttribute("repVO", repVO);
 		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 		successView.forward(req, res);

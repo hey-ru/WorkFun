@@ -28,6 +28,7 @@ import com.report_comment.model.Report_CommentVO;
 		        maxRequestSize      = 1024 * 1024 * 100
 )
 public class ReportCommentServlet extends HttpServlet{
+	ReportService repSvc = new ReportService();
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -42,10 +43,11 @@ public class ReportCommentServlet extends HttpServlet{
 
 				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 				req.setAttribute("errorMsgs", errorMsgs);
-
+				Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
+				ReportVO repVO = repSvc.getComment(report_id);
+				req.setAttribute("repVO", repVO);
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-					Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
 					System.out.println(report_id);
 					String comment = req.getParameter("comment");
 					System.out.println(comment);
@@ -60,7 +62,7 @@ public class ReportCommentServlet extends HttpServlet{
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/report/addReport.jsp");
+								.getRequestDispatcher("/report/backListOne.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -120,10 +122,10 @@ public class ReportCommentServlet extends HttpServlet{
 			if ("update".equals(action)) { // 來自updateReport.jsp的請求
 					Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 					req.setAttribute("errorMsgs", errorMsgs);
-				
+					Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
+
 					try {
 						/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-						Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
 						System.out.println(report_id);
 						Integer handler = Integer.valueOf(req.getParameter("handler").trim());
 						System.out.println(handler);
@@ -132,9 +134,8 @@ public class ReportCommentServlet extends HttpServlet{
 						Integer status = Integer.valueOf(req.getParameter("status"));
 						System.out.println(status);
 						String comment = req.getParameter("comment");
-						
 						Report_CommentService recSvc = new Report_CommentService();
-						
+						System.out.println(errorMsgs);
 						if (!errorMsgs.isEmpty()) {
 							RequestDispatcher failureView = req
 									.getRequestDispatcher("/report/updateReport.jsp");
@@ -143,6 +144,7 @@ public class ReportCommentServlet extends HttpServlet{
 						}
 						
 						/***************************2.開始修改資料*****************************************/
+						
 						ReportVO reportVO = recSvc.changeType(handler,report_type,status,report_id);
 						Report_CommentVO report_CommentVO = recSvc.forward(report_id, comment);
 						
@@ -154,10 +156,10 @@ public class ReportCommentServlet extends HttpServlet{
 
 						/***************************其他可能的錯誤處理*************************************/
 					} catch (Exception e) {
-//						errorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
-//						RequestDispatcher failureView = req
-//								.getRequestDispatcher("/report/backForwardReport.jsp");
-//						failureView.forward(req, res);
+						errorMsgs.put("Exception","修改資料失敗:" + e.getMessage());
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/report/backForwardReport.jsp");
+						failureView.forward(req, res);
 					}
 				}
 	}

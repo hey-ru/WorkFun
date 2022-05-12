@@ -18,8 +18,8 @@ int itemsPerPage = 10;
 <%@ include file="/design/frontmetacss.jsp"%>
 <style>
 .portfolio-wrap {
-	width: 300px;
-	height: 400px;
+	width: 330px;
+	height: 300px;
 	display: flex
 }
 
@@ -86,7 +86,7 @@ int itemsPerPage = 10;
 							<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 								<div class="portfolio-wrap">
 									<div
-										style="color: white; padding: 5px; z-index: 99; background: rgba(0, 255, 204, 0.4); height: 100px; width: 300px;">
+										style="color: white; padding: 5px; z-index: 99; background: rgba(0, 255, 204, 0.4); height: 100px; width: 330px;">
 										<h5>${groupBuyVO.gb_id}
 											<strong>${groupBuyVO.shop_name}</strong>
 										</h5>
@@ -95,7 +95,7 @@ int itemsPerPage = 10;
 									<img
 										src="<%=request.getContextPath()%>/util/DBGifReader?pic=shop_img1&table=shop&id_key=shop_id&id=${groupBuyVO.shop_id}"
 										class="img-fluid"
-										alt="" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; bottom: 0; left: 0; right: 0; margin: auto;">
+										alt="" style="height: 200px; width: 330px; position: absolute; bottom: 0; left: 0; right: 0; margin: auto;">
 									<div class="portfolio-info">
 										<div class="portfolio-links">
 										

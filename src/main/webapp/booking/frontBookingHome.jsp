@@ -97,17 +97,18 @@ pageContext.setAttribute("list", list);
 							<!-- <!-- 								</select> -->
 							<!-- <!-- 							</div> -->
 
-							<div class="form-group col-3" style="display: inline-block">
-								<input type="text" class="form-control"
-									id="exampleFormControlInput1" placeholder="輸入器材名稱"
-									style="border: gray solid 2px;" name="eqName"
-									value="${param.eqName}">
-							</div>
+<!-- 							<div class="form-group col-3" style="display: inline-block"> -->
+<!-- 								<input type="text" class="form-control" -->
+<!-- 									id="exampleFormControlInput1" placeholder="輸入器材名稱" -->
+<!-- 									style="border: gray solid 2px;" name="eqName" -->
+<%-- 									value="${param.eqName}"> --%>
+<!-- 							</div> -->
+							
 							<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
 
-							<input type="hidden" name="action" value="listByCompositeQuery">
-							<input type="submit" class="btn btn-primary mb-2 mt-1 col"
-								style="display: inline-block;" value="搜尋"></input>
+<!-- 							<input type="hidden" name="action" value="listByCompositeQuery"> -->
+<!-- 							<input type="submit" class="btn btn-primary mb-2 mt-1 col" -->
+<!-- 								style="display: inline-block;" value="搜尋"></input> -->
 						</form>
 					</div>
 				</div>

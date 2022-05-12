@@ -1,5 +1,6 @@
 package com.booking.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class BookingVO implements java.io.Serializable {
@@ -14,6 +15,7 @@ public class BookingVO implements java.io.Serializable {
 	private Integer returnStatus;
 	private Timestamp overdueDate;
 	private Integer overduePrice;
+	private Long dateDiff;//計算日期差
 
 	@Override
 	public String toString() {
@@ -21,6 +23,17 @@ public class BookingVO implements java.io.Serializable {
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", returnStatus=" + returnStatus
 				+ ", overdueDate=" + overdueDate + ", overduePrice=" + overduePrice + "]";
 	}
+	
+
+	public Long getDateDiff() {
+		return dateDiff;
+	}
+
+
+	public void setDateDiff(Long dateDiff) {
+		this.dateDiff = dateDiff;
+	}
+
 
 	public Integer getBookingId() {
 		return bookingId;

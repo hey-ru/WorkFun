@@ -42,14 +42,14 @@ public class EmpService {
 	}
 
 
-	public EmpVO login(Integer empId, String password ) {
-		EmpVO empVO=dao.selectForLogin(empId, password);
+	public EmpVO login(String mail, String password ) {
+		EmpVO empVO=dao.selectForLogin(mail, password);
 		return empVO;
 		
 		
 	}
-	public EmpVO login(Integer empId, String password,Connection con ) {
-		EmpVO empVO=dao.selectForLogin(empId, password);
+	public EmpVO login(String mail, String password,Connection con ) {
+		EmpVO empVO=dao.selectForLogin(mail, password);
 		return empVO;
 		
 		

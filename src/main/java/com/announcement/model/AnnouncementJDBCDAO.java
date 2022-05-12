@@ -24,10 +24,12 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO announcement (announcer,announcement_title,announcement_content) VALUES (?,?,?) ";
 	private static final String GET_ALL_STMT = "select announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement order by announcement_id ";
-	private static final String GET_ONE_STMT = "SELECT announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement where announcement_id = ? ";
+	private static final String GET_ONE_STMT = "select announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement where announcement_id = ? ";
 	private static final String DELETE = "DELETE FROM announcement where announcement_id = ?  ;";
-	private static final String UPDATE = "UPDATE announcement set announcement_title=?  where announcement_content = ? ";
+	private static final String UPDATE = "UPDATE announcement set ";
 
+// insert ok
+	//
 	@Override
 	public void insert(AnnouncementVO announcementVO) {
 
@@ -41,9 +43,9 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			
-			pstmt.setInt(1, announcementVO.getAnnouncerId());
-			pstmt.setString(2, announcementVO.getAnnouncementTitle());
-			pstmt.setString(3, announcementVO.getAnnouncementContent());
+			pstmt.setInt(1, announcementVO.getAnnouncer());
+			pstmt.setString(2, announcementVO.getAnnouncement_title());
+			pstmt.setString(3, announcementVO.getAnnouncement_content());
 
 			pstmt.executeUpdate();
 //			ResultSet rs = pstmt.getGeneratedKeys();
@@ -79,32 +81,43 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 
 	}
 
-	public int update(AnnouncementVO announcement) {
+	public int update(AnnouncementVO announcementVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		int count=0;
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
-			AnnouncementVO oldPermission = findByPrimaryKey(announcement.getAnnouncementId());
-
-			if (announcement.getAnnouncementTitle() != null) {
-				pstmt.setString(1, announcement.getAnnouncementTitle());
-			} else {
-				pstmt.setString(1, oldPermission.getAnnouncementTitle());
-
+			
+			StringBuilder sb=new StringBuilder();
+			sb.append(UPDATE);
+			
+			if (announcementVO.getAnnouncement_title() != null) {
+				sb.append("announcement_title=?, ");
 			}
-			if (announcement.getAnnouncementContent() != null) {
-				pstmt.setString(2, announcement.getAnnouncementContent());
-			} else {
-				pstmt.setString(2, oldPermission.getAnnouncementContent());
+			if (announcementVO.getAnnouncement_content() != null) {
+				sb.append("announcement_content=?, ");
 			}
 			
-
-			pstmt.setInt(3, announcement.getAnnouncementId());
-
+sb.append("announcement_id=? ");
+			
+			sb.append("where announcement_id = ? ");
+			pstmt = con.prepareStatement(sb.toString());
+			if (announcementVO.getAnnouncement_title() != null) {
+				count++;
+				pstmt.setString(count, announcementVO.getAnnouncement_title());
+			}
+			if (announcementVO.getAnnouncement_content() != null) {
+				count++;
+				pstmt.setString(count, announcementVO.getAnnouncement_content());
+			}
+			count++;
+			
+			pstmt.setInt(count, announcementVO.getAnnouncement_id());
+	count++;
+			
+			pstmt.setInt(count, announcementVO.getAnnouncement_id());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -141,7 +154,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 		return 1;
 	}
 
-	public void delete(Integer announcementId) {
+	public void delete(Integer Announcement_id) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -152,7 +165,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setInt(1, announcementId);
+			pstmt.setInt(1, Announcement_id);
 
 		
 
@@ -183,7 +196,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 
 	}
 
-	public AnnouncementVO findByPrimaryKey(Integer announcementId) {
+	public AnnouncementVO findByPrimaryKey(Integer announcement_id) {
 		
 		AnnouncementVO announcementVO = null;
 		Connection con = null;
@@ -195,7 +208,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, announcementId);
+			pstmt.setInt(1, announcement_id);
 
 			rs = pstmt.executeQuery();
 
@@ -203,12 +216,12 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 
 				announcementVO = new AnnouncementVO();
 								
-								announcementVO.setAnnouncementId(rs.getInt("announcement_id"));
-								announcementVO.setAnnouncerId(rs.getInt("announcer_id"));
-								announcementVO.setAnnouncementTitle(rs.getString("announcer_title"));
-								announcementVO.setAnnouncementContent(rs.getString("announcer_content"));
-								announcementVO.setAnnouncementTime(rs.getTimestamp("announcer_time"));
-								announcementVO.setAnnouncementStatus(rs.getByte("announcer_status"));
+								announcementVO.setAnnouncement_id(announcement_id);
+								announcementVO.setAnnouncer(rs.getInt("announcer"));
+								announcementVO.setAnnouncement_title(rs.getString("announcement_title"));
+								announcementVO.setAnnouncement_content(rs.getString("announcement_content"));
+								announcementVO.setAnnouncement_time(rs.getTimestamp("announcement_time"));
+								announcementVO.setAnnouncement_status(rs.getByte("announcement_status"));
 
 								
 							}
@@ -283,12 +296,12 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			while (rs.next()) {
 
 announcementVO = new AnnouncementVO();
-announcementVO.setAnnouncementId(rs.getInt("announcement_id"));
-announcementVO.setAnnouncerId(rs.getInt("announcer_id"));
-announcementVO.setAnnouncementTitle(rs.getString("announcer_title"));
-announcementVO.setAnnouncementContent(rs.getString("announcer_content"));
-announcementVO.setAnnouncementTime(rs.getTimestamp("announcer_time"));
-announcementVO.setAnnouncementStatus(rs.getByte("announcer_status"));
+announcementVO.setAnnouncement_id(rs.getInt("announcement_id"));
+announcementVO.setAnnouncer(rs.getInt("announcer"));
+announcementVO.setAnnouncement_title(rs.getString("announcement_title"));
+announcementVO.setAnnouncement_content(rs.getString("announcement_content"));
+announcementVO.setAnnouncement_time(rs.getTimestamp("announcement_time"));
+announcementVO.setAnnouncement_status(rs.getByte("announcement_status"));
 
 
 				list.add(announcementVO); // Store the row in the list
@@ -331,8 +344,24 @@ announcementVO.setAnnouncementStatus(rs.getByte("announcer_status"));
 	public static void main(String[] args) throws IOException {
 
 		AnnouncementJDBCDAO dao = new AnnouncementJDBCDAO();
-//		AnnouncementVO AnnouncementVO1 = new AnnouncementVO();
-//
+		AnnouncementVO AnnouncementVO1 = new AnnouncementVO();
+//AnnouncementVO1.setAnnouncer(1001);
+//AnnouncementVO1.setAnnouncement_content("我就知道是你又是你");
+//AnnouncementVO1.setAnnouncement_title("狗蛋大兵");
+//dao.insert(AnnouncementVO1);
+	
+//		AnnouncementVO AnnouncementVO2=dao.findByPrimaryKey(1001);
+//		System.out.println(AnnouncementVO2.getAnnouncement_content().toString());
+		List<AnnouncementVO> list=dao.getAll();
+		System.out.println(list);
+		
+		
+		
+		
+		
+		
+		
+		
 //		AnnouncementVO1.setPermissionId(3);
 //		AnnouncementVO1.setEmpId(1007);
 //		dao.insert(AnnouncementVO1);

@@ -75,10 +75,10 @@
 													<c:if test="${repVO.report_type==1}">損壞報修		</c:if>
 													<c:if test="${repVO.report_type==2}">軟硬體問題		</c:if>
 													<c:if test="${repVO.report_type==3}">其他		</c:if></span>
-               					 <label><input id="in0" class ="rptype" type="radio" name="report_type" value="0" ${(param.report_type=="0")? 'checked':'' }> 添購新品 </label>
-								 <label><input id="in1" class ="rptype" type="radio" name="report_type" value="1" ${(param.report_type=="1")? 'checked':'' }> 損壞報修 </label>
-							 	 <label><input id="in2" class ="rptype" type="radio" name="report_type" value="2" ${(param.report_type=="2")? 'checked':'' }> 軟硬體問題 </label>
-							 	 <label><input id="in3" class ="rptype" type="radio" name="report_type" value="3" ${(param.report_type=="3")? 'checked':'' }> 其他 </label>
+               					 <label><input id="in0" class ="rptype" type="radio" name="report_type" value="0" ${(repVO.report_type=="0")? 'checked':'' }> 添購新品 </label>
+								 <label><input id="in1" class ="rptype" type="radio" name="report_type" value="1" ${(repVO.report_type=="1")? 'checked':'' }> 損壞報修 </label>
+							 	 <label><input id="in2" class ="rptype" type="radio" name="report_type" value="2" ${(repVO.report_type=="2")? 'checked':'' }> 軟硬體問題 </label>
+							 	 <label><input id="in3" class ="rptype" type="radio" name="report_type" value="3" ${(repVO.report_type=="3")? 'checked':'' }> 其他 </label>
             				</div>
                                 <span class="input-group-text" id="basic-addon2">處理狀況</span>
                                <span><c:if test="${repVO.status==0}">已發送</c:if>
@@ -106,7 +106,7 @@
                                 <span class="input-group-text" id="basic-addon2">處理人</span>
                               <span>${repVO.empVO2.empName}</span>
                					<input type="hidden" class="form-control" aria-label="Username" id="inputhandler" name="handler"
-                    				aria-describedby="basic-addon1" value="${param.handler}">
+                    				aria-describedby="basic-addon1" value="${repVO.handler}">
                             </div>
                             <label for="basic-url" class="form-label">回報內容</label>
                             <div class="input-group mb-3" style=" height:200px">
@@ -116,7 +116,7 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupFile01">回報圖片</label>                              
                              <c:if test="${repVO.report_image!=null}">
-                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${param.report_id}&table=report&pic=report_image" style="width:100px; height:100px;">
+                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${repVO.report_id}&table=report&pic=report_image" style="width:100px; height:100px;">
                               </c:if>
                             </div>
                             <c:forEach var="recVO" items="${repVO.recVO}">
@@ -124,6 +124,10 @@
                                 <span class="input-group-text">處理訊息</span>
                                 <span class="input-group-text"><fmt:formatDate value="${recVO.createtime}" pattern="yyyy-MM-dd HH:mm "/></span>
                                 <textarea class="form-control" aria-label="With textarea">${recVO.comment}</textarea>
+                             <c:if test="${recVO.report_comment_image!=null}">
+                                <label class="input-group-text" for="inputGroupFile01">處理圖片</label>                              
+                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_comment_id&id=${recVO.report_comment_id}&table=report_comment&pic=report_comment_image" style="width:150px; height:150px;">
+                              </c:if>
                             </div>
                             </c:forEach>
                             
@@ -132,7 +136,7 @@
                    						 aria-describedby="basic-addon1" name="report_id" value="${repVO.report_id}">
                                 <span class="input-group-text">處理訊息</span>
                             	<input class="form-control" aria-label="Username" type="text"
-                    						aria-describedby="basic-addon1" name="comment" value="${param.comment}">
+                    						aria-describedby="basic-addon1" name="comment" value="${recVO.comment}">
                     						<p style="color :red">${errorMsgs.comment}</p>
                     			</div>
                     		<div class="input-group">       				

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,7 +45,6 @@ public class SelectMyGBListServlet extends HttpServlet {
 		System.out.println(action);
 
 // 來自buyer_selectGB.jsp的請求
-		
 //		(1)查看個人參團明細
 		if ("get_buyerlist".equals(action)) { 
 
@@ -85,13 +86,13 @@ public class SelectMyGBListServlet extends HttpServlet {
 			
 			RequestDispatcher successView = req.getRequestDispatcher("/groupbuylist/buyer_selectGB.jsp");// 刪除成功後,轉交回送出刪除的來源網頁
 			successView.forward(req, res);
-			
 		}
 		
 //		(3)編輯參團-先查詢個人訂單明細
 		if("updateMyGb".equals(action)) {
 			
 			/*************************** 1.接收請求參數 ****************************************/
+			Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
 			Integer buyer = Integer.valueOf(req.getParameter("buyer"));
 			Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
 			
@@ -100,7 +101,15 @@ public class SelectMyGBListServlet extends HttpServlet {
 			List<GroupBuyListVO> list  = gbListSvc.getOne(buyer, gb_id);
 			
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ***************/
-			req.setAttribute("buyerlist", list);
+			HttpSession session = req.getSession();
+			session.setAttribute("buyerlist", list);
+			
+			//再取得一次店家菜單物件集合,以顯示於填寫揪團單畫面
+//			MenuService menuService = new MenuService();
+//			List<MenuVO> menuList = menuService.getByShopId(shop_id);
+			
+//			HttpSession session1 = req.getSession();
+//			req.setAttribute("menuList", menuList);
 			
 			//跳轉至該訂單畫面
 			String url = "/groupbuylist/buyer_updateOneGB.jsp";
@@ -113,8 +122,10 @@ public class SelectMyGBListServlet extends HttpServlet {
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			//取得參數
+			
+			Integer buyer = Integer.valueOf(req.getParameter("buyer"));
+			
 			String[] gbList_id = req.getParameterValues("gbList_id");
-			String[] buyer = req.getParameterValues("buyer");
 			String[] qty = req.getParameterValues("qty");
 			String[] remark = req.getParameterValues("remark");
 			
@@ -126,17 +137,17 @@ public class SelectMyGBListServlet extends HttpServlet {
 				oldGBListVO=gbListSvc.findByPrimaryKey(Integer.valueOf(gbList_id[i]));
 				
 					oldGBListVO.setGbList_id(Integer.valueOf(gbList_id[i]));
-					oldGBListVO.setBuyer(Integer.valueOf(buyer[i]));
+					oldGBListVO.setBuyer(buyer);
 					oldGBListVO.setQty(Integer.valueOf(qty[i]));
 					oldGBListVO.setRemark(remark[i]);
 
 					newOrderlist.add(oldGBListVO);
 			}
 			
-			/*************************** 2.開始新增資料 ***************************/
+			/*************************** 2.開始修改資料 ***************************/
 			GroupBuyListService gblistSvc = new GroupBuyListService();
 			gblistSvc.updateMany(newOrderlist);
-
+			
 			System.out.println("newOrderlist"+newOrderlist.toString());
 			System.out.println("訂單修改完成");
 
@@ -146,6 +157,39 @@ public class SelectMyGBListServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
+		 //複合查詢
+    	if ("listByCompositeQueryBack".equals(action)) { 
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+				
+				/***************************1.將輸入資料轉為Map**********************************/ 
+				//採用Map<String,String[]> getParameterMap()的方法 
+				//注意:an immutable java.util.Map 
+				//Map<String, String[]> map = req.getParameterMap();
+			
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				
+				// 以下的 if 區塊只對第一次執行時有效
+				if (req.getParameter("whichPage") == null){
+					Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+					session.setAttribute("map",map1);
+					map = map1;
+				} 
+				
+				/***************************2.開始複合查詢***************************************/
+				
+				GroupBuyListService gbListSvc = new GroupBuyListService();
+				List<GroupBuyListVO> list  = gbListSvc.getAll(map);
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
+				RequestDispatcher successView = req.getRequestDispatcher("/groupbuylist/buyer_selectHistory.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
+		}
 		
 
 //		(3)編輯參團-先查詢個人訂單明細
