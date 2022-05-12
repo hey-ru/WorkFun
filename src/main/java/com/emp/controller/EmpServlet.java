@@ -654,8 +654,7 @@ return;
 					
 					EmpService empSvc = new EmpService();
 					EmpVO empVO=empSvc.login(mail,empPassword);
-					PermissionMappingService pmSrv=new PermissionMappingService();
-					 List<Integer> empPm=pmSrv.getOneEmpPermissions(empVO.getEmpId());
+				
 				
 					 
 //				EmpVO empVO=empSvc.login(empId,empPassword);
@@ -671,7 +670,8 @@ return;
 					  }
 					
 					  else {
-					
+							PermissionMappingService pmSrv=new PermissionMappingService();
+							 List<Integer> empPm=pmSrv.getOneEmpPermissions(empVO.getEmpId());
 						  session.setAttribute("empPm", empPm); //hint 特別標記 用來取得permission
 					      session.setAttribute("empVO", empVO);   //*工作1: 才在session內做已經登入過的標識
 					      String location=(String)session.getAttribute("location");
