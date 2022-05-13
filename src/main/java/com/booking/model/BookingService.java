@@ -2,6 +2,7 @@ package com.booking.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import com.equipment.model.EquipmentVO;
 
@@ -81,6 +82,10 @@ public class BookingService {
 
 	public List<BookingVO> getBookingAllDate(Integer equipmentId) {
 		return dao.getBookingAllDate(equipmentId);
+	}
+
+	public List<BookingVO> getAllByCQ(Map<String, String[]> map) {
+		return dao.getAllByCQ(map);
 	}
 
 }

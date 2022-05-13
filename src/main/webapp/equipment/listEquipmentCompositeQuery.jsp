@@ -5,9 +5,10 @@
 <%@ page import="java.util.*"%>
 
 
-<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<EquipmentVO>" />
+<jsp:useBean id="listByCompositeQuery" scope="request"
+	type="java.util.List<EquipmentVO>" />
 <%
-String yourServlet = "/equipment/equipment.do"; 
+String yourServlet = "/equipment/equipment.do";
 int itemsPerPage = 10;
 %>
 
@@ -76,7 +77,6 @@ td {
 	left: 30px;
 	top: 15px;
 }
-
 </style>
 </head>
 
@@ -316,7 +316,13 @@ td {
 	</a>
 
 	<%@ include file="/design/backjs.jsp"%>
-	
+
+
+	<script type="text/javascript">
+		$("tbody tr").css("background-color", function(index) {
+			return index % 2 == 0 ? "#dcdcdc" : "";
+		});
+	</script>
 
 </body>
 
