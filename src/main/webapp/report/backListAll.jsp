@@ -5,10 +5,12 @@
 <%@ page import="com.report.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
+
 ReportService repSvc = new ReportService();
 List<ReportVO> list = repSvc.getAll();
 pageContext.setAttribute("list", list);
 int itemsPerPage = 10;
+
 %>
 <!DOCTYPE html>
 <html>
@@ -81,7 +83,7 @@ int itemsPerPage = 10;
 														aria-describedby="dataTable_info" style="width: 100%;">
 														<ul>  
   <li>   
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reportServlet" name="form1">
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report/backListHandler.jsp" name="form1">
 
        <b>處理人:</b>
        <select size="1" name="handler" >
@@ -169,6 +171,7 @@ int itemsPerPage = 10;
 																			test="${reportVO.status==3}">取消</c:if> <c:if
 																			test="${reportVO.status==4}">已完成</c:if></td>
 																			<c:if test="${empVO.empId==reportVO.handler}">
+																			<c:if test="${reportVO.status!=4}">
 																	<td><a
 																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forComment">
 																			<button type="button" value="getOne_forComment"
@@ -184,6 +187,7 @@ int itemsPerPage = 10;
 																			<button type="button" value="complete"
 																				class="btn btn-info">完成</button>
 																	</a></td>
+														</c:if>
 														</c:if>
 																</tr>
 															</c:forEach>

@@ -71,13 +71,14 @@ public class ReportCommentServlet extends HttpServlet{
 					byte[] report_comment_image = null;	
 					Part part = req.getPart("report_comment_image");
 					
-					if(part !=null) {
-					report_comment_image = repcomSvc.Image(part);
-					}else { 
-						report_comment_image = null;
+					String filename1 = getFileNameFromPart(part);
+					if (filename1!= null && part.getContentType()!=null) {
+						report_comment_image = getByteArrayFromPart(part);
 					}
-					System.out.println(report_comment_image);
 					Report_CommentVO report_commentVO = repcomSvc.addReport_Comment(report_id,comment,report_comment_image);
+					ReportService repSvc = new ReportService();
+					ReportVO repVO2 = repSvc.reject(report_id);
+					
 					
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					String url = "/report/backListAll.jsp";
@@ -123,7 +124,8 @@ public class ReportCommentServlet extends HttpServlet{
 					Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 					req.setAttribute("errorMsgs", errorMsgs);
 					Integer report_id = Integer.valueOf(req.getParameter("report_id").trim());
-
+					ReportVO repVO = repSvc.getComment(report_id);
+					req.setAttribute("repVO", repVO);
 					try {
 						/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 						System.out.println(report_id);
@@ -134,11 +136,17 @@ public class ReportCommentServlet extends HttpServlet{
 						Integer status = Integer.valueOf(req.getParameter("status"));
 						System.out.println(status);
 						String comment = req.getParameter("comment");
+						String commentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
+						if (comment == null || comment.trim().length() == 0) {
+							errorMsgs.put("comment","處理訊息: 請勿空白");
+						} else if(!comment.trim().matches(commentReg)) { //以下練習正則(規)表示式(regular-expression)
+							errorMsgs.put("comment","處理訊息: 只能是中、英文字母、數字");
+			            }
 						Report_CommentService recSvc = new Report_CommentService();
 						System.out.println(errorMsgs);
 						if (!errorMsgs.isEmpty()) {
 							RequestDispatcher failureView = req
-									.getRequestDispatcher("/report/updateReport.jsp");
+									.getRequestDispatcher("/report/backForwardReport.jsp");
 							failureView.forward(req, res);
 							return; //程式中斷
 						}

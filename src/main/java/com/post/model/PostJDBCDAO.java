@@ -16,7 +16,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "INSERT INTO post (emp_id,post_title,post_content,post_video,is_disable) VALUES (?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM post";
+	private static final String GET_ALL_STMT = "SELECT * FROM post p join post_image pi on p.post_id = pi.post_id";
 	private static final String GET_ONE_STMT = "SELECT post_id,emp_id,post_title,post_content,post_video,post_createtime,post_updatetime,is_disable FROM post where post_id = ?";
 	private static final String UPDATE = "UPDATE post set ";
 

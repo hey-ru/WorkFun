@@ -121,6 +121,22 @@ int itemsPerPage = 10;
 													rowspan="1" colspan="1"
 													aria-label="Salary: activate to sort column ascending"
 													style="">回報狀態</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Salary: activate to sort column ascending"
+													style="">查閱</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Salary: activate to sort column ascending"
+													style="">更新</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Salary: activate to sort column ascending"
+													style="">退回</th>
+												<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Salary: activate to sort column ascending"
+													style="">完成</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -147,6 +163,14 @@ int itemsPerPage = 10;
 													<c:if test="${empVO.empId ==reportVO.reporter}">
 													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forUpdate">
 													<button type="button" value="getOne_forUpdate" class="btn btn-info">更新此回報</button></a></td>
+													<c:if test="${reportVO.status == 2}">
+													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=reject">
+													<button type="button" value="reject" class="btn btn-info">退回</button></a></td>
+													</c:if>
+													<c:if test="${reportVO.status == 2}">
+													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=allCompleted">
+													<button type="button" value="allCompleted" class="btn btn-info">完成</button></a></td>
+													</c:if>
 													</c:if>
 												</tr>
 											</c:forEach>

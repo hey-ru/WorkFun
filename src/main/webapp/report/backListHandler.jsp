@@ -6,12 +6,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 ReportService repSvc = new ReportService();
-List<ReportVO> list = repSvc.getHandler(Integer.valueOf(request.getParameter("handler")));
-
-int itemsPerPage = 10;
-
+Integer handler = Integer.parseInt(request.getParameter("handler"));
+request.setAttribute("handler",handler);
+List<ReportVO> list = repSvc.getHandler(handler);
 pageContext.setAttribute("list", list);
-
+int itemsPerPage = 10;
 
 %>
 <!DOCTYPE html>
@@ -28,7 +27,6 @@ pageContext.setAttribute("list", list);
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     
     <div id="wrapper">
@@ -160,18 +158,30 @@ pageContext.setAttribute("list", list);
 																			test="${reportVO.status==3}">取消</c:if> <c:if
 																			test="${reportVO.status==4}">已完成</c:if></td>
 																			<c:if test="${empVO.empId==reportVO.handler}">
+																			<c:if test="${reportVO.status!=4}">
 																	<td><a
-																		href="/CGA101G3/reportCommentServlet?report_id=${reportVO.report_id}&action=getOne_forUpdate">
-																			<button type="button" value="getOne_forUpdate"
-																				class="btn btn-info">處理此回報</button>
+																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forComment">
+																			<button type="button" value="getOne_forComment"
+																				class="btn btn-info">處理</button>
 																	</a></td>
+																	<td><a
+																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forModify">
+																			<button type="button" value="getOne_forModify"
+																				class="btn btn-info">轉發</button>
+																	</a></td>
+																	<td><a
+																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=complete">
+																			<button type="button" value="complete"
+																				class="btn btn-info">完成</button>
+																	</a></td>
+														</c:if>
 														</c:if>
 																</tr>
 															</c:forEach>
 														</thead>
 													
 													</table>
-													<%@ include file="/design/page2.file"%>
+													<%@ include file="/design/backReportPage2.file"%>
 												</div>
 											</div>
 										</div>

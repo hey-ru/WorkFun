@@ -267,7 +267,8 @@ public class ReportServlet extends HttpServlet{
 		
 		try {
 			/***************************1.接收請求參數****************************************/
-			Integer handler = Integer.valueOf(req.getParameter("handler"));
+			String handler = req.getParameter("handler");
+			System.out.println(handler);
 			/***************************2.開始查詢資料****************************************/
 //			ReportService repSvc = new ReportService();
 //			List<ReportVO> repVO = repSvc.getHandler(handler);
@@ -333,6 +334,40 @@ public class ReportServlet extends HttpServlet{
 		/***************************3.完成後 重整一次backListAll(Send the Success view)************/
 
 		String url = "/report/backListAll.jsp";
+		req.setAttribute("repVO", repVO);
+		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+		successView.forward(req, res);
+	}
+	
+	if("allCompleted".equals(action)) {
+		/***************************1.接收請求參數**********************/
+		Integer report_id = Integer.valueOf(req.getParameter("report_id"));
+		System.out.println(report_id);
+		/***************************2.開始更改回報狀態*****************************************/
+		ReportService repSvc = new ReportService();
+		ReportVO repVO = new ReportVO();
+		repSvc.allCompleted(report_id);
+		
+		/***************************3.完成後 重整一次backListAll(Send the Success view)************/
+
+		String url = "/report/listAllReport.jsp";
+		req.setAttribute("repVO", repVO);
+		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+		successView.forward(req, res);
+	}
+	
+	if("reject".equals(action)) {
+		/***************************1.接收請求參數**********************/
+		Integer report_id = Integer.valueOf(req.getParameter("report_id"));
+		System.out.println(report_id);
+		/***************************2.開始更改回報狀態*****************************************/
+		ReportService repSvc = new ReportService();
+		ReportVO repVO = new ReportVO();
+		repSvc.reject(report_id);
+		
+		/***************************3.完成後 重整一次backListAll(Send the Success view)************/
+
+		String url = "/report/listAllReport.jsp";
 		req.setAttribute("repVO", repVO);
 		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 		successView.forward(req, res);

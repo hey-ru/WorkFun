@@ -27,12 +27,12 @@
 	<!-- End Header -->
 
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-	<main style="height: 120vh; border: 3px red solid; margin-top: 40px;">
+	<main style="height: 120vh;margin-top: 40px;">
 		<FORM METHOD="post"
 			ACTION="${pageContext.request.contextPath}/reportServlet"
 			name="formUpdate" enctype="multipart/form-data">
 			<div
-				style="border: 3px blue solid; width: 900px; position: absolute; height: 630px; top: 45%; margin-top: -160px; margin-left: 14%;">
+				style="width: 900px; position: absolute; height: 630px; top: 45%; margin-top: -160px; margin-left: 14%;">
 				<div class="input-group mb-3" style="margin-top: 0px;">
 					<span class="input-group-text" id="basic-addon1">標題</span> <input
 						type="TEXT" name="title" size="45" value="${repVO.title}" />
@@ -80,7 +80,9 @@
 
 				<div class="input-group mb-3">
 					<label class="input-group-text" for="inputGroupFile01">回報圖片</label>
-					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${repVO.report_id}&table=report&pic=report_image" style="width:100px; height:100px;"> 
+					 <c:if test="${reportVO.report_image!=null}">
+					<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_id&id=${repVO.report_id}&table=report&pic=report_image" style="width:100px; height:100px;">
+					 </c:if> 
 					<label class="input-group-text" for="inputGroupFile01">Upload</label> 
 						<input type="file" value="${repVO.report_image}" name="report_image"
 						accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:150px; width:150px" id="pic" /> 
