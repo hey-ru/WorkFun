@@ -374,7 +374,6 @@ public class ShopDAO implements ShopDAO_interface {
 			          + jdbcUtil_CompositeQuery.get_WhereCondition(map)
 			          + " ORDER BY shop_id DESC ";
 				pstmt = con.prepareStatement(finalSQL);
-				System.out.println("●●finalSQL(by DAO) = "+finalSQL);
 			
 			rs = pstmt.executeQuery();
 

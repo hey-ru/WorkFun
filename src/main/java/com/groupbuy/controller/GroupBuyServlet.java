@@ -32,7 +32,6 @@ public class GroupBuyServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		System.out.println(action);
 		
 		//參團者加入揪團並新增修改刪除品項(加入菜單搜尋結果)
 		if ("showGB".equals(action)) { 

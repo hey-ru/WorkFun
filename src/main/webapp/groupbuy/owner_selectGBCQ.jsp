@@ -6,14 +6,7 @@
 <%@ page import="com.groupbuy.model.*"%>
 <%@ page import="com.groupbuylist.model.*"%>
 
-<%
-EmpVO empVO = (EmpVO)session.getAttribute("empVO");
-GroupBuyService gbSvc = new GroupBuyService();
-List<GroupBuyVO> list = gbSvc.getMyGBAll(empVO.getEmpId());
-pageContext.setAttribute("list", list);
 
-// int itemsPerPage = 10;
-%>
 
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -129,7 +122,7 @@ pageContext.setAttribute("list", list);
 
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
-										<c:forEach var="groupBuyVO" items="${list}">
+										<c:forEach var="groupBuyVO" items="${listByCompositeQuery}">
 <%-- 											<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>" --%>
 <%-- 										end="<%=pageIndex+rowsPerPage-1%>"> --%>
 										<c:if test="${groupBuyVO.gb_status != 1}">
