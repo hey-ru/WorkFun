@@ -82,7 +82,7 @@ int orderNumber = 1;
 								<th scope="col">數量</th>
 								<th scope="col">小計</th>
 								<th scope="col">備註</th>
-								<th scope="col">刪除</th>
+								<th scope="col"></th>
 								</tr>
 							</thead>
 
@@ -110,17 +110,27 @@ int orderNumber = 1;
 										size="15" value="${blist.remark}"></td>
 					
 <!-- 				[刪除請求] -->
+<!-- 					<td> -->
+<!-- 					<FORM METHOD="post" -->
+<%-- 					ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet" --%>
+<!-- 					style="margin-bottom: 0px;"> -->
+<%-- 					<input type="hidden" name="gbList_id" value="${blist.gbList_id}"> --%>
+<%-- 					<input type="hidden" name="gb_id" value="${blist.gb_id}"> --%>
+<%-- 					<input type="hidden" name="buyer" value="${blist.buyer}"> --%>
+<!-- 					<input type="hidden" name="action" value="deleteItem"> -->
+<!-- 					<input type="submit" class="btn btn-secondary btn-sm" value="刪除" -->
+<%-- 					${blist.qty eq 0 ? 'hidden="hidden"' : ''} /></FORM> --%>
+<!-- 					</td>	 -->
+
+<!-- 				[刪除請求] -->					
 					<td>
-					<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
-					style="margin-bottom: 0px;">
-					<input type="hidden" name="gbList_id" value="${blist.gbList_id}">
-					<input type="hidden" name="gb_id" value="${blist.gb_id}">
-					<input type="hidden" name="buyer" value="${blist.buyer}">
-					<input type="hidden" name="action" value="deleteItem">
-					<input type="submit" class="btn btn-secondary btn-sm" value="刪除"
-					${blist.qty eq 0 ? 'hidden="hidden"' : ''} /></FORM>
-					</td>	
+					<a href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet
+					?action=deleteItem&gbList_id=${blist.gbList_id}&gb_id=${blist.gb_id}&buyer=${blist.buyer}"
+					style="font-size:30px;" title="刪除此項"><i class="bi bi-trash"></i></a>
+					</td>
+					
+					
+					
 					</tr>
 				</c:forEach>
 						

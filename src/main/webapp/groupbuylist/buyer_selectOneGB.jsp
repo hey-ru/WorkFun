@@ -19,9 +19,7 @@ int orderNumber = 1;
 <%@ include file="/design/frontmetacss.jsp"%>
 
 <style>
-.table-responsive {
-	overflow-x: hidden;
-}
+
 
 th {
 	vertical-align: middle;
@@ -33,9 +31,7 @@ td {
 	text-align: center;
 }
 
-.table-responsive {
-	overflow-x: hidden;
-}
+
 </style>
 
 
@@ -100,7 +96,6 @@ td {
 							<tbody>
 
 								<c:forEach var="blist" items="${buyerlist}">
-
 									<tr>
 										<td><%=orderNumber++%></td>
 										<td>${blist.item}</td>

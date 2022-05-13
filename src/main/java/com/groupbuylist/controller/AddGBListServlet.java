@@ -1,6 +1,7 @@
 package com.groupbuylist.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,30 +38,40 @@ public class AddGBListServlet extends HttpServlet {
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 
-			// 備註例外處理
-//				String[] remark = req.getParameterValues("remark");
-//				String remarkReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
-//				if (!remark.split.trim.matches(remarkReg)) { // 正則(規)表示式(regular-expression)
-//					errorMsgs.put("remark", "備註: 只能是中、日、英文字母、數字、_、-和()");
-//				}
-
 			// 取得參數
 			String gb_id = req.getParameter("gb_id");
 			String buyer = req.getParameter("buyer");
 			String buyer_name = req.getParameter("buyer_name");
-			
+
 			String[] menu_id = req.getParameterValues("menu_id");
 			String[] item = req.getParameterValues("item");
 			String[] price = req.getParameterValues("price");
 			String[] qty = req.getParameterValues("qty");
+			
+			// 備註例外處理
 			String[] remark = req.getParameterValues("remark");
+			String remarkReg = "^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
+			for (String str : remark) {
+				if (!str.trim().equals(remarkReg)) {
+					errorMsgs.put("remark", "備註: 只能是中、日、英文字母、數字、_、-和()");
+				}
+			}
 
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/groupbuylist/buyer_joinGB.jsp");
-//					failureView.forward(req, res);
-//					return; //程式中斷
-//				}
+			int sumQty = 0;
+			for (String qtyString : qty) {
+				sumQty += Integer.valueOf(qtyString);
+				System.out.println(sumQty);
+			}
+			
+			if (sumQty == 0) {
+				errorMsgs.put("msgQty", "請選擇數量再下單");
+			}
+
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/groupbuylist/buyer_joinGB.jsp");
+				failureView.forward(req, res);
+				return; // 程式中斷
+			}
 
 			/*************************** 2.開始新增資料 ***************************/
 			GroupBuyListService gblistSvc = new GroupBuyListService();

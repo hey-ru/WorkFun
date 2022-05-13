@@ -196,13 +196,7 @@ pageContext.getAttribute("shop_id");
 		$(document).ready(function () {
 		Swal.fire({
 			  icon: 'info',
-			  title: '還沒有菜單，來新增~',
-			  showClass: {
-			    popup: 'animate__animated animate__fadeInDown'
-			  },
-			  hideClass: {
-			    popup: 'animate__animated animate__fadeOutUp'
-			  }
+			  title: '本店還沒有建立菜單，來新增吧! 🥗🍿🍜🍕🍣🍩🍦🥤☕',
 			});
 		});
 		
