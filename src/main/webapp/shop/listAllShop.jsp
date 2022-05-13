@@ -219,7 +219,7 @@ body {
 										</td>
 										<td>
 											<FORM METHOD="post"
-												ACTION="<%=request.getContextPath()%>/groupbuy/owner_addGB.jsp"
+												ACTION="<%=request.getContextPath()%>/groupbuy/AddGBServlet"
 												style="margin-bottom: 0px;">
 												<input type="submit" class="btn-info btn-lg" value="揪這家">
 												<input type="hidden" name="shop_id"

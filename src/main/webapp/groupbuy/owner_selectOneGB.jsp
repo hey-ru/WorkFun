@@ -41,15 +41,15 @@ th,td{
 		<main id="main" class="main">
 			<div class="card shadow mb-4">
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="card-header py-3" style="background-color: #FFCC99">
 					<div class="row">
-						<div class="col-11" style="height: 20px; display: inline-block;">
+						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h5>
 								<strong>查詢揪團</strong>
 							</h5>
 								
 						</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
+						<div class="col-3" style="height: 20px; display: inline-block;">
 							<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>回揪團主頁</strong></a>
 						</div>
 					</div>
@@ -88,6 +88,7 @@ th,td{
 						</div>
 
 						<c:forEach var="GBbuyer" items="${GBbuyers}">
+						<c:if test="${GBbuyer.total > 0}">
 						<div class="card fw-bolder">							
 							<div class="card-body bg-white text-dark">
 								<div class="row">
@@ -157,7 +158,8 @@ th,td{
 										</tbody>
 									</table>
 									</div>
-								</div>									
+								</div>
+								</c:if>								
 							</c:forEach>
 								
 							

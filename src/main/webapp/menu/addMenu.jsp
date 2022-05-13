@@ -139,9 +139,11 @@ pageContext.getAttribute("shop_id");
 	<%-- 	<%@ include file="/design/frontfooter.jsp"%> --%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>	
+	
 
 	<script type="text/javascript">
-
+	
 		$(document).ready(function () {
 
 			var maxField = 100; // Total 100 product fields we add
@@ -183,6 +185,20 @@ pageContext.getAttribute("shop_id");
 				x--; //Decrement field counter
 			});
 		});
+		
+		$(document).ready(function () {
+		Swal.fire({
+			  icon: 'info',
+			  title: '還沒有菜單，來新增~',
+			  showClass: {
+			    popup: 'animate__animated animate__fadeInDown'
+			  },
+			  hideClass: {
+			    popup: 'animate__animated animate__fadeOutUp'
+			  }
+			});
+		});
+		
 	</script>
 </body>
 
