@@ -72,7 +72,7 @@ tbody td {
 					<div class="row">
 						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h3>
-								<strong>訂購單填寫</strong>
+								<strong>請填寫訂購單</strong>
 							</h3>
 						</div>
 						<div class="col-3" style="height: 20px; display: inline-block;">
@@ -89,7 +89,7 @@ tbody td {
 				<div class="card-body">
 					<div class="col-sm-12">
 
-						<FORM METHOD="post"
+						<FORM METHOD="post" id="form1" name="form1"
 							ACTION="<%=request.getContextPath()%>/groupbuylist/addGBList">
 							<table class="table table-hover" style="text-align: center;">
 								<thead>
@@ -115,12 +115,12 @@ tbody td {
 										<td>${menu.price}<input type="hidden" name="price"
 											value="${menu.price}" /></td>
 										<!-- 數量 -->
-										<td><input type="number" class="quantity" required
+										<td><input type="number" class="quantity"  required="required" id="qty" 
 											min="0" max="100" name="qty" value="0"></td>
 										<!-- 小計 -->
 										<td>$<span id="total">0</span></td>
 										<!-- "備註: 只能是中、日、英文字母、數字、_、-和()" -->
-										<td><input type="text" name="remark"
+										<td><input type="text" name="remark" 
 											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
 											size="15" value="${param.remark}"></td>
 									</tr>
@@ -131,8 +131,10 @@ tbody td {
 <input type="hidden" name="buyer" value="${empVO.empId}">
 <input type="hidden" name="buyer_name" value="${empVO.empName}">
 							<input type="hidden" name="action" value="insert2GBlist">
+							
 							<div style="TEXT-ALIGN-LAST: CENTER;">
-							<input type="submit" class="selectAll" value="火速下單ヽ(●´∀`●)ﾉ">
+							<input type="submit" name="button" id="button"
+							class="selectAll" value="火速下單ヽ(●´∀`●)ﾉ">
 							</div>
 						</FORM>
 
@@ -151,6 +153,30 @@ tbody td {
 
 
 	<script>
+	
+	 $(document).ready(function(){
+		    $("#button").click(function(){
+		        if($("#qty").val()==""){
+		            alert("你尚未填寫數量");
+		            eval("document.form1['qty'].focus()");       
+		        }else if($("#phone").val()==""){
+		            alert("你尚未填寫電話");
+		            eval("document.form1['phone'].focus()");    
+		        }else if($("#address").val()==""){
+		            alert("你尚未填寫地址");
+		            eval("document.form1['address'].focus()");       
+		        }else{
+		            document.form1.submit();
+		        }
+		    })
+		 })
+	
+	
+	
+	
+	
+	
+	
 		// 	動態顯示計算金額
 		$(document).ready(
 				function() {

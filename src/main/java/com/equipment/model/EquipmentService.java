@@ -78,5 +78,9 @@ public class EquipmentService {
 	public List<EquipmentVO> getAllQuery(Map<String, String[]> map) {
 		return dao.getAllQuery(map);
 	}
+	
+	public List<EquipmentVO> getEqBookingDate(Integer equipmentId){
+		return dao.getEqBookingDate(equipmentId);
+	}
 
 }

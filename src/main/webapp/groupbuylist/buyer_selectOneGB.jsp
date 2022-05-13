@@ -9,6 +9,8 @@
 List<GroupBuyListVO> list = (List<GroupBuyListVO>) session.getAttribute("buyerlist");
 
 int itemsPerPage = 10;
+
+int orderNumber = 1;
 %>
 
 <!DOCTYPE html>
@@ -17,6 +19,20 @@ int itemsPerPage = 10;
 <%@ include file="/design/frontmetacss.jsp"%>
 
 <style>
+.table-responsive {
+	overflow-x: hidden;
+}
+
+th {
+	vertical-align: middle;
+	text-align: center;
+}
+
+td {
+	vertical-align: middle;
+	text-align: center;
+}
+
 .table-responsive {
 	overflow-x: hidden;
 }
@@ -51,52 +67,63 @@ int itemsPerPage = 10;
 
 				<!-- ============== Card Body ============== -->
 				<div class="card-body">
-				<div class="col-sm-6">
-					<table class="table table-striped">
+					<div class="col-sm-6">
+						<table class="table table-striped">
 
-						<!-- ========================= 表頭 ========================= -->
-						<thead>
-							<tr role=" row">
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Position: activate to sort column ascending">編號</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Position: activate to sort column ascending">品項</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Position: activate to sort column ascending">單價</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Office: activate to sort column ascending">數量</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Office: activate to sort column ascending">金額</th>
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Office: activate to sort column ascending">備註</th>
-							</tr>
-						</thead>
-
-						<%-- 										<%@ include file="/design/page1.file"%> --%>
-
-						<!-- ========================= 表格內容 ========================= -->
-						<tbody>
-							<c:forEach var="blist" items="${buyerlist}">
-								<tr>
-									<td>${blist.gbList_id}</td>
-									<td>${blist.item}</td>
-									<td>${blist.price}</td>
-									<td>${blist.qty}</td>
-									<td>${blist.price*blist.qty}</td>
-									<td>${blist.remark}</td>
+							<!-- ========================= 表頭 ========================= -->
+							<thead>
+								<tr role=" row">
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Position: activate to sort column ascending">編號</th>
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Position: activate to sort column ascending">品項</th>
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Position: activate to sort column ascending">單價</th>
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Office: activate to sort column ascending">數量</th>
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Office: activate to sort column ascending">金額</th>
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Office: activate to sort column ascending">備註</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+
+							<%-- 										<%@ include file="/design/page1.file"%> --%>
+
+							<!-- ========================= 表格內容 ========================= -->
+							<tbody>
+
+								<c:forEach var="blist" items="${buyerlist}">
+
+									<tr>
+										<td><%=orderNumber++%></td>
+										<td>${blist.item}</td>
+										<td>${blist.price}</td>
+										<td>${blist.qty}</td>
+										<td>${blist.price*blist.qty}</td>
+										<td>${blist.remark}</td>
+										<c:set var="sum" value="${sum+(blist.price)*(blist.qty)}"></c:set>
+									</tr>
+								</c:forEach>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><strong>總金額</strong></td>
+									<td><strong>$${sum}</strong></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<%-- 									<%@ include file="/design/page2.file"%> --%>
 				</div>
-				<%-- 									<%@ include file="/design/page2.file"%> --%>
-			</div>
 			</div>
 		</main>
 		<!-- ======= 內容結束 ======= -->

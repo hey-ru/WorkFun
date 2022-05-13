@@ -7,8 +7,8 @@
 <%@ page import="com.secondHand.model.*"%>
 
 <%
-// Integer second_hand_id = Integer.valueOf(request.getParameter("second_hand_id"));
-Integer second_hand_id = 1001;
+Integer second_hand_id = Integer.valueOf(request.getParameter("second_hand_id"));
+// Integer second_hand_id = 1001;
 
 SecondHandService secondHandService = new SecondHandService();
 SecondHandVO secondHandVO = secondHandService.getOneById(second_hand_id);
@@ -116,8 +116,22 @@ body {
 							<ul class="nav nav-tabs nav-tabs-bordered">
 
 								<li class="nav-item">
-									<button class="nav-link active" data-bs-toggle="tab"
-										data-bs-target="#profile-overview">Overview</button>
+									<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview" id="status">
+										<c:choose>
+										    <c:when test="${secondHandVO.is_deal == 0}">
+										        競標尚未開始
+										    </c:when>
+										    <c:when test="${secondHandVO.is_deal == 1}">
+										        競標中
+										    </c:when>
+										    <c:when test="${secondHandVO.is_deal == 2}">
+										        已成交
+										    </c:when>
+										    <c:otherwise>
+										        流標
+										    </c:otherwise>
+										</c:choose>
+									</button>
 								</li>
 
 							</ul>
@@ -138,7 +152,7 @@ body {
 
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">直購價</div>
-										<div class="col-lg-9 col-md-8">${secondHandVO.top_price}</div>
+										<div class="col-lg-9 col-md-8" id="topPrice">${secondHandVO.top_price}</div>
 									</div>
 
 									<div class="row">
@@ -150,10 +164,10 @@ body {
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">當前最高出價人</div>
 										<div class="col-lg-9 col-md-8" id="bidder">
-											<c:if test="${secondHandVO.bidVO.bidder==0}">
+											<c:if test="${secondHandVO.bidVO.bidder == 0}">
 											尚未有人出價
 										</c:if>
-											<c:if test="${secondHandVO.bidVO.bidder!=0}">
+											<c:if test="${secondHandVO.bidVO.bidder != 0}">
 											${secondHandVO.empVO2.empName}
 										</c:if>
 										</div>
@@ -161,7 +175,7 @@ body {
 
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">當前價格</div>
-										<div class="col-lg-9 col-md-8" id="currentPrice" onchange="changePrice(this.id)">${secondHandVO.bidVO.bidder==0?secondHandVO.bottom_price:secondHandVO.bidVO.price}</div>
+										<div class="col-lg-9 col-md-8" id="currentPrice">${secondHandVO.bidVO.bidder == 0 ? secondHandVO.bottom_price : secondHandVO.bidVO.price}</div>
 									</div>
 
 								</div>
@@ -169,44 +183,48 @@ body {
 							</div>
 							<!-- End Bordered Tabs -->
 
-							<c:if test="${secondHandVO.bidVO.bidder == empVO.empId}">
-								<br>您已經是最高出價者<br>
-							</c:if>
-							<c:if test="${secondHandVO.bidVO.bidder != empVO.empId}">
-								<div class="form-group col-3" style="display: inline-block">
-									<div class="form-group col-3" style="display: inline-block">
-										<input type="number" class="form-control"
- 											id="inputPrice" placeholder="輸入競標金額"
-											style="border: gray solid 2px;  width:150px;" name="price" onkeydown="if (event.keyCode == 13) sendPrice();"
- 											<c:if test="${secondHandVO.bidVO.bidder==0}">
- 												oninput="if(value >= ${secondHandVO.top_price}){value = ${secondHandVO.top_price}};
- 												if(value <= Number(document.getElementById('currentPrice').innerHTML)){value = Number(document.getElementById('currentPrice').innerHTML)}"
- 												
- 												value="${secondHandVO.bottom_price}"
- 											</c:if>
- 											<c:if test="${secondHandVO.bidVO.bidder!=0}">
-	 											oninput="if(value >= ${secondHandVO.top_price}){value = ${secondHandVO.top_price}};
-	 											if(value <= Number(document.getElementById('currentPrice').innerHTML)){value = Number(document.getElementById('currentPrice').innerHTML)+1}"
-	 											
-	 											value="${secondHandVO.bidVO.price+1}"
- 											</c:if>
-										>
-									</div>
-									<input type="submit" class="btn btn-primary mb-2 mt-1 col" id="sendPrice" style="display: inline-block;" value="送出" onclick="sendPrice();"></input>
-								</div>
+							<div id="notification">
+								<c:if test="${secondHandVO.is_deal == 2}">
+									<c:if test="${empVO.empId == secondHandVO.bidVO.bidder}">您已經是最高出價者 請與${secondHandVO.empVO1.empName}聯絡</c:if>
+									<c:if test="${empVO.empId != secondHandVO.bidVO.bidder}">此商品已經被${secondHandVO.empVO2.empName}買走了</c:if>
+								</c:if>
+							</div>
+							<c:if test="${secondHandVO.saler != empVO.empId}">
+								<c:if test="${secondHandVO.is_deal == 1}">
+									<c:if test="${secondHandVO.bidVO.bidder != empVO.empId}">
+										<div class="form-group col-3" style="display: inline-block">
+											<div class="form-group col-3" style="display: inline-block; margin-top:10px;">
+												<input type="number" class="form-control"
+		 											id="inputPrice" placeholder="輸入競標金額"
+													style="border: gray solid 2px;  width:150px;" name="price" onkeydown="if (event.keyCode == 13) sendPrice();"
+		 											<c:if test="${secondHandVO.bidVO.bidder==0}">
+		 												oninput="if(value >= ${secondHandVO.top_price}){value = ${secondHandVO.top_price}};
+		 												if(value <= Number(document.getElementById('currentPrice').innerHTML)){value = Number(document.getElementById('currentPrice').innerHTML)}"
+		 												
+		 												value="${secondHandVO.bottom_price}"
+		 											</c:if>
+		 											<c:if test="${secondHandVO.bidVO.bidder!=0}">
+			 											oninput="if(value >= ${secondHandVO.top_price}){value = ${secondHandVO.top_price}};
+			 											if(value <= Number(document.getElementById('currentPrice').innerHTML)){value = Number(document.getElementById('currentPrice').innerHTML)+1}"
+			 											
+			 											value="${secondHandVO.bidVO.price+1}"
+		 											</c:if>
+												>
+											</div>
+											<input type="submit" class="btn btn-primary" id="sendPrice" style="display: inline-block; margin-top:10px;" value="送出" onclick="sendPrice();"></input>
+										</div>
+									</c:if>
+								</c:if>
 							</c:if>
 							
 <%-- 							${empVO.empId} --%>
-
-							<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/bid/BidServlet"
-								name="form1">
-								<input type="hidden" name="bid_id" value="${secondHandVO.bidVO.bid_id}">
-								<input type="hidden" name="top_price" value="${secondHandVO.top_price}">
-								<input type="hidden" name="bidder" value="${empVO.empId}">
-								<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
-								<input type="submit" class="btn btn-primary mb-2 mt-1 col" id="buyItem" style="display: inline-block;" value="我要直購">
-								<input type="hidden" name="action" value="updateWithTopPrice">
-							</form>
+							<c:if test="${secondHandVO.saler != empVO.empId}">
+								<c:if test="${secondHandVO.is_deal == 1}">
+									<div class="form-group col-3" style="display: inline-block; margin-left: 20px">
+										<input type="submit" class="btn btn-primary" id="buyItem" style="display: inline-block; margin-top:10px;" value="我要直購" onclick="buyItem();">
+									</div>
+								</c:if>
+							</c:if>
 <%-- 							${param.second_hand_id} --%>
 <%-- 							<%=request.getParameter("second_hand_id")%> --%>
 						</div>
@@ -224,94 +242,123 @@ body {
 	<!-- Vendor JS Files -->
 	<%@ include file="/design/frontjs.jsp"%>
 	<script>
-	$("#btn1").click(function(){
-		$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
-	});
-	$("#btn2").click(function(){
-		$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
-	});
-	$("#btn3").click(function(){
-		$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
-	});
-
-	function changePrice() {
-		alert("有東西嗎");
-	}
+		$("#btn1").click(function(){
+			$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
+		});
+		$("#btn2").click(function(){
+			$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
+		});
+		$("#btn3").click(function(){
+			$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
+		});
+		
+		var MyPoint = "/BidWS/${secondHandVO.bidVO.bid_id}/${empVO.empId}";
+		var host = window.location.host; //localhost:8081/
+		var path = window.location.pathname; //WebSocketChatWeb
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+						 //ws://localhost:8081/CGA101G3/BidWS/${secondHandVO.bidVO.bid_id}/${empVO.empId}
+							
+		var webSocket;
 	
-	var MyPoint = "/BidWS/${empVO.empId}/${empVO.empName}/${secondHandVO.bidVO.bid_id}";
-	var host = window.location.host; //localhost:8081/
-	var path = window.location.pathname; //WebSocketChatWeb
-	var webCtx = path.substring(0, path.indexOf('/', 1));
-	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
-						//ws://localhost:8081/CGA101G3/BidWS/${empVO.empId}/${empVO.empName}/${secondHandVO.bidVO.bid_id}
-
-	/* var statusOutput = document.getElementById("statusOutput"); */
-	var webSocket;
-
-	function connect() {
-		// create a websocket
-		webSocket = new WebSocket(endPointURL);
-
-		webSocket.onopen = function(event) {
-// 			updateStatus("WebSocket Connected");
-			document.getElementById('sendPrice').disabled = false;
-			document.getElementById('buyItem').disabled = false;
-// 			document.getElementById('connect').disabled = true;
-// 			document.getElementById('disconnect').disabled = false;
-		};
-
-		webSocket.onmessage = function(event) { //前端收到資料
-// 			var messagesArea = document.getElementById("messagesArea");
-// 			var jsonObj = JSON.parse(event.data);
-// 			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-// 			messagesArea.value = messagesArea.value + message;
-// 			messagesArea.scrollTop = messagesArea.scrollHeight;
-			
-			var currentPrice = document.getElementById("currentPrice");
-			var jsonObj = JSON.parse(event.data);
-			currentPrice.innerHTML = jsonObj.price;
-			inputPrice.value = (Number(jsonObj.price) + 1).toString();
-			bidder.innerHTML = jsonObj.userName;
-			
-			
-		};
-
-		webSocket.onclose = function(event) {
-// 			updateStatus("WebSocket Disconnected");
-		};
-	}
-
-	var inputPrice = document.getElementById("inputPrice");
-	inputPrice.focus();
+		function connect() {
+			// create a websocket
+			webSocket = new WebSocket(endPointURL);
 	
-	function sendPrice() { //前端推送資料
-		var price = inputPrice.value.trim();
-		if (price === "") {
-			alert("請輸入價格");
-			inputPrice.focus();
-			return;
-		} else {
-			var jsonObj = {
-				"userId" : ${empVO.empId},
-				"userName" : "${empVO.empName}",
-				"bidId" : ${secondHandVO.bidVO.bid_id},
-				"price" : price
+			webSocket.onopen = function(event) {
+				if(${secondHandVO.saler != empVO.empId}) {
+					document.getElementById('sendPrice').disabled = false;
+					document.getElementById('buyItem').disabled = false;
+				}
 			};
-			webSocket.send(JSON.stringify(jsonObj));
-// 			inputPrice.value = document.getElementById("currentPrice").value.trim() + 1;
-			inputPrice.value = (Number(inputPrice.value)+1).toString();
+	
+			webSocket.onmessage = function(event) { //前端收到資料
+				
+				var currentPrice = document.getElementById("currentPrice");
+				var userName = "${empVO.empName}";
+				var jsonObj = JSON.parse(event.data);
+				currentPrice.innerHTML = jsonObj.price;
+				if(${secondHandVO.saler != empVO.empId}) {
+					inputPrice.value = (Number(jsonObj.price) + 1).toString();
+				}
+				document.getElementById('bidder').innerHTML = jsonObj.userName;
+				
+				if(userName === document.getElementById("bidder").innerHTML) {
+					document.getElementById('sendPrice').disabled = true;
+				} else {
+					if(${secondHandVO.saler != empVO.empId}) {
+						document.getElementById('sendPrice').disabled = false;
+					}
+				}
+				
+				if(document.getElementById("topPrice").innerHTML === document.getElementById("currentPrice").innerHTML) {
+					if(${secondHandVO.saler != empVO.empId}) {
+						document.getElementById('sendPrice').style.display = 'none';
+						document.getElementById('buyItem').style.display = 'none';
+						document.getElementById('inputPrice').style.display = 'none';
+					}
+					if(userName === bidder.innerHTML) {
+						document.getElementById('notification').innerHTML = '您已經是最高出價者 請與' + '${secondHandVO.empVO1.empName}' + '聯絡';
+					} else {
+						document.getElementById('notification').innerHTML = '此商品已經被' + jsonObj.userName + '買走了';
+					}
+					document.getElementById('status').innerHTML = '已成交';
+				}
+	
+			};
+	
+			webSocket.onclose = function(event) {
+			};
+		}
+	
+		var inputPrice = document.getElementById("inputPrice");
+		if(${secondHandVO.saler != empVO.empId}) {
 			inputPrice.focus();
 		}
-	}
-
-	function disconnect() {
-		webSocket.close();
-// 		document.getElementById('sendMessage').disabled = true;
-// 		document.getElementById('connect').disabled = false;
-// 		document.getElementById('disconnect').disabled = true;
-		document.getElementById('sendPrice').disabled = true;
-		document.getElementById('buyItem').disabled = true;
-	}
+		
+		function sendPrice() { //前端推送資料
+			var price = inputPrice.value.trim();
+			if (price === "") {
+				alert("請輸入價格");
+				inputPrice.focus();
+				return;
+			} else {
+				var jsonObj = {
+					"userId" : ${empVO.empId},
+					"userName" : "${empVO.empName}",
+					"secondHandId" : ${secondHandVO.second_hand_id},
+					"bidId" : ${secondHandVO.bidVO.bid_id},
+					"topPrice" : ${secondHandVO.top_price},
+					"price" : price
+				};
+				webSocket.send(JSON.stringify(jsonObj));
+				inputPrice.value = (Number(inputPrice.value)+1).toString();
+				inputPrice.focus();
+			}
+		}
+		
+		function buyItem() {
+			var jsonObj = {
+					"userId" : ${empVO.empId},
+					"userName" : "${empVO.empName}",
+					"secondHandId" : ${secondHandVO.second_hand_id},
+					"bidId" : ${secondHandVO.bidVO.bid_id},
+					"topPrice" : ${secondHandVO.top_price},
+					"price" : ${secondHandVO.top_price}
+			};
+			webSocket.send(JSON.stringify(jsonObj));
+			document.getElementById('sendPrice').style.display = 'none';
+			document.getElementById('buyItem').style.display = 'none';
+			document.getElementById('inputPrice').style.display = 'none';
+		}
+	
+		function disconnect() {
+			webSocket.close();
+			if(${secondHandVO.saler != empVO.empId}) {
+				document.getElementById('sendPrice').disabled = true;
+				document.getElementById('buyItem').disabled = true;
+			}
+		}
 	</script>
 </body>
 

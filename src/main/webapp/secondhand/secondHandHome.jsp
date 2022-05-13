@@ -123,13 +123,13 @@ int itemsPerPage = 9;
 												<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
 												<input type="hidden" name="action" value="getOneForUpdate">
 											</FORM>
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidViewOnly.jsp" style="margin-bottom: 0px; margin-right: 5px;">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidHomeWS.jsp" style="margin-bottom: 0px; margin-right: 5px;">
 												<input type="submit" value="查看商品" class="submitbtn" >
 												<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											</FORM>
 										</c:if>
 										<c:if test="${empVO.empId != secondHandVO.saler}"> 
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidHome.jsp" style="margin-bottom: 0px; margin-right: 5px;">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidHomeWS.jsp" style="margin-bottom: 0px; margin-right: 5px;">
 													<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1") != -1 ? "" : "hidden"} >
 													<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											</FORM>

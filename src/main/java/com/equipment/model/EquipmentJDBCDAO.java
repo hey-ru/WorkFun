@@ -30,6 +30,8 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 
 	private static final String GET_ALL_BY_EQNAME = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
 
+	private static final String GET_EQ_BOOKINGDATE = "select start_date , end_date from booking where equipment_id = ? and end_date >= now()";
+	
 	//	private static final String GET_ALL_QUERY = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
 
 	@Override
@@ -776,5 +778,11 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<EquipmentVO> getEqBookingDate(Integer equipmentId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

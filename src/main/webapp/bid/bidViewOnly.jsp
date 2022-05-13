@@ -93,8 +93,22 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 							<ul class="nav nav-tabs nav-tabs-bordered">
 
 								<li class="nav-item">
-									<button class="nav-link active" data-bs-toggle="tab"
-										data-bs-target="#profile-overview">Overview</button>
+									<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+										<c:choose>
+										    <c:when test="${secondHandVO.is_deal == 0}">
+										        競標尚未開始
+										    </c:when>
+										    <c:when test="${secondHandVO.is_deal == 1}">
+										        競標中
+										    </c:when>
+										    <c:when test="${secondHandVO.is_deal == 2}">
+										        已成交
+										    </c:when>
+										    <c:otherwise>
+										        流標
+										    </c:otherwise>
+										</c:choose>
+									</button>
 								</li>
 
 							</ul>
@@ -146,9 +160,12 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 							</div>
 							<!-- End Bordered Tabs -->
 							
-							<c:if test="${secondHandVO.bidVO.bidder == empVO.empId}">
-								<div class="col-lg-9 col-md-4 label">恭喜你得標,請與 ${secondHandVO.empVO1.empName} 聯絡</div>
-							</c:if>
+							<div>
+								<c:if test="${secondHandVO.is_deal == 2}">
+									<c:if test="${empVO.empId == secondHandVO.bidVO.bidder}">您已經是最高出價者 請與${secondHandVO.empVO1.empName}聯絡</c:if>
+									<c:if test="${empVO.empId != secondHandVO.bidVO.bidder}">此商品已經被${secondHandVO.empVO2.empName}買走了</c:if>
+								</c:if>
+							</div>
 
 						</div>
 					</div>

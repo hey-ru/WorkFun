@@ -24,6 +24,8 @@ pageContext.getAttribute("shop_id");
 #frm-add-data .form-group {
 	margin-left: 13px;
 }
+
+
 </style>
 
 </head>
@@ -53,8 +55,6 @@ pageContext.getAttribute("shop_id");
 				<div class="card" style="background-color: #EBD6D6">
 
 
-
-
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/menu/addmenubyshop">
 						<div class="card-body">
@@ -68,12 +68,16 @@ pageContext.getAttribute("shop_id");
 								<div class="field_wrapper">
 									<div style="DISPLAY: INLINE-FLEX;">
 										<div class="form-group">
-											<label for="item">品項 : </label> <input type="text"
+										<!-- "品項: 只能是中、日、英文字母、數字、_、-和()" -->
+											<label for="item">品項 : </label> 
+											<input type="text" required
+											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
 												class="form-control" placeholder="輸入名稱" name="item"
 												value="${param.item}">
 										</div>
 										<div class="form-group">
-											<label for="price">金額:</label> <input type="number"
+											<label for="price">金額:</label> 
+											<input type="number" required
 												class="form-control" placeholder="輸入金額" name="price"
 												value="${param.price}">
 										</div>
@@ -156,11 +160,14 @@ pageContext.getAttribute("shop_id");
 				<div style="DISPLAY: INLINE-FLEX;">
 					<div class="form-group">
 							<label for="item">品項:</label>
-					<input type="text" class="form-control" placeholder="輸入名稱" name="item" value="${param.item}">
+					<input type="text" required
+					pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
+					class="form-control" placeholder="輸入名稱" name="item" value="${param.item}">
 					</div>
 					<div class="form-group">
 					<label for="price">金額:</label>
-					<input type="number" class="form-control" placeholder="輸入金額" name="price" value="${param.price}">
+					<input type="number" required
+					class="form-control" placeholder="輸入金額" name="price" value="${param.price}">
 					</div>
 					<div class="form-group">
 					<a href="javascript:void(0);" class="remove_button" style="font-size:30px;" title="移除此項"><i class="bi bi-trash"></i></a>

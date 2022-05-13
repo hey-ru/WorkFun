@@ -7,12 +7,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 
+<!-- BookingService bookingService = new BookingService(); -->
+<!-- List<BookingVO> list = bookingService.getBookingAllDate(); -->
+<!-- pageContext.setAttribute("list", list); -->
 <%
 Integer equipmentId = Integer.valueOf(request.getParameter("equipmentId"));
 
 EquipmentService equipmentSvc = new EquipmentService();
 EquipmentVO equipmentVO = equipmentSvc.getByEqId(equipmentId);
 pageContext.setAttribute("equipmentVO", equipmentVO);
+
 %>
 
 
@@ -27,13 +31,13 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+
+
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+
 
 
 <style>
@@ -112,8 +116,15 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 
 							<div class="tab-content pt-2">
 
+
+<%-- 								<c:forEach var="bookingVO" items="${list}"> --%>
+<%-- 								<fmt:formatDate value="${bookingVO.endDate}" --%>
+<%-- 														pattern="yyyy-MM-dd" /> --%>
+<%-- 								</c:forEach> --%>
+
 								<h2 class="card-title">${equipmentVO.eqName}</h2>
 								<p class="col-lg-3 col-md-4 label"></p>
+
 
 								<h5 class="card-title"></h5>
 								<p class="small fst-italic">${equipmentVO.spec}</p>
@@ -127,23 +138,39 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 
 							</div>
 							<form class="my-1" method="post"
-								action="<%=request.getContextPath()%>/booking/booking.do" name="form1">
-								<label for="from">租借日 : </label> 
-								<input type="text" id="f_date1" name="startDate" autocomplete="off" value="${param.startDate}"> <br><br>
-								<label for="from">歸還日 : </label>
-								<input type="text" id="f_date2" name="endDate" autocomplete="off" value="${param.endDate}">
+								action="<%=request.getContextPath()%>/booking/booking.do"
+								name="form1">
+								<label for="start_time" class="col-sm-2 col-form-label">租借日
+									: </label>
+								<div class="col-sm-5">
+									<input name="startDate" id="start_time" type="text"
+										class="form-control" autocomplete="off"
+										value="${param.startDate}" />
+								</div>
 
-								<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
-								
-								<input type="hidden" name="empId" value="${empVO.empId}"> 
-								
-								<input type="hidden" name="startDate" value="${bookingVO.startDate}">
-								
-								<input type="hidden" name="endDate" value="${bookingVO.endDate}">
-								
-								<input type="hidden" name="returnStatus" value="${bookingVO.returnStatus}"> 
-								<input type="hidden" name="action" value="insert"> 
-								<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block;" value="我要預約" onclick='alertTest()'>
+								<div class="col-sm-4">${errorMsgs.start_date}</div>
+
+								<label for="end_time" class="col-sm-2 col-form-label">歸還日
+									: </label>
+								<div class="col-sm-5">
+									<input name="endDate" id="end_time" type="text"
+										autocomplete="off" class="form-control"
+										value="${param.endDate}">
+								</div>
+
+								<div class="col-sm-5">
+									<input type="hidden" name="equipmentId"
+										value="${equipmentVO.equipmentId}"> <input
+										type="hidden" name="empId" value="${empVO.empId}"> <input
+										type="hidden" name="startDate" value="${bookingVO.startDate}">
+									<input type="hidden" name="endDate"
+										value="${bookingVO.endDate}"> <input type="hidden"
+										name="returnStatus" value="${bookingVO.returnStatus}">
+									<input type="hidden" name="action" value="insert"> <input
+										type="submit" class="btn btn-primary mb-2 mt-1 col"
+										style="display: inline-block;" value="我要預約"
+										onclick='alertTest()'>
+								</div>
 							</form>
 
 						</div>
@@ -163,6 +190,10 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 	<!-- Vendor JS Files -->
 
 	<%-- 	<%@ include file="/design/frontjs.jsp"%> --%>
+
+	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 	<script>
 	
@@ -189,36 +220,43 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 	
 	
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-	
-         
-         $.datetimepicker.setLocale('zh');
-         $('#f_date1').datetimepicker({
- 	       theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-<%--  		   value: '<%=hiredate%>', // value:   new Date(), --%>
-            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-            //startDate:	            '2017/07/10',  // 起始日
-            //minDate:               '-1970-01-01', // 去除今日(不含)之前
-            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-         });
-         
-         $.datetimepicker.setLocale('zh');
-         $('#f_date2').datetimepicker({
- 	       theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-<%--  		   value: '<%=hiredate%>', // value:   new Date(), --%>
-            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-            //startDate:	            '2017/07/10',  // 起始日
-            //minDate:               '-1970-01-01', // 去除今日(不含)之前
-            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-         });
-         
- 
 
+	
+	
+	$.datetimepicker.setLocale('zh');
+     $('#start_time').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+	       timepicker:false,
+// 		   value:   new Date(),
+		   onShow:function(){
+			   this.setOptions({
+				minDate:0,
+				minTime:0,
+				maxDate:$('#end_time').val()?$('#end_time').val():false
+			   })
+		   }
+     });
+     $('#end_time').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+	       timepicker:false,
+		   //value: '${end_time}', // value:   new Date(),
+		  onShow:function(){
+			   this.setOptions({
+				
+			    minDate:$('#start_time').val()?$('#start_time').val():false,
+			   })
+			  }
+	});
+    
+     
+
+
+     
+     
+      
+     
 	</script>
 </body>
 </html>

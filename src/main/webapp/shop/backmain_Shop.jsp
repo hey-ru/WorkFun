@@ -27,7 +27,18 @@ int itemsPerPage = 10;
 
 
 <style>
+  th{
+        vertical-align: middle;
+            text-align: center;
+        }
+        td{
+        vertical-align: middle;
+            text-align: center;
+        }
 
+     .table-responsive {
+    	overflow-x:hidden;
+		}
 </style>
 </head>
 

@@ -1,23 +1,22 @@
 <%@page import="com.emp.model.*"%>
-<%@page import="java.util.List"%>
-<%@page import="com.booking.model.BookingService"%>
-<%@page import="com.booking.model.BookingVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
+<%@page import="com.booking.model.*"%>
 
+
+<jsp:useBean id="listByCompositeQuery" scope="request"
+	type="java.util.List<BookingVO>" />
 <%
-BookingService bookingSvc = new BookingService();
-List<BookingVO> list = bookingSvc.getAll();
-pageContext.setAttribute("list", list);
-
-EmpService empSvc = new EmpService();
-
+String yourServlet = "/booking/booking.do";
 int itemsPerPage = 10;
+EmpService empSvc = new EmpService();
 %>
 
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 
 <head>
 <%@ include file="/design/backcss.jsp"%>
@@ -29,7 +28,6 @@ int itemsPerPage = 10;
 <meta name="author" content="">
 
 <title>WorkFunBack</title>
-
 <style>
 .col-sm-6 {
 	flex: 0 0 100%;
@@ -40,7 +38,6 @@ int itemsPerPage = 10;
 	overflow-x: hidden;
 }
 </style>
-
 </head>
 
 <body id="page-top">
@@ -53,7 +50,6 @@ int itemsPerPage = 10;
 		<%@ include file="/design/backSidebar.jsp"%>
 		<!-- End of Sidebar -->
 
-
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 
@@ -62,13 +58,13 @@ int itemsPerPage = 10;
 
 				<!-- Topbar -->
 				<nav
-					class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
+					class="navbar navbar-expand navbar-light bg-dark topbar static-top shadow">
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav bg-dark ml-auto">
 
 						<!-- Nav Item - User Information -->
-						<li class="nav-item no-arrow"><a
+						<li class="nav-item no-arrow pr-4"><a
 							href="<%=request.getContextPath()%>/home/home.jsp"> <i
 								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 								Back Home
@@ -77,6 +73,25 @@ int itemsPerPage = 10;
 					</ul>
 
 				</nav>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<!-- 				<div class="container-fluid pl-0"> -->
+				<!-- 內容放這 -->
+				<!-- 					<main id="main" class="main"> -->
+				<!-- 						<div class="card shadow"> -->
+				<!-- ============== Card Header ============== -->
+				<!-- 							<div class="card-header py-3" style="background-color: #b0c4de"> -->
+				<!-- 								<div class="row"> -->
+				<!-- 									<div class="col-11" -->
+				<!-- 										style="height: 20px; display: inline-block;"> -->
+				<!-- 										<h5> -->
+				<!-- 											<strong>揪團管理</strong> -->
+				<!-- 										</h5> -->
+				<!-- 									</div> -->
+				<!-- 								</div> -->
+				<!-- 							</div> -->
+
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
@@ -117,7 +132,6 @@ int itemsPerPage = 10;
 				<!-- 						</div> -->
 				<!-- 					</div> -->
 				<!-- 				</div> -->
-
 				<div class="card-body">
 					<div class="row">
 						<div class="col-11 row"
@@ -217,6 +231,9 @@ int itemsPerPage = 10;
 														rowspan="1" colspan="1"
 														aria-label="Position: activate to sort column ascending">預約歸還日</th>
 
+													<th class="sorting" tabindex="0" aria-controls="dataTable"
+														rowspan="1" colspan="1"
+														aria-label="Position: activate to sort column ascending">預約狀態</th>
 
 													<th class="sorting" tabindex="0" aria-controls="dataTable"
 														rowspan="1" colspan="1"
@@ -226,14 +243,11 @@ int itemsPerPage = 10;
 														rowspan="1" colspan="1"
 														aria-label="Position: activate to sort column ascending">逾期罰金</th>
 
-													<th class="sorting" tabindex="0" aria-controls="dataTable"
-														rowspan="1" colspan="1"
-														aria-label="Position: activate to sort column ascending">預約狀態</th>
 												</tr>
 
 											</thead>
 
-											<%@ include file="/design/page1.file"%>
+											<%@ include file="/design/page1_ByCompositeQuery.file"%>
 											<tbody>
 												<c:forEach var="bookingVO" items="${list}"
 													begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -276,31 +290,31 @@ int itemsPerPage = 10;
 															action="<%=request.getContextPath()%>/booking/booking.do">
 
 															<td><label for="inputNumber"
-																class="col-sm-2 col-form-label"></label> <select
-																size="1" name="returnStatus" size="45"
-																style="margin-right: 20px;">
-																	<option value="0"
-																		${(bookingVO.returnStatus==0)? 'selected':'' }>已歸還</option>
-																	<option value="1"
-																		${(bookingVO.returnStatus==1)? 'selected':'' }>租借中</option>
-																	<option value="2"
-																		${(bookingVO.returnStatus==2)? 'selected':'' }>未領取器材</option>
-																	<option value="3"
-																		${(bookingVO.returnStatus==3)? 'selected':'' }>逾期歸還(需罰金)</option>
-																	<option value="4"
-																		${(bookingVO.returnStatus==4)? 'selected':'' }>未歸還(需罰金)</option>
-																	<option value="5"
-																		${(bookingVO.returnStatus==5)? 'selected':'' }>已登記預約</option>
-															</select> ${errorMsgs.returnStatus}
-																<div>
-																	<input type="hidden" name="action"
-																		value="updateReturnStatus"> <input
-																		type="hidden" name="bookingId"
-																		value="${bookingVO.bookingId}"> <input
-																		type="hidden" name="returnStatus"
-																		value="${bookingVO.returnStatus}"> <input
-																		type="submit" value="修改狀態" class="btn-info">
-																</div></td>
+																class="col-sm-2 col-form-label"></label>
+																<div class="col-sm-10">
+																	<select name="returnStatus" id="">
+																		<option value="0"
+																			${(bookingVO.returnStatus==0)? 'selected':'' }>已歸還</option>
+																		<option value="1"
+																			${(bookingVO.returnStatus==1)? 'selected':'' }>租借中</option>
+																		<option value="2"
+																			${(bookingVO.returnStatus==2)? 'selected':'' }>未領取器材</option>
+																		<option value="3"
+																			${(bookingVO.returnStatus==3)? 'selected':'' }>逾期歸還(需罰金)</option>
+																		<option value="4"
+																			${(bookingVO.returnStatus==4)? 'selected':'' }>未歸還(需罰金)</option>
+																		<option value="5"
+																			${(bookingVO.returnStatus==5)? 'selected':'' }>已登記預約</option>
+																	</select> ${errorMsgs.returnStatus}
+																	<div>
+																		<input type="hidden" name="action"
+																			value="updateReturnStatus"> <input
+																			type="hidden" name="bookingId"
+																			value="${bookingVO.bookingId}"> <input
+																			type="hidden" name="returnStatus"
+																			value="${bookingVO.returnStatus}"> <input
+																			type="submit" value="儲存" class="btn-info">
+																	</div>
 														</form>
 
 
@@ -326,34 +340,35 @@ int itemsPerPage = 10;
 												</c:forEach>
 											</tbody>
 										</table>
-										<%@ include file="/design/page2.file"%>
-
+										<%@ include file="/groupbuy/page2_ByCompositeQuery.file"%>
 									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- /.container-fluid -->
+					</main>
 				</div>
-				<!-- End of Main Content -->
+				<!-- /.container-fluid -->
 			</div>
-			<!-- End of Content Wrapper -->
+			<!-- End of Main Content -->
+		</div>
+		<!-- End of Content Wrapper -->
+	</div>
+	<!-- End of Page Wrapper -->
 
-			<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
 
-			<!-- Scroll to Top Button-->
-			<a class="scroll-to-top rounded" href="#page-top"> <i
-				class="fas fa-angle-up"></i>
-			</a>
+	<%@ include file="/design/backjs.jsp"%>
 
-			<%@ include file="/design/backjs.jsp"%>
-
-
-			<script type="text/javascript">
-				$("tbody tr").css("background-color", function(index) {
-					return index % 2 == 0 ? "#dcdcdc" : "";
-				});
-			</script>
+	<script type="text/javascript">
+		$("tbody tr").css("background-color", function(index) {
+			return index % 2 == 0 ? "#dcdcdc" : "";
+		});
+	</script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.groupbuylist.controller.jdbcUtil_CompositeQuery;
+import com.util.jdbcUtil_CompositeQuery;
 
 import java.sql.*;
 
@@ -23,14 +23,17 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		}
 	}
 
+	//萬用查詢
+	private static final String GET_JOIN="SELECT l.gb_id , g.shop_name, SUM(price*qty) AS TOTAL, "
+			+ "l.is_pay, l.is_pickup, g.start_time, g.end_time, g.gb_status "
+			+ "FROM groupbuylist l JOIN groupbuy g ON l.gb_id = g.gb_id";
+	
 //  <<參團管理>>
 //	參團者新增一筆參團ok
 	private static final String INSERT_STMT = "INSERT INTO groupbuylist (gb_id, buyer, buyer_name, menu_id, item, "
 			+ "price, qty, remark) " + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 
 //	-- 1.查詢我的參團: 查詢各團總額及狀態(主頁查詢畫面, 依結束時間降冪排序)-->join groupbuy
-//	private static final String GET_MYGB = "SELECT gb_id, price, qty, is_pay, is_pickup "
-//			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gblist_upd desc ";
 	private static final String GET_MYGB = "SELECT gb_id, SUM(price*qty) AS TOTAL, is_pay, is_pickup "
 			+ "FROM groupbuylist WHERE buyer=? GROUP BY gb_id ORDER BY gblist_upd desc ";
 //	-- 1. 計算我的各團總額
@@ -40,7 +43,7 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 	private static final String DELETEMYGB = "DELETE FROM groupbuylist where buyer = ? and gb_id = ?";
 
 //	-- 2. 檢視按鈕: 查詢 我的單筆明細ok
-	private static final String GET_ONE_BYBUYER = "SELECT * FROM groupbuylist WHERE buyer = ? AND gb_id= ? AND qty>0 GROUP BY gbList_id ";
+	private static final String GET_ONE_BYBUYER = "SELECT * FROM groupbuylist WHERE buyer = ? AND gb_id= ? GROUP BY gbList_id ";
 
 //	-- 2-1. 修改按鈕: (揪團截止前)修改 單筆項目的數量&備註ok
 	private static final String UPDATE = "UPDATE groupbuylist set qty=?, remark=? where buyer=? and gbList_id=?";
@@ -575,27 +578,28 @@ public class GroupBuyListDAO implements GroupBuyListDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			String finalSQL = "select * from groupbuylist " + jdbcUtil_CompositeQuery.get_WhereCondition(map)
-					+ "order by gblist_id";
+			String finalSQL = GET_JOIN 
+					+ jdbcUtil_CompositeQuery.get_WhereCondition(map)
+					+ "GROUP BY l.gb_id ORDER BY g.end_time desc";
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				groupBuyListVO = new GroupBuyListVO();
-				groupBuyListVO.setGbList_id(rs.getInt("gblist_id"));
+//				groupBuyListVO.setGbList_id(rs.getInt("gbList_id"));
 				groupBuyListVO.setGb_id(rs.getInt("gb_id"));
-				groupBuyListVO.setBuyer(rs.getInt("buyer"));
-				groupBuyListVO.setBuyer_name(rs.getString("buyer_name"));
-				groupBuyListVO.setMenu_id(rs.getInt("menu_id"));
-				groupBuyListVO.setItem(rs.getString("item"));
-				groupBuyListVO.setPrice(rs.getInt("price"));
-				groupBuyListVO.setQty(rs.getInt("qty"));
+//				groupBuyListVO.setBuyer(rs.getInt("buyer"));
+//				groupBuyListVO.setBuyer_name(rs.getString("buyer_name"));
+//				groupBuyListVO.setMenu_id(rs.getInt("menu_id"));
+//				groupBuyListVO.setItem(rs.getString("item"));
+//				groupBuyListVO.setPrice(rs.getInt("price"));
+//				groupBuyListVO.setQty(rs.getInt("qty"));
 				groupBuyListVO.setTotal(rs.getInt("total"));
-				groupBuyListVO.setRemark(rs.getString("remark"));
+//				groupBuyListVO.setRemark(rs.getString("remark"));
 				groupBuyListVO.setIs_pay(rs.getInt("is_pay"));
 				groupBuyListVO.setIs_pickup(rs.getInt("is_pickup"));
-				groupBuyListVO.setGbList_upd(rs.getTimestamp("gbList_upd"));
+//				groupBuyListVO.setGbList_upd(rs.getTimestamp("gbList_upd"));
 
 				list.add(groupBuyListVO); // Store the row in the List
 			}
