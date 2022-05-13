@@ -8,18 +8,11 @@
 <%@ page import="com.groupbuylist.model.*"%>
 <%@ page import="com.groupbuy.model.*"%>
 
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<GroupBuyListVO>" />
+
 <%
-//只能查詢個人參團紀錄
-EmpVO empVO = (EmpVO) session.getAttribute("empVO");
-
-//查詢出參團人所有參團
-GroupBuyListService gblistSvc = new GroupBuyListService();
-List<GroupBuyListVO> list = gblistSvc.getMyGB(empVO.getEmpId());
-
-HttpSession session1 = pageContext.getSession();
-session1.setAttribute("mygblist", list);
-
-int itemsPerPage = 6;
+String yourServlet = "/groupbuylist/selectmygblistservlet";
+int itemsPerPage = 10;
 int orderNumber = 1;
 %>
 
@@ -111,7 +104,6 @@ int orderNumber = 1;
 									</div>
 									<input type="hidden" name="action" value="listByCompositeQueryGBList">
 <!-- 									傳遞揪團中參數 -->
-<!-- 									<input type="hidden" name="is_pay" value="0"> -->
 									<button type="submit" class="btn btn-dark mb-2 mt-1 col"
 										style="display: inline-block;">搜尋</button>
 								</form>
@@ -138,12 +130,12 @@ int orderNumber = 1;
 								</tr>
 							</thead>
 
-							<%@ include file="/design/page1.file"%>
+							<%@ include file="/design/page1_ByCompositeQuery.file"%>
 
 							<!-- ========================= 表格內容 ========================= -->
 							<tbody>
-								<c:forEach var="mygb" items="${mygblist}" begin="<%=pageIndex%>"
-									end="<%=pageIndex+rowsPerPage-1%>">
+								<c:forEach var="mygb" items="${listByCompositeQuery}" begin="<%=pageIndex%>"
+							end="<%=pageIndex+rowsPerPage-1%>">
 									<c:if test="${(mygb.total) > 0}">
 										<tr>
 											<td><%=orderNumber++%></td>
@@ -205,13 +197,6 @@ int orderNumber = 1;
 													<input type="hidden" name="gb_id" value="${mygb.gb_id}">
 													<input type="hidden" name="buyer" value="${empVO.empId}">
 													<input type="hidden" name="action" value="deleteMyGb">
-
-													<!-- 判斷截止時間是否小於現在時間,若是hidden button -->
-													<!-- 																<input type="submit" class="btn btn-secondary btn-sm" value="退出揪團" -->
-													<%-- 																${mygb.groupBuyVO.end_time lt now ? 'disabled="disabled"' : ''}/> --%>
-													<%-- 																	<jsp:useBean id="now" class="java.util.Date" /> --%>
-													<%-- 																	<c:out value="${mygb.groupBuyVO.end_time lt now}"/>  --%>
-													<!-- 判斷截止時間是否為揪團中-->
 													<input type="submit" onclick="myAlertFunction(event)"
 														class="btn btn-secondary btn-sm" value="退團"
 														${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
@@ -225,7 +210,7 @@ int orderNumber = 1;
 						</table>
 					</div>
 
-					<%@ include file="/design/page2.file"%>
+					<%@ include file="/design/page2_ByCompositeQuery.file"%>
 				</div>
 			</div>
 			

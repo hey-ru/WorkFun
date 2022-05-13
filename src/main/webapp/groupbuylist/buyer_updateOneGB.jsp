@@ -23,6 +23,18 @@ int orderNumber = 1;
 .table-responsive {
 	overflow-x: hidden;
 }
+  th{
+        vertical-align: middle;
+            text-align: center;
+        }
+        td{
+        vertical-align: middle;
+            text-align: center;
+        }
+
+     .table-responsive {
+    	overflow-x:hidden;
+		}
 </style>
 
 
@@ -70,6 +82,7 @@ int orderNumber = 1;
 								<th scope="col">數量</th>
 								<th scope="col">小計</th>
 								<th scope="col">備註</th>
+								<th scope="col">刪除</th>
 								</tr>
 							</thead>
 
@@ -77,7 +90,7 @@ int orderNumber = 1;
 
 
 				<c:forEach var="blist" items="${buyerlist}">
-				
+		<input type="hidden" name="gb_id" value="${blist.gb_id}">		
 		<input type="hidden" name="gbList_id" value="${blist.gbList_id}">
 		<input type="hidden" name="buyer" value="${blist.buyer}">
 
@@ -95,14 +108,32 @@ int orderNumber = 1;
 									<td><input type="text" name="remark"
 										pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
 										size="15" value="${blist.remark}"></td>
-								</tr>
-							</c:forEach>
-						</table>
-		
-						<input type="hidden" name="action" value="updateMany"> <input
-							type="submit" class="btn btn-success"
-							onClick="alert('已完成訂單修改')" value="送出訂單">
-					</FORM>
+					
+<!-- 				[刪除請求] -->
+					<td>
+					<FORM METHOD="post"
+					ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
+					style="margin-bottom: 0px;">
+					<input type="hidden" name="gbList_id" value="${blist.gbList_id}">
+					<input type="hidden" name="gb_id" value="${blist.gb_id}">
+					<input type="hidden" name="buyer" value="${blist.buyer}">
+					<input type="hidden" name="action" value="deleteItem">
+					<input type="submit" class="btn btn-secondary btn-sm" value="刪除"
+					${blist.qty eq 0 ? 'hidden="hidden"' : ''} /></FORM>
+					</td>	
+					</tr>
+				</c:forEach>
+						
+					</table>
+						
+						
+<!-- 		[修改請求] -->
+					<div style="text-align: center;">
+					<input type="hidden" name="action" value="updateMany">
+					<input type="submit" class="btn btn-success" onclick="javascript:return window.alert('已送出修改')" value="送出訂單">
+					</div>
+				
+				</FORM>
 
 				</div>
 			</div>
