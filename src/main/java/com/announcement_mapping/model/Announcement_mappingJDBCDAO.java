@@ -1,4 +1,4 @@
-package com.announcement_mapping;
+package com.announcement_mapping.model;
 
 import java.util.*;
 
@@ -27,8 +27,9 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 	private static final String GET_ALL_STMT = "select announcement_id,announcementImg_id,announcementImg FROM announcement_mapping order by announcement_id ";
 	private static final String GET_ONE_STMT = "SELECT *  FROM announcement_mapping where announcement_id = ? ";
 	private static final String DELETE = "DELETE FROM announcement_mapping where announcement_id = ? and announcementImg_id = ? ;";
-	private static final String UPDATE = "UPDATE permission_mapping set announcementImg=?  where announcement_id = ? and announcementImg_id = ? ";
-
+	//private static final String UPDATE = "UPDATE permission_mapping set announcementImg=?  where announcement_id = ? and announcementImg_id = ? ";
+	private static final String UPDATE = "UPDATE announcement_mapping set ";
+	
 	@Override
 	public void insert(Announcement_mappingVO announcement_mappingVO) {
 
@@ -79,6 +80,50 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 
 	}
 
+	@Override
+	public void insert(Announcement_mappingVO announcement_mappingVO,Connection con) {
+
+
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			
+			pstmt.setInt(1, announcement_mappingVO.getAnnouncement_id());
+		
+			pstmt.setBytes(2, announcement_mappingVO.getAnnouncementImg());
+			pstmt.executeUpdate();
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			if (rs.next()) {
+//				employee_id = rs.getInt(1);
+//				System.out.println(rowCount + " row inserted; order ID: " + employee_id);
+//			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			
+		}
+
+	}
+
 	public int update(Announcement_mappingVO announcement_mappingVO) {
 
 		Connection con = null;
@@ -87,16 +132,37 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
-		
+			
+			StringBuilder sb=new StringBuilder();
+			sb.append(UPDATE);
 
+			int count=0;
 			if (announcement_mappingVO.getAnnouncementImg() != null) {
-				pstmt.setBytes(1, announcement_mappingVO.getAnnouncementImg());
-			} 
-
-			pstmt.setInt(2, announcement_mappingVO.getAnnouncementImg_id());
+				sb.append("announcementImg=? ");
+			
+			sb.append( "  where announcement_id = ? and announcementImg_id = ? ");
+			
+			
+			pstmt = con.prepareStatement(sb.toString());
+			
+			
+			if (announcement_mappingVO.getAnnouncementImg() != null) {
+				count++;
+			pstmt.setBytes(count, announcement_mappingVO.getAnnouncementImg());
+			
+			}
+			
+			count++;
+			pstmt.setInt(count, announcement_mappingVO.getAnnouncement_id());
+			count++;
+			pstmt.setInt(count, announcement_mappingVO.getAnnouncementImg_id());
+			
 
 			pstmt.executeUpdate();
+			}else {
+				
+				
+			}
 
 			// Handle any driver errors
 
@@ -174,9 +240,9 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 
 	}
 //
-	public List<Announcement_mappingVO> findByPrimaryKey(Integer announcement_id) {
-		List<Announcement_mappingVO> list= new ArrayList<Announcement_mappingVO>();
-		Announcement_mappingVO Announcement_mappingVO = null;
+	public List<Integer> findByPrimaryKey(Integer announcement_id) {
+		List<Integer> list= new ArrayList<Integer>();
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -192,13 +258,10 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 
 			while (rs.next()) {
 
-				Announcement_mappingVO = new Announcement_mappingVO();
-								
-								Announcement_mappingVO.setAnnouncement_id(announcement_id);
-								Announcement_mappingVO.setAnnouncementImg_id(rs.getInt("announcementImg_id"));
+				
 
-								Announcement_mappingVO.setAnnouncementImg(rs.getBytes("announcementImg"));
-								list.add(Announcement_mappingVO);
+								
+								list.add(rs.getInt("announcementImg_id"));
 
 							
 								
@@ -323,14 +386,16 @@ Announcement_mappingVO.setAnnouncementImg(rs.getBytes("announcementImg"));
 		Announcement_mappingJDBCDAO dao = new Announcement_mappingJDBCDAO();
 		Announcement_mappingVO announcement_mappingVO1 = new Announcement_mappingVO();
 
-		announcement_mappingVO1.setAnnouncement_id(1001);
+		announcement_mappingVO1.setAnnouncement_id(2010);
 	//	/Users/lin/Downloads/FRjF7siagAA9CQh.jpeg
-		FileInputStream fileInputStream=new FileInputStream("/Users/lin/Downloads/FRjF7siagAA9CQh.jpeg");
+		FileInputStream fileInputStream=new FileInputStream("/Users/lin/chisato/96419655_p19.png");
 		byte[] a=new byte[fileInputStream.available()];
-
-		announcement_mappingVO1.setAnnouncementImg(a);
+		announcement_mappingVO1.setAnnouncementImg_id(1);
+	
 		fileInputStream.read(a);
+		announcement_mappingVO1.setAnnouncementImg(a);
 		dao.insert(announcement_mappingVO1);
+	//	dao.update(announcement_mappingVO1);
 		
 		
 	

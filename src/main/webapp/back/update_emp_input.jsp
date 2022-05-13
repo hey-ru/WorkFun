@@ -54,11 +54,7 @@
                 <div class="container-fluid">
                     <!-- 內容放這 -->
 <main style="height: 120vh; margin-top: 40px;">
-						<div>
-							<input type="search" class="light-table-filter"
-								data-table="order-table" placeholder="請輸入關鍵字"
-								style="margin-left: 78%; border: 3px yellow solid;">
-						</div>
+						
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
 							<div

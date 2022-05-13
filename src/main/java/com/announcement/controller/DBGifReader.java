@@ -1,4 +1,4 @@
-package com.util;
+package com.announcement.controller;
 
 import java.io.*;
 import java.sql.*;
@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.sql.DataSource;
 
-@WebServlet("/util/DBGifReader")
+@WebServlet("/servlet/com.announcement.controller.DBGifReader")
 public class DBGifReader extends HttpServlet {
 
 	Connection con;
@@ -27,19 +27,24 @@ public class DBGifReader extends HttpServlet {
 		ServletOutputStream out = res.getOutputStream();
 
 		try {
+			
 			Statement stmt = con.createStatement();
-			String id_key= req.getParameter("id_key").trim();
-			String id= req.getParameter("id").trim();
-			String table= req.getParameter("table").trim();
-			String pic= req.getParameter("pic").trim();
+			String announcement_id= req.getParameter("announcement_id").trim();
+			String announcementImg_id= req.getParameter("announcementImg_id").trim();
+		String announcementImg="announcementImg";
 			ResultSet rs = stmt.executeQuery(
-				"select "+pic+" from "+table+" where "+id_key+" ="+id);
+					" select announcementImg "
+							+" from  announcement ann join announcement_mapping annmap on ann.announcement_id=annmap.announcement_id "
+							+"where ann.announcement_id = "+announcement_id
+							+ " and announcementImg_id="+announcementImg_id
+							+" order by ann.announcement_id;");
 	
 			
 
 			if (rs.next()) {
 				        //InputStream in = rs.getBinaryStream("pic");
-				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream(pic));
+				
+				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream(announcementImg));
 				byte[] buf = new byte[4 * 1024]; // 4K buffer
 				int len;
 				while ((len = in.read(buf)) != -1) {

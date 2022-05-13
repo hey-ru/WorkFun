@@ -1,4 +1,4 @@
-package com.announcement_mapping;
+package com.announcement_mapping.model;
 
 import java.util.*;
 
@@ -70,6 +70,46 @@ public class Announcement_mappingDAO implements Announcement_mappingDAO_interfac
 					e.printStackTrace(System.err);
 				}
 			}
+		}
+
+	}
+	@Override
+	public void insert(Announcement_mappingVO announcement_mappingVO,Connection con) {
+
+
+		PreparedStatement pstmt = null;
+
+		try {
+
+		
+			
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			
+			pstmt.setInt(1, announcement_mappingVO.getAnnouncement_id());
+		
+			pstmt.setBytes(2, announcement_mappingVO.getAnnouncementImg());
+			pstmt.executeUpdate();
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			if (rs.next()) {
+//				employee_id = rs.getInt(1);
+//				System.out.println(rowCount + " row inserted; order ID: " + employee_id);
+//			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		}  finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			
 		}
 
 	}

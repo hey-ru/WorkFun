@@ -54,8 +54,8 @@
 								<div class="tab-pane fade show active profile-overview"
 									id="profile-overview">
 									<h5 class="card-title">About</h5>
-									<p class="small fst-italic">${empVO.empId}</p>
-
+									<p class="small fst-italic">員工編號:${empVO.empId}</p>
+<p class="small fst-italic">大頭照</p>
 									<h5 class="card-title"><img style="width:200px;length:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
@@ -63,24 +63,46 @@
 												class="img-fluid"
 											></h5>
 
+						
+										<div class="row">
+									<div class="col-lg-9 col-md-8">姓名：${empVO.empName}</div>
+										<div class="col-lg-3 col-md-4 label"></div>
+										
+									</div>
 									<div class="row">
-										<div class="col-lg-3 col-md-4 label ">${empVO.empName}</div>
-										<div class="col-lg-9 col-md-8">${empVO.phone}</div>
+									<div class="col-lg-9 col-md-8">手機：</div>
+										<div class="col-lg-3 col-md-4 label">${empVO.phone}</div>
+										
 									</div>
 
+									
 									<div class="row">
+									<div class="col-lg-9 col-md-8">分機：</div>
 										<div class="col-lg-3 col-md-4 label">${empVO.extension}</div>
-										<div class="col-lg-9 col-md-8">${empVO.hobby}</div>
+										
 									</div>
 
 									<div class="row">
+									<div class="col-lg-9 col-md-8">興趣：</div>
+										<div class="col-lg-3 col-md-4 label">${empVO.hobby}</div>
+										
+									</div>
+									
+									<div class="row">
+									<div class="col-lg-9 col-md-8">專長：</div>
 										<div class="col-lg-3 col-md-4 label">${empVO.skill}</div>
-										<div class="col-lg-9 col-md-8">${empVO.birthday}</div>
+										
+									</div>
+									<div class="row">
+									<div class="col-lg-9 col-md-8">生日：</div>
+										<div class="col-lg-3 col-md-4 label">${empVO.birthday}</div>
+										
 									</div>
 
 									<div class="row">
+									<div class="col-lg-9 col-md-8">信箱：</div>
 										<div class="col-lg-3 col-md-4 label">${empVO.mail}</div>
-										<div class="col-lg-9 col-md-8">USA</div>
+										
 									</div>
 
 									<div class="row">

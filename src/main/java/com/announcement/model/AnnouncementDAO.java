@@ -2,18 +2,18 @@ package com.announcement.model;
 
 import java.util.*;
 
-
+import com.announcement_mapping.model.Announcement_mappingJDBCDAO;
+import com.announcement_mapping.model.Announcement_mappingVO;
 
 import static com.util.ConnectionPool.getConectPool;
 
 //import org.graalvm.compiler.core.common.alloc.Trace;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
-import java.io.OutputStream;
+
 import java.sql.*;
-import java.sql.Date;
+
 
 public class AnnouncementDAO implements AnnouncementDAO_interface {
 
@@ -73,7 +73,103 @@ public class AnnouncementDAO implements AnnouncementDAO_interface {
 		}
 
 	}
+	@Override
+	public void insertWithImg(AnnouncementVO announcementVO, List<Announcement_mappingVO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 
+		try {
+
+
+			con = getConectPool().getConnection();
+			
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+
+		
+			String cols[] = { "announcement_id" };// for 複合主鍵
+
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+
+			pstmt.setInt(1, announcementVO.getAnnouncer());
+			pstmt.setString(2, announcementVO.getAnnouncement_title());
+			pstmt.setString(3, announcementVO.getAnnouncement_content());
+			
+//			Statement stmt = con.createStatement();
+
+			pstmt.executeUpdate();
+			System.out.println("before");
+			Integer announcement_id = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				announcement_id = rs.getInt(1);
+			
+			} 
+			rs.close();
+				
+			
+			// 再同時新增競標
+			
+			Announcement_mappingJDBCDAO mapDao=new Announcement_mappingJDBCDAO();
+			Iterator<Announcement_mappingVO> iterator=list.iterator();
+			while (iterator.hasNext()) {
+				 
+				 Announcement_mappingVO	announcement_mappingVO=iterator.next();
+				announcement_mappingVO.setAnnouncement_id(announcement_id);
+				
+			
+				mapDao.insert(announcement_mappingVO,con);
+			
+				
+			}
+				
+			
+			
+			
+			
+			
+			
+		
+	
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+		
+
+			// Handle any driver errors
+		}  catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-secondHand");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
 	public int update(AnnouncementVO announcementVO) {
 
 		Connection con = null;

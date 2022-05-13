@@ -31,6 +31,9 @@ import com.util.JavaMail;
 @WebServlet("/empServlet")
 public class EmpServlet extends HttpServlet {
 
+	
+	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		doPost(req, res);
