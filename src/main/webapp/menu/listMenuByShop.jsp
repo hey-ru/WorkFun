@@ -7,24 +7,33 @@
 <%
 List<MenuVO> list = (List<MenuVO>) request.getAttribute("menuList");
 // int itemsPerPage = 10; //設定每頁頁數
+
+int menuNumber = 1;
 %>
 
 <html>
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
 <style>
-/* th { */
-/* 	vertical-align: middle; */
-/* 	text-align: center; */
-/* } */
 
-/* td { */
-/* 	vertical-align: middle; */
-/* 	text-align: center; */
-/* } */
 .main {
 	overflow-x: hidden;
 }
+
+  th{
+        vertical-align: middle;
+            text-align: center;
+        }
+        td{
+        vertical-align: middle;
+            text-align: center;
+        }
+
+     .table table-dark {
+    	overflow-x:hidden;
+		}
+
+
 </style>
 
 </head>
@@ -70,7 +79,7 @@ List<MenuVO> list = (List<MenuVO>) request.getAttribute("menuList");
 								<!-- ========================= 表頭 ========================= -->
 								<thead>
 									<tr>
-										<th scope="col">編號</th>
+										<th scope="col">項次</th>
 										<th scope="col">品項</th>
 										<th scope="col">價格</th>
 										<th scope="col">狀態</th>
@@ -81,7 +90,7 @@ List<MenuVO> list = (List<MenuVO>) request.getAttribute("menuList");
 
 								<c:forEach var="menu" items="${menuList}">
 									<tr>
-										<td><c:out value="${menu.menu_id}" /></td>
+										<td><%=menuNumber++%></td>
 										<td><c:out value="${menu.item}" /></td>
 										<td><c:out value="${menu.price}" /></td>
 										<td><c:if test="${menu.is_item==1}">
