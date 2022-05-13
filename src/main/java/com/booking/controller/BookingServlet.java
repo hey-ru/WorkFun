@@ -170,14 +170,9 @@ public class BookingServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//		Integer bookingId = Integer.valueOf(req.getParameter("bookingId").trim());
 			Integer equipmentId = Integer.valueOf(req.getParameter("equipmentId").trim());
 			Integer empId = Integer.valueOf(req.getParameter("empId").trim());
-
-//			Timestamp startDate = null;
-//			String startString = req.getParameter("startDate") + " 00:00:00";
-//			Timestamp startDate = Timestamp.valueOf(startString);
-
+			
 			String startString = req.getParameter("startDate") + " 00:00:00";
 			Timestamp startDate = Timestamp.valueOf(startString);
 
@@ -197,7 +192,7 @@ public class BookingServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 
-		if ("listByCompositeQueryBack".equals(action)) {
+		if ("listByCompositeQuery".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 
 			System.out.println("我進來了");
@@ -218,7 +213,6 @@ public class BookingServlet extends HttpServlet {
 			/*************************** 2.開始複合查詢 ***************************************/
 			BookingService bookingService = new BookingService();
 			List<BookingVO> list = bookingService.getAllByCQ(map);
-
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
 //			session.setAttribute("listByCompositeQuery", list);

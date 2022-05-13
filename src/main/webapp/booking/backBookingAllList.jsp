@@ -10,9 +10,7 @@
 BookingService bookingSvc = new BookingService();
 List<BookingVO> list = bookingSvc.getAll();
 pageContext.setAttribute("list", list);
-
 EmpService empSvc = new EmpService();
-
 int itemsPerPage = 10;
 %>
 
@@ -80,44 +78,10 @@ int itemsPerPage = 10;
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<!-- 				<div class="container-fluid"> -->
+<!-- 								<div class="container-fluid"> -->
 				<!-- 					內容放這 -->
 
-				<!-- 					<div class="row"> -->
-				<!-- 						<div class="col-10" style="height: 60px; display: inline-block;"> -->
-				<!-- 							<form class="my-1"> -->
-
-				<!-- 								<div class="form-group col-2" style="display: inline-block;"> -->
-				<%-- 									<jsp:useBean id="booking1" scope="page" --%>
-				<%-- 										class="com.booking.model.BookingService" /> --%>
-				<!-- 									<select class="form-control" id="exampleFormControlSelect1" -->
-				<!-- 										style="border: gray solid 2px;" name="returnStatus"> -->
-				<!-- 										<option value="5">已登記預約</option> -->
-
-				<!-- 										<option value="0">已歸還</option> -->
-				<!-- 										<option value="1">租借中</option> -->
-				<!-- 										<option value="2">未領取器材</option> -->
-				<!-- 										<option value="3">逾期歸還</option> -->
-				<!-- 										<option value="4">未歸還</option> -->
-				<!-- 									</select> -->
-				<!-- 								</div> -->
-
-				<!-- 								<div class="form-group col-3" style="display: inline-block"> -->
-				<!-- 									<input type="text" class="form-control" -->
-				<!-- 										id="exampleFormControlInput1" placeholder="輸入預約單編號" -->
-				<!-- 										style="border: gray solid 2px;" name="bookingId" -->
-				<%-- 										value="${param.bookingId}"> --%>
-				<!-- 								</div> -->
-
-				<%-- 								<input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-				<!-- 								<input type="hidden" name="action" value="listByCompositeQuery"> -->
-				<!-- 								<input type="submit" class="btn btn-primary mb-2 mt-1 col" -->
-				<!-- 									style="display: inline-block;" value="搜尋"></input> -->
-				<!-- 							</form> -->
-				<!-- 						</div> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
-
+				<!-- ============== Card Body ============== -->
 				<div class="card-body">
 					<div class="row">
 						<div class="col-11 row"
@@ -126,31 +90,31 @@ int itemsPerPage = 10;
 								<ul class="nav nav-tabs">
 
 									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do=listByCompositeQueryBack">ALL</a>
+										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery">ALL</a>
 									</li>
 
 									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQueryBack&return_status=0">已歸還</a>
+										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=0">已歸還</a>
 									</li>
 
 									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQueryBack&gb_status=1">租借中</a>
+										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=1">租借中</a>
 									</li>
 
 									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQueryBack&gb_status=2">未領取器材</a>
+										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=2">未領取器材</a>
 									</li>
 
 									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQueryBack&gb_status=3">逾期歸還</a>
+										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=3">逾期歸還</a>
 									</li>
 
 									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQueryBack&gb_status=4">未歸還</a>
+										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=4">未歸還</a>
 									</li>
 
 									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQueryBack&gb_status=5">已登記預約</a>
+										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=5">已登記預約</a>
 									</li>
 
 
@@ -164,16 +128,13 @@ int itemsPerPage = 10;
 						<div class="col-11 row"
 							style="height: 60px; display: inline-block;">
 
-							<form class="my-1 col-6" METHOD="post"
-								ACTION="<%=request.getContextPath()%>/booking/boooking.do"
-								name="formsearch">
+							<form class="my-1 col-6" METHOD="post" ACTION="<%=request.getContextPath()%>/booking/booking.do" name="formsearch">
 								<div class="form-groupf" style="display: inline-block">
 									<input type="text" class="form-control" id="booking_id"
 										placeholder="查詢訂單編號" style="border: gray solid 2px;"
 										name="booking_id">
 								</div>
-								<input type="hidden" name="action"
-									value="listByCompositeQueryBack">
+								<input type="hidden" name="action" value="listByCompositeQuery">
 								<button type="submit" class="btn btn-dark mb-2 mt-1 col-2"
 									style="display: inline-block;">搜尋</button>
 							</form>
@@ -296,33 +257,15 @@ int itemsPerPage = 10;
 																	<input type="hidden" name="action"
 																		value="updateReturnStatus"> <input
 																		type="hidden" name="bookingId"
-																		value="${bookingVO.bookingId}"> <input
-																		type="hidden" name="returnStatus"
-																		value="${bookingVO.returnStatus}"> <input
+																		value="${bookingVO.bookingId}"> 
+<!-- 																		<input -->
+<!-- 																		type="hidden" name="returnStatus" -->
+<%-- 																		value="${bookingVO.returnStatus}">  --%>
+																		<input
 																		type="submit" value="修改狀態" class="btn-info">
 																</div></td>
 														</form>
 
-
-
-														<%-- 												<td>${bookingVO.overdueDate}</td> --%>
-														<%-- 												<td>${bookingVO.overduePrice}</td> --%>
-
-
-														<!-- 															<div class="row mb-3"> -->
-														<!-- 																<input type="hidden" name="action" -->
-														<!-- 																	value="updateReturnStatus"> <input -->
-														<!-- 																	type="hidden" name="bookingId" -->
-														<%-- 																	value="${bookingVO.bookingId}"> <input --%>
-														<!-- 																	type="hidden" name="returnStatus" -->
-														<%-- 																	value="${bookingVO.returnStatus}"> <input --%>
-														<!-- 																	type="submit" value="儲存" -->
-														<!-- 																	class="btn btn-dark mb-2 mt-1 col" -->
-														<!-- 																	style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;"> -->
-
-														<!-- 															</div> -->
-														<!-- 														</td> -->
-														<!-- 													</form> -->
 												</c:forEach>
 											</tbody>
 										</table>

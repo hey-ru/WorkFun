@@ -54,7 +54,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 
 	private static final String GET_BOOKING_ALL_DATE = "select start_date , end_date from booking where equipment_id = ? and end_date >= now()";
 
-	private static final String GET_BOOKING_CQ = "SELECT booking_id,equipment_id,emp_id,start_date,end_date,return_status, overdue_date, overdue_price, timestampdiff(day,end_date , current_timestamp()) as dateDiff from booking";
+	private static final String GET_BOOKING_CQ = "SELECT booking_id,equipment_id,emp_id,start_date,end_date,return_status, overdue_date, overdue_price, timestampdiff(day,end_date , current_timestamp()) as dateDiff from booking ";
 
 	// ========================================================================
 	@Override
@@ -668,7 +668,7 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 
 			String finalSQL = GET_BOOKING_CQ + jdbcUtil_CompositeQuery.get_WhereCondition(map)
-					+ "order by start_date desc";
+					+ " order by start_date desc";
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
 
