@@ -63,33 +63,21 @@
                 </ul>
                 </nav>
 
-                
-<!--                 <div style="margin-left: 120px;"> </div> -->
-                <!-- 左邊icon -->
-<!--                 <div class="navbar"> -->
-<!--                     <ul> -->
-<!--                         <li> -->
-<!--                             <a href=""> -->
-<!--                                 <i class="bi bi-chat-dots" style="font-size:25px; color: black;"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-<!--                         <li> -->
-<!--                             <a href=""><i class="bi bi-chat" style="font-size:25px; color: black;"></i></a> -->
-<!--                         </li> -->
-<!--                         <li> -->
-<!--                             <div class="dropdown"> -->
-<!--                                 <i class="bi bi-bell" style="font-size:25px"></i> -->
-<!--                                 <div class="dropdown-content nav-item-right"> -->
-<!--                                     <a href="#">訊息一</a> -->
-<!--                                     <a href="#">訊息二</a> -->
-<!--                                     <a href="#">訊息三</a> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </li> -->
-
                         <!-- 個人頁面dropdown -->
                         <nav class="navbar order-last">
                         <ul class="navbar-right">
+             
+                        <li> 
+                            <div class="dropdown">
+                                <i class="bi bi-chat-dots" style="font-size:25px"></i>
+                                <div class="dropdown-content nav-item-right">
+                                    <a href="#">聊天一</a>
+                                    <a href="#">聊天二</a>
+                                    <a href="#">聊天三</a>
+                                </div>
+                            </div>
+                        </li>
+                        
                         <li class="nav-item dropdown pe-3">
 
                             <a class="nav-link nav-profile d-flex align-items-center pe-0 ; width:2px" href="#"
