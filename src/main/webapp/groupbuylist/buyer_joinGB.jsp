@@ -87,7 +87,7 @@ tbody td {
 				<!-- ============== Card Body ============== -->
 				
 				<div class="card-body">
-					<div class="col-sm-12">
+					<div class="col-sm-11">
 
 						<FORM METHOD="post" id="form1" name="form1"
 							ACTION="<%=request.getContextPath()%>/groupbuylist/addGBList">
@@ -120,9 +120,9 @@ tbody td {
 											value="0"></td>
 										<!-- 小計 -->
 										<td>$<span id="total">0</span></td>
-										<!-- "備註: 只能是中、日、英文字母、數字、_、-和()" -->
+										<!-- "備註: 只能是中、日、英文字母、數字、_、-、+和()" -->
 										<td><input type="text" name="remark"
-											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
+											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\(\\-\\)\\]*$"
 											size="15" value="${param.remark}"></td>
 									</tr>
 
@@ -135,11 +135,22 @@ tbody td {
 
 							<div style="TEXT-ALIGN-LAST: CENTER;">
 								<input type="submit" name="button" id="button" class="selectAll"
-									value="火速下單ヽ(●´∀`●)ﾉ">
+									value="火速下單 ヽ(●´∀`●)ﾉ">
 							</div>
 						</FORM>
 
 					</div>
+					
+					<div class="col-sm-1">
+${errorMsgs.msgQty}
+${errorMsgs.remark}
+						
+
+					</div>
+					
+					
+					
+					
 				</div>
 				<!-- ============== Card Body ============== -->
 			</div>

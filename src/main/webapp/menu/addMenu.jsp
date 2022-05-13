@@ -68,10 +68,10 @@ pageContext.getAttribute("shop_id");
 								<div class="field_wrapper">
 									<div style="DISPLAY: INLINE-FLEX;">
 										<div class="form-group">
-										<!-- "品項: 只能是中、日、英文字母、數字、_、-和()" -->
+										<!-- "品項: 只能是中、日、英文字母、數字、_、-、+和()" -->
 											<label for="item">品項 : </label> 
 											<input type="text" required
-											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
+											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\(\\-\\)\\]*$"
 												class="form-control" placeholder="輸入名稱" name="item"
 												value="${param.item}">
 										</div>
@@ -161,7 +161,7 @@ pageContext.getAttribute("shop_id");
 					<div class="form-group">
 							<label for="item">品項:</label>
 					<input type="text" required
-					pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
+					pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\(\\-\\)\\]*$"
 					class="form-control" placeholder="輸入名稱" name="item" value="${param.item}">
 					</div>
 					<div class="form-group">
@@ -196,7 +196,7 @@ pageContext.getAttribute("shop_id");
 		$(document).ready(function () {
 		Swal.fire({
 			  icon: 'info',
-			  title: '本店還沒有建立菜單，來新增吧! 🥗🍿🍜🍕🍣🍩🍦🥤☕',
+			  title: '   幫 這 間 店 家 新 增 菜 單  \n 🥗🍿🍜🍕🍣🍩🍦🥤☕',
 			});
 		});
 		
