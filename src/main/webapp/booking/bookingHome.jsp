@@ -137,9 +137,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 								</p>
 
 							</div>
-							<form class="my-1" method="post"
-								action="<%=request.getContextPath()%>/booking/booking.do"
-								name="form1">
+							<form class="my-1" method="post" id="form" action="<%=request.getContextPath()%>/booking/booking.do" name="form1" >
 								<label for="start_time" class="col-sm-2 col-form-label">租借日
 									: </label>
 								<div class="col-sm-5">
@@ -250,13 +248,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 			  }
 	});
     
-     
 
-
-     
-     
-      
-     
 	</script>
 </body>
 </html>
