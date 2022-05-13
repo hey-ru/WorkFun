@@ -52,7 +52,7 @@ public class AddGBListServlet extends HttpServlet {
 			String[] remark = req.getParameterValues("remark");
 			String remarkReg = "^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
 			for (String str : remark) {
-				if (!str.trim().equals(remarkReg)) {
+				if ((str.trim().length() != 0) && !(str.trim().matches(remarkReg))) {
 					errorMsgs.put("remark", "備註: 只能是中、日、英文字母、數字、_、-和()");
 				}
 			}

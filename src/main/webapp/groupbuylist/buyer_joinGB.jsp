@@ -155,20 +155,20 @@ tbody td {
 
 	<script>
 	//未填寫數量alert
-		$(document).ready(function() {
-			$("#button").click(function() {
-				if ($("#qty").val() == 0) {
-					Swal.fire({
-						  icon: 'warning',
-						  title: '請先選擇數量再送出',
-						});
-// 					alert("你尚未填寫數量");
-					eval("document.form1['qty'].focus()");
-				} else {
-					document.form1.submit();
-				}
-			})
-		})
+// 		$(document).ready(function() {
+// 			$("#button").click(function() {
+// 				if ($("#qty").val() == 0) {
+// 					Swal.fire({
+// 						  icon: 'warning',
+// 						  title: '請先選擇數量再送出',
+// 						});
+// // 					alert("你尚未填寫數量");
+// 					eval("document.form1['qty'].focus()");
+// 				} else {
+// 					document.form1.submit();
+// 				}
+// 			})
+// 		})
 
 		// 	動態顯示計算金額
 		$(document).ready(
