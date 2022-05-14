@@ -68,11 +68,11 @@ public class UpdateMenuByShopServlet extends HttpServlet {
 				Integer menu_id = Integer.valueOf(req.getParameter("menu_id").trim());
 				//項目
 				String item = req.getParameter("item");
-				String itemReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
+				String itemReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\s\\(\\-\\)]*$";
 				if (item == null || item.trim().length() == 0) {
 					errorMsgs.put("item", "品項: 請勿空白");
 				} else if (!item.trim().matches(itemReg)) { // 正則(規)表示式(regular-expression)
-					errorMsgs.put("item", "品項名稱: 只能是中、日、英文字母、數字、_、-和()");
+					errorMsgs.put("item", "品項:只能是中、日、英文字母、數字、_、-、+空格和()");
 				}
 				//價格
 				Integer price = null;

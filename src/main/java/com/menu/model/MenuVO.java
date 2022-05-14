@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
+import com.shop.model.ShopService;
+import com.shop.model.ShopVO;
 
 public class MenuVO implements java.io.Serializable {
 	
@@ -51,8 +53,6 @@ public class MenuVO implements java.io.Serializable {
 				+ ", is_item=" + is_item + ", menu_upd=" + menu_upd + "]";
 	}
 	
-	
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(is_item, item, menu_id, menu_upd, price, shop_id);
@@ -109,4 +109,5 @@ public class MenuVO implements java.io.Serializable {
 		this.menu_upd = menu_upd;
 	}
 
+	
 }

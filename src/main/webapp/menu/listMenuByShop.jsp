@@ -101,7 +101,8 @@ int menuNumber = 1;
 										<td>
 											<FORM METHOD="post"
 												ACTION="<%=request.getContextPath()%>/menu/updatemenubyshop">
-												<input type="submit" class="btn btn-secondary btn-sm " value="編輯">
+												<input type="submit" class="btn btn-secondary btn-sm" 
+												data-toggle="modal" data-target="#exampleModalCenter" value="編輯">
 												<input type="hidden" name="menu_id" value="${menu.menu_id}">
 												<input type="hidden" name="action"
 													value="getMenuItem_For_Update">
