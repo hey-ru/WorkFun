@@ -200,7 +200,7 @@ EmpService empSvc = new EmpService();
 															</select>
 															
 																												
-														<input type="submit" class="btn-info" value="確認修改" style="margin-bottom: 0px;"> 
+														<input type="submit" class="btn btn-info" value="確認修改" style="margin-bottom: 0px;"> 
 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 														<input type="hidden" name="action" value="updateGBStatus">										
 														</FORM>															

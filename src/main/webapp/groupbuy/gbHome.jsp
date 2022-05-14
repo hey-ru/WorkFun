@@ -90,7 +90,7 @@ int itemsPerPage = 10;
 										<h5>${groupBuyVO.gb_id}
 											<strong>${groupBuyVO.shop_name}</strong>
 										</h5>
-										<p>[揪團截止時間 <fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/>]</p>
+										<p>揪團截止時間 <fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/></p>
 										<p>主揪: ${groupBuyVO.empVO.empName}</p>
 									</div>
 									<img

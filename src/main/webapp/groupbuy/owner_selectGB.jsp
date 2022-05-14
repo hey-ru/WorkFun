@@ -57,18 +57,18 @@ pageContext.setAttribute("list", list);
 							<div class = col-8>
 							<ul class="nav nav-tabs">
 								  <li class="nav-item">
-								    <a class="nav-link" 
+								    <a class="nav-link text-info" 
 								    href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_owner=${empVO.empId}">ALL</a>
 								  </li>
 								  <li class="nav-item">
-								    <a class="nav-link"
+								    <a class="nav-link text-info"
 								     href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_status=0&gb_owner=${empVO.empId}">揪團中</a>
 								  </li>
 								  <li class="nav-item">
-								    <a class="nav-link" href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_status=2&gb_owner=${empVO.empId}">截止</a>
+								    <a class="nav-link text-info" href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_status=2&gb_owner=${empVO.empId}">截止</a>
 								  </li>
 								  <li class="nav-item">
-								    <a class="nav-link" href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_status=3&gb_owner=${empVO.empId}">關閉</a>
+								    <a class="nav-link text-info" href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_status=3&gb_owner=${empVO.empId}">揪團關閉</a>
 								  </li>								  
 								</ul>
 								</div>
@@ -87,39 +87,39 @@ pageContext.setAttribute("list", list);
 												<th class="sorting sorting_asc" tabindex="0"
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
-													aria-label="Name: activate to sort column descending"
+													  
 													>揪團編號</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
+													 
 													>店家名稱</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
+													 
 													>開始時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
+													 
 													>結束時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
+													 
 													>到貨時間</th>
 <!-- 												<th class="sorting" tabindex="0" aria-controls="dataTable" -->
 <!-- 													rowspan="1" colspan="1" -->
-<!-- 													aria-label="Office: activate to sort column ascending" -->
+<!-- 													  -->
 <!-- 													>低消限制</th> -->
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
+													 
 													>狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
+													 
 													style="width: 50px;"></th>
 <!-- 												<th class="sorting" tabindex="0" aria-controls="dataTable" -->
 <!-- 													rowspan="1" colspan="1" -->
-<!-- 													aria-label="Salary: activate to sort column ascending" -->
+<!-- 													  -->
 <!-- 													style="width: 50px;"></th> -->
 											</tr>
 										</thead>
@@ -161,7 +161,7 @@ pageContext.setAttribute("list", list);
 														<td>
 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet"
 																style="margin-bottom: 0px;">
-														<input type="submit" class="btn-info" value="詳細" style="margin-bottom: 0px;"> 
+														<input type="submit" class="btn btn-info" value="詳細" style="margin-bottom: 0px;"> 
 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 														<input type="hidden" name="action" value="getOne_For_Display">										
 														</FORM>															

@@ -44,8 +44,7 @@ int itemsPerPage = 10;
 						<h2>🍽️ 今天我想來點...</h2>
 						<p></p>
 					</div>
-
-				<div class="row">
+						<div class="row">
 							<div class="col-10" style="height: 60px; display: inline-block;">
 								<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet">
 									<div class="form-group col-2" style="display: inline-block;">
@@ -76,6 +75,7 @@ int itemsPerPage = 10;
 							<a class="btn btn-success" href="<%=request.getContextPath()%>/shop/listAllShop.jsp" role="button">選店家開團</a>
 							</div>
 						</div>
+
 						<%@ include file="/design/page1_ByCompositeQuery.file"%>
 
 
@@ -90,13 +90,13 @@ int itemsPerPage = 10;
 										<h5>${groupBuyVO.gb_id}
 											<strong>${groupBuyVO.shop_name}</strong>
 										</h5>
-										<p>[揪團截止時間 <fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/>]</p>
+										<p>揪團截止時間 <fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/></p>
 										<p>主揪: ${groupBuyVO.empVO.empName}</p>
 									</div>
 									<img
 										src="<%=request.getContextPath()%>/util/DBGifReader?pic=shop_img1&table=shop&id_key=shop_id&id=${groupBuyVO.shop_id}"
 										class="img-fluid"
-										alt="" style="height: 200px; width: 330px; position: absolute; bottom: 0; left: 0; right: 0; margin: auto;">
+										alt="" style="height: 200px; width: 330px;position: absolute; bottom: 0; left: 0; right: 0; margin: auto;">
 									<div class="portfolio-info">
 										<div class="portfolio-links">
 										
@@ -108,8 +108,6 @@ int itemsPerPage = 10;
 												<input type="submit" class="btn btn-outline-warning" value="加入"> 
 												<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 												<input type="hidden" name="shop_id" value="${groupBuyVO.shop_id}">
-<%-- 												<input type="hidden" name="buyer" value="${empVO.empId}"> --%>
-<%-- 												<input type="hidden" name="buyer_name" value="${empVO.empName}"> --%>
 												<input type="hidden" name="action" value="showGB">
 											</FORM>
 
