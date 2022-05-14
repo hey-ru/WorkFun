@@ -16,7 +16,6 @@ Integer equipmentId = Integer.valueOf(request.getParameter("equipmentId"));
 EquipmentService equipmentSvc = new EquipmentService();
 EquipmentVO equipmentVO = equipmentSvc.getByEqId(equipmentId);
 pageContext.setAttribute("equipmentVO", equipmentVO);
-
 %>
 
 
@@ -48,6 +47,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
 	height: 151px; /* height:  151px; */
 }
+
 </style>
 
 
@@ -71,10 +71,10 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 
 							<img
 								src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}"
-								alt="Profile" style="width: 365px;" id="showPic">
+								alt="Profile" style="width: 450px;" id="showPic">
 							<div class="row" style="margin-top: 10px;">
 								<!-- Button trigger modal -->
-								<div class="col-sm-3" style="height: 100px; width: 100px;">
+								<div class="col-sm-3" style="height: 150px; width: 150px;">
 									<button type="button" data-bs-toggle="modal"
 										data-bs-target="#pic1" style="border: 0px" id="btn1">
 										<img
@@ -84,7 +84,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 								</div>
 								<!-- Button trigger modal end-->
 								<!-- Button trigger modal -->
-								<div class="col-sm-3" style="height: 100px; width: 100px;">
+								<div class="col-sm-3" style="height: 150px; width: 150px;">
 									<button type="button" data-bs-toggle="modal"
 										data-bs-target="#pic2" style="border: 0px" id="btn2">
 										<img
@@ -95,11 +95,11 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 
 								<!-- Button trigger modal -->
 
-								<div class="col-sm-3" style="height: 100px; width: 100px;">
+								<div class="col-sm-3" style="height: 150px; width: 150px;">
 									<button type="button" data-bs-toggle="modal"
 										data-bs-target="#pic3" style="border: 0px" id="btn3">
 										<img
-											src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}"
+											src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}"
 											style="max-height: 100%; max-width: 100%;">
 									</button>
 								</div>
@@ -117,33 +117,36 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 							<div class="tab-content pt-2">
 
 
-<%-- 								<c:forEach var="bookingVO" items="${list}"> --%>
-<%-- 								<fmt:formatDate value="${bookingVO.endDate}" --%>
-<%-- 														pattern="yyyy-MM-dd" /> --%>
-<%-- 								</c:forEach> --%>
+								<%-- 								<c:forEach var="bookingVO" items="${list}"> --%>
+								<%-- 								<fmt:formatDate value="${bookingVO.endDate}" --%>
+								<%-- 														pattern="yyyy-MM-dd" /> --%>
+								<%-- 								</c:forEach> --%>
 
 								<h2 class="card-title">${equipmentVO.eqName}</h2>
 								<p class="col-lg-3 col-md-4 label"></p>
 
 
-								<h5 class="card-title"></h5>
-								<p class="small fst-italic">${equipmentVO.spec}</p>
-
-								<h5 class="card-title">
-									<span style="text-decoration: line-through">逾期總罰金</span>
-								</h5>
+								<h4 class="card-title">${equipmentVO.spec}</h4>
+								<p class="small fst-italic">
+								</p>
+								<h6 class="card-title">
+									<span style="text-decoration: line-through">器材金額</span>
+									(逾期罰金一天為商品30%，最多至90%)
+								</h6>
 								<p class="small fst-italic">
 									<font color="#FF0000">$${equipmentVO.price}</font>
 								</p>
 
 							</div>
-							<form class="my-1" method="post" id="form" action="<%=request.getContextPath()%>/booking/booking.do" name="form1" >
+							<form class="my-1" method="post" id="form"
+								action="<%=request.getContextPath()%>/booking/booking.do"
+								name="form1">
 								<label for="start_time" class="col-sm-2 col-form-label">租借日
 									: </label>
 								<div class="col-sm-5">
 									<input name="startDate" id="start_time" type="text"
 										class="form-control" autocomplete="off"
-										value="${param.startDate}" />
+										value="${param.startDate}" required />
 								</div>
 
 								<div class="col-sm-4">${errorMsgs.start_date}</div>
@@ -153,7 +156,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 								<div class="col-sm-5">
 									<input name="endDate" id="end_time" type="text"
 										autocomplete="off" class="form-control"
-										value="${param.endDate}">
+										value="${param.endDate}" required />
 								</div>
 
 								<div class="col-sm-5">
@@ -205,17 +208,21 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 		$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}')
 	});
 	
-	
+
+    
     function alertTest() {
-        Swal.fire(
-            "預約成功", //標題 
-            "記得領取器材哦 ! WorkFun 提醒您", //訊息內容(可省略)
-            "success" //圖示(可省略) success/info/warning/error/question
-            //圖示範例：https://sweetalert2.github.io/#icons
-        );
+    Swal.fire({
+    	  title: '預約成功 ! ',
+    	  text: '記得取貨哦 ! 喵喵喵喵喵喵 ~  ',
+    	  imageUrl: '<%=request.getContextPath()%>/booking/images/giphy.gif',
+    	  imageWidth: 300,
+    	  imageHeight: 300,
+    	  timer: 3000,
+    	  imageAlt: 'Custom image',
+    	});
     }
-	
-	
+    
+
 	
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
@@ -235,6 +242,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 			   })
 		   }
      });
+     
      $('#end_time').datetimepicker({
 	       theme: '',              //theme: 'dark',
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
@@ -248,7 +256,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 			  }
 	});
     
-
+  
 	</script>
 </body>
 </html>
