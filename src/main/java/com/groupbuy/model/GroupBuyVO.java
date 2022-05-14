@@ -19,7 +19,7 @@ public class GroupBuyVO implements java.io.Serializable {
 	private Integer gb_status;
 	private Integer min_amt;
 	private ShopVO shopVO;
-	private EmpVO empVO;//buyer	
+	private EmpVO empVO;//gb_owner	
 	
 	
 	@Override

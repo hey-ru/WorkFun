@@ -30,15 +30,9 @@ public class AddGBServlet extends HttpServlet {
 
 		res.setContentType("text/html; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
-//		String action = req.getParameter("action");
-//		
-//		System.out.println(action);
-//		
-//		if ("getOne_For_Display".equals(action)) { // 來自owner_selectGb.jsp的請求
-//
-////			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-////			req.setAttribute("errorMsgs", errorMsgs);
 
+		
+				//主揪揪團前先判斷有沒有菜單
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
 				
@@ -56,13 +50,9 @@ public class AddGBServlet extends HttpServlet {
 					successView.forward(req, res);
 					
 				}else {
-//					String msg = "還沒有菜單，請先追加菜單~";
-//					req.setAttribute("MsgFromGB", msg);
 					String url = "/groupbuy/owner_addGB.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); 
 					successView.forward(req, res);
-					
-					
 				}
 				
 

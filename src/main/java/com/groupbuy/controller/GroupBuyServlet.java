@@ -68,7 +68,7 @@ public class GroupBuyServlet extends HttpServlet {
 		}
 		
 		
-		
+		//從主揪的list選一個查看詳細	
 		if ("getOne_For_Display".equals(action)) { // 來自owner_selectGb.jsp的請求
 
 //			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -85,6 +85,18 @@ public class GroupBuyServlet extends HttpServlet {
 				sumTotal = GBbuyers.stream()
 		    			.mapToInt(e -> e.getTotal() )
 		    			.sum();
+				long payCount = GBbuyers.stream()
+						.filter(e -> e.getIs_pay().equals(0))
+						.count();
+				long pickCount = GBbuyers.stream()
+						.filter(e -> e.getIs_pickup().equals(0))
+						.count();
+				String closeGB;
+				if(payCount+pickCount == 0) {
+					closeGB = "close";
+				}else {
+					closeGB = "open";
+				}
 				
 				
 				Set<GroupBuyListVO> groupBuyListVOs = groupBuySvc.getGroupBuyListBygbid(gb_id);
@@ -95,12 +107,15 @@ public class GroupBuyServlet extends HttpServlet {
 				req.setAttribute("GBbuyers", GBbuyers);
 				req.setAttribute("groupBuyListVOs", groupBuyListVOs);
 				req.setAttribute("sumTotal", sumTotal);
+				req.setAttribute("closeGB", closeGB);
 				String url = "/groupbuy/owner_selectOneGB.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
 		}
 		
+		
+		//owner_selectOneGB.jsp中修改到貨時間
 		if ("updateArrTime".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -127,11 +142,30 @@ public class GroupBuyServlet extends HttpServlet {
 			GroupBuyService groupBuySvc = new GroupBuyService();
 			groupBuySvc.updateArrTime(gb_id, arr_time);
 			GroupBuyVO groupBuyVO = groupBuySvc.getOneGB(gb_id);
-			Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);				
+			Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);
+			Integer sumTotal;
+			sumTotal = GBbuyers.stream()
+	    			.mapToInt(e -> e.getTotal() )
+	    			.sum();
+			long payCount = GBbuyers.stream()
+					.filter(e -> e.getIs_pay().equals(0))
+					.count();
+			long pickCount = GBbuyers.stream()
+					.filter(e -> e.getIs_pickup().equals(0))
+					.count();
+			String closeGB;
+			if(payCount+pickCount == 0) {
+				closeGB = "close";
+			}else {
+				closeGB = "open";
+			}
+			
 			Set<GroupBuyListVO> groupBuyListVOs = groupBuySvc.getGroupBuyListBygbid(gb_id);
 			/***************************3.修改完成,準備轉交(Send the Success view)*************/
 			req.setAttribute("groupBuyVO", groupBuyVO);
 			req.setAttribute("GBbuyers", GBbuyers);
+			req.setAttribute("sumTotal", sumTotal);
+			req.setAttribute("closeGB", closeGB);
 			req.setAttribute("groupBuyListVOs", groupBuyListVOs); 
 			String url = "/groupbuy/owner_selectOneGB.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
@@ -139,7 +173,8 @@ public class GroupBuyServlet extends HttpServlet {
 
 	}
 		
-if ("updateGBStatus".equals(action)) { // 來自owner_selectOneGB.jsp的請求
+			//gbBack.jsp揪團管理(後台) 修改團狀態
+			if ("updateGBStatus".equals(action)) { 
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -149,21 +184,25 @@ if ("updateGBStatus".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 			
 			Integer gb_id = Integer.valueOf(req.getParameter("gb_id").trim());
 			Integer gb_status = Integer.valueOf(req.getParameter("gb_status").trim());
-			System.out.println(gb_status+"成功!");
-			System.out.println(gb_id);
 			
 			/***************************2.開始修改資料*****************************************/
 			GroupBuyService groupBuySvc = new GroupBuyService();
 			groupBuySvc.updateGBStatusBygbId(gb_id, gb_status);
 			
 			/***************************3.修改完成,準備轉交(Send the Success view)*************/
+			String front = req.getParameter("front");
 			String url = "/groupbuy/gbBack.jsp";
+			
+			if("front".equals(front)) {
+				url = "/groupbuy/owner_selectGB.jsp";
+			}
+			
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
 
 	}
 		
-		
+		//主揪修改團員取貨付款狀態
 		if ("updatePayPickUp".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 		
 
@@ -173,8 +212,7 @@ if ("updateGBStatus".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 				Integer gb_id = Integer.valueOf(req.getParameter("gb_id").trim());
 				Integer is_pay = Integer.valueOf(req.getParameter("is_pay").trim());		
 				Integer is_pickup = Integer.valueOf(req.getParameter("is_pickup").trim());
-				
-							
+								
 			
 				
 				/***************************2.開始修改資料*****************************************/
@@ -182,25 +220,43 @@ if ("updateGBStatus".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 				groupBuyListSvc.updatePayPickUP(gb_id, buyer, is_pay, is_pickup);
 				GroupBuyService groupBuySvc = new GroupBuyService();
 				GroupBuyVO groupBuyVO = groupBuySvc.getOneGB(gb_id);
-				Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);				
+				Set<GroupBuyListVO> GBbuyers = groupBuySvc.getBuyerBygbid(gb_id);
+				Integer sumTotal;
+				sumTotal = GBbuyers.stream()
+		    			.mapToInt(e -> e.getTotal() )
+		    			.sum();
+				long payCount = GBbuyers.stream()
+						.filter(e -> e.getIs_pay().equals(0))
+						.count();
+				long pickCount = GBbuyers.stream()
+						.filter(e -> e.getIs_pickup().equals(0))
+						.count();
+				String closeGB;
+				if(payCount+pickCount == 0) {
+					closeGB = "close";
+				}else {
+					closeGB = "open";
+				}
 				Set<GroupBuyListVO> groupBuyListVOs = groupBuySvc.getGroupBuyListBygbid(gb_id);
 
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("groupBuyVO", groupBuyVO);
 				req.setAttribute("GBbuyers", GBbuyers);
-				req.setAttribute("groupBuyListVOs", groupBuyListVOs); 
+				req.setAttribute("sumTotal", sumTotal);
+				req.setAttribute("closeGB", closeGB);
+				req.setAttribute("groupBuyListVOs", groupBuyListVOs);
 				String url = "/groupbuy/owner_selectOneGB.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 		}
 
+		//主揪新增一個團
         if ("insert".equals(action)) { // 來自listALLShop.jsp listOneShop.jsp的請求  
 			
         	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-//			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 	
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
@@ -276,19 +332,11 @@ if ("updateGBStatus".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/groupbuy/gbHome.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);				
-				
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("Exception","新資料失敗:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/shop/addShop.jsp");
-//				failureView.forward(req, res);
-//			}
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
 }
         
-      //複合查詢
+      //複合查詢gbHome
     	if ("listByCompositeQuery".equals(action)) { 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -322,7 +370,7 @@ if ("updateGBStatus".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 				successView.forward(req, res);
 		}
     	
-    	 //複合查詢(後台)
+    	 //複合查詢(後台)gbBack
     	if ("listByCompositeQueryBack".equals(action)) { 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -355,36 +403,6 @@ if ("updateGBStatus".equals(action)) { // 來自owner_selectOneGB.jsp的請求
 				RequestDispatcher successView = req.getRequestDispatcher("/groupbuy/gbBackCQ.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 		}
-		
-		
-//		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
-//			req.setAttribute("errorMsgs", errorMsgs);
-//	
-//			try {
-//				/***************************1.接收請求參數***************************************/
-//				Integer empno = new Integer(req.getParameter("empno"));
-//				
-//				/***************************2.開始刪除資料***************************************/
-//				EmpService empSvc = new EmpService();
-//				empSvc.deleteEmp(empno);
-//				
-//				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-//				String url = "/emp/listAllEmp.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-//				successView.forward(req, res);
-//				
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/listAllEmp.jsp");
-//				failureView.forward(req, res);
-//			}
-//		}
 	
 	}
 

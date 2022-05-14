@@ -34,13 +34,12 @@ public class ShopServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		res.setContentType("text/html; charset=UTF-8");
 		
-		
-		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+		//練習用 
+		if ("getOne_For_Display".equals(action)) { 
 
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("shop_id");
 				if (str == null || (str.trim()).length() == 0) {
@@ -89,8 +88,8 @@ public class ShopServlet extends HttpServlet {
 				successView.forward(req, res);
 		}
 		
-		
-		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
+		// 編輯  來自listAllShop.jsp listOneShop.jsp的請求
+		if ("getOne_For_Update".equals(action)) { 
 
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -118,7 +117,7 @@ public class ShopServlet extends HttpServlet {
 				successView.forward(req, res);
 		}
 		
-		
+		//送出編輯 update_shop_input.jsp
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -128,7 +127,7 @@ public class ShopServlet extends HttpServlet {
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
 				
 				String shop_name = req.getParameter("shop_name");
-				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
+				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\s\\(\\-\\)]*$";
 				if (shop_name == null || shop_name.trim().length() == 0) {
 					errorMsgs.put("shop_name","店家名稱: 請勿空白");
 				} else if(!shop_name.trim().matches(shop_nameReg)) {
@@ -142,7 +141,7 @@ public class ShopServlet extends HttpServlet {
 				String city = req.getParameter("city");
 				String dist = req.getParameter("dist");
 				String addressend = req.getParameter("addressend");
-				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$";
+				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\s\\-]*$";
 				if ((addressend.trim().length() != 0) && !(addressend.trim().matches(addressReg))) { 
 					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_-");
 	            }
@@ -209,14 +208,15 @@ public class ShopServlet extends HttpServlet {
 						min_amt, shop_img1, shop_img2, shop_img3);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("shopVO", shopVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				req.setAttribute("shopVO", shopVO); // 資料庫update成功後,正確的的shopVO物件,存入req
 				String url = "/shop/listOneShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneShop.jsp
 				successView.forward(req, res);
 
 		}
-
-        if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+		
+		//新增店家
+        if ("insert".equals(action)) {   
 			
         	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -224,7 +224,7 @@ public class ShopServlet extends HttpServlet {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 	
 				String shop_name = req.getParameter("shop_name");
-				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
+				String shop_nameReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\s\\(\\-\\)]*$";
 				if (shop_name == null || shop_name.trim().length() == 0) {
 					errorMsgs.put("shop_name","店家名稱: 請勿空白");
 				} else if(!shop_name.trim().matches(shop_nameReg)) {
@@ -238,7 +238,7 @@ public class ShopServlet extends HttpServlet {
 				String city = req.getParameter("city");
 				String dist = req.getParameter("dist");
 				String addressend = req.getParameter("address").trim();
-				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$";
+				String addressReg ="^[(\u4e00-\u9fa5)a-zA-Z0-9_\\s\\-]*$";
 				if ((addressend.trim().length() != 0) && !(addressend.trim().matches(addressReg))) { 
 					errorMsgs.put("address","地址: 只能是中、英文字母、數字和_-");
 	            }
@@ -323,7 +323,7 @@ public class ShopServlet extends HttpServlet {
 				
 }
         
-        	//複合查詢
+        	//複合查詢listAllShop
         	if ("listByCompositeQuery".equals(action)) { 
     			List<String> errorMsgs = new LinkedList<String>();
     			// Store this set in the request scope, in case we need to

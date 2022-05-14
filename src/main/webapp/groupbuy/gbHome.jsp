@@ -91,6 +91,7 @@ int itemsPerPage = 10;
 											<strong>${groupBuyVO.shop_name}</strong>
 										</h5>
 										<p>[揪團截止時間 <fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/>]</p>
+										<p>主揪: ${groupBuyVO.empVO.empName}</p>
 									</div>
 									<img
 										src="<%=request.getContextPath()%>/util/DBGifReader?pic=shop_img1&table=shop&id_key=shop_id&id=${groupBuyVO.shop_id}"

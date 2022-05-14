@@ -32,7 +32,7 @@ public class GroupBuyOwnerServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-      //複合查詢
+      //複合查詢(主揪)owner_selectGB.jsp
     	if ("listByCompositeQuery".equals(action)) { 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to

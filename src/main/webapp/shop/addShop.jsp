@@ -153,7 +153,7 @@
                 <%@ include file="/design/frontjs.jsp" %>
           <script type="text/javascript">
           
-	          let rule1=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$/;
+	          let rule1=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\s\\(\\-\\)]*$/;
 	          $("#shop_name").blur(function(){
 	        	  if($(this).val() == ''){
 	        		  $('#shop_nameerror').text('請填入店名!')
@@ -164,7 +164,7 @@
 	              }
 	          });
           	
-	          let rule2=/^[(\u4e00-\u9fa5)a-zA-Z0-9_\\-]*$/;
+	          let rule2=/^[(\u4e00-\u9fa5)a-zA-Z0-9_\s\\-]*$/;
 	          $("#address").blur(function(){
 	        	  
 	        	 if(rule2.test($(this).val())){

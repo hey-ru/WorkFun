@@ -50,7 +50,7 @@ th,td{
 								
 						</div>
 						<div class="col-3" style="height: 20px; display: inline-block;">
-							<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>回揪團主頁</strong></a>
+							<a href="<%=request.getContextPath()%>/groupbuy/owner_selectGB.jsp"><strong>回查詢揪團</strong></a>
 						</div>
 					</div>
 				</div>
@@ -62,7 +62,7 @@ th,td{
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
 						<div class="row">
-						<FORM METHOD="post" class="col-7" style="padding:0px 20px;margin-bottom:30px;" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
+						<FORM METHOD="post" class="col-6" style="padding:0px 20px;margin-bottom:30px;" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
 						<h4> ${groupBuyVO.gb_id} &nbsp;&nbsp;&nbsp; ${groupBuyVO.shop_name}</h4>
 						
 							<div class="row mb-3">
@@ -84,6 +84,17 @@ th,td{
 						<div class="col-2" style="height:40px;">
 						<button type="button" id="showtable" class="btn btn-info">摺疊/展開</button>	
 						</div>
+						<c:if test="${closeGB =='close' && groupBuyVO.gb_status != 3}">
+						<div class="col-1 mr-1" style="height:40px;" id="closeGB">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet">
+							<input type="submit" class="btn btn-secondary" value="關閉揪團" id="closebtn" style="margin-bottom: 0px;">
+							<input type="hidden" name="gb_status" value="3">
+							<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
+							<input type="hidden" name="front" value="front">
+							<input type="hidden" name="action" value="updateGBStatus">					
+						</FORM>							
+						</div>
+						</c:if>
 						
 						</div>
 
@@ -193,7 +204,6 @@ $(function(){
 $("tbody tr").css("background-color", function(index) {
     return index%2==0?"rgba(211,211,211,0.5)":"";
 });
-
 
         $.datetimepicker.setLocale('zh');
         $('#arr_time').datetimepicker({
