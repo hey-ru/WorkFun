@@ -62,13 +62,7 @@
 										type="text" name="empPassword" size="45" value="${param.empPassword}"
 										class="form-control" aria-label="Username"
 										aria-describedby="basic-addon1">${errorMsgs.empPassword}
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
+                                      <br>
                                        <input
 										type="submit" value="登入" class="input-group-text bg-info"
 										id="basic-addon2" style="width:345px; color:white; justify-content: center;">

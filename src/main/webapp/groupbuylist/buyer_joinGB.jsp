@@ -99,7 +99,7 @@ tbody td {
                   class="d-block w-100">
                 </div>
 
-                <div class="carousel-item">
+                <div class="carousel-item ">
                   <img src="<%=request.getContextPath()%>/util/DBGifReader?pic=shop_img2&table=shop&id_key=shop_id&id=${groupBuyVO.shop_id}"
                   class="d-block w-100">
                 </div>

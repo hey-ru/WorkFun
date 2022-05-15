@@ -26,6 +26,9 @@
         
     </style>
 
+
+
+
 </head>
 
 <body>
@@ -52,7 +55,7 @@
          
     
     <div 
-								style="border: 3px blue solid; width: 400px;  height: 200px; margin-top:-50px;margin-left:500px;z-index：1000;">
+								style="border: 3px blue solid; width: 400px;  height: 200px; margin-top:-300px;margin-left:500px;z-index：1000;">
     
                         <div class="row">
                             <div class="col-md-12">
