@@ -4,7 +4,10 @@
 <%@ page import="com.shop.model.*"%>
 <%@ page import="java.util.*"%>
 
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<ShopVO>" />
 <%
+String yourServlet = "/shop/ShopServlet"; 
+
 ShopService shopSvc = new ShopService();
 List<ShopVO> list = shopSvc.getAll();
 pageContext.setAttribute("list", list);
@@ -105,7 +108,7 @@ td {
 											<div class="form-groupf" style="display: inline-block">
 												<input type="text" class="form-control"
 													id="exampleFormControlInput1" placeholder="輸入店名"
-												<!-- 													style="border: gray solid 2px;" name="shop_name"> -->
+													style="border: gray solid 2px;" name="shop_name">
 											</div>
 											<input type="hidden" name="action"
 												value="listByCompositeQueryBack">
@@ -156,10 +159,10 @@ td {
 											</thead>
 
 
-											<%@ include file="/design/page1.file"%>
+											<%@ include file="/design/page1_ByCompositeQuery.file"%>
 											<tbody>
 
-												<c:forEach var="shopVO" items="${list}"
+												<c:forEach var="shopVO" items="${listByCompositeQuery}"
 													begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 													<tr>
@@ -226,10 +229,9 @@ td {
 										</table>
 										<div style="display: inline-block; width: 50px;"></div>
 										<div style="display: inline-block; margin-bottom: 10px;">
-											<%@ include file="/design/page2.file"%>
+											<%@ include file="/groupbuy/page2_ByCompositeQuery.file"%>
 										</div>
 									
-							
 							
 							</div>
 						</div>

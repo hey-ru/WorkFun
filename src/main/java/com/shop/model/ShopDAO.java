@@ -389,6 +389,8 @@ public class ShopDAO implements ShopDAO_interface {
 				shopVO.setShop_img1(rs.getBytes("shop_img1"));
 				shopVO.setShop_img2(rs.getBytes("shop_img2"));
 				shopVO.setShop_img3(rs.getBytes("shop_img3"));
+				shopVO.setIs_disable(rs.getInt("is_disable"));
+				shopVO.setShop_upd(rs.getTimestamp("shop_upd"));
 				list.add(shopVO);
 			}
 

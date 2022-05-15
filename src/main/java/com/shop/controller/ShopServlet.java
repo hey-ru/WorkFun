@@ -358,6 +358,40 @@ public class ShopServlet extends HttpServlet {
     				RequestDispatcher successView = req.getRequestDispatcher("/shop/listShopCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
     				successView.forward(req, res);
     		}
+        	
+        	//複合查詢listAllShop
+        	if ("listByCompositeQueryBack".equals(action)) { 
+    			List<String> errorMsgs = new LinkedList<String>();
+    			// Store this set in the request scope, in case we need to
+    			// send the ErrorPage view.
+    			req.setAttribute("errorMsgs", errorMsgs);
+
+    				
+    				/***************************1.將輸入資料轉為Map**********************************/ 
+    				//採用Map<String,String[]> getParameterMap()的方法 
+    				//注意:an immutable java.util.Map 
+    				//Map<String, String[]> map = req.getParameterMap();
+    			
+    				HttpSession session = req.getSession();
+    				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+    				
+    				// 以下的 if 區塊只對第一次執行時有效
+    				if (req.getParameter("whichPage") == null){
+    					Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+    					session.setAttribute("map",map1);
+    					map = map1;
+    				} 
+    				
+    				/***************************2.開始複合查詢***************************************/
+    				ShopService shopSvc = new ShopService();
+    				List<ShopVO> list  = shopSvc.getAll(map);
+    				System.out.println(list.toString());
+    				
+    				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+    				req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
+    				RequestDispatcher successView = req.getRequestDispatcher("/shop/backmain_ShopCQ.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+    				successView.forward(req, res);
+    		}
 		
 //        	[後台]修改店家狀態:上下架
         	if("updateShopStatus".equals(action)) {
