@@ -215,9 +215,8 @@ public class EmpServlet extends HttpServlet {
 				EmpService empSvc = new EmpService();
 
 				Part empProfile=req.getPart("empProfile");
-				
-		
-		
+				java.sql.Date resigndate = null;
+
 				
 				
 				
@@ -237,7 +236,13 @@ public class EmpServlet extends HttpServlet {
 				}
 				
 					newempVO.setEmpProfile(headimg);
-			
+					if(req.getParameter("resigndate")==null) {
+						
+					}
+					else {
+						newempVO.setResigndate(java.sql.Date.valueOf(req.getParameter("resigndate")));
+						newempVO.setEmpStatus((byte)2);
+					}
 			
 				newempVO.setMail(mail);
 				newempVO.setBirthday(birthday);

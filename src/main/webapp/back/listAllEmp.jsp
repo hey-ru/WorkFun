@@ -71,14 +71,14 @@
 	  <jsp:useBean id="depSvc" scope="page" class="com.dep.model.DepService" />
  <li>   
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1">
-        <b><font color=blue>萬用複合查詢:</font></b> <br>
+   
        <!--  <b>輸入員工編號:</b>
         <input type="text" name="empId" value=""><br> -->
            
      <!--   <b>輸入員工姓名:</b>
        <input type="text" name="empName" value=""><br> -->
             <b>輸入員工分機:</b>
-       <input type="text" name="extension" value=""><br>
+       <input type="text" name="extension" value="">
        
        
       <!--  <b>輸入員工職位:</b>
@@ -90,7 +90,7 @@
          <c:forEach var="depVO" items="${depSvc.all}" > 
           <option value="${depVO.depId}">${depVO.depName}
          </c:forEach>   
-       </select><br>
+       </select>
            
        <b>雇用日期:</b>
 	   <input name="hiredate" id="f_date1" type="text"> 
@@ -107,14 +107,14 @@
                                 <!-- Advanced Tables -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        Advanced Tables
+                                      
                                     </div>
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover"
                                                 id="dataTables-example">
                                                <tr>
-		<th>員工編號</th>
+	
 		<th>員工姓名</th>
 		<th>部門</th>
 		<th>雇用日期</th>
@@ -136,7 +136,7 @@
 	<c:forEach var="empVOSearch" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
-			<td>${empVOSearch.empId}</td>
+			
 			<td>${empVOSearch.empName}</td>
 			<td>${empVOSearch.depId}-[${empVOSearch.depVO.depName}]</td>
 
@@ -155,9 +155,17 @@
 											></td>
 								<td>${empVOSearch.mail}</td>
 									<td>${empVOSearch.birthday}</td>
-										<td>${empVOSearch.empStatus}</td>
+									<c:choose>
+									<c:when test="${empVOSearch.empStatus==2}">
+										<td>離職</td>
+										</c:when>
+										<c:otherwise>
+											<td>在職</td>
+										</c:otherwise>
 										
-			
+										
+										
+		</c:choose>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">

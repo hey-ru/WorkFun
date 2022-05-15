@@ -25,19 +25,8 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-
-
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-
-
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
@@ -47,7 +36,6 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
 	height: 151px; /* height:  151px; */
 }
-
 </style>
 
 
@@ -127,8 +115,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 
 
 								<h4 class="card-title">${equipmentVO.spec}</h4>
-								<p class="small fst-italic">
-								</p>
+								<p class="small fst-italic"></p>
 								<h6 class="card-title">
 									<span style="text-decoration: line-through">器材金額</span>
 									(逾期罰金一天為商品30%，最多至90%)
@@ -158,19 +145,15 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 										autocomplete="off" class="form-control"
 										value="${param.endDate}" required />
 								</div>
-
 								<div class="col-sm-5">
-									<input type="hidden" name="equipmentId"
-										value="${equipmentVO.equipmentId}"> <input
-										type="hidden" name="empId" value="${empVO.empId}"> <input
-										type="hidden" name="startDate" value="${bookingVO.startDate}">
-									<input type="hidden" name="endDate"
-										value="${bookingVO.endDate}"> <input type="hidden"
+									<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block;" value="我要預約" onclick='alertTest()'>
+										<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
+										<input type="hidden" name="empId" value="${empVO.empId}"> 
+										<input type="hidden" name="startDate" value="${bookingVO.startDate}">
+									<input type="hidden" name="endDate" value="${bookingVO.endDate}"> <input type="hidden"
 										name="returnStatus" value="${bookingVO.returnStatus}">
-									<input type="hidden" name="action" value="insert"> <input
-										type="submit" class="btn btn-primary mb-2 mt-1 col"
-										style="display: inline-block;" value="我要預約"
-										onclick='alertTest()'>
+									<input type="hidden" name="action" value="insert" onclick="alertTest();"> 
+									
 								</div>
 							</form>
 
@@ -208,8 +191,6 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 		$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}')
 	});
 	
-
-    
     function alertTest() {
     Swal.fire({
     	  title: '預約成功 ! ',
@@ -223,7 +204,6 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
     }
     
 
-	
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
 	
@@ -255,8 +235,9 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 			   })
 			  }
 	});
-    
-  
+     
+     
 	</script>
+
 </body>
 </html>

@@ -56,10 +56,10 @@ public class GroupBuyServlet extends HttpServlet {
 				//再取得一次店家菜單物件集合,以顯示於填寫揪團單畫面
 				MenuService menuService = new MenuService();
 				List<MenuVO> menuList = menuService.getByShopId(shop_id);
-				
 				HttpSession session1 = req.getSession();
 				session1.setAttribute("menuList", menuList);
 				
+				//轉交
 				String url = "/groupbuylist/buyer_joinGB.jsp";
 				
 				// 成功轉交 buyer_joinGB.jsp

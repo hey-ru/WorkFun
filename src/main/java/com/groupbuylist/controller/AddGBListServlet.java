@@ -28,6 +28,7 @@ public class AddGBListServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html;charset=utf-8");
 		String action = req.getParameter("action");
 		System.out.println(action);
 
@@ -62,9 +63,8 @@ public class AddGBListServlet extends HttpServlet {
 				sumQty += Integer.valueOf(qtyString);
 				System.out.println(sumQty);
 			}
-			
 			if (sumQty == 0) {
-				errorMsgs.put("msgQty", "請選擇數量再下單");
+				errorMsgs.put("msgQty", "😵請選擇數量再下單‼");
 			}
 
 			if (!errorMsgs.isEmpty()) {

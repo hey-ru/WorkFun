@@ -11,7 +11,7 @@ List<MenuVO> list = (List<MenuVO>) request.getAttribute("menuList");
 int menuNumber = 1;
 %>
 
-<html>
+<html class="glightbox-open">
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
 <style>
@@ -20,18 +20,20 @@ int menuNumber = 1;
 	overflow-x: hidden;
 }
 
-  th{
-        vertical-align: middle;
-            text-align: center;
-        }
-        td{
-        vertical-align: middle;
-            text-align: center;
-        }
+th {
+	vertical-align: middle;
+	text-align: center;
+}
 
-     .table table-dark {
-    	overflow-x:hidden;
-		}
+td {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.table table-dark {
+	overflow-x: hidden;
+}
+
 
 
 </style>
@@ -40,15 +42,16 @@ int menuNumber = 1;
 
 <body>
 	<div class="wrapper">
-
 		<%@ include file="/design/frontheader.jsp"%>
 
 		<!-- ====================== 內容開始 ====================== -->
 		<main id="main" class="main">
+			<!-- ======= Portfolio Section ======= -->
+
 			<div class="card shadow mb-4">
 				<!-- ============== Card Header ============== -->
 				<div class="card-header py-3" style="background-color: #b0c4de">
-					<div class="row">
+					<div class="row" style="justify-content: center;">
 						<div class="col-11" style="height: 20px; display: inline-block;">
 							<h5>
 								<strong>查詢店家菜單</strong>
@@ -60,62 +63,68 @@ int menuNumber = 1;
 					</div>
 				</div>
 
-				<!-- ============== Card Body ============== -->
-				<!-- 新增菜單請求 -->
-						<div class="col-1">
-							<a
-								href="${pageContext.request.contextPath}/menu/addMenu.jsp?shop_id=${param.shop_id}">
-								<button type="button" class="btn btn-info">新增項目</button>
-							</a>
+
+				<section id="portfolio" class="portfolio">
+					<div class="container" data-aos="fade-up">
+
+						<!-- ============== Card Body ============== -->
+						<div class="row" style="place-content: center;">
+							<div class="col-2" style="display:inline-block;"></div>
+							<div 
+								style="width: 750px; align-self: center; color: white; background-color: gray; display: inline-block;">
+								<div class="card-header"
+									style="text-align: center; margin: 20px;">
+									<h3>${param.shop_name}M e n u</h3>
+								</div>
+
+								<table class="table table-hover table-dark">
+									<!-- ========================= 表頭 ========================= -->
+									<thead>
+										<tr>
+											<th scope="col">項次</th>
+											<th scope="col">品項</th>
+											<th scope="col">價格</th>
+											<th scope="col">狀態</th>
+											<th scope="col"></th>
+
+										</tr>
+									</thead>
+
+									<c:forEach var="menu" items="${menuList}">
+										<tr>
+											<td><%=menuNumber++%></td>
+											<td><c:out value="${menu.item}" /></td>
+											<td><c:out value="${menu.price}" /></td>
+											<td><c:if test="${menu.is_item==1}">
+													<c:out value="上架中" />
+												</c:if> <c:if test="${menu.is_item==0}">
+													<c:out value="已下架" />
+												</c:if></td>
+											<td>
+												<FORM METHOD="post"
+													ACTION="<%=request.getContextPath()%>/menu/updatemenubyshop">
+													<input type="submit" class="btn btn-secondary btn-sm"
+														value="編輯"> <input
+														type="hidden" name="menu_id" value="${menu.menu_id}">
+													<input type="hidden" name="action"
+														value="getMenuItem_For_Update">
+												</FORM>
+											</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+							<!-- 新增菜單請求 -->
+							<div class="col-2" style="display:inline-block;">
+								<a class="btn btn-danger btn-icon-split"
+									href="${pageContext.request.contextPath}/menu/addMenu.jsp?shop_id=${param.shop_id}">
+									<button type="button" class="btn btn-danger btn-icon-split">我要新增菜單</button>
+								</a>
+							</div>
 						</div>
-				
-				
-				<div class="card" style="width: 700px; align-self: center;margin: 10px; color:white; background-color: gray;">
-					<div class="card-header" style="text-align: center; margin: 20px;" > <h3>${param.shop_name} M e n u</h3> </div>
-
-					<div class="card-body row">
-						<div class="col-12" >
-							<table class="table table-dark" >
-								<!-- ========================= 表頭 ========================= -->
-								<thead>
-									<tr>
-										<th scope="col">項次</th>
-										<th scope="col">品項</th>
-										<th scope="col">價格</th>
-										<th scope="col">狀態</th>
-										<th scope="col"></th>
-
-									</tr>
-								</thead>
-
-								<c:forEach var="menu" items="${menuList}">
-									<tr>
-										<td><%=menuNumber++%></td>
-										<td><c:out value="${menu.item}" /></td>
-										<td><c:out value="${menu.price}" /></td>
-										<td><c:if test="${menu.is_item==1}">
-												<c:out value="上架中" />
-											</c:if> <c:if test="${menu.is_item==0}">
-												<c:out value="已下架" />
-											</c:if></td>
-										<td>
-											<FORM METHOD="post"
-												ACTION="<%=request.getContextPath()%>/menu/updatemenubyshop">
-												<input type="submit" class="btn btn-secondary btn-sm " value="編輯">
-												<input type="hidden" name="menu_id" value="${menu.menu_id}">
-												<input type="hidden" name="action"
-													value="getMenuItem_For_Update">
-											</FORM>
-										</td>
-									</tr>
-								</c:forEach>
-							</table>
-						</div>
-
-						
 					</div>
-
-				</div>
+				</section>
+				<!-- End Portfolio Section -->
 			</div>
 		</main>
 		<!-- ======= 內容結束 ======= -->
@@ -125,6 +134,9 @@ int menuNumber = 1;
 	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
+	<script>
+		
+	</script>
 </body>
 
 </html>

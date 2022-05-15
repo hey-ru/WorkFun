@@ -1,3 +1,5 @@
+<%@page import="com.shop.model.ShopService"%>
+<%@page import="com.shop.model.ShopVO"%>
 <%@page import="com.menu.model.MenuService"%>
 <%@page import="com.menu.model.MenuVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -106,8 +108,8 @@ int orderNumber = 1;
 										<td>$<span id="total">${blist.price*blist.qty}</span></td>	
 									<!-- 備註 -->
 									<td><input type="text" name="remark"
-										pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$"
-										size="15" value="${blist.remark}"></td>
+										pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
+										size="20" value="${blist.remark}"></td>
 					
 <!-- 				[刪除請求] -->
 <!-- 					<td> -->

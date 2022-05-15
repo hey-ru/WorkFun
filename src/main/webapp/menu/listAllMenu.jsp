@@ -89,6 +89,47 @@
 		</tr>
 	</c:forEach>
 </table>
+
+
+
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/menu/addmenubyshop"> 
+<!-- 	 							<table class="table table-hover" style="text-align: center;">  -->
+<!-- 									<thead>  -->
+<!-- 										<tr>  -->
+<!-- 	 										<th>店家ID</th>  -->
+<!-- 	 										<th>品項</th>  -->
+<!-- 										<th>價格</th>  -->
+<!-- 										</tr> -->
+<!-- 									</thead>  -->
+<!-- 	 								<tbody>  -->
+<!-- 	 								<tr>  -->
+<!-- 									<td><input type="text" name="shop"  -->
+											<%-- 										value="${param.shop_id}"></td> --%>
+											<%-- 									<td><input type="text" name="item" value="${param.item}" /></td> --%>
+											<%-- 									<td><input type="number" name="price" value="${param.price}" /></td> --%>
+											<!-- 								</tr> -->
+											<!-- 								<tr> -->
+											<!-- 									<td><input type="text" name="shop_id" -->
+											<%-- 										value="${param.shop_id}"></td> --%>
+											<%-- 									<td><input type="text" name="item" value="${param.item}" /></td> --%>
+											<%-- 									<td><input type="number" name="price" value="${param.price}" /></td> --%>
+											<!-- 								</tr> -->
+											<!-- 								</tbody> -->
+											<!-- 							</table> -->
+
+											<!-- 							<input type="hidden" name="action" value="insert">  -->
+											<!-- 							<input type="submit" value="新增"> -->
+											<!-- 						</form> -->
+											<!-- 						================================================================================ -->
+
+
+
+
+
+
+
+
+
 <%@ include file="/design/page2.file"%>
 
 </body>

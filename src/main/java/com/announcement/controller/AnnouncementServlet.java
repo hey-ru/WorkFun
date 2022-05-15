@@ -87,6 +87,9 @@ if("insert".equals(action)) {
 		return;//程式中斷
 		
 	}
+	String a=req.getParameter("test");
+	System.out.println("1234"+a);
+	
 	AnnouncementVO announcementVO=new AnnouncementVO();
 	Integer announcer=Integer.valueOf(announcerString);
 	announcementVO.setAnnouncer(announcer);
@@ -157,6 +160,42 @@ if("insert".equals(action)) {
 	
 }
 
+if("getOne".equals(action)) {
+	
+	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+	
+	
+		/***************************1.接收請求參數****************************************/
+		Integer announcement_id = Integer.valueOf(req.getParameter("announcement_id"));
+		
+		/***************************2.開始查詢資料****************************************/
+		AnnouncementService annSvc=new AnnouncementService();
+		AnnouncementVO announcementVO=annSvc.findByPrimaryKey(announcement_id);
+	EmpService empService=new EmpService();
+	
+						
+		/***************************3.查詢完成,準備轉交(Send the Success view)************/
+		String param = "?announcement_id="  +announcementVO.getAnnouncement_id()+
+				 "&announcer="+  announcementVO.getAnnouncer()+
+				 "&announcer_name="  +empService.getOneEmp(announcementVO.getAnnouncer()).getEmpName()+
+				       "&announcement_title="  +announcementVO.getAnnouncement_title()+
+				       "&announcement_content="+announcementVO.getAnnouncement_content();
+				    
+				     
+		String url = "/announcement/frontAnnouncement.jsp"+param;
+		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+		successView.forward(req, res);
+	
+	
+	
+	
+	
+	
+	
+}
+
+
 if("getOne_For_Update".equals(action)) {
 	
 	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -178,7 +217,7 @@ if("getOne_For_Update".equals(action)) {
 				 "&announcer_name="  +empService.getOneEmp(announcementVO.getAnnouncer()).getEmpName()+
 				       "&announcement_title="  +announcementVO.getAnnouncement_title()+
 				       "&announcement_content="+announcementVO.getAnnouncement_content()+
-				       "&resigndate="+announcementVO.getAnnouncement_status();
+				       "&getAnnouncement_status="+announcementVO.getAnnouncement_status();
 				     
 		String url = "/announcement/updateAnnouncement.jsp"+param;
 		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp

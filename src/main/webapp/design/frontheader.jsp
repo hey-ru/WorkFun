@@ -100,7 +100,7 @@
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="<%=request.getContextPath()%>/emp/frontProfile.jsp">
                                         <i class="bi bi-person"></i>
-                                        <span>My Profile</span>
+                                        <span>個人資料</span>
                                     </a>
                                 </li>
                                 <li>
@@ -109,7 +109,7 @@
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="<%=request.getContextPath()%>/back/backmain.jsp" >
                                         <i class="bi bi-gear"></i>
-                                        <span>Account Settings</span>
+                                        <span>後台</span>
                                     </a>
                                 </li>
                                 <li>
@@ -118,7 +118,7 @@
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="<%=request.getContextPath()%>/empServlet?action=logout">
                                         <i class="bi bi-box-arrow-right"></i>
-                                        <span>Sign Out</span>
+                                        <span>登出</span>
                                     </a>
                                 </li>
                             </ul>
