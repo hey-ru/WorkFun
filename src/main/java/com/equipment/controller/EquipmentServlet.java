@@ -325,6 +325,10 @@ public class EquipmentServlet extends HttpServlet {
 				price = Integer.valueOf(req.getParameter("price").trim());
 			} catch (NumberFormatException e) {
 				errorMsgs.put("price", "金額請填數字");
+			}if(price <= 0) {
+				errorMsgs.put("price", "請輸入大於0的數字");
+			}if(price > 1000000) {
+				errorMsgs.put("price", "金額請小於100w");
 			}
 
 //			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());

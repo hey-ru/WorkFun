@@ -41,30 +41,6 @@ td {
 	overflow-x: visible;
 }
 
-.row {
-	margin-top: 20px;
-}
-
-.col-sm-12 {
-	flex: 0 0 100%;
-    max-width: 100%;
-}
-
-.my-1 {
-	margin: auto;
-	padding: 0px 25px;
-}
-
-.col-10 {
-	width: 80%;
-}
-
-.mt-2 {
-	padding-right: 20px;
-	margin: auto;
-	margin-right: 35px;
-}
-
 .wrapper {
 	overflow-x: hidden;
 }
@@ -95,18 +71,17 @@ td {
 			<div id="content">
 
 				<!-- Topbar -->
-				<nav
-					class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
+				<nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav bg-dark ml-auto">
 
 						<!-- Nav Item - User Information -->
-						<li class="nav-item no-arrow"><a
+						<li class="nav-item no-arrow pr-4"><a
 							href="<%=request.getContextPath()%>/home/home.jsp"> <i
 								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-								Back Home
-						</a></li>
+								Back Home</a>
+						</li>
 
 					</ul>
 
@@ -130,9 +105,16 @@ td {
 					<!-- 									</div> -->
 					<!-- 								</div> -->
 					<!-- 							</div> -->
+             
+              <!-- End of Topbar -->
 
+                <!-- Begin Page Content -->
+                <div class="container-fluid pl-0">
+                    <!-- 內容放這 -->
+                  <main id="main" class="main">
 
-
+				<!-- ============== Card Header ============== -->
+				<div class="card-body">
 					<div class="row">
 						<div class="col-10" style="height: 60px; display: inline-block;">
 							<form class="my-1" METHOD="post"
@@ -141,21 +123,21 @@ td {
 
 								<jsp:useBean id="equipmentSvc1" scope="page"
 									class="com.equipment.model.EquipmentService" />
-								<div class="form-group col-2" style="display: inline-block;">
+<!-- 								<div class="form-group col-2" style="display: inline-block;"> -->
 
-									<select class="form-control" id="exampleFormControlSelect1"
-										style="border: gray solid 2px;" name="eq_status">
-										<option value="">選擇器材狀態</option>
-										<option value="0">上架</option>
-										<option value="1">未歸還的器材</option>
-										<option value="2">送修中</option>
-										<option value="3">下架</option>
-									</select>
-								</div>
+<!-- 									<select class="form-control" id="exampleFormControlSelect1" -->
+<!-- 										style="border: gray solid 2px;" name="eq_status"> -->
+<!-- 										<option value="">選擇器材狀態</option> -->
+<!-- 										<option value="0">上架</option> -->
+<!-- 										<option value="1">未歸還的器材</option> -->
+<!-- 										<option value="2">送修中</option> -->
+<!-- 										<option value="3">下架</option> -->
+<!-- 									</select> -->
+<!-- 								</div> -->
 
 								<div class="form-group col-3" style="display: inline-block">
 									<input type="text" class="form-control"
-										id="exampleformControlInput1" placeholder="搜尋器材名稱"
+										id="exampleformControlInput1" placeholder="輸入器材名稱"
 										style="border: gray solid 2px;" name="eq_name"
 										value="${param.eqName}">
 								</div>
@@ -165,23 +147,19 @@ td {
 									style="display: inline-block; width: 100px;">搜尋</button>
 							</form>
 						</div>
-					</div>
-
-					<div class="col-2 mt-2" style="left: 0;">
+					
+						<div class="col-2 mt-2" style="left: -25px;" >
 
 						<a
 							href='${pageContext.request.contextPath}/equipment/backAddEqpt.jsp'><button
 								type="button" class="btn btn-warning btn-lg"
-								style="background-color: #36BF36; color: #FFFFFF; font-weight: bold; width: 200px;">新增器材</button></a>
+								style="background-color: #36BF36; color: #FFFFFF; font-weight: bold; width: 200px; ">新增器材</button></a>
 					</div>
+					</div>
+				
 
-				</div>
-
-				<div class="page1">
-					<%@ include file="/design/page1.file"%>
-				</div>
-
-
+		<div class="table-responsive">
+			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 				<div class="row">
 
 					<div class="col-sm-12">
@@ -194,27 +172,27 @@ td {
 										aria-controls="dataTable" rowspan="1" colspan="1"
 										aria-sort="ascending"
 										aria-label="Name: activate to sort column descending"
-										style="width: 50px;">器材編號</th>
+										>器材編號</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Position: activate to sort column ascending"
-										style="width: 100px;">器材名稱</th>
+										>器材名稱</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Position: activate to sort column ascending"
-										style="width: 30px;">金額</th>
+										>金額</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Office: activate to sort column ascending"
-										style="width: 100px;">狀態</th>
+										>狀態</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Age: activate to sort column ascending"
-										style="width: 200px;">器材介紹</th>
+										>器材介紹</th>
 
 									<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
 									<!-- 										rowspan="1" colspan="1" -->
@@ -224,7 +202,7 @@ td {
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Salary: activate to sort column ascending"
-										style="width: 100px;">圖片</th>
+										>圖片</th>
 
 									<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
 									<!-- 										rowspan="1" colspan="1" -->
@@ -239,18 +217,18 @@ td {
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Salary: activate to sort column ascending"
-										style="width: 50px;"></th>
-
+										></th>
 								</tr>
-
 							</thead>
 
 
-							<%-- 							<%@ include file="/design/page1.file"%> --%>
+							<%@ include file="/design/page1.file"%>
+							
+							<!-- ============== 表格內容(自行增減修改) ============== -->
+							
 							<tbody>
 
-								<c:forEach var="equipmentVO" items="${list}"
-									begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+								<c:forEach var="equipmentVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 									<tr>
 										<td>${equipmentVO.equipmentId}</td>
@@ -291,56 +269,47 @@ td {
 										<!-- 											style="max-height: 100%;"></td> -->
 
 										<td>
-											<FORM METHOD="post"
-												ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
-												style="margin-bottom: 0px;">
-												<input type="submit" value="修改"
-													class="btn btn-dark mb-2 mt-1 col"
-													style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
-												<input type="hidden" name="equipmentId"
-													value="${equipmentVO.equipmentId}"> <input
-													type="hidden" name="action" value="getOne_For_Update">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/equipment/equipment.do" style="margin-bottom: 0px;">
+												<input type="submit" value="修改" class="btn btn-dark mb-2 mt-1 col" style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
+												<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
+												<input type="hidden" name="action" value="getOne_For_Update">
 											</FORM>
 										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-
 						<%@ include file="/design/page2.file"%>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</main>
 
-				<!-- /.container-fluid -->
-				</main>
+				
+				
+				
+				<!-- /.container-fluid -->				
 			</div>
 			<!-- End of Main Content -->
 		</div>
-	</div>
-	</div>
-
-
-
-
 	<!-- End of Content Wrapper -->
-
-
+	</div>
 	<!-- End of Page Wrapper -->
-
+</div>
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
 
-	<%@ include file="/design/backjs.jsp"%>
+<%@ include file="/design/backjs.jsp"%>
 
-	
-	
-	<script type="text/javascript">
+<script type="text/javascript">
 		$("tbody tr").css("background-color", function(index) {
 			return index % 2 == 0 ? "#dcdcdc" : "";
 		});
-	</script>
+</script>
 
 </body>
 

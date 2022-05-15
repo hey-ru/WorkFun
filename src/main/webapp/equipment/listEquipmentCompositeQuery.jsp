@@ -130,17 +130,17 @@ td {
 
 							<jsp:useBean id="equipmentSvc1" scope="page"
 								class="com.equipment.model.EquipmentService" />
-							<div class="form-group col-2" style="display: inline-block;">
+<!-- 							<div class="form-group col-2" style="display: inline-block;"> -->
 
-								<select class="form-control" id="exampleFormControlSelect1"
-									style="border: gray solid 2px;" name="eq_status">
-									<option value="">選擇器材狀態</option>
-									<option value="0">上架</option>
-									<option value="1">未歸還的器材</option>
-									<option value="2">送修中</option>
-									<option value="3">下架</option>
-								</select>
-							</div>
+<!-- 								<select class="form-control" id="exampleFormControlSelect1" -->
+<!-- 									style="border: gray solid 2px;" name="eq_status"> -->
+<!-- 									<option value="">選擇器材狀態</option> -->
+<!-- 									<option value="0">上架</option> -->
+<!-- 									<option value="1">未歸還的器材</option> -->
+<!-- 									<option value="2">送修中</option> -->
+<!-- 									<option value="3">下架</option> -->
+<!-- 								</select> -->
+<!-- 							</div> -->
 
 							<div class="form-group col-3" style="display: inline-block">
 								<input type="text" class="form-control"
