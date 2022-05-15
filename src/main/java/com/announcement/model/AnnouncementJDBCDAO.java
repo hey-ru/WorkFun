@@ -7,6 +7,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.announcement_mapping.model.Announcement_mappingJDBCDAO;
+import com.announcement_mapping.model.Announcement_mappingVO;
+import com.bid.model.BidJDBCDAO;
+import com.bid.model.BidVO;
+import com.secondHand.model.SecondHandVO;
+
 //import org.graalvm.compiler.core.common.alloc.Trace;
 
 import java.io.FileInputStream;
@@ -27,6 +33,13 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 	private static final String GET_ONE_STMT = "select announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement where announcement_id = ? ";
 	private static final String DELETE = "DELETE FROM announcement where announcement_id = ?  ;";
 	private static final String UPDATE = "UPDATE announcement set ";
+//	private static final String GET_ALLWITHIMG = " select ann.announcement_id,ann.announcer,ann.announcement_title,ann.announcement_content,ann.announcement_time,ann.announcement_status,annmap.announcementImg_id,annmap.announcementImg"
+//	+" from  announcement ann join announcement_mapping annmap on ann.announcement_id=annmap.announcement_id "
+//	+"order by ann.announcement_id ;";
+	private static final String GET_ALLWITHIMG = " select ann.announcement_id,ann.announcer,ann.announcement_title,ann.announcement_content,ann.announcement_time,ann.announcement_status,annmap.announcementImg_id,annmap.announcementImg"
+	+" from  announcement ann join announcement_mapping annmap on ann.announcement_id=annmap.announcement_id where ann.announcement_id =? "
+	+"order by ann.announcement_id ;";
+
 
 // insert ok
 	//
@@ -80,8 +93,183 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 		}
 
 	}
+	
+	@Override
+	public void insertWithImg(AnnouncementVO announcementVO, List<Announcement_mappingVO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			// 1●設定於 pstm.executeUpdate()之前
+			con.setAutoCommit(false);
+
+		
+			String cols[] = { "announcement_id" };// for 複合主鍵
+
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+
+			pstmt.setInt(1, announcementVO.getAnnouncer());
+			pstmt.setString(2, announcementVO.getAnnouncement_title());
+			pstmt.setString(3, announcementVO.getAnnouncement_content());
+			
+//			Statement stmt = con.createStatement();
+
+			pstmt.executeUpdate();
+			System.out.println("before");
+			Integer announcement_id = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				announcement_id = rs.getInt(1);
+			
+			} 
+			rs.close();
+				
+			
+			// 再同時新增競標
+			AnnouncementJDBCDAO dao = new AnnouncementJDBCDAO();
+			Announcement_mappingJDBCDAO mapDao=new Announcement_mappingJDBCDAO();
+			Iterator<Announcement_mappingVO> iterator=list.iterator();
+			while (iterator.hasNext()) {
+				 
+				 Announcement_mappingVO	announcement_mappingVO=iterator.next();
+				announcement_mappingVO.setAnnouncement_id(announcement_id);
+				
+			
+				mapDao.insert(announcement_mappingVO,con);
+			
+				
+			}
+				
+			
+			
+			
+			
+			
+			
+		
+	
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+		
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-secondHand");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	
+	
 
 	public int update(AnnouncementVO announcementVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int count=0;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			
+			StringBuilder sb=new StringBuilder();
+			sb.append(UPDATE);
+			
+			if (announcementVO.getAnnouncement_title() != null) {
+				sb.append("announcement_title=?, ");
+			}
+			if (announcementVO.getAnnouncement_content() != null) {
+				sb.append("announcement_content=?, ");
+			}
+			
+sb.append("announcement_id=? ");
+			
+			sb.append("where announcement_id = ? ");
+			pstmt = con.prepareStatement(sb.toString());
+			if (announcementVO.getAnnouncement_title() != null) {
+				count++;
+				pstmt.setString(count, announcementVO.getAnnouncement_title());
+			}
+			if (announcementVO.getAnnouncement_content() != null) {
+				count++;
+				pstmt.setString(count, announcementVO.getAnnouncement_content());
+			}
+			count++;
+			
+			pstmt.setInt(count, announcementVO.getAnnouncement_id());
+	count++;
+			
+			pstmt.setInt(count, announcementVO.getAnnouncement_id());
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+		}
+		return 1;
+	}
+	public int updateWithImg(AnnouncementVO announcementVO, List<Announcement_mappingVO> list) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -227,7 +415,6 @@ sb.append("announcement_id=? ");
 							}
 			
 			
-			
 
 			// Handle any driver errors
 //		} catch (ClassNotFoundException e) {
@@ -340,6 +527,79 @@ announcementVO.setAnnouncement_status(rs.getByte("announcement_status"));
 		}
 		return list;
 	}
+	public List<AnnouncementVO> getAllWithImg(Integer announcement_id) {
+		
+	
+		
+List<AnnouncementVO> list=new ArrayList<AnnouncementVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
+			// FROM emp order by emp_id";
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALLWITHIMG);
+			pstmt.setInt(1, announcement_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				AnnouncementVO announcementVO = new AnnouncementVO();
+Announcement_mappingVO announcement_mappingVO=new Announcement_mappingVO();
+announcementVO.setAnnouncement_id(rs.getInt("announcement_id"));
+announcementVO.setAnnouncer(rs.getInt("announcer"));
+announcementVO.setAnnouncement_title(rs.getString("announcement_title"));
+announcementVO.setAnnouncement_content(rs.getString("announcement_content"));
+announcementVO.setAnnouncement_time(rs.getTimestamp("announcement_time"));
+announcementVO.setAnnouncement_status(rs.getByte("announcement_status"));
+announcement_mappingVO.setAnnouncementImg_id(rs.getInt("announcementImg_id"));
+announcement_mappingVO.setAnnouncementImg(rs.getBytes("announcementImg"));
+announcementVO.setAnnouncement_mappingVO(announcement_mappingVO);
+
+
+
+
+
+
+				list.add(announcementVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 	public static void main(String[] args) throws IOException {
 
@@ -352,8 +612,22 @@ announcementVO.setAnnouncement_status(rs.getByte("announcement_status"));
 	
 //		AnnouncementVO AnnouncementVO2=dao.findByPrimaryKey(1001);
 //		System.out.println(AnnouncementVO2.getAnnouncement_content().toString());
-		List<AnnouncementVO> list=dao.getAll();
+		List<AnnouncementVO> list=dao.getAllWithImg(2011);
 		System.out.println(list);
+		Iterator<AnnouncementVO> iterator=list.iterator();
+		while (iterator.hasNext()) {
+			AnnouncementVO announcementVO = (AnnouncementVO) iterator.next();
+			Announcement_mappingVO announcement_mappingVO= announcementVO.getAnnouncement_mappingVO();
+		System.out.println("公告編號"+announcementVO.getAnnouncement_id());
+		System.out.println("公告標題"+announcementVO.getAnnouncement_title());
+		System.out.println("公告內容"+announcementVO.getAnnouncement_content());
+		System.out.println("公告狀態"+announcementVO.getAnnouncement_status());
+		System.out.println("公告圖片編號"+announcement_mappingVO.getAnnouncementImg_id());
+		System.out.println("公告圖片"+announcement_mappingVO.getAnnouncementImg());
+
+			
+			
+		}
 		
 		
 		

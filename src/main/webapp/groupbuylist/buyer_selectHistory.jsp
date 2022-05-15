@@ -13,6 +13,7 @@
 <%
 String yourServlet = "/groupbuylist/selectmygblistservlet";
 int itemsPerPage = 6;
+int orderNumber = 1;
 
 //只能查詢個人參團紀錄
 EmpVO empVO = (EmpVO) session.getAttribute("empVO");
@@ -21,15 +22,27 @@ EmpVO empVO = (EmpVO) session.getAttribute("empVO");
 GroupBuyListService gblistSvc = new GroupBuyListService();
 List<GroupBuyListVO> list = gblistSvc.getMyGB(empVO.getEmpId());
 
-// HttpSession session1 = pageContext.getSession();
-// session1.setAttribute("mygblist", list);
-
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
+
+<style>
+  th{
+        vertical-align: middle;
+            text-align: center;
+        }
+        td{
+        vertical-align: middle;
+            text-align: center;
+        }
+
+     .table-responsive {
+    	overflow-x:hidden;
+		}
+</style>
 
 
 </head>
@@ -72,7 +85,7 @@ List<GroupBuyListVO> list = gblistSvc.getMyGB(empVO.getEmpId());
 <!-- 								  </li> -->
 								  <li class="nav-item">
 								    <a class="nav-link" 
-								    href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet?action=listByCompositeQueryBack&buyer=${empVO.empId}&g.gb_status=0">歷史訂單</a>
+								    href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet?action=listByCompositeQuery&buyer=${empVO.empId}&g.gb_status=0">歷史訂單</a>
 								  </li>
 								</ul>
 								</div>
@@ -99,7 +112,7 @@ List<GroupBuyListVO> list = gblistSvc.getMyGB(empVO.getEmpId());
 								<tr>
 									<th scope="col">我的參團</th>
 									<th scope="col">店家</th>
-									<th scope="col">總額</th>
+									<th scope="col">總金額</th>
 									<th scope="col">付款狀態</th>
 									<th scope="col">取貨狀態</th>
 									<th scope="col">開始時間</th>
@@ -120,9 +133,9 @@ List<GroupBuyListVO> list = gblistSvc.getMyGB(empVO.getEmpId());
 									end="<%=pageIndex+rowsPerPage-1%>">
 									<c:if test="${(mygb.total) > 0}">
 										<tr>
-											<td>${mygb.gb_id}</td>
+											<td><%=orderNumber++%></td>
 											<td>${mygb.groupBuyVO.shop_name}</td>
-											<td>${mygb.total}</td>
+											<td>$${mygb.total}</td>
 											<td>${mygb.is_pay eq 0? "未付款":"已付款"}</td>
 											<td>${mygb.is_pickup eq 0? "未取貨":"已取貨"}</td>
 											<td><fmt:formatDate

@@ -1,4 +1,4 @@
-package com.announcement_mapping;
+package com.announcement_mapping.model;
 
 public class Announcement_mappingVO {
 	private Integer announcement_id;

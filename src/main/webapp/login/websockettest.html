@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" >
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<title>私信界面</title>
+
+		<!-- Bootstrap -->
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/main.css" rel="stylesheet">
+
+		<script>
+
+			$(document).ready(function(){
+				$("#quxiaobtn").click(function(){
+					$("#text").val('');
+				});
+				
+			});
+
+
+
+	
+            var webSocket;
+
+            function send_msg() {
+                if (webSocket != null) {
+                    var input_msg = document.getElementById("input_msg").value.trim();
+                    if (input_msg == "") {
+                        return;
+                    }
+                    webSocket.send(input_msg);
+                    // 清除input框里的信息
+                    document.getElementById("input_msg").value = "";
+                } else {
+                    alert("您已掉线，请重新进入聊天室...");
+                }
+            };
+
+            function closeWs() {
+                webSocket.close();
+            };
+
+            function initWebSocket() {
+                var roomName = document.getElementById("input_roomName").value;
+                // 房间名不能为空
+                if (roomName == null || roomName == "") {
+                    alert("请输入房间名");
+                    return;
+                }
+                if ("WebSocket" in window) {
+//            alert("您的浏览器支持 WebSocket!");
+                    if (webSocket == null) {
+                        var url = "ws://localhost:8081/webSocket/chat/"+roomName;
+                        // 打开一个 web socket
+                        webSocket = new WebSocket(url);
+                        alert("连接...");
+                    } else {
+                        alert("您已进入聊天室...");
+                    }
+
+                    webSocket.onopen = function () {
+                        alert("已进入聊天室，畅聊吧...");
+                    };
+
+                    webSocket.onmessage = function (evt) {
+                        var msg_board = document.getElementsByClassName("msg_board")[0];
+                        var received_msg = evt.data;
+                        var old_msg = msg_board.innerHTML;
+                        msg_board.innerHTML  = old_msg + received_msg ;
+                        // 让滚动块往下移动
+                        msg_board.scrollTop = msg_board.scrollHeight;
+                    };
+
+                    webSocket.onclose = function () {
+                        // 关闭 websocket，清空信息板
+                        alert("连接已关闭...");
+                        webSocket = null;
+                        document.getElementsByClassName("msg_board")[0].innerHTML = "";
+                    }; 
+                }
+                else {
+                    // 浏览器不支持 WebSocket
+                    alert("您的浏览器不支持 WebSocket!");
+                }
+            }
+		</script>
+
+	</head>
+
+	<!--背景色-->
+
+	<body class="gray-bg">
+		<header class="clearfix">
+			<!-- 头部 -->
+
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="navbar-header">
+
+						<a class="navbar-brand" href="#">XXX聊天室</a>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<!--整体布局-->
+		    
+		<label>房间名</label>
+		<input id="input_roomName" style="width: 10em" type="text"  placeholder="房间号">
+		<input class="btn btn-default" type="button" value="进入聊天室" onclick="initWebSocket()">
+		<input class="btn btn-default" type="button" value="退出聊天室" onclick="closeWs()">
+		<div>
+		<div id="zhongjian">
+			<div class="wrapper wrapper-content animated fadeInRight">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="ibox chat-view ">
+							<div class="ibox-title">
+								<small class="pull-right text-muted" style="color: #fff;">最新消息：2018-06-21 </small> 聊天窗口
+							</div>
+							<div class="ibox-content col-lg-12">
+								<div class="row">
+									<div class="col-md-12 ">
+										<div id="msg_board" class="chat-discussion msg_board">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="chat-message-form">
+
+											<div class="form-group">
+
+												<textarea id="input_msg" class="form-control message-input" name="message" placeholder="输入消息内容"></textarea>
+
+												<div class="buttongroup" style="float: right;">
+												
+													<input id="quxiaobtn" type="reset" class="btn btn-default" value="取消" />
+												  
+												<input id="btn"  type="button" onclick="send_msg()" class="btn btn-default" value="确定" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</body>
+
+</html>

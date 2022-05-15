@@ -6,8 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+
+import com.groupbuy.model.GroupBuyVO;
+import com.util.jdbcUtil_CompositeQuery;
 
 public class BookingJDBCDAO implements BookingDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -50,6 +53,8 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	private static final String GET_OVERDUE_DATE = "select DATEDIFF(current_timestamp(),end_date) as dateDiff from booking where emp_id =?";
 
 	private static final String GET_BOOKING_ALL_DATE = "select start_date , end_date from booking where equipment_id = ? and end_date >= now()";
+
+	private static final String GET_BOOKING_CQ = "SELECT booking_id,equipment_id,emp_id,start_date,end_date,return_status, overdue_date, overdue_price, timestampdiff(day,end_date , current_timestamp()) as dateDiff from booking ";
 
 	// ========================================================================
 	@Override
@@ -622,6 +627,73 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<BookingVO> getAllByCQ(Map<String, String[]> map) {
+		List<BookingVO> list = new ArrayList<BookingVO>();
+		BookingVO bookingVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			String finalSQL = GET_BOOKING_CQ + jdbcUtil_CompositeQuery.get_WhereCondition(map)
+					+ " order by start_date desc";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				bookingVO = new BookingVO();
+				bookingVO.setBookingId(rs.getInt("booking_id"));
+				bookingVO.setEquipmentId(rs.getInt("equipment_id"));
+				bookingVO.setEmpId(rs.getInt("emp_id"));
+				bookingVO.setStartDate(rs.getTimestamp("start_date"));
+				bookingVO.setEndDate(rs.getTimestamp("end_date"));
+				bookingVO.setReturnStatus(rs.getInt("return_status"));
+				bookingVO.setOverdueDate(rs.getTimestamp("overdue_date"));
+				bookingVO.setOverduePrice(rs.getInt("overdue_price"));
+				bookingVO.setDateDiff(rs.getLong("dateDiff"));// 差異天數
+				list.add(bookingVO);
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
 				try {

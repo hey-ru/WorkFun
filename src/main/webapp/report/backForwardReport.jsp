@@ -5,7 +5,7 @@
 <%@ page import="com.report.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%ReportVO repVO = (ReportVO) request.getAttribute("repVO"); 
-
+	request.setAttribute("repVO", repVO);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,13 +58,13 @@
                     <!-- 內容放這 -->
   <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
   		
-         <main style="height: 120vh; border:3px red solid;">
+         <main style="height: 150vh">
                        
                         <div
-                            style="border:3px blue solid;width:900px;position:absolute; height:630px; top:15%; right:5%;">
-                            <div class="input-group mb-3" style="margin-top: 0px;">
+                            style="width:900px;position:absolute; height:630px; top:15%; right:5%;">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">標題</span>
-                                 <span style="border:3px lightyellow solid;">${repVO.title}</span>
+                                 <span>${repVO.title}</span>
                                     
                             </div>
 	<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/reportCommentServlet" name="formUpdate" enctype="multipart/form-data">

@@ -151,6 +151,14 @@
 													<c:if test="${empVO.empId ==reportVO.reporter}">
 													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forUpdate">
 													<button type="button" value="getOne_forUpdate" class="btn btn-info">更新此回報</button></a></td>
+													<c:if test="${reportVO.status == 2}">
+													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=reject">
+													<button type="button" value="reject" class="btn btn-info">退回</button></a></td>
+													</c:if>
+													<c:if test="${reportVO.status == 2}">
+													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=allCompleted">
+													<button type="button" value="allCompleted" class="btn btn-info">完成</button></a></td>
+													</c:if>
 													</c:if>
 												</tr>
 											</c:forEach>

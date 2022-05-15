@@ -17,6 +17,8 @@ import com.booking.model.BookingVO;
 import com.emp.model.EmpVO;
 import com.equipment.model.EquipmentService;
 import com.equipment.model.EquipmentVO;
+import com.groupbuy.model.GroupBuyService;
+import com.groupbuy.model.GroupBuyVO;
 
 @WebServlet("/booking/booking.do")
 public class BookingServlet extends HttpServlet {
@@ -168,21 +170,14 @@ public class BookingServlet extends HttpServlet {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//		Integer bookingId = Integer.valueOf(req.getParameter("bookingId").trim());
 			Integer equipmentId = Integer.valueOf(req.getParameter("equipmentId").trim());
 			Integer empId = Integer.valueOf(req.getParameter("empId").trim());
 			
-//			Timestamp startDate = null;
-//			String startString = req.getParameter("startDate") + " 00:00:00";
-//			Timestamp startDate = Timestamp.valueOf(startString);
-					
 			String startString = req.getParameter("startDate") + " 00:00:00";
 			Timestamp startDate = Timestamp.valueOf(startString);
 
 			String endString = req.getParameter("endDate") + " 00:00:00";
 			Timestamp endDate = Timestamp.valueOf(endString);
-
-
 
 			Integer returnStatus = 5;
 
@@ -196,6 +191,35 @@ public class BookingServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 		}
+
+		if ("listByCompositeQuery".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+
+			System.out.println("我進來了");
+
+			req.setAttribute("errorMsgs", errorMsgs);
+			/*************************** 1.將輸入資料轉為Map **********************************/
+
+			HttpSession session = req.getSession();
+			Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
+
+			// 以下的 if 區塊只對第一次執行時有效
+			if (req.getParameter("whichPage") == null) {
+				Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+				session.setAttribute("map", map1);
+				map = map1;
+			}
+
+			/*************************** 2.開始複合查詢 ***************************************/
+			BookingService bookingService = new BookingService();
+			List<BookingVO> list = bookingService.getAllByCQ(map);
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
+//			session.setAttribute("listByCompositeQuery", list);
+			RequestDispatcher successView = req.getRequestDispatcher("/booking/backBookingCQ.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+			successView.forward(req, res);
+		}
+
 //
 //		if ("getOverdueDate".equals(action)) {
 //			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -254,5 +278,7 @@ public class BookingServlet extends HttpServlet {
 //		time += day; // 相加得到新的毫秒數
 //		return new Date(time); // 將毫秒數轉換成日期
 //	}
+	
+	
 	}
 }

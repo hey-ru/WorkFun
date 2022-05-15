@@ -41,16 +41,16 @@ th,td{
 		<main id="main" class="main">
 			<div class="card shadow mb-4">
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="card-header py-3" style="background-color: #FFCC99">
 					<div class="row">
-						<div class="col-11" style="height: 20px; display: inline-block;">
+						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h5>
-								<strong>查詢揪團</strong>
+								<strong>詳細揪團資訊</strong>
 							</h5>
 								
 						</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
-							<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>回揪團主頁</strong></a>
+						<div class="col-3" style="height: 20px; display: inline-block;">
+							<a href="<%=request.getContextPath()%>/groupbuy/owner_selectGB.jsp"><strong>回查詢揪團</strong></a>
 						</div>
 					</div>
 				</div>
@@ -62,14 +62,16 @@ th,td{
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
 						<div class="row">
-						<FORM METHOD="post" class="col-7" style="padding:0px 20px;margin-bottom:30px;" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
+						<FORM METHOD="post" class="col-6" style="padding:0px 20px;margin-bottom:30px;" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet" name="form1">
 						<h4> ${groupBuyVO.gb_id} &nbsp;&nbsp;&nbsp; ${groupBuyVO.shop_name}</h4>
 						
 							<div class="row mb-3">
 							<label for="arr_time" class="col-sm-2 col-form-label">到貨時間:</label>
 							<div class="col-sm-9">
 								<input name="arr_time" id="arr_time" type="text" class="form-control-plaintext" style="width:250px; border:1px solid gray; display:inline-block;" autocomplete="off" value="${groupBuyVO.arr_time}"/>
+								<c:if test="${groupBuyVO.gb_status != 3}">
 								<input type="submit" value="送出修改到貨時間" style="display:inline-block;margin-left:30px;">
+								</c:if>
 							</div>
 								</div>
 							
@@ -84,10 +86,21 @@ th,td{
 						<div class="col-2" style="height:40px;">
 						<button type="button" id="showtable" class="btn btn-info">摺疊/展開</button>	
 						</div>
-						
+						<c:if test="${closeGB =='close' && groupBuyVO.gb_status != 3}">
+						<div class="col-1 mr-1" style="height:40px;" id="closeGB">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet">
+							<input type="submit" class="btn btn-secondary" value="關閉揪團" id="closebtn" style="margin-bottom: 0px;">
+							<input type="hidden" name="gb_status" value="3">
+							<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
+							<input type="hidden" name="front" value="front">
+							<input type="hidden" name="action" value="updateGBStatus">					
+						</FORM>							
+						</div>
+						</c:if>
 						</div>
 
 						<c:forEach var="GBbuyer" items="${GBbuyers}">
+						<c:if test="${GBbuyer.total > 0}">
 						<div class="card fw-bolder">							
 							<div class="card-body bg-white text-dark">
 								<div class="row">
@@ -109,7 +122,9 @@ th,td{
 										<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 										<input type="hidden" name="action" value="updatePayPickUp">
 									<div class="col-1 mb-2">
+									<c:if test="${groupBuyVO.gb_status != 3}">
 										<input type="submit" value="送出修改">
+										</c:if>
 									</div>
 									</form>
 								</div>
@@ -157,7 +172,8 @@ th,td{
 										</tbody>
 									</table>
 									</div>
-								</div>									
+								</div>
+								</c:if>								
 							</c:forEach>
 								
 							
@@ -191,6 +207,12 @@ $(function(){
 $("tbody tr").css("background-color", function(index) {
     return index%2==0?"rgba(211,211,211,0.5)":"";
 });
+
+$(function(){
+	$("#showtable").click(function(){
+	$(".table").slideToggle("fast");
+	});
+	});
 
 
         $.datetimepicker.setLocale('zh');

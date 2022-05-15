@@ -28,6 +28,7 @@ pageContext.setAttribute("list", list);
 .section-title h2 {
 	margin-bottom: 0px;
 }
+
 </style>
 
 </head>
@@ -120,7 +121,7 @@ pageContext.setAttribute("list", list);
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 							<div class="portfolio-wrap">
 								<div
-									style="color: white; padding: 5px; z-index: 99; background: rgba(0, 255, 204, 0.4); height: 50px; width: 300px;">
+									style="color: white; padding: 5px; z-index: 99; background: #BFC8D7; height: 100px; width: 300px;">
 									<h5>
 										<strong>${equipmentVO.eqName}</strong>
 									</h5>

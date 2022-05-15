@@ -41,14 +41,14 @@ left:0;
 <main class="main">
 	<div class="row">
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="card-header py-3" style="background-color: #FFCC99">
 					<div class="row">
-						<div class="col-10" style="height: 20px; display: inline-block;">
+						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h5>
 								<strong>建立揪團單</strong>
 							</h5>
 						</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
+						<div class="col-3" style="height: 20px; display: inline-block;">
 							<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp"><strong>回店家列表</strong></a>
 						</div>
 					</div>
@@ -180,30 +180,30 @@ left:0;
 					<label for="start_time" class="col-sm-2 col-form-label">開始時間</label>
 					<div class="col-sm-5">
 						<input name="start_time" id="start_time" type="text" class="form-control-plaintext" 
-						readonly autocomplete="off" value="${param.start_time}"/>
+						readonly autocomplete="off" value="<%=new Timestamp(System.currentTimeMillis()- (System.currentTimeMillis() % 900000)) %>"/>
 					</div>
 					<div class="col-sm-4">${errorMsgs.start_time}</div>
 				</div>
 				<div class="row mb-3">
 					<label for="end_time" class="col-sm-2 col-form-label">結束時間</label>
 					<div class="col-sm-5">
-						<input name="end_time" id="end_time" type="text" class="form-control" autocomplete="off" value="${param.end_time}"/>
+						<input name="end_time" id="end_time" type="text" class="form-control" required autocomplete="off" value="${param.end_time}"/>
 					</div>
-					<div class="col-sm-4">${errorMsgs.end_time}</div>
+					<div class="col-sm-4"><span id="end_timeerror" style="color:red;">${errorMsgs.end_time}</span></div>
 				</div>
 				<div class="row mb-3">
 					<label for="arr_time" class="col-sm-2 col-form-label">到貨時間</label>
 					<div class="col-sm-5">
 						<input name="arr_time" id="arr_time" type="text" class="form-control" autocomplete="off" value="${param.arr_time}"/>
 					</div>
-					<div class="col-sm-4">${errorMsgs.arr_time}</div>
+					<div class="col-sm-4"><span id="arr_timeerror" style="color:red;">${errorMsgs.arr_time}</span></div>
 				</div>
 				<div class="row mb-3">
-				<label for="inputText" class="col-sm-2 col-form-label">低消</label>
+				<label for="min_amt" class="col-sm-2 col-form-label">低消</label>
 				<div class="col-sm-5">
-					<input type="text"  name="min_amt" class="form-control" autocomplete="off" value="${param.min_amt}"/>
+					<input type="number" id="min_amt" name="min_amt" min="0" class="form-control" autocomplete="off" value="${param.min_amt}"/>
 				</div>
-				<div class="col-sm-4">${errorMsgs.min_amt}</div>
+				<div class="col-sm-4"><span id="min_amterror" style="color:red;">${errorMsgs.min_amt}</span></div>
 			</div>
 					
 					<input type="hidden" name="gb_owner" value="${empVO.empId}">
@@ -232,24 +232,18 @@ left:0;
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+	
 
 <script>
-
+		
         $.datetimepicker.setLocale('zh');
-        $('#start_time').datetimepicker({
- 	       theme: '',              //theme: 'dark',
-	       timepicker:true,       //timepicker:true,
-	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
-		   value:   new Date(),
-		   onShow:function(){
-			   this.setOptions({
-				minDate:0,
-				minTime:0,
-				maxDate:$('#end_time').val()?$('#end_time').val():false
-			   })
-		   }
-        });
+//         $('#start_time').datetimepicker({
+//  	       theme: '',              //theme: 'dark',
+// 	       timepicker:true,       //timepicker:true,
+// 	       step: 15,                //step: 60 (這是timepicker的預設間隔60分鐘)
+// 	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+//         });
         $('#end_time').datetimepicker({
   	       theme: '',              //theme: 'dark',
  	       timepicker:true,       //timepicker:true,
@@ -258,7 +252,6 @@ left:0;
  		   //value: '${end_time}', // value:   new Date(),
  		  onShow:function(){
  			   this.setOptions({
- 				
  			    minDate:$('#start_time').val()?$('#start_time').val():false,
  			    maxDate:$('#arr_time').val()?$('#arr_time').val():false,
  			   })
@@ -276,6 +269,16 @@ left:0;
   		   })
   		  }
  	});
+        
+        
+        $("#min_amt").blur(function(){
+      	  
+       	 if($(this).val() >= 0){
+                 $('#min_amterror').text('')
+             }else{
+                 $('#min_amterror').text('請輸入0以上數字')
+             }
+         });
 
         
 </script>

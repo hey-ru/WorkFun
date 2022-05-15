@@ -68,11 +68,11 @@ public class UpdateMenuByShopServlet extends HttpServlet {
 				Integer menu_id = Integer.valueOf(req.getParameter("menu_id").trim());
 				//項目
 				String item = req.getParameter("item");
-				String itemReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
+				String itemReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\s\\(\\-\\)]*$";
 				if (item == null || item.trim().length() == 0) {
 					errorMsgs.put("item", "品項: 請勿空白");
 				} else if (!item.trim().matches(itemReg)) { // 正則(規)表示式(regular-expression)
-					errorMsgs.put("item", "品項名稱: 只能是中、日、英文字母、數字、_、-和()");
+					errorMsgs.put("item", "品項:只能是中、日、英文字母、數字、_、-、+空格和()");
 				}
 				//價格
 				Integer price = null;
@@ -86,7 +86,7 @@ public class UpdateMenuByShopServlet extends HttpServlet {
 				try {
 					 is_item = Integer.valueOf(req.getParameter("is_item").trim());
 				} catch (NumberFormatException e) {
-					errorMsgs.put("is_item", "價格請填數字");
+					errorMsgs.put("is_item", "項目狀態請選擇下架或上架");
 				}
 				// 店家編號FK shop_id
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
@@ -105,7 +105,7 @@ public class UpdateMenuByShopServlet extends HttpServlet {
 				req.setAttribute("menuVO", menuVO); // 資料庫update成功後,正確的的menuVO物件,存入req
 				System.out.println("新值: "+ menuVO.toString());
 				
-				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面(存session不須)
+				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面
 				List<MenuVO> menuList = menuService.getByShopId(shop_id);
 				req.setAttribute("menuList", menuList);
 				

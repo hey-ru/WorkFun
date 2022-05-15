@@ -34,6 +34,8 @@ public class DBGifReader extends HttpServlet {
 			String pic= req.getParameter("pic").trim();
 			ResultSet rs = stmt.executeQuery(
 				"select "+pic+" from "+table+" where "+id_key+" ="+id);
+	
+			
 
 			if (rs.next()) {
 				        //InputStream in = rs.getBinaryStream("pic");

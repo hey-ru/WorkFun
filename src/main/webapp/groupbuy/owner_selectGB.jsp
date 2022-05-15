@@ -12,7 +12,7 @@ GroupBuyService gbSvc = new GroupBuyService();
 List<GroupBuyVO> list = gbSvc.getMyGBAll(empVO.getEmpId());
 pageContext.setAttribute("list", list);
 
-int itemsPerPage = 10;
+// int itemsPerPage = 10;
 %>
 
 <!DOCTYPE html>
@@ -36,14 +36,14 @@ int itemsPerPage = 10;
 		<main id="main" class="main">
 			<div class="card shadow mb-4">
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="card-header py-3" style="background-color: #FFCC99">
 					<div class="row">
-						<div class="col-11" style="height: 20px; display: inline-block;">
+						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h5>
 								<strong>查詢揪團</strong>
 							</h5>
 						</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
+						<div class="col-3" style="height: 20px; display: inline-block;">
 							<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>回揪團主頁</strong></a>
 						</div>
 					</div>
@@ -52,6 +52,27 @@ int itemsPerPage = 10;
 				<!-- ============== Card Body ============== -->
 				<div class="card-body">
 					<div class="table-responsive">
+					
+					<div class="col-11 row" style="height: 60px; display: inline-block;">
+							<div class = col-8>
+							<ul class="nav nav-tabs">
+								  <li class="nav-item">
+								    <a class="nav-link text-info" 
+								    href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_owner=${empVO.empId}">ALL</a>
+								  </li>
+								  <li class="nav-item">
+								    <a class="nav-link text-info"
+								     href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_status=0&gb_owner=${empVO.empId}">揪團中</a>
+								  </li>
+								  <li class="nav-item">
+								    <a class="nav-link text-info" href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_status=2&gb_owner=${empVO.empId}">截止</a>
+								  </li>
+								  <li class="nav-item">
+								    <a class="nav-link text-info" href="<%=request.getContextPath()%>/groupbuy/GroupBuyOwnerServlet?action=listByCompositeQuery&gb_status=3&gb_owner=${empVO.empId}">揪團關閉</a>
+								  </li>								  
+								</ul>
+								</div>
+								</div>
 						<div id="dataTable_wrapper"
 							class="dataTables_wrapper dt-bootstrap4">
 
@@ -66,50 +87,51 @@ int itemsPerPage = 10;
 												<th class="sorting sorting_asc" tabindex="0"
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
-													aria-label="Name: activate to sort column descending"
+													  
 													>揪團編號</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
+													 
 													>店家名稱</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Position: activate to sort column ascending"
+													 
 													>開始時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
+													 
 													>結束時間</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Office: activate to sort column ascending"
+													 
 													>到貨時間</th>
 <!-- 												<th class="sorting" tabindex="0" aria-controls="dataTable" -->
 <!-- 													rowspan="1" colspan="1" -->
-<!-- 													aria-label="Office: activate to sort column ascending" -->
+<!-- 													  -->
 <!-- 													>低消限制</th> -->
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
+													 
 													>狀態</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
-													aria-label="Salary: activate to sort column ascending"
+													 
 													style="width: 50px;"></th>
 <!-- 												<th class="sorting" tabindex="0" aria-controls="dataTable" -->
 <!-- 													rowspan="1" colspan="1" -->
-<!-- 													aria-label="Salary: activate to sort column ascending" -->
+<!-- 													  -->
 <!-- 													style="width: 50px;"></th> -->
 											</tr>
 										</thead>
 
 
-											<%@ include file="/design/page1.file"%>
+<%-- 											<%@ include file="/design/page1.file"%> --%>
 
 										<!-- ========================= 表格內容 ========================= -->
 										<tbody>
-											<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>"
-										end="<%=pageIndex+rowsPerPage-1%>">
+										<c:forEach var="groupBuyVO" items="${list}">
+<%-- 											<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>" --%>
+<%-- 										end="<%=pageIndex+rowsPerPage-1%>"> --%>
 										<c:if test="${groupBuyVO.gb_status != 1}">
 													<tr>
 														<td>${groupBuyVO.gb_id}</td>
@@ -139,7 +161,7 @@ int itemsPerPage = 10;
 														<td>
 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet"
 																style="margin-bottom: 0px;">
-														<input type="submit" class="btn-info" value="詳細" style="margin-bottom: 0px;"> 
+														<input type="submit" class="btn btn-info" value="詳細" style="margin-bottom: 0px;"> 
 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 														<input type="hidden" name="action" value="getOne_For_Display">										
 														</FORM>															
@@ -154,7 +176,7 @@ int itemsPerPage = 10;
 								</div>
 							</div>
 
-							<%@ include file="/design/page2.file"%>
+<%-- 							<%@ include file="/design/page2.file"%> --%>
 
 
 

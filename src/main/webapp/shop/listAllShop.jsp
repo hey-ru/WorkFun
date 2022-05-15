@@ -182,7 +182,7 @@ body {
 										<td>${shopVO.address}</td>
 										<td>${shopVO.tel}</td>
 										<td><a href="${shopVO.website}"
-											class="nav-link ${(shopVO.website==''||shopVO.website==null)? 'disabled':''}">link</a></td>
+											class="nav-link ${(shopVO.website==''||shopVO.website==null)? 'disabled':''}" target="_blank">link</a></td>
 										<td>${shopVO.min_amt}</td>
 										<td><img
 											src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1"
@@ -219,7 +219,7 @@ body {
 										</td>
 										<td>
 											<FORM METHOD="post"
-												ACTION="<%=request.getContextPath()%>/groupbuy/owner_addGB.jsp"
+												ACTION="<%=request.getContextPath()%>/groupbuy/AddGBServlet"
 												style="margin-bottom: 0px;">
 												<input type="submit" class="btn-info btn-lg" value="揪這家">
 												<input type="hidden" name="shop_id"

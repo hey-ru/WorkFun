@@ -1,6 +1,9 @@
 package com.announcement.model;
 
 import java.sql.Timestamp;
+import java.util.List;
+
+import com.announcement_mapping.model.Announcement_mappingVO;
 
 public class AnnouncementVO {
 	private Integer announcement_id;
@@ -9,8 +12,17 @@ public class AnnouncementVO {
 	private String announcement_content ;
 	private Timestamp announcement_time;
 	private Byte announcement_status ;
+	private Announcement_mappingVO announcement_mappingVO;
+	private List<Announcement_mappingVO> list;
+	
 	public Integer getAnnouncement_id() {
 		return announcement_id;
+	}
+	public List<Announcement_mappingVO> getList() {
+		return list;
+	}
+	public void setList(List<Announcement_mappingVO> list) {
+		this.list = list;
 	}
 	public void setAnnouncement_id(Integer announcement_id) {
 		this.announcement_id = announcement_id;
@@ -46,6 +58,18 @@ public class AnnouncementVO {
 	public void setAnnouncement_status(Byte announcement_status) {
 		this.announcement_status = announcement_status;
 	}
+	 public com.emp.model.EmpVO getEmpVO() {
+		    com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+		    com.emp.model.EmpVO empVO = empSvc.getOneEmp(announcer);
+		    return empVO;
+	    }
 	
+	public Announcement_mappingVO getAnnouncement_mappingVO() {
+		return announcement_mappingVO;
+	}
+	public void setAnnouncement_mappingVO(Announcement_mappingVO announcement_mappingVO) {
+		this.announcement_mappingVO = announcement_mappingVO;
+	}
+
 	
 }

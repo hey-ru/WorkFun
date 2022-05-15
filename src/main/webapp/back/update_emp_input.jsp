@@ -54,11 +54,7 @@
                 <div class="container-fluid">
                     <!-- 內容放這 -->
 <main style="height: 120vh; margin-top: 40px;">
-						<div>
-							<input type="search" class="light-table-filter"
-								data-table="order-table" placeholder="請輸入關鍵字"
-								style="margin-left: 78%; border: 3px yellow solid;">
-						</div>
+						
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
 							<div
@@ -79,7 +75,8 @@
 											>
 									<input type="file" name="empProfile" size="45"
 										value="${param.empProfile}" class="form-control"
-										id="inputGroupFile01" required="required">
+										id="profile" >
+										<img id="profileimg">
 								</div>
 								<jsp:useBean id="depSvc" scope="page"
 									class="com.dep.model.DepService" />
@@ -92,9 +89,12 @@
 												${(param.depId==depVO.depId)? 'selected':'' }>${depVO.depName}
 										</c:forEach>
 
-									</select> <span class="input-group-text" id="basic-addon2">雇用日期</span> <input
-										name="hiredate" id="f_date1" type="text" class="form-control"
-										value="${param.hiredate}">
+									</select>	<span class="input-group-text" id="basic-addon2">生日</span> <input
+										type="TEXT" name="birthday" size="45"  required="required"
+										value="${param.birthday}" class="form-control"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2" id="f_date2"> 
+									
 
 
 								</div>
@@ -128,11 +128,12 @@
 										aria-describedby="basic-addon2">
 								</div>
 								<div class="input-group mb-3">
-									<span class="input-group-text" id="basic-addon2">生日</span> <input
-										type="TEXT" name="birthday" size="45"  required="required"
-										value="${param.birthday}" class="form-control"
-										aria-label="Recipient's username"
-										aria-describedby="basic-addon2" id="f_date2">
+								<span class="input-group-text" id="basic-addon2">雇用日期</span> <input
+										name="hiredate" id="f_date1" type="text" class="form-control"
+										value="${param.hiredate}">
+											<span class="input-group-text" id="basic-addon2">離職日期</span> <input
+										name="resigndate" id="f_date3" type="text" class="form-control"
+										value="${param.resigndate}">
 
 								</div>
 
@@ -147,22 +148,29 @@
 										id="basic-addon2">
 								</div>
 						</FORM>
+						</main>
+						
+						</div>
+						
+						
+						
+						
 </body>
-</div>
-</main>
 
 
 
-</div>
+
+
+
 
                     <!-- /.container-fluid -->
-                </div>
+                
                 <!-- End of Main Content -->
-            </div>
+            
             <!-- End of Content Wrapper -->
-        </div>
+        
         <!-- End of Page Wrapper -->
-	</div>
+	
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
@@ -231,6 +239,17 @@
             //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
          });
         
+        $('#f_date3').datetimepicker({
+   	       theme: '',              //theme: 'dark',
+  	       timepicker:false,       //timepicker:true,
+  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+  	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+  		   value: 0, // value:   new Date(),
+             //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+             //startDate:	            '2017/07/10',  // 起始日
+             //minDate:               '-1970-01-01', // 去除今日(不含)之前
+             //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+          });
         
    
         // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------

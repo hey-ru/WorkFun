@@ -23,7 +23,7 @@ public class SecondHandStatusController extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		TIMERSERVICE.scheduleAtFixedRate(new SecondHandRun(),30,300,TimeUnit.SECONDS);
-
+		
 	}
 	/**
 	 * @see Servlet#destroy()

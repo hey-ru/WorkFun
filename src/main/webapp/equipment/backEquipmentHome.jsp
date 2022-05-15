@@ -75,7 +75,6 @@ td {
 	left: 30px;
 	top: 15px;
 }
-
 </style>
 </head>
 
@@ -115,194 +114,212 @@ td {
 				</nav>
 				<!-- End of Topbar -->
 
+<!-- 				<div class="container-fluid pl-0"> -->
+
+					<!-- ======= 內容開始 ======= -->
+					<!-- 					<main id="main" class="main"> -->
+					<!-- 						<div class="card shadow"> -->
+
+					<!-- ============== Card Header ============== -->
+					<!-- 							<div class="card-header py-3" style="background-color: #87cefa"> -->
+					<!-- 								<div class="row"> -->
+					<!-- 									<div class="col-11" -->
+					<!-- 										style="height: 20px; display: inline-block;"> -->
+					<!-- 										<h5> -->
+					<!-- 											<strong>[後台] 器材管理</strong> -->
+					<!-- 										</h5> -->
+					<!-- 									</div> -->
+					<!-- 								</div> -->
+					<!-- 							</div> -->
 
 
-				<!-- ======= 內容開始 ======= -->
 
+					<div class="row">
+						<div class="col-10" style="height: 60px; display: inline-block;">
+							<form class="my-1" METHOD="post"
+								ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
+								name="form1">
+
+								<jsp:useBean id="equipmentSvc1" scope="page"
+									class="com.equipment.model.EquipmentService" />
+								<div class="form-group col-2" style="display: inline-block;">
+
+									<select class="form-control" id="exampleFormControlSelect1"
+										style="border: gray solid 2px;" name="eq_status">
+										<option value="">選擇器材狀態</option>
+										<option value="0">上架</option>
+										<option value="1">未歸還的器材</option>
+										<option value="2">送修中</option>
+										<option value="3">下架</option>
+									</select>
+								</div>
+
+								<div class="form-group col-3" style="display: inline-block">
+									<input type="text" class="form-control"
+										id="exampleformControlInput1" placeholder="搜尋器材名稱"
+										style="border: gray solid 2px;" name="eq_name"
+										value="${param.eqName}">
+								</div>
+								<input type="hidden" name="action" value="listByCompositeQuery">
+								<!-- 							<input type="hidden" name="is_disable" value="0"> -->
+								<button type="submit" class="btn btn-dark mb-2 mt-1 col"
+									style="display: inline-block; width: 100px;">搜尋</button>
+							</form>
+						</div>
+					</div>
+
+					<div class="col-2 mt-2" style="left: 0;">
+
+						<a
+							href='${pageContext.request.contextPath}/equipment/backAddEqpt.jsp'><button
+								type="button" class="btn btn-warning btn-lg"
+								style="background-color: #36BF36; color: #FFFFFF; font-weight: bold; width: 200px;">新增器材</button></a>
+					</div>
+
+				</div>
+
+				<div class="page1">
+					<%@ include file="/design/page1.file"%>
+				</div>
 
 
 				<div class="row">
-					<div class="col-10" style="height: 60px; display: inline-block;">
-						<form class="my-1" METHOD="post"
-							ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
-							name="form1">
 
-							<jsp:useBean id="equipmentSvc1" scope="page"
-								class="com.equipment.model.EquipmentService" />
-							<div class="form-group col-2" style="display: inline-block;">
+					<div class="col-sm-12">
+						<table class="table table-bordered dataTable" id="dataTable"
+							role="grid" aria-describedby="dataTable_info"
+							style="width: 100%; cellspacing: 0;">
+							<thead>
+								<tr role=" row">
+									<th class="sorting sorting_asc" tabindex="0"
+										aria-controls="dataTable" rowspan="1" colspan="1"
+										aria-sort="ascending"
+										aria-label="Name: activate to sort column descending"
+										style="width: 50px;">器材編號</th>
 
-								<select class="form-control" id="exampleFormControlSelect1"
-									style="border: gray solid 2px;" name="eq_status">
-									<option value="">選擇器材狀態</option>
-									<option value="0">上架</option>
-									<option value="1">未歸還的器材</option>
-									<option value="2">送修中</option>
-									<option value="3">下架</option>
-								</select>
-							</div>
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Position: activate to sort column ascending"
+										style="width: 100px;">器材名稱</th>
 
-							<div class="form-group col-3" style="display: inline-block">
-								<input type="text" class="form-control"
-									id="exampleformControlInput1" placeholder="搜尋器材名稱"
-									style="border: gray solid 2px;" name="eq_name"
-									value="${param.eqName}">
-							</div>
-							<input type="hidden" name="action" value="listByCompositeQuery">
-<!-- 							<input type="hidden" name="is_disable" value="0"> -->
-							<button type="submit" class="btn btn-dark mb-2 mt-1 col"
-								style="display: inline-block; width: 100px;">搜尋</button>
-						</form>
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Position: activate to sort column ascending"
+										style="width: 30px;">金額</th>
+
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Office: activate to sort column ascending"
+										style="width: 100px;">狀態</th>
+
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Age: activate to sort column ascending"
+										style="width: 200px;">器材介紹</th>
+
+									<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+									<!-- 										rowspan="1" colspan="1" -->
+									<!-- 										aria-label="Office: activate to sort column ascending" -->
+									<!-- 										style="width: 200px;">器材規格</th> -->
+
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Salary: activate to sort column ascending"
+										style="width: 100px;">圖片</th>
+
+									<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+									<!-- 										rowspan="1" colspan="1" -->
+									<!-- 										aria-label="Salary: activate to sort column ascending" -->
+									<!-- 										style="width: 50px;">圖片2</th> -->
+
+									<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+									<!-- 										rowspan="1" colspan="1" -->
+									<!-- 										aria-label="Salary: activate to sort column ascending" -->
+									<!-- 										style="width: 50px;">圖片3</th> -->
+
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Salary: activate to sort column ascending"
+										style="width: 50px;"></th>
+
+								</tr>
+
+							</thead>
+
+
+							<%-- 							<%@ include file="/design/page1.file"%> --%>
+							<tbody>
+
+								<c:forEach var="equipmentVO" items="${list}"
+									begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+
+									<tr>
+										<td>${equipmentVO.equipmentId}</td>
+
+										<td>${equipmentVO.eqName}</td>
+
+										<td>${equipmentVO.price}</td>
+
+										<td><c:choose>
+												<c:when test="${equipmentVO.eqStatus == 0}">
+											       	上架
+											    </c:when>
+												<c:when test="${equipmentVO.eqStatus == 1}">
+											        未歸還器材
+											    </c:when>
+												<c:when test="${equipmentVO.eqStatus == 2}">
+											        送修中
+											    </c:when>
+												<c:when test="${equipmentVO.eqStatus == 3}">
+											        下架
+											    </c:when>
+											</c:choose></td>
+
+										<%-- 										<td>${equipmentVO.introduction}</td> --%>
+
+										<td>${equipmentVO.spec}</td>
+
+										<td><img
+											src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img1"
+											style="max-height: 100%;"></td>
+
+										<!-- 										<td><img -->
+										<%-- 											src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img2" --%>
+										<!-- 											style="max-height: 100%;"></td> -->
+
+										<!-- 										<td><img -->
+										<%-- 											src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img3" --%>
+										<!-- 											style="max-height: 100%;"></td> -->
+
+										<td>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
+												style="margin-bottom: 0px;">
+												<input type="submit" value="修改"
+													class="btn btn-dark mb-2 mt-1 col"
+													style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
+												<input type="hidden" name="equipmentId"
+													value="${equipmentVO.equipmentId}"> <input
+													type="hidden" name="action" value="getOne_For_Update">
+											</FORM>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+
+						<%@ include file="/design/page2.file"%>
 					</div>
 				</div>
 
-				<div class="col-2 mt-2" style="left: 0;">
-
-					<a
-						href='${pageContext.request.contextPath}/equipment/backAddEqpt.jsp'><button
-							type="button" class="btn btn-warning btn-lg"
-							style="background-color: #36BF36; color: #FFFFFF; font-weight: bold; width: 200px;">新增器材</button></a>
-				</div>
-
+				<!-- /.container-fluid -->
+				</main>
 			</div>
-
-			<div class="page1">
-				<%@ include file="/design/page1.file"%>
-			</div>
-
-
-			<div class="row">
-
-				<div class="col-sm-12">
-					<table class="table table-bordered dataTable" id="dataTable"
-						role="grid" aria-describedby="dataTable_info"
-						style="width: 100%; cellspacing: 0;">
-						<thead>
-							<tr role=" row">
-								<th class="sorting sorting_asc" tabindex="0"
-									aria-controls="dataTable" rowspan="1" colspan="1"
-									aria-sort="ascending"
-									aria-label="Name: activate to sort column descending"
-									style="width: 50px;">器材編號</th>
-
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Position: activate to sort column ascending"
-									style="width: 100px;">器材名稱</th>
-
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Position: activate to sort column ascending"
-									style="width: 30px;">金額</th>
-
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Office: activate to sort column ascending"
-									style="width: 100px;">狀態</th>
-
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Age: activate to sort column ascending"
-									style="width: 200px;">器材介紹</th>
-
-								<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
-								<!-- 										rowspan="1" colspan="1" -->
-								<!-- 										aria-label="Office: activate to sort column ascending" -->
-								<!-- 										style="width: 200px;">器材規格</th> -->
-
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Salary: activate to sort column ascending"
-									style="width: 100px;">圖片</th>
-
-								<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
-								<!-- 										rowspan="1" colspan="1" -->
-								<!-- 										aria-label="Salary: activate to sort column ascending" -->
-								<!-- 										style="width: 50px;">圖片2</th> -->
-
-								<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
-								<!-- 										rowspan="1" colspan="1" -->
-								<!-- 										aria-label="Salary: activate to sort column ascending" -->
-								<!-- 										style="width: 50px;">圖片3</th> -->
-
-								<th class="sorting" tabindex="0" aria-controls="dataTable"
-									rowspan="1" colspan="1"
-									aria-label="Salary: activate to sort column ascending"
-									style="width: 50px;"></th>
-
-							</tr>
-
-						</thead>
-
-
-						<%-- 							<%@ include file="/design/page1.file"%> --%>
-						<tbody>
-
-							<c:forEach var="equipmentVO" items="${list}"
-								begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-
-								<tr>
-									<td>${equipmentVO.equipmentId}</td>
-
-									<td>${equipmentVO.eqName}</td>
-
-									<td>${equipmentVO.price}</td>
-
-									<td><c:choose>
-											<c:when test="${equipmentVO.eqStatus == 0}">
-											       	上架
-											    </c:when>
-											<c:when test="${equipmentVO.eqStatus == 1}">
-											        未歸還器材
-											    </c:when>
-											<c:when test="${equipmentVO.eqStatus == 2}">
-											        送修中
-											    </c:when>
-											<c:when test="${equipmentVO.eqStatus == 3}">
-											        下架
-											    </c:when>
-										</c:choose></td>
-
-									<%-- 										<td>${equipmentVO.introduction}</td> --%>
-
-									<td>${equipmentVO.spec}</td>
-
-									<td><img
-										src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img1"
-										style="max-height: 100%;"></td>
-
-									<!-- 										<td><img -->
-									<%-- 											src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img2" --%>
-									<!-- 											style="max-height: 100%;"></td> -->
-
-									<!-- 										<td><img -->
-									<%-- 											src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${equipmentVO.equipmentId}&table=equipment&pic=img3" --%>
-									<!-- 											style="max-height: 100%;"></td> -->
-
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="修改"
-												class="btn btn-dark mb-2 mt-1 col"
-												style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
-											<input type="hidden" name="equipmentId"
-												value="${equipmentVO.equipmentId}"> <input
-												type="hidden" name="action" value="getOne_For_Update">
-										</FORM>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-
-					<%@ include file="/design/page2.file"%>
-				</div>
-			</div>
-
-			<!-- /.container-fluid -->
+			<!-- End of Main Content -->
 		</div>
-		<!-- End of Main Content -->
 	</div>
+	</div>
+
 
 
 
@@ -317,6 +334,14 @@ td {
 	</a>
 
 	<%@ include file="/design/backjs.jsp"%>
+
+	
+	
+	<script type="text/javascript">
+		$("tbody tr").css("background-color", function(index) {
+			return index % 2 == 0 ? "#dcdcdc" : "";
+		});
+	</script>
 
 </body>
 

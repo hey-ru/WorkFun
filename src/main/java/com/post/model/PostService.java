@@ -7,7 +7,7 @@ public class PostService {
 	private PostDAO_interface dao;
 	
 	public PostService() {
-		dao = new PostDAO();
+		dao = new PostJDBCDAO();
 	}
 	
 	public PostVO addPost(Integer emp_id,String post_title,String post_content,

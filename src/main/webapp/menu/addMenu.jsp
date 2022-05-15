@@ -33,7 +33,7 @@ pageContext.getAttribute("shop_id");
 	<%@ include file="/design/frontheader.jsp"%>
 
 	<!-- ====================== 內容開始 ====================== -->
-	<main id="main" class="main" style="height: 50vh;">
+	<main id="main" class="main" style="height: 300vh">
 		<div class="card shadow mb-4">
 			<!-- ============== Card Header ============== -->
 			<div class="card-header py-3" style="background-color: #b0c4de">
@@ -50,10 +50,7 @@ pageContext.getAttribute("shop_id");
 			</div>
 			<!-- ============== Card Body ============== -->
 			<div class="col-lg-6">
-				<div class="card" style="background-color: #EBD6D6">
-
-
-
+				<div class="card" style="background-color: #EBD6D6;">
 
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/menu/addmenubyshop">
@@ -65,16 +62,24 @@ pageContext.getAttribute("shop_id");
 										style="font-size: 40px;" title="新增一項"><i
 										class="bi bi-plus-square-fill bi--4xl"></i></a>
 								</div>
-								<div class="field_wrapper">
+								<div class="field_wrapper ">
 									<div style="DISPLAY: INLINE-FLEX;">
-										<div class="form-group">
-											<label for="item">品項 : </label> <input type="text"
+										<div class="form-group"
+											style="text-align: center;>
+										<!-- "品項:只能是中、日、英文字母、數字、_、-、+空格和()" -->
+											<label for="item"><strong>品 項 <strong></label>
+											<input type="text" required size=30px
+												pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
 												class="form-control" placeholder="輸入名稱" name="item"
 												value="${param.item}">
+
+
 										</div>
-										<div class="form-group">
-											<label for="price">金額:</label> <input type="number"
-												class="form-control" placeholder="輸入金額" name="price"
+										<div class="form-group"
+											style="text-align: center;>
+											<label for="price">金 額 </label> 
+											<input type="number" required
+												class="form-control" placeholder="輸入金額" name="price" min="1"
 												value="${param.price}">
 										</div>
 										<div class="form-group">
@@ -92,13 +97,15 @@ pageContext.getAttribute("shop_id");
 								class="btn btn-dark" value="送出新增">
 						</div>
 					</form>
-
-
-
 				</div>
+			</div>
+			
+			
+			
 			</div>
 		</div>
 	</main>
+	
 
 
 	<!-- 新增一筆寫法 -->
@@ -114,34 +121,36 @@ pageContext.getAttribute("shop_id");
 	<!-- 								<tbody> -->
 	<!-- 								<tr> -->
 	<!-- 									<td><input type="text" name="shop" -->
-	<%-- 										value="${param.shop_id}"></td> --%>
-	<%-- 									<td><input type="text" name="item" value="${param.item}" /></td> --%>
-	<%-- 									<td><input type="number" name="price" value="${param.price}" /></td> --%>
-	<!-- 								</tr> -->
-	<!-- 								<tr> -->
-	<!-- 									<td><input type="text" name="shop_id" -->
-	<%-- 										value="${param.shop_id}"></td> --%>
-	<%-- 									<td><input type="text" name="item" value="${param.item}" /></td> --%>
-	<%-- 									<td><input type="number" name="price" value="${param.price}" /></td> --%>
-	<!-- 								</tr> -->
-	<!-- 								</tbody> -->
-	<!-- 							</table> -->
+											<%-- 										value="${param.shop_id}"></td> --%>
+											<%-- 									<td><input type="text" name="item" value="${param.item}" /></td> --%>
+											<%-- 									<td><input type="number" name="price" value="${param.price}" /></td> --%>
+											<!-- 								</tr> -->
+											<!-- 								<tr> -->
+											<!-- 									<td><input type="text" name="shop_id" -->
+											<%-- 										value="${param.shop_id}"></td> --%>
+											<%-- 									<td><input type="text" name="item" value="${param.item}" /></td> --%>
+											<%-- 									<td><input type="number" name="price" value="${param.price}" /></td> --%>
+											<!-- 								</tr> -->
+											<!-- 								</tbody> -->
+											<!-- 							</table> -->
 
-	<!-- 							<input type="hidden" name="action" value="insert">  -->
-	<!-- 							<input type="submit" value="新增"> -->
-	<!-- 						</form> -->
-	<!-- 						================================================================================ -->
+											<!-- 							<input type="hidden" name="action" value="insert">  -->
+											<!-- 							<input type="submit" value="新增"> -->
+											<!-- 						</form> -->
+											<!-- 						================================================================================ -->
 
 
 
-	<!-- ======= 內容結束 ======= -->
-	<!-- ======= Footer ======= -->
-	<%-- 	<%@ include file="/design/frontfooter.jsp"%> --%>
-	<!-- ======= js ======= -->
-	<%@ include file="/design/frontjs.jsp"%>
+											<!-- ======= 內容結束 ======= -->
+											<!-- ======= Footer ======= -->
+											<%-- 	<%@ include file="/design/frontfooter.jsp"%> --%>
+											<!-- ======= js ======= -->
+											<%@ include file="/design/frontjs.jsp"%>
+											<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-	<script type="text/javascript">
 
+											<script type="text/javascript">
+	
 		$(document).ready(function () {
 
 			var maxField = 100; // Total 100 product fields we add
@@ -153,12 +162,15 @@ pageContext.getAttribute("shop_id");
 			var fieldHTML = `<div class="form-elements">
 				<div style="DISPLAY: INLINE-FLEX;">
 					<div class="form-group">
-							<label for="item">品項:</label>
-					<input type="text" class="form-control" placeholder="輸入名稱" name="item" value="${param.item}">
+							<label for="item"></label>
+					<input type="text" required size=30px
+					pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
+					class="form-control" placeholder="輸入名稱" name="item" value="${param.item}">
 					</div>
 					<div class="form-group">
-					<label for="price">金額:</label>
-					<input type="number" class="form-control" placeholder="輸入金額" name="price" value="${param.price}">
+					<label for="price"></label>
+					<input type="number" required
+					class="form-control" placeholder="輸入金額" name="price"  min="1" value="${param.price}">
 					</div>
 					<div class="form-group">
 					<a href="javascript:void(0);" class="remove_button" style="font-size:30px;" title="移除此項"><i class="bi bi-trash"></i></a>
@@ -183,6 +195,14 @@ pageContext.getAttribute("shop_id");
 				x--; //Decrement field counter
 			});
 		});
+		
+		$(document).ready(function () {
+		Swal.fire({
+			  icon: 'info',
+			  title: '   幫 這 間 店 家 新 增 菜 單  \n 🥗🍿🍜🍕🍣🍩🍦🥤☕',
+			});
+		});
+		
 	</script>
 </body>
 

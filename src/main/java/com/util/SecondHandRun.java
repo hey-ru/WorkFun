@@ -1,13 +1,17 @@
 package com.util;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
-
+import com.groupbuy.model.GroupBuyService;
+import com.groupbuy.model.GroupBuyVO;
+import com.groupbuylist.model.GroupBuyListService;
 import com.secondHand.model.SecondHandService;
 import com.secondHand.model.SecondHandVO;
 
@@ -131,7 +135,25 @@ public class SecondHandRun implements Runnable {
 //		
 //	}
 	
+	public static void main(String[] args) {
+		GroupBuyService gbSvc = new GroupBuyService();
+	    GroupBuyVO groupBuyVO = gbSvc.getOneGB(1002);
+	Timestamp aTimestamp= groupBuyVO.getEnd_time();
+	System.out.println(aTimestamp);
+	Long aLong=aTimestamp.getTime();
+	Long b=new GregorianCalendar().getTime().getTime();
+	Long cLong=System.currentTimeMillis();
 	
+   Timestamp bTimestamp=new Timestamp((aLong-b));
+   System.out.println(aLong);
+   System.out.println(b);
+   
+   
+  
+	
+	
+	
+	}
 	
 	
 }

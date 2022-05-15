@@ -11,6 +11,7 @@ EmpVO empVO = (EmpVO) (request.getSession().getAttribute("empVO"));
 BookingService bookingSvc = new BookingService();
 List<BookingVO> list = bookingSvc.getByEmpId(empVO.getEmpId());
 pageContext.setAttribute("list", list);
+int itemsPerPage = 10;
 %>
 
 
@@ -119,12 +120,13 @@ pageContext.setAttribute("list", list);
 
 
 										<!-- ============== 表格內容(自行增減修改) ============== -->
-
-										<c:forEach var="bookingVO" items="${list}">
+										<%@ include file="/design/page1.file"%>
+										<c:forEach var="bookingVO" items="${list}"
+											begin="<%=pageIndex%>" end="<%=pageIndex + rowsPerPage - 1%>">
 
 											<tr>
 												<td>${bookingVO.bookingId}</td>
-												<td>${empVO.empId} (${empVO.empName})</td>
+												<td>${empVO.empId}(${empVO.empName})</td>
 												<td>${bookingVO.equipmentVO.eqName}</td>
 												<td><fmt:formatDate value="${bookingVO.startDate}"
 														pattern="yyyy-MM-dd" /></td>
@@ -156,12 +158,12 @@ pageContext.setAttribute("list", list);
 														</c:choose>
 													</c:if></td>
 
-												
-<%-- 												<c:if test="${bookingVO.returnStatus == 1}"> --%>
-<%-- 													<td>罰金$ ${bookingVO.dateDiff * bookingVO.equipmentVO.price * 0.2}</td> --%>
-<%-- 												</c:if> --%>
-												
-														<td><c:if test="${bookingVO.returnStatus == 1}">
+
+												<%-- 												<c:if test="${bookingVO.returnStatus == 1}"> --%>
+												<%-- 													<td>罰金$ ${bookingVO.dateDiff * bookingVO.equipmentVO.price * 0.2}</td> --%>
+												<%-- 												</c:if> --%>
+
+												<td><c:if test="${bookingVO.returnStatus == 1}">
 														<c:choose>
 															<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
 															<c:when test="${bookingVO.dateDiff == 1}">罰金$ ${1 * bookingVO.equipmentVO.price * 0.3}</c:when>
@@ -170,33 +172,44 @@ pageContext.setAttribute("list", list);
 															<c:when test="${bookingVO.dateDiff > 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.3}</c:when>
 														</c:choose>
 													</c:if></td>
-												
-												
-												
-												
-												
-											
+
+
+
+
+
+
 											</tr>
 
 
 										</c:forEach>
 
 									</table>
-
+									<div style="display: inline-block; width: 50px;"></div>
+									<div style="display: inline-block; margin-bottom: 10px;">
+										<%@ include file="/design/page2.file"%>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 		</main>
 		<!-- ======= 內容結束 ======= -->
 
 	</div>
 	<!-- ======= Footer ======= -->
 	<%@ include file="/design/frontfooter.jsp"%>
+
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
+
+	<script type="text/javascript">
+		$("tbody tr").css("background-color", function(index) {
+			return index % 2 == 0 ? "#FFEFD5" : "";
+		});
+	</script>
+
+
 </body>
 
 </html>

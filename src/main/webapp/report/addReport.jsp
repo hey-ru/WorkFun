@@ -44,9 +44,9 @@
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">處理人</span>
                <input readonly type="hidden" class="form-control" aria-label="Username" id="inputhandler" name="handler"
-                    aria-describedby="basic-addon1" value="${param.handler}">
+                    aria-describedby="basic-addon1" value= "1019">
                      <span  class="form-control" aria-label="Username" id="inputfake" 
-                    aria-describedby="basic-addon1" ></span>
+                    aria-describedby="basic-addon1" >Rora</span>
             </div>
             
             <div class="input-group mb-3">

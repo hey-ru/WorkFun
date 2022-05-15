@@ -97,21 +97,21 @@ int itemsPerPage = 10;
 							<div class = col-8>
 							<ul class="nav nav-tabs">
 								  <li class="nav-item">
-								    <a class="nav-link" 
+								    <a class="nav-link  text-info" 
 								    href="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet?action=listByCompositeQueryBack">ALL</a>
 								  </li>
 								  <li class="nav-item">
-								    <a class="nav-link"
+								    <a class="nav-link  text-info"
 								     href="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet?action=listByCompositeQueryBack&gb_status=0">揪團中</a>
 								  </li>
 								  <li class="nav-item">
-								    <a class="nav-link" href="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet?action=listByCompositeQueryBack&gb_status=2">截止</a>
+								    <a class="nav-link  text-info" href="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet?action=listByCompositeQueryBack&gb_status=2">截止</a>
 								  </li>
 								  <li class="nav-item">
-								    <a class="nav-link" href="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet?action=listByCompositeQueryBack&gb_status=3">關閉</a>
+								    <a class="nav-link  text-info" href="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet?action=listByCompositeQueryBack&gb_status=3">關閉</a>
 								  </li>
 								  <li class="nav-item">
-								    <a class="nav-link" href="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet?action=listByCompositeQueryBack&gb_status=1">取消</a>
+								    <a class="nav-link  text-info" href="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet?action=listByCompositeQueryBack&gb_status=1">取消</a>
 								  </li>								  
 								</ul>
 								</div>
@@ -200,7 +200,7 @@ int itemsPerPage = 10;
 															</select>
 															
 																												
-														<input type="submit" class="btn-info" value="確認修改" style="margin-bottom: 0px;"> 
+														<input type="submit" class="btn btn-info" value="確認修改" style="margin-bottom: 0px;"> 
 														<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 														<input type="hidden" name="action" value="updateGBStatus">										
 														</FORM>															

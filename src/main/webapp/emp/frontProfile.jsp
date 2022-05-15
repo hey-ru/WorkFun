@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
         <!DOCTYPE html>
@@ -29,23 +29,19 @@
 
 								<li class="nav-item">
 									<button class="nav-link active" data-bs-toggle="tab"
-										data-bs-target="#profile-overview">Overview</button>
+										data-bs-target="#profile-overview">個人資料</button>
 								</li>
 
 								<li class="nav-item">
 									<button class="nav-link" data-bs-toggle="tab"
-										data-bs-target="#profile-edit">Edit Profile</button>
+										data-bs-target="#profile-edit">修改個人資料</button>
 								</li>
+
+							
 
 								<li class="nav-item">
 									<button class="nav-link" data-bs-toggle="tab"
-										data-bs-target="#profile-settings">Settings</button>
-								</li>
-
-								<li class="nav-item">
-									<button class="nav-link" data-bs-toggle="tab"
-										data-bs-target="#profile-change-password">Change
-										Password</button>
+										data-bs-target="#profile-change-password">修改密碼</button>
 								</li>
 
 							</ul>
@@ -53,51 +49,62 @@
 
 								<div class="tab-pane fade show active profile-overview"
 									id="profile-overview">
-									<h5 class="card-title">About</h5>
-									<p class="small fst-italic">${empVO.empId}</p>
-
-									<h5 class="card-title"><img style="width:200px;length:200px"
+									<h5 class="card-title">關於我</h5>
+									<p >員工編號:${empVO.empId}</p>
+<p >大頭照 <img style="width:200px;length:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
 									"
 												class="img-fluid"
-											></h5>
+											></p>
+									
 
+						
+										<div class="row">
+									<div class="col-lg-9 col-md-8">姓名：${empVO.empName}</div>
+									
+										
+									</div>
 									<div class="row">
-										<div class="col-lg-3 col-md-4 label ">${empVO.empName}</div>
-										<div class="col-lg-9 col-md-8">${empVO.phone}</div>
+									<div class="col-lg-9 col-md-8">手機：${empVO.phone}</div>
+									
+										
+									</div>
+
+									
+									<div class="row">
+									<div class="col-lg-9 col-md-8">分機：${empVO.extension}</div>
+									
+										
 									</div>
 
 									<div class="row">
-										<div class="col-lg-3 col-md-4 label">${empVO.extension}</div>
-										<div class="col-lg-9 col-md-8">${empVO.hobby}</div>
+									<div class="col-lg-9 col-md-8">興趣：${empVO.hobby}</div>
+										
+										
+									</div>
+									
+									<div class="row">
+									<div class="col-lg-9 col-md-8">專長：${empVO.skill}</div>
+										
+										
+									</div>
+									<div class="row">
+									<div class="col-lg-9 col-md-8">生日：${empVO.birthday}</div>
+								
+										
 									</div>
 
 									<div class="row">
-										<div class="col-lg-3 col-md-4 label">${empVO.skill}</div>
-										<div class="col-lg-9 col-md-8">${empVO.birthday}</div>
+									<div class="col-lg-9 col-md-8">信箱：${empVO.mail}</div>
+									
+										
 									</div>
 
-									<div class="row">
-										<div class="col-lg-3 col-md-4 label">${empVO.mail}</div>
-										<div class="col-lg-9 col-md-8">USA</div>
-									</div>
 
-									<div class="row">
-										<div class="col-lg-3 col-md-4 label">Address</div>
-										<div class="col-lg-9 col-md-8">A108 Adam Street, New
-											York, NY 535022</div>
-									</div>
+									
 
-									<div class="row">
-										<div class="col-lg-3 col-md-4 label">Phone</div>
-										<div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-									</div>
-
-									<div class="row">
-										<div class="col-lg-3 col-md-4 label">Email</div>
-										<div class="col-lg-9 col-md-8"><font color="red">${errorMsgs.empId}${errorMsgs.empName}${errorMsgs.depId}${errorMsgs.hiredate}${errorMsgs.phone}${errorMsgs.extension}${errorMsgs.birthday}</font></div>
-									</div>
+							
 
 								</div>
 
@@ -108,8 +115,8 @@
 							enctype="multipart/form-data">
 										<div class="row mb-3">
 											<label for="profileImage"
-												class="col-md-4 col-lg-3 col-form-label">Profile
-												Image</label> <img style="width:200px;length:200px"
+												class="col-md-4 col-lg-3 col-form-label">照片
+										</label> <img style="width:200px;length:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
 									"
@@ -138,7 +145,8 @@
 											
 												<input type="file" name="empProfile" size="45"
 												 class="form-control"
-													id="inputGroupFile01">
+													id="profile">
+													<img id="profileimg">
 												<div class="pt-2">
 													<a href="#" class="btn btn-primary btn-sm"
 														title="Upload new profile image"><i
@@ -236,6 +244,9 @@
 													aria-describedby="basic-addon2">
 											</div>
 										</div>
+										<div>
+										<font color="red">${errorMsgs.empId}${errorMsgs.empName}${errorMsgs.depId}${errorMsgs.hiredate}${errorMsgs.phone}${errorMsgs.extension}${errorMsgs.birthday}</font>
+										</div>
 
 
 
@@ -247,7 +258,7 @@
 										<div class="text-center">
 											<input type="hidden" name="action" value="updateFront">
 											<button type="submit" class="input-group-text"
-												id="basic-addon2">Save Changes</button>
+												id="basic-addon2">確認修改</button>
 										</div>
 									</form>
 									<!-- End Profile Edit Form -->
@@ -257,44 +268,7 @@
 								<div class="tab-pane fade pt-3" id="profile-settings">
 
 									<!-- Settings Form -->
-									<form>
-
-										<div class="row mb-3">
-											<label for="fullName"
-												class="col-md-4 col-lg-3 col-form-label">Email
-												Notifications</label>
-											<div class="col-md-8 col-lg-9">
-												<div class="form-check">
-													<input class="form-check-input" type="checkbox"
-														id="changesMade" checked> <label
-														class="form-check-label" for="changesMade">
-														Changes made to your 	 </label>
-												</div>
-												<div class="form-check">
-													<input class="form-check-input" type="checkbox"
-														id="newProducts" checked> <label
-														class="form-check-label" for="newProducts">
-														Information on new products and services </label>
-												</div>
-												<div class="form-check">
-													<input class="form-check-input" type="checkbox"
-														id="proOffers"> <label class="form-check-label"
-														for="proOffers"> Marketing and promo offers </label>
-												</div>
-												<div class="form-check">
-													<input class="form-check-input" type="checkbox"
-														id="securityNotify" checked disabled> <label
-														class="form-check-label" for="securityNotify">
-														Security alerts </label>
-												</div>
-											</div>
-										</div>
-
-										<div class="text-center">
-											<button type="submit" class="btn btn-primary">Save
-												Changes</button>
-										</div>
-									</form>
+									
 									<!-- End settings Form -->
 
 								</div>
@@ -306,8 +280,7 @@
 
 										<div class="row mb-3">
 											<label for="currentPassword"
-												class="col-md-4 col-lg-3 col-form-label">Current
-												Password</label>
+												class="col-md-4 col-lg-3 col-form-label">目前密碼</label>
 											<div class="col-md-8 col-lg-9">
 												<input name="nowpassword" type="password" class="form-control"
 													id="currentPassword">
@@ -316,8 +289,7 @@
 
 										<div class="row mb-3">
 											<label for="newPassword"
-												class="col-md-4 col-lg-3 col-form-label">New
-												Password</label>
+												class="col-md-4 col-lg-3 col-form-label">新密碼</label>
 											<div class="col-md-8 col-lg-9">
 												<input name="newpassword1" type="password"
 													class="form-control" id="newPassword">
@@ -326,8 +298,7 @@
 
 										<div class="row mb-3">
 											<label for="renewPassword"
-												class="col-md-4 col-lg-3 col-form-label">Re-enter
-												New Password</label>
+												class="col-md-4 col-lg-3 col-form-label">再次輸入新密碼</label>
 											<div class="col-md-8 col-lg-9">
 												<input name="newpassword2" type="password"
 													class="form-control" id="renewPassword">
@@ -335,8 +306,7 @@
 										</div>
 
 										<div class="text-center">
-											<button type="submit" class="btn btn-primary">Change
-												Password</button>
+											<button type="submit" class="btn btn-primary">確認修改密碼</button>
 										</div>
 										<input type="hidden" name="action" value="frontchangepassword">
 									</form>
@@ -362,6 +332,19 @@
             <%@ include file="/design/frontfooter.jsp" %>
                 <!-- ======= js ======= -->
                 <%@ include file="/design/frontjs.jsp" %>
+
+<script type="text/javascript">
+document.getElementById("profile").onchange = addImg;
+function addImg(e) {
+	 let url = URL.createObjectURL(e.target.files[0])
+	let profileimg=document.getElementById("profileimg");
+    profileimg.setAttribute("src",url);
+  profileimg.setAttribute("width", 200)
+                profileimg.setAttribute("length", 200)
+	
+}
+</script>
+
 
         </body>
 
