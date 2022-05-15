@@ -1,3 +1,4 @@
+<%@page import="com.shop.model.ShopVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.menu.model.*"%>
@@ -7,7 +8,6 @@
 
 <%
 List<MenuVO> menuList = (List<MenuVO>) session.getAttribute("menuList");
-// int itemsPerPage = 10; //設定每頁頁數
 
 int menuNumber = 1;
 %>
@@ -46,7 +46,7 @@ td {
 		<%@ include file="/design/frontheader.jsp"%>
 
 		<!-- ====================== 內容開始 ====================== -->
-		<main id="main" class="main">
+		<main id="main" class="main" >
 			<!-- ======= Portfolio Section ======= -->
 
 			<div class="card shadow mb-4">
@@ -65,17 +65,17 @@ td {
 				</div>
 
 
-				<section id="portfolio" class="portfolio">
+				<section id="portfolio" class="portfolio" style="background-color: #DCDDDF;">
 					<div class="container" data-aos="fade-up">
 
 						<!-- ============== Card Body ============== -->
 						<div class="row" style="place-content: center;">
 							<div class="col-2" style="display:inline-block;"></div>
 							<div 
-								style="width: 750px; align-self: center; color: white; background-color: gray; display: inline-block;">
+								style="width: 750px; align-self: center; color: white; background-color:#818C98; display: inline-block;">
 								<div class="card-header"
 									style="text-align: center; margin: 20px;">
-									<h3>${menuVO.shopVO.shop_name} M e n u</h3>
+									<h4>${shopVO.shop_name}&nbsp; M e n u</h4>
 								</div>
 
 								<table class="table table-hover table-dark">
@@ -117,9 +117,9 @@ td {
 							</div>
 							<!-- 新增菜單請求 -->
 							<div class="col-2" style="display:inline-block;">
-								<a class="btn btn-danger btn-icon-split"
+								<a 
 									href="${pageContext.request.contextPath}/menu/addMenu.jsp?shop_id=${param.shop_id}">
-									<button type="button" class="btn btn-danger btn-icon-split">我要新增菜單</button>
+									<button type="button" class="btn btn btn-lg" style="background-color:#A392A2; color:white;"><strong>我要新增🍴</strong></button>
 								</a>
 							</div>
 						</div>
