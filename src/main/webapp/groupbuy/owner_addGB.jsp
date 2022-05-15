@@ -97,12 +97,12 @@ left:0;
 						<a href="${shopVO.website}"  class="nav-link ${(shopVO.website=='')? 'disabled':''}">link</a>
 					</div>		
 				</div>
-				<div class="row mb-3">
-					<label for="inputText" class="col-sm-4 col-form-label">低消</label>
-					<div class="col-sm-8">
-						<input type="text" name="min_amt" value="${shopVO.min_amt}" class="form-control-plaintext" readonly>
-					</div>
-				</div>
+<!-- 				<div class="row mb-3"> -->
+<!-- 					<label for="inputText" class="col-sm-4 col-form-label">低消</label> -->
+<!-- 					<div class="col-sm-8"> -->
+<%-- 						<input type="text" name="min_amt" value="${shopVO.min_amt}" class="form-control-plaintext" readonly> --%>
+<!-- 					</div> -->
+<!-- 				</div> -->
 				<div class="row">
 				<label for="inputText" class="col-sm-2">圖片</label>
 				<!-- Button trigger modal -->	
@@ -198,10 +198,10 @@ left:0;
 					</div>
 					<div class="col-sm-4"><span id="arr_timeerror" style="color:red;">${errorMsgs.arr_time}</span></div>
 				</div>
-				<div class="row mb-3">
-				<label for="min_amt" class="col-sm-2 col-form-label">低消</label>
+			<div class="row mb-3" style="height:90px;">
+<!-- 				<label for="min_amt" class="col-sm-2 col-form-label">低消</label> -->
 				<div class="col-sm-5">
-					<input type="number" id="min_amt" name="min_amt" min="0" class="form-control" autocomplete="off" value="${param.min_amt}"/>
+					<input type="hidden" id="min_amt" name="min_amt" min="0" class="form-control" autocomplete="off" value="${param.min_amt}"/>
 				</div>
 				<div class="col-sm-4"><span id="min_amterror" style="color:red;">${errorMsgs.min_amt}</span></div>
 			</div>
@@ -214,6 +214,7 @@ left:0;
 					<input type="submit" value="送出新增">
 								
 		</FORM>
+		<br>
 		</div>
 
 </div>

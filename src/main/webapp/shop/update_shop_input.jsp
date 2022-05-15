@@ -103,7 +103,7 @@
 		<td><input type="url" name="website" size="45"
 			 value="${param.website}"/></td><td>${errorMsgs.website}</td>
 	</tr>
-	<tr>
+	<tr style="display:none;">
 		<th>低消: </th>
 		<td><input type="number" name="min_amt" min="0" id="min_amt" size="45"
 			 value="${param.min_amt}"/></td><td>${errorMsgs.min_amt}</td>

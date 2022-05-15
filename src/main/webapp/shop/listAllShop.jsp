@@ -7,7 +7,7 @@
 ShopService shopSvc = new ShopService();
 List<ShopVO> list = shopSvc.getFRONTAll();
 pageContext.setAttribute("list", list);
-int itemsPerPage = 10;
+int itemsPerPage = 5;
 %>
 
 <!DOCTYPE html>
@@ -117,10 +117,10 @@ body {
 										rowspan="1" colspan="1"
 										aria-label="Age: activate to sort column ascending"
 										style="width: 40px;">店家網站</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Office: activate to sort column ascending"
-										style="width: 40px;">低消金額</th>
+<!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+<!-- 										rowspan="1" colspan="1" -->
+<!-- 										aria-label="Office: activate to sort column ascending" -->
+<!-- 										style="width: 40px;">低消金額</th> -->
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Salary: activate to sort column ascending"
@@ -183,7 +183,7 @@ body {
 										<td>${shopVO.tel}</td>
 										<td><a href="${shopVO.website}"
 											class="nav-link ${(shopVO.website==''||shopVO.website==null)? 'disabled':''}" target="_blank">link</a></td>
-										<td>${shopVO.min_amt}</td>
+<%-- 										<td>${shopVO.min_amt}</td> --%>
 										<td><img
 											src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1"
 											style="max-height: 100%;"></td>

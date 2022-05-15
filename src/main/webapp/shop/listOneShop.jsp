@@ -75,10 +75,10 @@
 											rowspan="1" colspan="1"
 											aria-label="Age: activate to sort column ascending"
 											style="width: 50px;">店家網站</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1"
-											aria-label="Office: activate to sort column ascending"
-											style="width: 50px;">低消金額</th>
+<!-- 										<th class="sorting" tabindex="0" aria-controls="dataTable" -->
+<!-- 											rowspan="1" colspan="1" -->
+<!-- 											aria-label="Office: activate to sort column ascending" -->
+<!-- 											style="width: 50px;">低消金額</th> -->
 										<th class="sorting" tabindex="0" aria-controls="dataTable"
 											rowspan="1" colspan="1"
 											aria-label="Salary: activate to sort column ascending"
@@ -137,7 +137,7 @@
 											<td>${shopVO.address}</td>
 											<td>${shopVO.tel}</td>
 											<td><a href="${shopVO.website}">link</a></td>
-											<td>${shopVO.min_amt}</td>
+<%-- 											<td>${shopVO.min_amt}</td> --%>
 											<td><img
 												src="<%=request.getContextPath()%>/util/DBGifReader?id_key=shop_id&id=${shopVO.shop_id}&table=shop&pic=shop_img1"
 												style="max-height: 100%;"></td>
