@@ -1,11 +1,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.menu.model.*"%>
+<%@ page import="java.util.List"%>
 <%@ page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-List<MenuVO> list = (List<MenuVO>) request.getAttribute("menuList");
+List<MenuVO> menuList = (List<MenuVO>) session.getAttribute("menuList");
 // int itemsPerPage = 10; //設定每頁頁數
 
 int menuNumber = 1;
@@ -74,7 +75,7 @@ td {
 								style="width: 750px; align-self: center; color: white; background-color: gray; display: inline-block;">
 								<div class="card-header"
 									style="text-align: center; margin: 20px;">
-									<h3>${param.shop_name}M e n u</h3>
+									<h3>${menuVO.shopVO.shop_name} M e n u</h3>
 								</div>
 
 								<table class="table table-hover table-dark">

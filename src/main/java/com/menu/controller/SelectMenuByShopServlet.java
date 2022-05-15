@@ -41,8 +41,9 @@ public class SelectMenuByShopServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 *****************************************/
 				MenuService menuService = new MenuService();
 				List<MenuVO> menuList = menuService.getByShopId(shop_id);
-
 				
+				MenuVO menuVO = menuService.getOneMenuItem(shop_id);
+				req.setAttribute("menuVO", menuVO);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				// 資料庫取出的menuVO物件集合,存入session(修改或新增回上一頁可取得)
 				HttpSession session = req.getSession();

@@ -86,7 +86,7 @@ public class UpdateMenuByShopServlet extends HttpServlet {
 				try {
 					 is_item = Integer.valueOf(req.getParameter("is_item").trim());
 				} catch (NumberFormatException e) {
-					errorMsgs.put("is_item", "價格請填數字");
+					errorMsgs.put("is_item", "項目狀態請選擇下架或上架");
 				}
 				// 店家編號FK shop_id
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
@@ -105,7 +105,7 @@ public class UpdateMenuByShopServlet extends HttpServlet {
 				req.setAttribute("menuVO", menuVO); // 資料庫update成功後,正確的的menuVO物件,存入req
 				System.out.println("新值: "+ menuVO.toString());
 				
-				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面(存session不須)
+				//再取得一次店家菜單物件集合,以顯示於店家菜單畫面
 				List<MenuVO> menuList = menuService.getByShopId(shop_id);
 				req.setAttribute("menuList", menuList);
 				
