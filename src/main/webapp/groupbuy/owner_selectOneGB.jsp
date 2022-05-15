@@ -45,7 +45,7 @@ th,td{
 					<div class="row">
 						<div class="col-9" style="height: 20px; display: inline-block;">
 							<h5>
-								<strong>查詢揪團</strong>
+								<strong>詳細揪團資訊</strong>
 							</h5>
 								
 						</div>
@@ -69,7 +69,9 @@ th,td{
 							<label for="arr_time" class="col-sm-2 col-form-label">到貨時間:</label>
 							<div class="col-sm-9">
 								<input name="arr_time" id="arr_time" type="text" class="form-control-plaintext" style="width:250px; border:1px solid gray; display:inline-block;" autocomplete="off" value="${groupBuyVO.arr_time}"/>
+								<c:if test="${groupBuyVO.gb_status != 3}">
 								<input type="submit" value="送出修改到貨時間" style="display:inline-block;margin-left:30px;">
+								</c:if>
 							</div>
 								</div>
 							
@@ -95,7 +97,6 @@ th,td{
 						</FORM>							
 						</div>
 						</c:if>
-						
 						</div>
 
 						<c:forEach var="GBbuyer" items="${GBbuyers}">
@@ -121,7 +122,9 @@ th,td{
 										<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 										<input type="hidden" name="action" value="updatePayPickUp">
 									<div class="col-1 mb-2">
+									<c:if test="${groupBuyVO.gb_status != 3}">
 										<input type="submit" value="送出修改">
+										</c:if>
 									</div>
 									</form>
 								</div>
@@ -204,6 +207,13 @@ $(function(){
 $("tbody tr").css("background-color", function(index) {
     return index%2==0?"rgba(211,211,211,0.5)":"";
 });
+
+$(function(){
+	$("#showtable").click(function(){
+	$(".table").slideToggle("fast");
+	});
+	});
+
 
         $.datetimepicker.setLocale('zh');
         $('#arr_time').datetimepicker({

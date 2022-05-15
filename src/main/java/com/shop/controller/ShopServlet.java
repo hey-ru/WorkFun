@@ -147,7 +147,9 @@ public class ShopServlet extends HttpServlet {
 	            }
 				String address = "";
 				if (addressend.trim().length() != 0) {
-				address = placecode+city+dist+addressend;
+					String addressend1 = addressend.replace(city, "");
+					String addressend2 = addressend1.replace(dist, "");				
+					address = placecode+city+dist+addressend2;
 				}
 				
 				String tel = req.getParameter("tel");
