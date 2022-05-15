@@ -208,13 +208,6 @@ $("tbody tr").css("background-color", function(index) {
     return index%2==0?"rgba(211,211,211,0.5)":"";
 });
 
-$(function(){
-	$("#showtable").click(function(){
-	$(".table").slideToggle("fast");
-	});
-	});
-
-
         $.datetimepicker.setLocale('zh');
         $('#arr_time').datetimepicker({
     	       theme: '',              //theme: 'dark',
