@@ -1,11 +1,75 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+	<%@ page import="com.emp.model.*"%>
+	<%@ page import="com.announcement.model.*"%>
+	<%@ page import="com.announcement_mapping.model.*"%>
+	<%@page import="java.util.List"%>
+	<%
+	Integer announcement_id=Integer.valueOf(request.getParameter("announcement_id")) ;  
+	    Announcement_mappingService annmapSvc = new Announcement_mappingService();
+	
+	    	List<Integer> list = annmapSvc.findByPrimaryKey(announcement_id);
+	    pageContext.setAttribute("list",list);
+	    Integer oldquantity=list.size();
+	    request.setAttribute("oldquantity", oldquantity);
+	%>
         <!DOCTYPE html>
         <html lang="zh-TW">
 
         <head>
             <%@ include file="/design/frontmetacss.jsp" %>
+  <style>
+#mainleft {
+	margin-top: 200px;
+/* 	margin-right: auto; */
+	margin-left: 200px;
+	background-color: #DDCFC2;
+	padding: 30px;
+	border-radius: 10px;
+}
+#mainarea {
+	max-width: 700px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 20px;
+	background-color: #586D80;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+#card-title{
+ font-family: fantasy;
+}
+
+/* 購物車 start */
+table {
+	background-color: #fff;
+	width: 100%;
+	border-radius: 5px;
+}
+
+thead tr {
+	background-color: #BFC2CB;
+}
+
+thead td {
+	padding: 7px;
+}
+
+tbody td {
+	padding: 7px;
+}
+
+.selectAll {
+	padding: 10px;
+	color: white;
+	background-color: #2A4C65;
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+
+</style>
         </head>
 
         <body>
@@ -14,45 +78,32 @@
                 <%@ include file="/design/frontheader.jsp" %>
 
                     <!-- ======= 內容開始 ======= -->
-                    <main style="height: 120vh; margin-top: 40px;">
+            
 						
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
-							enctype="multipart/form-data">
-							<div
-								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
-								<div class="input-group mb-3" style="margin-top: 0px;">
-									<span class="input-group-text" id="xx">發布者</span> <a
-										
-										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1">${param.announcer_name}</a>
-								
-									<span class="input-group-text" id="xx">發布者</span> <input
-										type="hidden" name="announcer" size="45" value="${param.announcer}"
-										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1" required="required">
-								</div>
+						
+						
+						
+						
+						
+						
+						<div id="mainleft" class="col-4" style="height: max-content;font-weight:bold; font-family: Andale Mono, monospace;">
+              <h3 class="card-title" style="text-align: center; background-color: #DBD2C9;"><strong>${param.announcement_title}</strong></h3>
+              <p>💁‍♂️發布者: ${param.announcer_name} <br>
+              <jsp:useBean id="now" class="java.util.Date" />
+              內容: ${param.announcement_content}<br>
+           
+              <!-- Slides with fade transition -->
+              <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
 
-							
-							
-
-								<div class="input-group mb-3">
-									<span class="input-group-text" id="basic-addon2">公告標題</span> <input
-										type="TEXT" name="announcement_title" size="45" value="${param.announcement_title}"
-										class="form-control" required="required"
-										aria-label="Recipient's username"
-										aria-describedby="basic-addon2"> 
-
-								</div>
-								<div class="input-group mb-3">
-									<span class="input-group-text" id="basic-addon2">公告內容</span> <input
-										type="TEXT" name="announcement_content" size="45" value="${param.announcement_content}"
-										class="form-control" aria-label="Recipient's username"
-										aria-describedby="basic-addon2"> 
-								</div>
-								
-								<c:forEach var="announcement_mapping" items="${list}" >
-圖片${announcement_mapping}
-					<img style="width:200px;height:200px"
+			  <div class="carousel-inner">
+			  
+			  
+			  
+			  <c:forEach var="announcement_mapping" items="${list}">
+			  <c:choose>
+			  <c:when test="${list.get(0)==announcement_mapping}">
+			    <div class="carousel-item active">
+                 			<img style="width:200px;height:200px"
 												src="
 									<%=request.getContextPath()%>/servlet/com.announcement.controller.DBGifReader?announcementImg_id=${announcement_mapping}&announcement_id=${param.announcement_id}
 									"
@@ -60,37 +111,51 @@
 												
 												
 											>	
-										
-										
-								
-								
-								</c:forEach>
-								
-							
-							
+                </div> 
+			  
+			  <a>true</a>
+			  
+			  
+			  </c:when>
+			  <c:otherwise>
+			  	    <div class="carousel-item ">
+                 			<img style="width:200px;height:200px"
+												src="
+									<%=request.getContextPath()%>/servlet/com.announcement.controller.DBGifReader?announcementImg_id=${announcement_mapping}&announcement_id=${param.announcement_id}
+									"
+												class="img-fluid"
+												
+												
+											>	
+                </div> 
+			  
+			  <a>false</a>
+			  
+			  
+			  </c:otherwise>
+			  
+			  
+			  
+			  </c:choose>
+			  
+			    </c:forEach>
+                  
 
+         
+              
+              </div>
 
-								
-
-
-								<div class="input-group mb-3">
-	<input type="hidden" name="announcement_id" value="${param.announcement_id}"> 
-									<input type="hidden" name="action" value="update"> <input
-										type="submit" value="修改" class="input-group-text"
-										id="basic-addon2">
-								</div>
-								</div>
-						</FORM>
-							
-							<div>
-						
-							</div>
-								
-						
-						
-						
-						</main>
-                    
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button> 
+            </div>
+		</div>
+               
                     
 
                     <!-- ======= 內容結束 ======= -->
