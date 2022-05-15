@@ -11,7 +11,6 @@
 <%
 //查詢個人單筆明細
 List<GroupBuyListVO> list = (List<GroupBuyListVO>) session.getAttribute("buyerlist");
-// GroupBuyVO groupBuyVO = session.getAttribute("groupBuyVO");
 
 int orderNumber = 1;
 %>

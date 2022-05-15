@@ -236,7 +236,7 @@ public class EmpServlet extends HttpServlet {
 				}
 				
 					newempVO.setEmpProfile(headimg);
-					if(req.getParameter("resigndate")==null) {
+					if(req.getParameter("resigndate")==null || req.getParameter("resigndate").trim().length()==0) {
 						
 					}
 					else {

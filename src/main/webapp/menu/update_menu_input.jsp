@@ -13,13 +13,13 @@
 
 </head>
 
-<body>
+<body  style="background-color: #DBD4C6;">
 
 	<%@ include file="/design/frontheader.jsp"%>
 
 	<!-- ====================== 內容開始 ====================== -->
-	<main id="main" class="main" style="height: 50vh;">
-		<div class="card shadow mb-4">
+	<main id="main" class="main" style="height: 50vh;background-color: #DBD4C6">
+		<div style="background-color: #DBD4C6;">
 			<!-- ============== Card Header ============== -->
 			<div class="card-header py-3" style="background-color: #b0c4de">
 				<div class="row">
@@ -35,14 +35,18 @@
 			</div>
 			<!-- ============== Card Body ============== -->
 
-						<div class="col-lg-6">
-							<div class="card">
+						<div class="col-lg-12" >
+							<div class="card" style="background-color: #DBD4C6;ALIGN-ITEMS: CENTER;">
 								<div class="card-body">
 
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/menu/updatemenubyshop"
 										name="form1">
 										<table class="table table-borderless">
+											<tr>
+												<td><strong>店家 :</strong></td>
+												<td><strong>${shopVO.shop_name}</strong></td>
+											</tr>
 											<tr>
 												<td><strong>品項 :</strong></td>
 												<td><input type="TEXT" name="item" size="45"
