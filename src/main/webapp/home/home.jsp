@@ -17,11 +17,9 @@
         #hero {
             width: 100%;
             max-height: calc(100vh - var(--footer-height));
-            background: url("<%=request.getContextPath()%>/home/img/homepic.png") ;
+            background: url("<%=request.getContextPath()%>/home/img/homepic.png");
             background-size: cover;
-            opacity: 0.7;
             box-sizing: border-box;
-             z-index: -2;
         }
         
     </style>
@@ -38,12 +36,48 @@
     <!-- End Header -->
 
     <!-- ======= Hero Section ======= -->
-    <section id="hero" class="d-flex align-items-center ">
-        <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
-            <h1>Welcome to WorkFun</h1>
-            <h2>Work together makes work fun!</h2>
-         
-        </div>
+    <section id="hero" class="d-flex">        
+            <div id="sectionannouncement"style="margin-left:100px;margin-top:100px;width: 85vw;  min-height: 80vh;">
+			<div class="row">
+                  <div class="col-12">
+                  <!-- Advanced Tables -->
+                
+                   <div class="table-responsive bg-white" ">
+					<table class="table table-hover text-dark" id="dataTables-example">
+                       <tr>
+                       	<th class="text-dark bg-info">Tibame大事紀</th>
+						<!-- <th></th> -->
+						
+					   </tr>
+						<%@ include file="/home/page1.file" %> 
+						<c:forEach var="announcement" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+							
+					   <tr>
+					   	<td >
+					   	<a class="text-dark"
+					   	 href="<%=request.getContextPath()%>/announcementServlet?action=getOne&announcement_id=${announcement.announcement_id}">${announcement.announcement_title}</a>
+					   	</td>
+					   	
+					   </tr>
+						</c:forEach>
+					</table>
+							<div >
+							<%@ include file="/home/page2.file" %>
+							</div>
+					</div>
+					
+					</div>
+
+                    <!-- /.container-fluid -->
+                </div>
+    </div>
+        
+        
+        
+        
+        
+        
+        
     </section><!-- End Hero -->
 
     <!-- ======= Footer ======= -->
@@ -51,63 +85,7 @@
          
        
     <!-- ======= js ======= -->
-        <%@ include file="/design/frontjs.jsp" %>
-         
-    
-    <div 
-								style="border: 3px blue solid; width: 400px;  height: 200px; margin-top:-300px;margin-left:500px;z-index：1000;">
-    
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- Advanced Tables -->
-                                <div class="panel panel-default">
-                                   
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                        
-                                      
-                                        
-                                        
-                                            <table class="table table-striped table-bordered table-hover"
-                                                id="dataTables-example" >
-                                               <tr  >
-                                            
-	
-		<th style="padding:0"; >Tibame大事紀</th>
-		
-		
-	
-		<!-- <th></th> -->
-		
-		
-	</tr>
-	<%@ include file="page1.file" %> 
-	<c:forEach var="announcement" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-		
-		<tr>
-		
-			
-			<td ><a href="<%=request.getContextPath()%>/announcementServlet?action=getOne&announcement_id=${announcement.announcement_id}">${announcement.announcement_title}</a></td>
-			
-
-						
-							
-										
-			
-		
-		</tr>
-	</c:forEach>
-</table>
-<%@ include file="page2.file" %>
-</div>
-</div>
-</div>
-</div>
-
-                    <!-- /.container-fluid -->
-                </div>
-    </div>
-    
+        <%@ include file="/design/frontjs.jsp" %> 
 
     
 </body>
