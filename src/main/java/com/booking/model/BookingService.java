@@ -88,4 +88,14 @@ public class BookingService {
 		return dao.getAllByCQ(map);
 	}
 
+	public List<BookingVO> getAllDate(){
+		return dao.getAllDate();
+	}
+
+	public BookingVO updateBooking(BookingVO bookingVO) {
+		
+		dao.update(bookingVO);
+		
+		return bookingVO;
+	}
 }

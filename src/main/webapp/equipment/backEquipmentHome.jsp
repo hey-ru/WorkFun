@@ -29,7 +29,6 @@ int itemsPerPage = 10;
 th {
 	vertical-align: middle;
 	text-align: center;
-	height: 50px;
 }
 
 td {
@@ -47,8 +46,8 @@ td {
 }
 
 .col-sm-12 {
-	margin: auto;
-	padding: 0px 40px;
+	flex: 0 0 100%;
+    max-width: 100%;
 }
 
 .my-1 {

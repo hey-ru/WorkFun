@@ -124,18 +124,29 @@ public class EmpServlet extends HttpServlet {
 			
 				/***************************1.接收請求參數****************************************/
 				Integer empId = Integer.valueOf(req.getParameter("empId"));
-				
+				String resigndate;
 				/***************************2.開始查詢資料****************************************/
 				EmpService empSvc = new EmpService();
 //				EmpVO empVO = empSvc.getOneEmp(empId);
 				EmpVO empVO = empSvc.getOneEmp(empId);
-								
+				if(empVO.getResigndate()==null) {
+					resigndate="";
+					
+					
+				}				else {
+					resigndate=String.valueOf(empVO.getResigndate());
+					
+				}
+				
+				
+				
+				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				String param = "?empId="  +empVO.getEmpId()+
 						 "&depId="  +empVO.getDepId()+
 						       "&empName="  +empVO.getEmpName()+
 						       "&hiredate="+empVO.getHiredate()+
-						       "&resigndate="+empVO.getResigndate()+
+						       "&resigndate="+resigndate+
 						       "&phone="    +empVO.getPhone()+
 						       "&extension="   +empVO.getExtension()+
 						       "&hobby="   +empVO.getHobby()+
@@ -237,7 +248,7 @@ public class EmpServlet extends HttpServlet {
 				
 					newempVO.setEmpProfile(headimg);
 					if(req.getParameter("resigndate")==null || req.getParameter("resigndate").trim().length()==0) {
-						
+						newempVO.setEmpStatus((byte)1);
 					}
 					else {
 						newempVO.setResigndate(java.sql.Date.valueOf(req.getParameter("resigndate")));

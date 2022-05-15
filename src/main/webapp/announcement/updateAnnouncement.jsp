@@ -76,10 +76,10 @@
 										class="form-control" aria-label="Username"
 										aria-describedby="basic-addon1">${param.announcer_name}</a>
 								
-									<span class="input-group-text" id="xx">發布者</span> <input
+							 <input
 										type="hidden" name="announcer" size="45" value="${param.announcer}"
 										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1" required="required">
+										aria-describedby="basic-addon1" >
 								</div>
 
 							
@@ -101,6 +101,7 @@
 								</div>
 								
 								<c:forEach var="announcement_mapping" items="${list}" >
+									<div class="input-group mb-3">
 圖片${announcement_mapping}
 					<img style="width:200px;height:200px"
 												src="
@@ -110,11 +111,12 @@
 												
 												
 											>	
-											<span class="input-group-text" id="basic-addon2">修改圖片${announcement_mapping}</span>
-											<input type="file" name="${announcement_mapping}$" >	
+										
+											<input id="profile" type="file" name="${announcement_mapping}$" >
+											<img id="profileimg">
 												<input type="hidden" name="$" value="${announcement_mapping}" >	
 										
-								
+									</div>
 								
 								</c:forEach>
 								
@@ -129,6 +131,19 @@
 											<input value="${oldquantity}" name="oldquantity" type="hidden">
 								</div>
 							
+								<div class="input-group mb-3">
+	<input type="hidden" name="announcement_id" value="${param.announcement_id}"> 
+									<input type="radio" name="announcement_status" value="1"> <label>公開</label>
+										<input type="radio" name="announcement_status" value="2"><label>非公開</label>
+										
+										
+										
+										
+										
+										
+										
+								</div>
+								
 
 
 								
@@ -143,7 +158,7 @@
 								</div>
 						</FORM>
 							
-							<div>
+							<div style=" border: 3px blue solid;width: 300px;  height: 600px; margin-top: 300px;margin-left: 600px ">
 								<c:forEach var="announcement_mapping" items="${list}" >
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
 							enctype="multipart/form-data">
@@ -157,12 +172,14 @@
 									</FORM>
 							</c:forEach>
 							</div>
+									</main>
+						
+							</div>
 								
 						
 						
 						
-						</main>
-						
+				
 </body>
 
 
@@ -202,7 +219,7 @@
         input.setAttribute("type", "file")
         input.setAttribute("accept", "image/*")
         img.setAttribute("width", 200)
-        img.setAttribute("length", 200)
+        img.setAttribute("height", 200)
         body.append(input)
         body.append(img)
         document.getElementById(inputnum).onchange = addImg;
@@ -220,7 +237,7 @@
                     input.setAttribute("name", inputnum)
                 input.setAttribute("accept", "image/*")
                 img.setAttribute("width", 200)
-                img.setAttribute("length", 200)
+                img.setAttribute("height", 200)
                 body.append(input)
                 body.append(img)
                 quantity.setAttribute("value", inputnum - 1)
@@ -234,8 +251,45 @@
         }
 
     </script>
+    <script>
+document.getElementById("profile").onchange = addImg;
+function addImg(e) {
+	 let url = URL.createObjectURL(e.target.files[0])
+	let profileimg=document.getElementById("profileimg");
+    profileimg.setAttribute("src",url);
+  profileimg.setAttribute("width", 200)
+                profileimg.setAttribute("height", 200)
+	
+}
 
 
+</script>
+
+<script>
+let list=${list};
+console.log(list);
+for(let imgId of list ){
+	console.log(imgId)
+	let profile="profile"+imgId
+	let profileimg="profileimg"+imgId
+	console.log(profile)
+		console.log(profileimg)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+
+
+</script>
 
 </body>
 

@@ -14,6 +14,11 @@
     <meta name="author" content="">
 
     <title>WorkFunBack</title>
+    <style type="text/css">
+    .input-group-text {
+    border:;
+    }
+    </style>
 
 </head>
 
@@ -133,7 +138,7 @@
 										value="${param.hiredate}">
 											<span class="input-group-text" id="basic-addon2">離職日期</span> <input
 										name="resigndate" id="f_date3" type="text" class="form-control"
-										value="">
+										value="${param.resigndate}">
 
 								</div>
 
@@ -146,6 +151,7 @@
 									<input type="hidden" name="action" value="update"> <input
 										type="submit" value="修改" class="input-group-text"
 										id="basic-addon2">
+								</div>
 								</div>
 						</FORM>
 						</main>
@@ -198,6 +204,7 @@
 	   birthday = new java.sql.Date(System.currentTimeMillis());
    }
 %>
+
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -244,7 +251,7 @@
   	       timepicker:false,       //timepicker:true,
   	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
   	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-  		  
+  	    
              //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
              //startDate:	            '2017/07/10',  // 起始日
              //minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -308,7 +315,7 @@ function addImg(e) {
 	let profileimg=document.getElementById("profileimg");
     profileimg.setAttribute("src",url);
   profileimg.setAttribute("width", 200)
-                profileimg.setAttribute("length", 200)
+                profileimg.setAttribute("height", 200)
 	
 }
 

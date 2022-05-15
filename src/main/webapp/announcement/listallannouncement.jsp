@@ -69,46 +69,14 @@
 	
 	   <div id="page-inner">
 	 
- <li>   
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1">
-        <b><font color=blue>萬用複合查詢:</font></b> <br>
-       <!--  <b>輸入員工編號:</b>
-        <input type="text" name="empId" value=""><br> -->
-           
-     <!--   <b>輸入員工姓名:</b>
-       <input type="text" name="empName" value=""><br> -->
-            <b>輸入員工分機:</b>
-       <input type="text" name="extension" value=""><br>
-       
-       
-      <!--  <b>輸入員工職位:</b>
-       <input type="text" name="" value="PRESIDENT"><br> -->
-    
-       <b>選擇部門:</b>
-       <select size="1" name="depId" >
-          <option value="">
-         <c:forEach var="depVO" items="${depSvc.all}" > 
-          <option value="${depVO.depId}">${depVO.depName}
-         </c:forEach>   
-       </select><br>
-           
-       <b>雇用日期:</b>
-	   <input name="hiredate" id="f_date1" type="text"> 
-		        
-        <input type="submit" value="送出">
-        <input type="hidden" name="action" value="listEmps_ByCompositeQuery">
-     </FORM>
-  </li>
- 
+
  
 
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- Advanced Tables -->
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        Advanced Tables
-                                    </div>
+                                  
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover"

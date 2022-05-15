@@ -51,7 +51,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 									id="profile-overview">
 									<h5 class="card-title">關於我</h5>
 									<p >員工編號:${empVO.empId}</p>
-<p >大頭照 <img style="width:200px;length:200px"
+<p >大頭照 <img style="width:200px;height:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
 									"
@@ -116,7 +116,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 										<div class="row mb-3">
 											<label for="profileImage"
 												class="col-md-4 col-lg-3 col-form-label">照片
-										</label> <img style="width:200px;length:200px"
+										</label> <img style="width:200px;height:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
 									"
@@ -341,7 +341,7 @@ function addImg(e) {
 	let profileimg=document.getElementById("profileimg");
     profileimg.setAttribute("src",url);
   profileimg.setAttribute("width", 200)
-                profileimg.setAttribute("length", 200)
+                profileimg.setAttribute("height", 200)
 	
 }
 </script>
@@ -378,6 +378,11 @@ $('#f_date2').datetimepicker({
      //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
   });
 </script>
+
+
+
+
+
 
         </body>
 

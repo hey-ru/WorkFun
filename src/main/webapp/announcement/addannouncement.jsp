@@ -182,7 +182,7 @@ function addImg(e) {
         input.setAttribute("type", "file")
         input.setAttribute("accept", "image/*")
         img.setAttribute("width", 200)
-        img.setAttribute("length", 200)
+        img.setAttribute("height", 200)
         body.append(input)
         body.append(img)
         document.getElementById(inputnum).onchange = addImg;
@@ -200,7 +200,7 @@ function addImg(e) {
                     input.setAttribute("name", inputnum)
                 input.setAttribute("accept", "image/*")
                 img.setAttribute("width", 200)
-                img.setAttribute("length", 200)
+                img.setAttribute("height", 200)
                 body.append(input)
                 body.append(img)
                 quantity.setAttribute("value", inputnum - 1)
