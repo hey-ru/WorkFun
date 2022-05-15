@@ -16,7 +16,7 @@ public class jdbcUtil_CompositeQuery {
 		String aCondition = null;
 
 //		if ("is_deal".equals(columnName) || "sal".equals(columnName) || "comm".equals(columnName) || "deptno".equals(columnName)) // 原本樣子
-		if ("is_deal".equals(columnName) || "shop_type".equals(columnName) || "gb_status".equals(columnName) || "is_disable".equals(columnName)|| "gb_id".equals(columnName) || "gb_owner".equals(columnName)  || "eq_status".equals(columnName) || "buyer".equals(columnName) || "l.is_pay".equals(columnName) || "l.is_pickup".equals(columnName) || "booking_id".equals(columnName) || "return_status".equals(columnName)) // 用於其他
+		if ("is_deal".equals(columnName) || "saler".equals(columnName) || "bid_winner".equals(columnName) || "shop_type".equals(columnName) || "gb_status".equals(columnName) || "is_disable".equals(columnName)|| "gb_id".equals(columnName) || "gb_owner".equals(columnName)  || "eq_status".equals(columnName) || "buyer".equals(columnName) || "l.is_pay".equals(columnName) || "l.is_pickup".equals(columnName) || "booking_id".equals(columnName) || "return_status".equals(columnName)) // 用於其他
 			aCondition = columnName + "=" + value;
 //		else if ("name".equals(columnName) || "job".equals(columnName)) // 原本樣子
 		else if ("name".equals(columnName)) // 用於varchar

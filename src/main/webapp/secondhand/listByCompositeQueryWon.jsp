@@ -5,12 +5,10 @@
 <%@ page import="com.secondHand.model.*"%>
 
 <%
-SecondHandService secondHandSvc = new SecondHandService();
-List<SecondHandVO> list = secondHandSvc.getAllByIsDeal(1);
-pageContext.setAttribute("list", list);
 int itemsPerPage = 9;
-String thisPage = "";
 %>
+
+<jsp:useBean id="listByCompositeQuery" scope="request" type="java.util.List<SecondHandVO>" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +61,7 @@ String thisPage = "";
 			<div class="container" data-aos="fade-up">
 
 				<div class="section-title">
-					<h2>二手商品總覽</h2>
+					<h2>我的得標</h2>
 
 				</div>
 
@@ -71,26 +69,16 @@ String thisPage = "";
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1">
-							<%@ include file="/design/page1.file"%>
-								<div class="form-group col-2" style="display: inline-block;">
-								<jsp:useBean id="secondHandSvc1" scope="page"
-									class="com.secondHand.model.SecondHandService" />
-								<select class="form-select" id="exampleFormControlSelect1"
-									style="border: gray solid 2px;" name="is_deal">
-									<option value="1">競標中</option>
-									<option value="0">未開始</option>
-									<option value="2">已成交</option>
-									<option value="3">流標</option>
-									<option value="">顯示全部</option>
-								</select>
-							</div>
+							
+							<%@ include file="/design/page1_ByCompositeQuery.file" %>
 							<div class="form-group col-3" style="display: inline-block">
 								<input type="text" class="form-control"
 									id="exampleFormControlInput1" placeholder="輸入名稱"
 									style="border: gray solid 2px;" name="name" value="${param.name}">
 							</div>
 							<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-							<input type="hidden" name="action" value="listByCompositeQuery">
+							<input type="hidden" name="bid_winner" value="${empVO.empId}">
+							<input type="hidden" name="action" value="listByCompositeQueryWon">
 							<input type="submit" class="btn btn-primary mb-2 mt-1 col"
 								style="display: inline-block;" value="搜尋"></input>
 
@@ -100,7 +88,7 @@ String thisPage = "";
 
 				<div class="row portfolio-container" data-aos="fade-up"
 					data-aos-delay="200">
-					<c:forEach var="secondHandVO" items="${list}"
+					<c:forEach var="secondHandVO" items="${listByCompositeQuery}"
 						begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
 							<div class="portfolio-wrap">
@@ -124,13 +112,13 @@ String thisPage = "";
 												<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
 												<input type="hidden" name="action" value="getOneForUpdate">
 											</FORM>
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidHomeWS.jsp" style="margin-bottom: 0px; margin-right: 5px;">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidViewOnly.jsp" style="margin-bottom: 0px; margin-right: 5px;">
 												<input type="submit" value="查看商品" class="submitbtn" >
 												<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											</FORM>
 										</c:if>
 										<c:if test="${empVO.empId != secondHandVO.saler}"> 
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidHomeWS.jsp" style="margin-bottom: 0px; margin-right: 5px;">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidHome.jsp" style="margin-bottom: 0px; margin-right: 5px;">
 													<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1") != -1 ? "" : "hidden"} >
 													<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											</FORM>
@@ -145,9 +133,8 @@ String thisPage = "";
 						</div>
 					</c:forEach>
 				</div>
-
-				<%@ include file="/design/page2.file"%>
-			</div>
+				<% String yourServlet = "/secondhand/SecondHandServlet"; %>
+				<%@ include file="/design/page2_ByCompositeQuery.file"%>
 		</section>
 	</main>
 	<!-- End #main -->

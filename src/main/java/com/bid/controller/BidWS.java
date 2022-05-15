@@ -53,8 +53,8 @@ public class BidWS {
 //        System.out.println("A client has connected!");
     
 		
-		String text = String.format("Session ID = %s, connected; userId = %s", userSession.getId(), userId);
-		System.out.println(text);
+//		String text = String.format("Session ID = %s, connected; userId = %s", userSession.getId(), userId);
+//		System.out.println(text);
 	}
 
 	@OnMessage

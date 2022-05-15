@@ -3,6 +3,7 @@ package com.secondHand.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -35,7 +36,7 @@ public class SecondHandServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 //		System.out.println(action);
-
+		
 		if ("getOneForUpdate".equals(action)) { // 來自secondHandHome.jsp的請求
 
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -202,7 +203,7 @@ public class SecondHandServlet extends HttpServlet {
 //				SecondHandVO secondHandVO = secondHandService.updateSecondHand(bid_winner, deal_price, name, bottom_price, top_price, start_time, end_time, is_deal, img1, img2, img3, second_hand_id);
 				SecondHandService secondHandService = new SecondHandService();
 				secondHandService.updateSecondHand(newSecondHandVO);
-				
+
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("secondHandVO", newSecondHandVO); // 資料庫update成功後,正確的的secondHandVO物件,存入req
 				String url = "/secondhand/secondHandHome.jsp";
@@ -398,6 +399,53 @@ public class SecondHandServlet extends HttpServlet {
 //			}		
 		}
 		
+		if ("listSecondHandsBySaler".equals(action)) { // 來自frontheader.jsp的自身售出查詢請求
+			
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+//			try {
+				
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer saler = new Integer(req.getParameter("saler"));
+				System.out.println(saler);
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/secondHandHome.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				SecondHandService secondHandService = new SecondHandService();
+				List<SecondHandVO> list = secondHandService.getAllBySaler(saler);
+				for (SecondHandVO secondHandVO : list) {
+					System.out.println(secondHandVO.toString());
+				}
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/secondHandHome.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("list", list);    // 資料庫取出的list物件,存入request
+
+				String url = "/secondhand/listByMySaleSecondHand.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+//			} catch (Exception e) {
+//				errorMsgs.put("Exception", e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/secondhand/addSecondHand.jsp");
+//				failureView.forward(req, res);
+//				System.out.println("error");
+//			}		
+		}
 		
 		if ("listByCompositeQuery".equals(action)) { // 來自secondHandHome.jsp的複合查詢請求
 			List<String> errorMsgs = new LinkedList<String>();
@@ -428,6 +476,70 @@ public class SecondHandServlet extends HttpServlet {
 				req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
 //				session.setAttribute("listByCompositeQuery", list);
 				RequestDispatcher successView = req.getRequestDispatcher("/secondhand/listByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
+		}
+		
+		if ("listByCompositeQuerySaled".equals(action)) { // 來自listByMySaled.jsp的複合查詢請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+				
+				/***************************1.將輸入資料轉為Map**********************************/ 
+				//採用Map<String,String[]> getParameterMap()的方法 
+				//注意:an immutable java.util.Map 
+				//Map<String, String[]> map = req.getParameterMap();
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				
+				// 以下的 if 區塊只對第一次執行時有效
+				if (req.getParameter("whichPage") == null){
+					Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+					session.setAttribute("map",map1);
+					map = map1;
+				} 
+				
+				/***************************2.開始複合查詢***************************************/
+				SecondHandService secondHandService = new SecondHandService();
+				List<SecondHandVO> list  = secondHandService.getAll(map);
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
+//				session.setAttribute("listByCompositeQuery", list);
+				RequestDispatcher successView = req.getRequestDispatcher("/secondhand/listByCompositeQuerySaled.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
+		}
+		
+		if ("listByCompositeQueryWon".equals(action)) { // 來自listByMyWon.jsp的複合查詢請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+				
+				/***************************1.將輸入資料轉為Map**********************************/ 
+				//採用Map<String,String[]> getParameterMap()的方法 
+				//注意:an immutable java.util.Map 
+				//Map<String, String[]> map = req.getParameterMap();
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				
+				// 以下的 if 區塊只對第一次執行時有效
+				if (req.getParameter("whichPage") == null){
+					Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+					session.setAttribute("map",map1);
+					map = map1;
+				} 
+				
+				/***************************2.開始複合查詢***************************************/
+				SecondHandService secondHandService = new SecondHandService();
+				List<SecondHandVO> list  = secondHandService.getAll(map);
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
+//				session.setAttribute("listByCompositeQuery", list);
+				RequestDispatcher successView = req.getRequestDispatcher("/secondhand/listByCompositeQueryWon.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 				successView.forward(req, res);
 		}
 
