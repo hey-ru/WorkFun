@@ -58,11 +58,14 @@ public class SelectMyGBListServlet extends HttpServlet {
 			 ***************************************/
 			GroupBuyListService gbListSvc = new GroupBuyListService();
 			List<GroupBuyListVO> list = gbListSvc.getOne(buyer, gb_id);
+			
+			GroupBuyService gbSvc = new GroupBuyService();
+			GroupBuyVO groupBuyVO = gbSvc.getOneGB(gb_id);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			HttpSession session = req.getSession();
 			session.setAttribute("buyerlist", list);
-			System.out.println(list.toString());
+			session.setAttribute("groupBuyVO", groupBuyVO);
 
 			String url = "/groupbuylist/buyer_selectOneGB.jsp";
 			// 成功轉交
@@ -103,17 +106,14 @@ public class SelectMyGBListServlet extends HttpServlet {
 			 ***************************************/
 			GroupBuyListService gbListSvc = new GroupBuyListService();
 			List<GroupBuyListVO> list = gbListSvc.getOne(buyer, gb_id);
+			
+			GroupBuyService gbSvc = new GroupBuyService();
+			GroupBuyVO groupBuyVO = gbSvc.getOneGB(gb_id);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ***************/
 			HttpSession session = req.getSession();
 			session.setAttribute("buyerlist", list);
-
-			// 再取得一次店家菜單物件集合,以顯示於填寫揪團單畫面
-//			MenuService menuService = new MenuService();
-//			List<MenuVO> menuList = menuService.getByShopId(shop_id);
-
-//			HttpSession session1 = req.getSession();
-//			req.setAttribute("menuList", menuList);
+			session.setAttribute("groupBuyVO", groupBuyVO);
 
 			// 跳轉至該訂單畫面
 			String url = "/groupbuylist/buyer_updateOneGB.jsp";
@@ -242,7 +242,7 @@ public class SelectMyGBListServlet extends HttpServlet {
 
 			GroupBuyListService gbListSvc = new GroupBuyListService();
 			List<GroupBuyListVO> list = gbListSvc.getAll(map);
-
+			
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
 			RequestDispatcher successView = req.getRequestDispatcher("/groupbuylist/buyer_selectHistory.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp

@@ -51,7 +51,7 @@ td {
 					<div class="row">
 						<div class="col-11" style="height: 20px; display: inline-block;">
 							<h5>
-								<strong>參團明細</strong>
+								<strong>參團購買明細</strong>
 							</h5>
 						</div>
 						<div class="col-1" style="height: 20px; display: inline-block;">
@@ -62,31 +62,28 @@ td {
 				</div>
 
 				<!-- ============== Card Body ============== -->
+				<div class="row">
+				<div class="card-header py-3">
+					<h5 class="card-title">
+						<strong>${groupBuyVO.shop_name}</strong>
+					</h5>
+						<h6>‍團主: ${groupBuyVO.empVO.empName} &nbsp 分機:
+						${groupBuyVO.empVO.extension}</h6>
+				</div>
 				<div class="card-body">
-					<div class="col-sm-6">
-						<table class="table table-striped">
+					<div class="col-6">
+						<table class="table">
 
 							<!-- ========================= 表頭 ========================= -->
 							<thead>
-								<tr role=" row">
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Position: activate to sort column ascending">編號</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Position: activate to sort column ascending">品項</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Position: activate to sort column ascending">單價</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Office: activate to sort column ascending">數量</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Office: activate to sort column ascending">金額</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Office: activate to sort column ascending">備註</th>
+								<tr>
+								<th scope="col">編號</th>
+								<th scope="col">品項</th>
+								<th scope="col">單價</th>
+								<th scope="col">數量</th>
+								<th scope="col">小計</th>
+								<th scope="col">備註</th>
+								<th scope="col"></th>
 								</tr>
 							</thead>
 

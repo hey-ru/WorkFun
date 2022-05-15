@@ -178,9 +178,9 @@ tbody td {
 													value="0"></td>
 												<!-- 小計 -->
 												<td>$<span id="total">0</span></td>
-												<!-- "備註: 只能是中、日、英文字母、數字、_、-、+和()" -->
+												<!-- "備註: 只能是中、日、英文字母、數字、_、-、+空格和()" -->
 												<td><input type="text" name="remark"
-													pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\(\\-\\)\\]*$"
+													pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
 													size="15" value="${param.remark}"></td>
 											</tr>
 

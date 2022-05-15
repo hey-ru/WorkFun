@@ -10,7 +10,8 @@
 
 <%
 //查詢個人單筆明細
-List<GroupBuyListVO> list = (List<GroupBuyListVO>) request.getAttribute("buyerlist");
+List<GroupBuyListVO> list = (List<GroupBuyListVO>) session.getAttribute("buyerlist");
+// GroupBuyVO groupBuyVO = session.getAttribute("groupBuyVO");
 
 int orderNumber = 1;
 %>
@@ -25,21 +26,21 @@ int orderNumber = 1;
 .table-responsive {
 	overflow-x: hidden;
 }
-  th{
-        vertical-align: middle;
-            text-align: center;
-        }
-        td{
-        vertical-align: middle;
-            text-align: center;
-        }
 
-     .table-responsive {
-    	overflow-x:hidden;
-		}
+th {
+	vertical-align: middle;
+	text-align: center;
+}
+
+td {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.table-responsive {
+	overflow-x: hidden;
+}
 </style>
-
-
 
 </head>
 
@@ -49,7 +50,7 @@ int orderNumber = 1;
 
 		<%@ include file="/design/frontheader.jsp"%>
 
-;
+		;
 		<!-- ====================== 內容開始 ====================== -->
 		<main id="main" class="main">
 			<div class="card shadow mb-4">
@@ -69,84 +70,75 @@ int orderNumber = 1;
 				</div>
 			</div>
 			<!-- ============== Card Body ============== -->
-			<div class="card-body">
-				<div class="col-6">
 
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet">
-						<table class="table table-striped">
-							<!-- ========================= 表頭 ========================= -->
-							<thead>
-								<tr>
-								<th scope="col">編號</th>
-								<th scope="col">品項</th>
-								<th scope="col">單價</th>
-								<th scope="col">數量</th>
-								<th scope="col">小計</th>
-								<th scope="col">備註</th>
-								<th scope="col"></th>
-								</tr>
-							</thead>
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">
+						<strong>${groupBuyVO.shop_name}</strong><br> <br> 團主:
+						${groupBuyVO.empVO.empName} &nbsp 分機:
+						${groupBuyVO.empVO.extension}<br>
+					</h5>
 
-							<!-- ========================= 表格內容 ========================= -->
+					<div class="col-6" style="display: inline-block;">
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet">
+							<table class="table table-hover">
+								<!-- ========================= 表頭 ========================= -->
+								<thead>
+									<tr>
+										<th scope="col">編號</th>
+										<th scope="col">品項</th>
+										<th scope="col">單價</th>
+										<th scope="col">數量</th>
+										<th scope="col">小計</th>
+										<th scope="col">備註</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+
+								<!-- ========================= 表格內容 ========================= -->
 
 
-				<c:forEach var="blist" items="${buyerlist}">
-		<input type="hidden" name="gb_id" value="${blist.gb_id}">		
-		<input type="hidden" name="gbList_id" value="${blist.gbList_id}">
-		<input type="hidden" name="buyer" value="${blist.buyer}">
+								<c:forEach var="blist" items="${buyerlist}">
+									<input type="hidden" name="gb_id" value="${blist.gb_id}">
+									<input type="hidden" name="gbList_id"
+										value="${blist.gbList_id}">
+									<input type="hidden" name="buyer" value="${blist.buyer}">
 
-								<tr class="order" data-price="${blist.price}">
-									<td><%=orderNumber++%></td>
-									<td>${blist.item}</td>
-									<!-- 單價 -->
-									<td>${blist.price}</td>
-									<!-- 數量 -->
-									<td><input type="number" class="quantity" required min="0" max="100"
-										name="qty" value="${blist.qty}"> 
-									<!-- 小計 -->
-										<td>$<span id="total">${blist.price*blist.qty}</span></td>	
-									<!-- 備註 -->
-									<td><input type="text" name="remark"
-										pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
-										size="20" value="${blist.remark}"></td>
-					
-<!-- 				[刪除請求] -->
-<!-- 					<td> -->
-<!-- 					<FORM METHOD="post" -->
-<%-- 					ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet" --%>
-<!-- 					style="margin-bottom: 0px;"> -->
-<%-- 					<input type="hidden" name="gbList_id" value="${blist.gbList_id}"> --%>
-<%-- 					<input type="hidden" name="gb_id" value="${blist.gb_id}"> --%>
-<%-- 					<input type="hidden" name="buyer" value="${blist.buyer}"> --%>
-<!-- 					<input type="hidden" name="action" value="deleteItem"> -->
-<!-- 					<input type="submit" class="btn btn-secondary btn-sm" value="刪除" -->
-<%-- 					${blist.qty eq 0 ? 'hidden="hidden"' : ''} /></FORM> --%>
-<!-- 					</td>	 -->
+									<tr class="order" data-price="${blist.price}">
+										<td><%=orderNumber++%></td>
+										<td>${blist.item}</td>
+										<!-- 單價 -->
+										<td>${blist.price}</td>
+										<!-- 數量 -->
+										<td><input type="number" class="quantity" required
+											min="0" max="100" name="qty" value="${blist.qty}"> <!-- 小計 -->
+										<td>$<span id="total">${blist.price*blist.qty}</span></td>
+										<!-- 備註 -->
+										<td><input type="text" name="remark"
+											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
+											size="20" value="${blist.remark}"></td>
+										<!-- [刪除請求] -->
+										<td><a
+											href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet
+									?action=deleteItem&gbList_id=${blist.gbList_id}&gb_id=${blist.gb_id}&buyer=${blist.buyer}"
+											style="font-size: 30px;" title="刪除此項"><i
+												class="bi bi-trash"></i></a></td>
+									</tr>
+								</c:forEach>
+							</table>
 
-<!-- 				[刪除請求] -->					
-					<td>
-					<a href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet
-					?action=deleteItem&gbList_id=${blist.gbList_id}&gb_id=${blist.gb_id}&buyer=${blist.buyer}"
-					style="font-size:30px;" title="刪除此項"><i class="bi bi-trash"></i></a>
-					</td>
-					
-					
-					
-					</tr>
-				</c:forEach>
-						
-					</table>
-						
-						
-<!-- 		[修改請求] -->
-					<div style="text-align: center;">
-					<input type="hidden" name="action" value="updateMany">
-					<input type="submit" class="btn btn-success" onclick="javascript:return window.alert('已送出修改')" value="送出訂單">
+							<!-- [修改請求] -->
+							<div style="text-align: center;">
+								<input type="hidden" name="action" value="updateMany"> <input
+									type="submit" class="btn btn-success"
+									onclick="javascript:return window.alert('已送出修改')" value="送出訂單">
+							</div>
+						</FORM>
 					</div>
-				
-				</FORM>
-
+					<div class="col-5" style="display: inline-block; text-align: start;">
+						<img src="<%=request.getContextPath()%>/shop/images/sticker.png">
+					</div>
 				</div>
 			</div>
 		</main>
@@ -158,7 +150,7 @@ int orderNumber = 1;
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
 
-		<script>
+	<script>
 		// 	動態顯示計算金額
 		$(document).ready(
 				function() {
