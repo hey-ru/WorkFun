@@ -14,12 +14,20 @@ public interface SecondHandDAO_interface {
 
 	public SecondHandVO getById(Integer second_hand_id);
 
+	public List<SecondHandVO> getBySaler(Integer saler);
+
+	public List<SecondHandVO> getByBidWinner(Integer bid_winner);
+
 	public List<SecondHandVO> getByName(String name);
 	
 	public List<SecondHandVO> getByIsDeal(Integer is_deal);
 
 	public List<SecondHandVO> getAll();
 	
+	public List<SecondHandVO> getAllBySaler(Map<String, String[]> map); 
+
+	public List<SecondHandVO> getAllByBidWinner(Map<String, String[]> map); 
+
 	public List<SecondHandVO> getAll(Map<String, String[]> map); 
 	
 	public List<SecondHandVO> getAllDate();

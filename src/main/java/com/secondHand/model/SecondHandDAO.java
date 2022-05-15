@@ -382,6 +382,12 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 		}
 		return secondHandVO;
 	}
+	
+	@Override
+	public List<SecondHandVO> getBySaler(Integer saler) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<SecondHandVO> getByName(String name) {

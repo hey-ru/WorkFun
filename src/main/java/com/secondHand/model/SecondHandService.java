@@ -54,7 +54,6 @@ public class SecondHandService {
 	}
 
 	public SecondHandVO updateSecondHand(SecondHandVO secondHandVO) {
-
 		
 		dao.update(secondHandVO);
 
@@ -63,6 +62,14 @@ public class SecondHandService {
 
 	public SecondHandVO getOneById(Integer second_hand_id) {
 		return dao.getById(second_hand_id);
+	}
+	
+	public List<SecondHandVO> getAllBySaler(Integer saler){
+		return dao.getBySaler(saler);
+	}
+	
+	public List<SecondHandVO> getAllByBidWinner(Integer bid_winner){
+		return dao.getByBidWinner(bid_winner);
 	}
 	
 	public List<SecondHandVO> getAllByName(String name){
@@ -77,9 +84,18 @@ public class SecondHandService {
 		return dao.getAll();
 	}
 	
+	public List<SecondHandVO> getAllBySaler(Map<String, String[]> map) {
+		return dao.getAllBySaler(map);
+	}
+	
+	public List<SecondHandVO> getAllByBidWinner(Map<String, String[]> map) {
+		return dao.getAllByBidWinner(map);
+	}
+	
 	public List<SecondHandVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
-	}
+	}	
+	
 	public List<SecondHandVO> getAllDate() {
 		return dao.getAllDate();
 	}

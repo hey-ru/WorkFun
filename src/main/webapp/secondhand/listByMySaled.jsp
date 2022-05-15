@@ -1,15 +1,23 @@
+
+<%@page import="com.emp.model.EmpVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.secondHand.model.*"%>
 
+<!-- List<SecondHandVO> list = (List<SecondHandVO>) request.getAttribute("list"); -->
+<!-- pageContext.setAttribute("list", list); -->
+
 <%
+HttpSession session1 = request.getSession();
+EmpVO empVO = (EmpVO)session.getAttribute("empVO");
+
 SecondHandService secondHandSvc = new SecondHandService();
-List<SecondHandVO> list = secondHandSvc.getAllByIsDeal(1);
+List<SecondHandVO> list = secondHandSvc.getAllBySaler(empVO.getEmpId());
 pageContext.setAttribute("list", list);
 int itemsPerPage = 9;
-String thisPage = "";
+String thisPage = "test";
 %>
 
 <!DOCTYPE html>
@@ -63,7 +71,7 @@ String thisPage = "";
 			<div class="container" data-aos="fade-up">
 
 				<div class="section-title">
-					<h2>二手商品總覽</h2>
+					<h2>我的競標</h2>
 
 				</div>
 
@@ -90,7 +98,8 @@ String thisPage = "";
 									style="border: gray solid 2px;" name="name" value="${param.name}">
 							</div>
 							<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-							<input type="hidden" name="action" value="listByCompositeQuery">
+							<input type="hidden" name="saler" value="${empVO.empId}">
+							<input type="hidden" name="action" value="listByCompositeQuerySaled">
 							<input type="submit" class="btn btn-primary mb-2 mt-1 col"
 								style="display: inline-block;" value="搜尋"></input>
 
@@ -146,7 +155,8 @@ String thisPage = "";
 					</c:forEach>
 				</div>
 
-				<%@ include file="/design/page2.file"%>
+ 				<%@ include file="/design/page2.file"%>
+<%-- 				<%@ include file="/design/page2_SecondHandSaler.file"%> --%>
 			</div>
 		</section>
 	</main>

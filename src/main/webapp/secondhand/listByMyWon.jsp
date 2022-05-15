@@ -1,15 +1,23 @@
+
+<%@page import="com.emp.model.EmpVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.secondHand.model.*"%>
 
+<!-- List<SecondHandVO> list = (List<SecondHandVO>) request.getAttribute("list"); -->
+<!-- pageContext.setAttribute("list", list); -->
+
 <%
+HttpSession session1 = request.getSession();
+EmpVO empVO = (EmpVO)session.getAttribute("empVO");
+
 SecondHandService secondHandSvc = new SecondHandService();
-List<SecondHandVO> list = secondHandSvc.getAllByIsDeal(1);
+List<SecondHandVO> list = secondHandSvc.getAllByBidWinner(empVO.getEmpId());
 pageContext.setAttribute("list", list);
 int itemsPerPage = 9;
-String thisPage = "";
+String thisPage = "test";
 %>
 
 <!DOCTYPE html>
@@ -63,7 +71,7 @@ String thisPage = "";
 			<div class="container" data-aos="fade-up">
 
 				<div class="section-title">
-					<h2>二手商品總覽</h2>
+					<h2>我的得標</h2>
 
 				</div>
 
@@ -72,25 +80,14 @@ String thisPage = "";
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1">
 							<%@ include file="/design/page1.file"%>
-								<div class="form-group col-2" style="display: inline-block;">
-								<jsp:useBean id="secondHandSvc1" scope="page"
-									class="com.secondHand.model.SecondHandService" />
-								<select class="form-select" id="exampleFormControlSelect1"
-									style="border: gray solid 2px;" name="is_deal">
-									<option value="1">競標中</option>
-									<option value="0">未開始</option>
-									<option value="2">已成交</option>
-									<option value="3">流標</option>
-									<option value="">顯示全部</option>
-								</select>
-							</div>
 							<div class="form-group col-3" style="display: inline-block">
 								<input type="text" class="form-control"
 									id="exampleFormControlInput1" placeholder="輸入名稱"
 									style="border: gray solid 2px;" name="name" value="${param.name}">
 							</div>
 							<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
-							<input type="hidden" name="action" value="listByCompositeQuery">
+							<input type="hidden" name="bid_winner" value="${empVO.empId}">
+							<input type="hidden" name="action" value="listByCompositeQueryWon">
 							<input type="submit" class="btn btn-primary mb-2 mt-1 col"
 								style="display: inline-block;" value="搜尋"></input>
 
@@ -146,7 +143,8 @@ String thisPage = "";
 					</c:forEach>
 				</div>
 
-				<%@ include file="/design/page2.file"%>
+ 				<%@ include file="/design/page2.file"%>
+<%-- 				<%@ include file="/design/page2_SecondHandSaler.file"%> --%>
 			</div>
 		</section>
 	</main>
