@@ -185,7 +185,7 @@ public class BookingServlet extends HttpServlet {
 			BookingService bookingSvc = new BookingService();
 			bookingSvc.addBooking(equipmentId, empId, startDate, endDate, returnStatus);
 
-			System.out.println(bookingSvc.toString());
+//			System.out.println(bookingSvc.toString());
 
 			String url = "/booking/bookingList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp

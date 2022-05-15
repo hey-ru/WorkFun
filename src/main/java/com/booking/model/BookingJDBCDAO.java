@@ -10,6 +10,7 @@ import java.util.*;
 
 
 import com.groupbuy.model.GroupBuyVO;
+import com.secondHand.model.SecondHandVO;
 import com.util.jdbcUtil_CompositeQuery;
 
 public class BookingJDBCDAO implements BookingDAO_interface {
@@ -56,6 +57,10 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 
 	private static final String GET_BOOKING_CQ = "SELECT booking_id,equipment_id,emp_id,start_date,end_date,return_status, overdue_date, overdue_price, timestampdiff(day,end_date , current_timestamp()) as dateDiff from booking ";
 
+	private static final String GET_ALL_DATE = "SELECT booking_id ,start_date,end_date,return_status,overdue_date,overdue_price from booking order by booking_id";
+	
+	private static final String UPDATE = "UPDATE booking set ";
+	
 	// ========================================================================
 	@Override
 	public void insertBooking(BookingVO bookingVO) {
@@ -541,6 +546,99 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	}
 
 	@Override
+	public void update(BookingVO newBookingVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			BookingVO oldBookingVO = getByBookingId(newBookingVO.getBookingId());
+			StringBuilder sb = new StringBuilder().append(UPDATE);
+			
+			if(newBookingVO.getStartDate() != null) {
+				sb.append("start_date=?, ");
+			}
+			
+			if(newBookingVO.getEndDate() != null) {
+				sb.append("end_date=?, ");
+			}
+			
+			if (newBookingVO.getReturnStatus() != null){
+				sb.append("return_status=?, ");
+			}
+			
+			if(newBookingVO.getOverdueDate() != null) {
+				sb.append("overdue_date=?, ");
+			}
+			
+			if(newBookingVO.getOverduePrice() != null) {
+				sb.append("overdue_price=?, ");
+			}
+			
+			sb.append("booking_id=? where booking_id = ?");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			
+			if(newBookingVO.getStartDate() != null) {
+				count++;
+				pstmt.setTimestamp(count, newBookingVO.getStartDate());		
+			}
+			
+			if(newBookingVO.getEndDate() != null) {
+				count++;
+				pstmt.setTimestamp(count, newBookingVO.getEndDate());
+			}
+		
+			if(newBookingVO.getReturnStatus() != null) {
+				count++;
+				pstmt.setInt(count, newBookingVO.getReturnStatus());	
+			}
+		
+			if (newBookingVO.getOverdueDate() != null) {
+				count++;
+				pstmt.setTimestamp(count, newBookingVO.getOverdueDate());
+			}
+		
+			if(newBookingVO.getOverduePrice() != null) {
+				count++;
+				pstmt.setInt(count, newBookingVO.getOverduePrice());
+			}
+			count++;
+			pstmt.setInt(count, newBookingVO.getBookingId());
+			count++;
+			pstmt.setInt(count, newBookingVO.getBookingId());
+		
+			pstmt.executeUpdate();
+		
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	@Override
 	public List<BookingVO> getOverdueDate(Integer empId) {
 
 		List<BookingVO> list = new ArrayList<BookingVO>();
@@ -633,6 +731,57 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 					rs.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	public List<BookingVO> getAllDate(){
+		List<BookingVO> list = new ArrayList<BookingVO>();
+		BookingVO bookingVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_DATE);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				bookingVO = new BookingVO();
+				bookingVO.setBookingId(rs.getInt("booking_id"));
+				bookingVO.setStartDate(rs.getTimestamp("start_date"));
+				bookingVO.setEndDate(rs.getTimestamp("end_date"));
+				bookingVO.setReturnStatus(rs.getInt("return_status"));
+				bookingVO.setOverdueDate(rs.getTimestamp("overdue_date"));
+				bookingVO.setOverduePrice(rs.getInt("overdue_price"));
+				list.add(bookingVO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 			if (pstmt != null) {

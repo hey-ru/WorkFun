@@ -126,7 +126,7 @@ int itemsPerPage = 10;
 
 											<tr>
 												<td>${bookingVO.bookingId}</td>
-												<td>${empVO.empId}(${empVO.empName})</td>
+												<td>${empVO.empId}<br>${empVO.empName}</td>
 												<td>${bookingVO.equipmentVO.eqName}</td>
 												<td><fmt:formatDate value="${bookingVO.startDate}"
 														pattern="yyyy-MM-dd" /></td>
@@ -148,7 +148,7 @@ int itemsPerPage = 10;
 												<%-- 												<td>${bookingVO.dateDiff}</td> --%>
 												<%-- 											</c:if> --%>
 
-												<td><c:if test="${bookingVO.returnStatus == 1}">
+												<td><c:if test="${bookingVO.returnStatus == 3}">
 														<c:choose>
 															<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
 															<c:when test="${bookingVO.dateDiff == 1}">逾期 1 天</c:when>
@@ -163,7 +163,7 @@ int itemsPerPage = 10;
 												<%-- 													<td>罰金$ ${bookingVO.dateDiff * bookingVO.equipmentVO.price * 0.2}</td> --%>
 												<%-- 												</c:if> --%>
 
-												<td><c:if test="${bookingVO.returnStatus == 1}">
+												<td><c:if test="${bookingVO.returnStatus == 3}">
 														<c:choose>
 															<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
 															<c:when test="${bookingVO.dateDiff == 1}">罰金$ ${1 * bookingVO.equipmentVO.price * 0.3}</c:when>

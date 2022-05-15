@@ -40,4 +40,8 @@ public interface BookingDAO_interface {
 	// 後台查詢訂單
 	public List<BookingVO> getAllByCQ(Map<String, String[]> map);
 
+	public List<BookingVO> getAllDate();
+	
+	public void update(BookingVO bookingVO);
+
 }

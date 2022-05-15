@@ -24,4 +24,13 @@
 		<servlet-name>SecondHandStatusController</servlet-name>
 		<url-pattern>/SecondHandStatusController</url-pattern>
 	</servlet-mapping>	
+	 <servlet>
+		<servlet-name>BookingStatusController</servlet-name>
+		<servlet-class>com.booking.controller.BookingStatusController</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BookingStatusController</servlet-name>
+		<url-pattern>/BookingStatusController</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -50,4 +50,14 @@ public void SecondHand(long initialDelay, long delay) {
 //	
 //	a.cancel(false);
 
+public void Booking(long initialDelay, long delay) {	
+		
+		TIMERSERVICE.scheduleAtFixedRate(new BookingRun(), initialDelay, delay,TimeUnit.SECONDS);
+	}
+
 }
+
+
+
+	
+
