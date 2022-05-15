@@ -28,13 +28,13 @@ pageContext.getAttribute("shop_id");
 
 </head>
 
-<body>
+<body style="background-color: #EBD6D6">
 
 	<%@ include file="/design/frontheader.jsp"%>
 
 	<!-- ====================== 內容開始 ====================== -->
 	<main id="main" class="main" style="height: 300vh">
-		<div class="card shadow mb-4">
+<!-- 		<div class="card shadow mb-4"> -->
 			<!-- ============== Card Header ============== -->
 			<div class="card-header py-3" style="background-color: #b0c4de">
 				<div class="row">
@@ -49,8 +49,8 @@ pageContext.getAttribute("shop_id");
 				</div>
 			</div>
 			<!-- ============== Card Body ============== -->
-			<div class="col-lg-6">
-				<div class="card" style="background-color: #EBD6D6;">
+			<div class="col-lg-12">
+				<div class="card" style="background-color: #EBD6D6;ALIGN-ITEMS: CENTER;">
 
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/menu/addmenubyshop">

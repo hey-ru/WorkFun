@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import com.menu.model.MenuService;
 import com.menu.model.MenuVO;
+import com.shop.model.ShopService;
+import com.shop.model.ShopVO;
 
 @WebServlet("/menu/selectmenubyshop")
 public class SelectMenuByShopServlet extends HttpServlet {
@@ -42,12 +44,15 @@ public class SelectMenuByShopServlet extends HttpServlet {
 				MenuService menuService = new MenuService();
 				List<MenuVO> menuList = menuService.getByShopId(shop_id);
 				
-				MenuVO menuVO = menuService.getOneMenuItem(shop_id);
-				req.setAttribute("menuVO", menuVO);
+				ShopService shopService = new ShopService();
+				ShopVO shopVO =shopService.getOneShop(shop_id);
+				System.out.println(shopVO.toString());
+				
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				// 資料庫取出的menuVO物件集合,存入session(修改或新增回上一頁可取得)
 				HttpSession session = req.getSession();
 				session.setAttribute("menuList", menuList);
+				session.setAttribute("shopVO", shopVO);
 
 				
 				String url = "/menu/listMenuByShop.jsp";

@@ -38,14 +38,14 @@ int itemsPerPage = 10;
 		<div style="height: var(--header-height);"></div>
 		<main>
 
-			<section id="portfolio" class="portfolio">
+			<section id="portfolio" class="portfolio" style="background-color: #F4EBE4;">
 				<div class="container" data-aos="fade-up">
 					<div class="section-title">
 						<h2>🍽️ 今天我想來點...</h2>
 						<p></p>
 					</div>
 						<div class="row">
-							<div class="col-10" style="height: 60px; display: inline-block;">
+							<div class="col-9" style="height: 60px; display: inline-block;">
 								<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet">
 									<div class="form-group col-2" style="display: inline-block;">
 										<select class="form-select" id="exampleFormControlSelect1"
@@ -67,12 +67,12 @@ int itemsPerPage = 10;
 									<input type="hidden" name="action" value="listByCompositeQuery">
 <!-- 									傳遞揪團中參數 -->
 									<input type="hidden" name="gb_status" value="0">
-									<button type="submit" class="btn btn-dark mb-2 mt-1 col"
-										style="display: inline-block;">搜尋</button>
+									<button type="submit" class="btn btn-success mb-2 mt-1 col"
+										style="display: inline-block;">搜 尋 🔍</button>
 								</form>
 							</div>
-							<div class="col-2 mt-2" style="left: 0;">
-							<a class="btn btn-success" href="<%=request.getContextPath()%>/shop/listAllShop.jsp" role="button">選店家開團</a>
+							<div class="col-2 mt-2" style="text-align: right;">
+							<a class="btn btn btn-lg" style="background-color: #E6C786; color:white;" href="<%=request.getContextPath()%>/shop/listAllShop.jsp" role="button"><strong>選店家開團</strong></a>
 							</div>
 						</div>
 
@@ -84,14 +84,14 @@ int itemsPerPage = 10;
 						<c:forEach var="groupBuyVO" items="${list}" begin="<%=pageIndex%>"
 							end="<%=pageIndex+rowsPerPage-1%>">
 							<div class="col-lg-4 col-md-6 portfolio-item filter-card">
-								<div class="portfolio-wrap">
+								<div class="portfolio-wrap" style="border-radius: 15px;">
 									<div
-										style="color: white; padding: 5px; z-index: 99; background: rgba(0, 255, 204, 0.4); height: 100px; width: 330px;">
+										style="color: white; padding: 5px; z-index: 99; background:#66828E; height: 100px; width: 330px;">
 										<h5>${groupBuyVO.gb_id}
 											<strong>${groupBuyVO.shop_name}</strong>
 										</h5>
-										<p>揪團截止時間 <fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/></p>
-										<p>主揪: ${groupBuyVO.empVO.empName}</p>
+										<p>截止: <fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/></p>
+										<p>團主: ${groupBuyVO.empVO.empName}</p>
 									</div>
 									<img
 										src="<%=request.getContextPath()%>/util/DBGifReader?pic=shop_img1&table=shop&id_key=shop_id&id=${groupBuyVO.shop_id}"
@@ -105,7 +105,7 @@ int itemsPerPage = 10;
 											<FORM METHOD="post"
 												ACTION="<%=request.getContextPath()%>/groupbuy/GroupBuyServlet"
 												style="margin-bottom: 0px;">
-												<input type="submit" class="btn btn-outline-warning" value="加入"> 
+												<input type="submit" class="btn btn" style="background-color:#8D8FA4; color:white;" value="手刀加入👉"> 
 												<input type="hidden" name="gb_id" value="${groupBuyVO.gb_id}">
 												<input type="hidden" name="shop_id" value="${groupBuyVO.shop_id}">
 												<input type="hidden" name="action" value="showGB">
