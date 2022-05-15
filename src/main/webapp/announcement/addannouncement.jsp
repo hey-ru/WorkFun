@@ -63,8 +63,7 @@
 								<div class="input-group mb-3" style="margin-top: 0px;">
 									<span class="input-group-text" id="xx">發布者</span> <a
 										
-										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1">${empVO.empName}</a>
+									>${empVO.empName}</a>
 									<input
 										type="hidden" name="announcer" size="45" value="${empVO.empId}"
 										class="form-control" aria-label="Username"
@@ -75,9 +74,8 @@
 								<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon2">公告標題</span> <input
 										type="TEXT" name="announcement_title" size="45" value="${param.titile}"
-										class="form-control" required="required"
-										aria-label="Recipient's username"
-										aria-describedby="basic-addon2"> 
+										 required="required"
+										> 
 
 							
 
@@ -85,11 +83,11 @@
 								</div>
 
 								<div class="input-group mb-3">
-									<span class="input-group-text" id="basic-addon2">公告內容</span> <input
-										type="TEXT" name="announcement_content" size="45" value="${param.content}"
-										class="form-control" required="required"
-										aria-label="Recipient's username"
-										aria-describedby="basic-addon2"> 
+									<span class="input-group-text" id="basic-addon2">公告內容</span> 
+									<textarea name="announcement_content" rows="3" cols="20">${param.content}</textarea>
+									
+									
+							
 
 								</div>
 								<div class="input-group mb-3" id="55">
