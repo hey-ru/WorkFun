@@ -21,6 +21,8 @@ public interface GroupBuyListDAO_interface {
     
     //萬用複合查詢(傳入參數型態Map)(回傳 List)
     public List<GroupBuyListVO> getAll(Map<String, String[]> map);
+    //查詢參團中
+    public List<GroupBuyListVO> getAllJoin(Map<String, String[]> map);
 	
 }
 

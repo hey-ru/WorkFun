@@ -131,4 +131,9 @@ public class GroupBuyListService {
 	public List<GroupBuyListVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
 	}
+	
+	// 萬用查詢(參團中)
+		public List<GroupBuyListVO> getAllJoin(Map<String, String[]> map) {
+			return dao.getAllJoin(map);
+		}
 }

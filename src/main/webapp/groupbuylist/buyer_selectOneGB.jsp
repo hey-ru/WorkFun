@@ -100,6 +100,7 @@ td {
 										<td>${blist.qty}</td>
 										<td>${blist.price*blist.qty}</td>
 										<td>${blist.remark}</td>
+										
 										<c:set var="sum" value="${sum+(blist.price)*(blist.qty)}"></c:set>
 									</tr>
 								</c:forEach>

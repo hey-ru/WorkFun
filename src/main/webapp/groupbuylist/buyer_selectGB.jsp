@@ -80,6 +80,9 @@ td {
 										href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp">所有參團</a>
 									</li>
 									<li class="nav-item"><a class="nav-link"
+										href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet?action=Query&buyer=${empVO.empId}&gb.gb_status=0">參團中</a>
+									</li>
+									<li class="nav-item"><a class="nav-link"
 										href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet?action=listByCompositeQuery&buyer=${empVO.empId}&g.gb_status=0">歷史訂單</a>
 									</li>
 								</ul>

@@ -476,4 +476,10 @@ public class GroupBuyListJDBCDAO implements GroupBuyListDAO_interface {
 		dao.updateIsPayIsPickUp(groupBuyListVO5);
 	}
 
+	@Override
+	public List<GroupBuyListVO> getAllJoin(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

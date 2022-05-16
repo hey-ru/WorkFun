@@ -206,11 +206,13 @@ td {
 											<FORM METHOD="post" id="delete-confirm"
 												onclick="myAlertFunction(event)"
 												ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet"
-												onSubmit="javascript:return window.sweetAlert('確定不參加嗎？')">
+												onSubmit="javascript:return window.alert('確定不參加嗎？')">
 												<input type="hidden" name="gb_id" value="${mygb.gb_id}">
 												<input type="hidden" name="buyer" value="${empVO.empId}">
 												<input type="hidden" name="action" value="deleteMyGb">
-
+												<input type="submit" onclick="myAlertFunction(event)"
+													class="btn btn-secondary btn-sm" value="退團"
+													${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
 											</FORM>
 										</td>
 									</tr>

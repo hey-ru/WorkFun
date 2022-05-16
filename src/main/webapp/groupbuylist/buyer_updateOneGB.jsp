@@ -124,22 +124,33 @@ td {
 											style="font-size: 30px;" title="刪除此項"><i
 												class="bi bi-trash"></i></a></td>
 									</tr>
+									<c:set var="sum" value="${sum+(blist.price)*(blist.qty)}"></c:set>
 								</c:forEach>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><strong>總金額$${sum}</strong></td>
+									<td></td>
+									<td></td>
+								</tr>
 							</table>
-
+							<div></div>
 							<!-- [修改請求] -->
-							<div style="text-align: center;">
+							<div style="text-align: right;">
 								<input type="hidden" name="action" value="updateMany"> <input
 									type="submit" class="btn btn-success"
 									onclick="javascript:return window.alert('已送出修改')" value="送出訂單">
 							</div>
 						</FORM>
 					</div>
-					<div class="col-5" style="display: inline-block; text-align: start;">
-						<img src="<%=request.getContextPath()%>/shop/images/sticker.png">
+					<div class="col-4" style="display: inline-block;">
+						<%-- 												<img src="<%=request.getContextPath()%>/shop/images/sticker.png"> --%>
+
 					</div>
+
 				</div>
-			</div>
 		</main>
 		<!-- ======= 內容結束 ======= -->
 

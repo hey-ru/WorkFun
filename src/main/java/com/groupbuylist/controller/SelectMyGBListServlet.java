@@ -63,9 +63,9 @@ public class SelectMyGBListServlet extends HttpServlet {
 			GroupBuyVO groupBuyVO = gbSvc.getOneGB(gb_id);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			HttpSession session = req.getSession();
-			session.setAttribute("buyerlist", list);
-			session.setAttribute("groupBuyVO", groupBuyVO);
+//			HttpSession session = req.getSession();
+			req.setAttribute("buyerlist", list);
+			req.setAttribute("groupBuyVO", groupBuyVO);
 
 			String url = "/groupbuylist/buyer_selectOneGB.jsp";
 			// 成功轉交
@@ -248,6 +248,39 @@ public class SelectMyGBListServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher("/groupbuylist/buyer_selectHistory.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 			successView.forward(req, res);
 		}
+		
+		// 複合查詢(參團中)
+				if ("Query".equals(action)) {
+					List<String> errorMsgs = new LinkedList<String>();
+					// Store this set in the request scope, in case we need to
+					// send the ErrorPage view.
+					req.setAttribute("errorMsgs", errorMsgs);
+
+					/*************************** 1.將輸入資料轉為Map **********************************/
+					// 採用Map<String,String[]> getParameterMap()的方法
+					// 注意:an immutable java.util.Map
+					// Map<String, String[]> map = req.getParameterMap();
+
+					HttpSession session = req.getSession();
+					Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
+
+					// 以下的 if 區塊只對第一次執行時有效
+					if (req.getParameter("whichPage") == null) {
+						Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+						session.setAttribute("map", map1);
+						map = map1;
+					}
+
+					/*************************** 2.開始複合查詢 ***************************************/
+
+					GroupBuyListService gbListSvc = new GroupBuyListService();
+					List<GroupBuyListVO> list = gbListSvc.getAllJoin(map);
+					
+					/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+					req.setAttribute("listByCompositeQuery", list); // 資料庫取出的list物件,存入request
+					RequestDispatcher successView = req.getRequestDispatcher("/groupbuylist/buyer_selectGBStatus0.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+					successView.forward(req, res);
+				}
 
 //		(3-2)刪除項目
 		if ("deleteItem".equals(action)) {
