@@ -12,7 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
-public class JavaMail {
+public class JavaMailDuplicate {
 	
 	// 1.step 資料 1.寄件者 2.寄件者電子信箱密碼()  3.收件者 4.信件標題 5.內容
  // GMail user name (just the part before "@gmail.com")
@@ -26,10 +26,6 @@ public class JavaMail {
  //private static String TXT = "testjavamail";
  
  
-public static void main(String[] args) {
-	JavaMail javaMail=new JavaMail();
-javaMail.sendMail();
-}
 
 
  public String getRECIPIENT() {

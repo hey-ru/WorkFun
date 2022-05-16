@@ -19,9 +19,18 @@ import java.sql.*;
 
 
 
-public class EmpDAO implements EmpDAO_interface {
+public class EmpDAO implements EmpDAO_interface { 
 	
 	
+	
+
+	
+	private static final String LIKE_EMP_NAME = "select emp_name ,extension  from emp where  emp_name like  %?%  ;  ";
+	private static final String LIKE_EXTENSION = "select emp_name ,extension  from emp where  extension like  %?%  ;  ";
+	private static final String SELECT_EXTENSIONWITHID = "select extension from emp where extension = ? and emp_id != ? limit 1 ;  ";
+private static final String SELECT_EXTENSION = "select extension from emp where extension = ? limit 1 ;  ";
+	private static final String SELECT_MAIL = "select mail from emp where mail = ? limit 1 ;  ";
+	private static final String SELECT_MAILWITHID = "select mail from emp where mail = ? and emp_id != ? limit 1 ;  ";
 	private static final String LOGIN_STMT = "select * from emp where mail = ? and emp_password = ? ";
 	private static final String FORGOT_STMT = "select * from emp where mail = ? and birthday = ? ";
 	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
@@ -30,6 +39,127 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String DELETE = "DELETE FROM emp where emp_id = ?";
 //	private static final String UPDATE = "UPDATE emp set dep_id=?, emp_name=?, hire_date=?, resign_date=?, phone=?, extension=?, emp_password=?, hobby=?, skill=?, emp_profile=?, mail=?, birthday=?, emp_status=? where emp_id = ? ";
 	private static final String UPDATE = "UPDATE emp set ";
+	
+	 public List<EmpVO> selectByExtension(String extension){
+		 List<EmpVO> list = new ArrayList<EmpVO>();
+			EmpVO empVO = null;
+
+		
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			
+			
+			ResultSet rs = null;
+
+			try {
+				// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
+				// FROM emp order by emp_id";
+
+				con = getConectPool().getConnection();
+				pstmt = con.prepareStatement(LIKE_EXTENSION);
+			
+				rs = pstmt.executeQuery();
+				pstmt.setString(1, extension);
+				while (rs.next()) {
+					
+
+
+					empVO = new EmpVO();
+					
+					empVO.setEmpName(rs.getString("emp_name"));
+					
+					empVO.setExtension(rs.getString("extension"));
+					
+					list.add(empVO); // Store the row in the list
+				}
+
+				// Handle any driver errors
+
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			
+			}
+	return list;
+			
+		 
+	 }
+	 public List<EmpVO> selectByEmpName(String empName){
+		 List<EmpVO> list = new ArrayList<EmpVO>();
+			EmpVO empVO = null;
+
+		
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			
+			
+			ResultSet rs = null;
+
+			try {
+				// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
+				// FROM emp order by emp_id";
+
+				con = getConectPool().getConnection();
+				pstmt = con.prepareStatement(LIKE_EXTENSION);
+			
+				rs = pstmt.executeQuery();
+				pstmt.setString(1, empName);
+				while (rs.next()) {
+					
+
+
+					empVO = new EmpVO();
+					
+					empVO.setEmpName(rs.getString("emp_name"));
+					
+					empVO.setExtension(rs.getString("extension"));
+					
+					list.add(empVO); // Store the row in the list
+				}
+
+				// Handle any driver errors
+
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			
+			}
+	return list;
+			
+		 
+	 }
+	
+	
+		
+		
+	
+	
+	
+	
+	
+	
 	@Override
 	public int insert(EmpVO empVO) {
 
@@ -175,9 +305,7 @@ int count=0;
 			if (newemp.getHiredate() != null) {
 				sb.append("hire_date=?, ");
 			}
-			if (newemp.getResigndate() != null) {
-				sb.append("resign_date=?, ");
-			}
+			
 			if (newemp.getPhone() != null) {
 				sb.append("phone=?, ");
 			}
@@ -205,6 +333,13 @@ int count=0;
 			if (newemp.getEmpStatus() != null) {
 				sb.append("emp_status=?, ");
 			}
+			if(newemp.getResigndate()!=null)
+			{
+				sb.append("resign_date=?, ");
+			}	
+			else {
+				sb.append("resign_date=NULL, ");
+			}
 	
 				sb.append("emp_id=? ");
 			
@@ -229,10 +364,7 @@ int count=0;
 				pstmt.setDate(count, newemp.getHiredate());
 			} 
 			
-			if (newemp.getResigndate() != null) {
-				count++;
-				pstmt.setDate(count, newemp.getResigndate());
-			} 
+			
 			
 			if (newemp.getPhone() != null) {
 				count++;
@@ -276,7 +408,13 @@ int count=0;
 				count++;
 				pstmt.setInt(count, newemp.getEmpStatus());
 			} 
-			
+			if (newemp.getResigndate() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getResigndate());
+			} 
+			else {
+
+			}
 		
 			
 			count++;
@@ -477,7 +615,114 @@ int count=0;
 		}
 return 1;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public Integer selectMail(String mail,Integer empId) {
+		Integer col;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
+		try {
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(SELECT_MAILWITHID, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+		
+			
+
+			pstmt.setString(1, mail);
+			pstmt.setInt(2, empId);
+
+			rs = pstmt.executeQuery();
+			
+			
+			rs.last();
+		
+			col = rs.getRow();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return col;
+	}
+	public Integer selectMail(String mail) {
+		Integer col;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(SELECT_MAIL, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+		
+			
+
+			pstmt.setString(1, mail);
+
+			rs = pstmt.executeQuery();
+			
+			
+			rs.last();
+		
+			col = rs.getRow();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return col;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public int delete(Integer EmpId) {
 
 		Connection con = null;
@@ -544,6 +789,158 @@ return 1;
 		}
 return 1;
 	}
+	
+	public Integer selectExtension(String extension) {
+
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+Integer col = null;
+		try {
+			
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(SELECT_EXTENSION, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+
+		
+
+			pstmt.setString(1, extension);
+
+			rs = pstmt.executeQuery();
+			
+			
+			rs.last();
+		
+			col = rs.getRow();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return col;
+	}
+	
+	public Integer selectExtension(String extension,Integer empId) {
+
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+Integer col = null;
+		try {
+			
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(SELECT_EXTENSIONWITHID, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+
+			pstmt.setString(1, extension);
+
+			pstmt.setInt(2, empId);
+
+			rs = pstmt.executeQuery();
+			
+			
+			rs.last();
+		
+			col = rs.getRow();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return col;
+	}
+	
+	
+	public String findEmpNameByExtension(String extension) {
+
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+String empName = null;
+		try {
+			
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(LIKE_EMP_NAME);
+			
+
+			pstmt.setString(1, extension);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo Domain objects
+				
+				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
+			
+				empName=(rs.getString("emp_name"));
+			
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return empName;
+	}
+	
+	
+	
+	
+	
 
 	public EmpVO findByPrimaryKey(Integer empno) {
 
@@ -1412,4 +1809,6 @@ System.out.println(value);
 //		}
 		
 	}
+
+	
 }

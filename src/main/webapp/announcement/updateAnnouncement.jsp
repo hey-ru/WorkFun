@@ -26,6 +26,11 @@
 
     <title>WorkFunBack</title>
 
+
+
+
+
+
 </head>
 
 <body id="page-top">
@@ -93,12 +98,21 @@
 										aria-describedby="basic-addon2"> 
 
 								</div>
+								
 								<div class="input-group mb-3">
-									<span class="input-group-text" id="basic-addon2">公告內容</span> <input
-										type="TEXT" name="announcement_content" size="45" value="${param.announcement_content}"
-										class="form-control" aria-label="Recipient's username"
-										aria-describedby="basic-addon2"> 
+									<span class="input-group-text" id="basic-addon2">公告內容</span> 
+									<textarea name="announcement_content" rows="3" cols="20" style="width:810px">${param.announcement_content}</textarea>
+									
+									
+							
+
 								</div>
+								
+								
+								
+								
+								
+								
 								
 								<c:forEach var="announcement_mapping" items="${list}" >
 									<div class="input-group mb-3">
@@ -119,10 +133,13 @@
 									</div>
 								
 								</c:forEach>
-								
+								<label class="input-group-text" for="inputGroupFile01" style="width:90px">新增圖片</label>
 								
 									<div class="input-group mb-3" id="55">
-									<label class="input-group-text" for="inputGroupFile01">新增圖片</label>
+									
+									
+									
+									
 								
 								<%-- 	<input type="file" name="empProfile" size="45"
 										value="${param.empProfile}" class="form-control"
@@ -133,8 +150,8 @@
 							
 								<div class="input-group mb-3">
 	<input type="hidden" name="announcement_id" value="${param.announcement_id}"> 
-									<input type="radio" name="announcement_status" value="1"> <label>公開</label>
-										<input type="radio" name="announcement_status" value="2"><label>非公開</label>
+									<input type="radio" name="announcement_status" value="1" ${param.announcement_status==1 ? "checked" : ""}> <label>公開</label>
+										<input type="radio" name="announcement_status" value="2" ${param.announcement_status==2 ? "checked" : ""}><label>非公開</label>
 										
 										
 										
@@ -166,10 +183,16 @@
 									<input type="hidden" name="announcementImg_id" value="${announcement_mapping}" >	
 								<input
 										type="submit" value="刪除" class="input-group-text"
-										id="basic-addon2">
+										id="basic-addon2" style="z-index:100;position: relative;">
 											<input type="hidden" name="announcement_id" value="${param.announcement_id}"> 
 											<input type="hidden" name="action" value="deleteImg"> 
 									</FORM>
+									<br>
+									<br>
+									<br>
+									<br>
+									<br>
+									<br>
 							</c:forEach>
 							</div>
 									</main>
@@ -207,51 +230,69 @@
 
 
 <script>
-        let quantity = document.getElementById("quantity")
-        let body = document.getElementById("55")
-        let inputnum = 1;
-        quantity.setAttribute("value", inputnum-1)
-        let input = document.createElement("input");
-        let img = document.createElement("img");
-        input.setAttribute("class", "new")
-            input.setAttribute("name", inputnum)
+
+$('#55').css('display', 'initial');
+
+let quantity = document.getElementById("quantity")
+let body = document.getElementById("55")
+let inputnum = 1;
+quantity.setAttribute("value", inputnum-1)
+let input = document.createElement("input");
+let img = document.createElement("img");
+let br = document.createElement("br");
+let div = document.createElement("div");
+div.setAttribute("width",10)
+        div.setAttribute("height",10)
+input.setAttribute("class", "new")
+    input.setAttribute("name", inputnum)
+input.setAttribute("id", inputnum)
+input.setAttribute("type", "file")
+  input.setAttribute("width", 245)
+input.setAttribute("accept", "image/*")
+img.setAttribute("width", 200)
+img.setAttribute("height", 200)
+body.append(input)
+body.append(img)
+body.append(br)
+document.getElementById(inputnum).onchange = addImg;
+function addImg(e) {
+    let br1 = document.createElement("br");
+    let url = URL.createObjectURL(e.target.files[0])
+       let div1 = document.createElement("div");
+        div1.setAttribute("width",10)
+        div1.setAttribute("height",10)
+     
+    if (e.target.getAttribute("class") === "new") {
+        inputnum++;
+        e.target.nextSibling.setAttribute("src", url);
+        e.target.removeAttribute("class");
+        input = document.createElement("input");
+        img = document.createElement("img");
         input.setAttribute("id", inputnum)
+           input.setAttribute("width", 245)
+        input.setAttribute("class", "new")
         input.setAttribute("type", "file")
+            input.setAttribute("name", inputnum)
         input.setAttribute("accept", "image/*")
+        
         img.setAttribute("width", 200)
         img.setAttribute("height", 200)
         body.append(input)
         body.append(img)
-        document.getElementById(inputnum).onchange = addImg;
-        function addImg(e) {
-            let url = URL.createObjectURL(e.target.files[0])
-            if (e.target.getAttribute("class") === "new") {
-                inputnum++;
-                e.target.nextSibling.setAttribute("src", url);
-                e.target.removeAttribute("class");
-                input = document.createElement("input");
-                img = document.createElement("img");
-                input.setAttribute("id", inputnum)
-                input.setAttribute("class", "new")
-                input.setAttribute("type", "file")
-                    input.setAttribute("name", inputnum)
-                input.setAttribute("accept", "image/*")
-                img.setAttribute("width", 200)
-                img.setAttribute("height", 200)
-                body.append(input)
-                body.append(img)
-                quantity.setAttribute("value", inputnum - 1)
-            }
-            else {
-                let url = URL.createObjectURL(e.target.files[0])
-                e.target.nextSibling.setAttribute("src", url);
+ body.append(br1)
+      
+        quantity.setAttribute("value", inputnum - 1)
+    }
+    else {
+        let url = URL.createObjectURL(e.target.files[0])
+        e.target.nextSibling.setAttribute("src", url);
 
-            }
-            document.getElementById(inputnum).onchange = addImg;
-        }
+    }
+    document.getElementById(inputnum).onchange = addImg;
+}
 
     </script>
-    <script>
+   <!--  <script>
 document.getElementById("profile").onchange = addImg;
 function addImg(e) {
 	 let url = URL.createObjectURL(e.target.files[0])
@@ -263,33 +304,9 @@ function addImg(e) {
 }
 
 
-</script>
-
-<script>
-let list=${list};
-console.log(list);
-for(let imgId of list ){
-	console.log(imgId)
-	let profile="profile"+imgId
-	let profileimg="profileimg"+imgId
-	console.log(profile)
-		console.log(profileimg)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
+</script> -->
 
 
-
-</script>
 
 </body>
 

@@ -100,6 +100,7 @@
 										class="form-control" placeholder=""
 										aria-label="Recipient's username"
 										aria-describedby="basic-addon2">
+										<font color="red">	${errorMsgs.extension}${errorMsgs.dupextension}</font>
 
 								</div>
 								<div class="input-group mb-3">
@@ -111,7 +112,11 @@
 										type="TEXT" name="mail" size="45" value="${param.mail}"
 										class="form-control" aria-label="Recipient's username"
 										aria-describedby="basic-addon2" required="required">
+										<font color="red">${errorMsgs.dupmail}</font>
+									
 								</div>
+								
+								
 								<div class="input-group mb-3">
 									<span class="input-group-text" >生日</span> <input
 									id="f_date2"

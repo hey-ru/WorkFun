@@ -1,9 +1,10 @@
 package com.emp.controller;
 
-import static com.util.JavaMail.genAuthCode;
+
 import static com.util.String2SQLDate.strToDate;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,7 +27,11 @@ import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.permission.model.PermissionService;
 import com.permissionmapping.model.PermissionMappingService;
-import com.util.JavaMail;
+import com.util.JavaMailDuplicate;
+
+
+
+
 @MultipartConfig
 @WebServlet("/empServlet")
 public class EmpServlet extends HttpServlet {
@@ -248,6 +253,9 @@ public class EmpServlet extends HttpServlet {
 				
 					newempVO.setEmpProfile(headimg);
 					if(req.getParameter("resigndate")==null || req.getParameter("resigndate").trim().length()==0) {
+						Date date=null;
+						System.out.println(date);
+						newempVO.setResigndate(date);
 						newempVO.setEmpStatus((byte)1);
 					}
 					else {
@@ -255,15 +263,38 @@ public class EmpServlet extends HttpServlet {
 						newempVO.setEmpStatus((byte)2);
 					}
 			
-				newempVO.setMail(mail);
+				
 				newempVO.setBirthday(birthday);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/update_emp_input.jsp");
+							.getRequestDispatcher("/back/update_emp_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
+				
+			if(	empSvc.selectMail(mail,empId)==1) {
+				errorMsgs.put("dupmail","信箱重複");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back/update_emp_input.jsp");
+				failureView.forward(req, res);
+				return; //程式中斷
+				
+			}
+			if(	empSvc.selectExtension(extension,empId)==1) {
+				errorMsgs.put("dupextension","信箱重複");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back/update_emp_input.jsp");
+				failureView.forward(req, res);
+				return; //程式中斷
+				
+			}
+			
+			
+			newempVO.setMail(mail);
+				
+				
+				
 				
 				/***************************2.開始修改資料*****************************************/
 				
@@ -360,7 +391,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				oldempVO.setDepId(depId);
 //				oldempVO.setHiredate(hiredate);
 				oldempVO.setPhone(phone);
-				oldempVO.setExtension(extension);
+			
 				oldempVO.setHobby(hobby);
 				oldempVO.setSkill(skill);
 				if(empPassword != null ) {
@@ -370,7 +401,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				oldempVO.setEmpProfile(headimg);
 			
 			
-				oldempVO.setMail(mail);
+				
 				oldempVO.setBirthday(birthday);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -379,6 +410,27 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
+				
+
+				if(	empSvc.selectMail(mail,empId)==1) {
+					errorMsgs.put("dupmail","信箱重複");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/emp/frontProfile.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+					
+				}
+				if(	empSvc.selectExtension(extension,empId)==1) {
+					errorMsgs.put("dupextension","分機重複");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/emp/frontProfile.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+					
+				}
+				
+				oldempVO.setMail(mail);
+				oldempVO.setExtension(extension);
 				
 				/***************************2.開始修改資料*****************************************/
 				
@@ -409,7 +461,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 			
         	
         	EmpService empSvc = new EmpService();
-			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+        	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -448,6 +500,9 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				if (extension == null || extension.trim().length() == 0) {
 					errorMsgs.put("extension","分機請勿空白");
 				}
+				if ( extension.trim().length() == 4) {
+					errorMsgs.put("extension","分機長度為4");
+				}
 				String hobby = req.getParameter("hobby").trim();
 				String skill = req.getParameter("skill").trim();
 			
@@ -472,12 +527,12 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				newempVO.setDepId(depId);
 				newempVO.setHiredate(hiredate);
 				newempVO.setPhone(phone);
-				newempVO.setExtension(extension);
+			
 				newempVO.setHobby(hobby);
 				newempVO.setSkill(skill);
 				newempVO.setEmpPassword(password);
 				newempVO.setEmpProfile(headimg);
-				newempVO.setMail(mail);
+				
 				newempVO.setBirthday(birthday);
 				
 				
@@ -491,6 +546,24 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 					return;
 				}
 				
+				if(	empSvc.selectMail(mail)==1) {
+					errorMsgs.put("dupmail","信箱重複");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back/addEmp.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+					
+				}
+				if(	empSvc.selectExtension(extension)==1) {
+					errorMsgs.put("dupextension","分機重複");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back/addEmp.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+					
+				}
+				newempVO.setMail(mail);
+				newempVO.setExtension(extension);
 				/***************************2.開始新增資料***************************************/
 				
 //				empSvc.addEmp(empVO);
@@ -929,10 +1002,28 @@ return;
 
 				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 				req.setAttribute("errorMsgs", errorMsgs);
+				
+				if (req.getParameter("birthday") == null || req.getParameter("birthday").trim().length() == 0) {
+					errorMsgs.put("birthday","生日請勿空白");
+				}
+				if (req.getParameter("mail") == null || req.getParameter("mail").trim().length() == 0) {
+					errorMsgs.put("birthday","信箱請勿空白");
+				}
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/login/forgot.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+				}
+				
+				
+				
+				
 	java.sql.Date birthday=strToDate(req.getParameter("birthday"));
-
+System.out.println(birthday);
 			 String mail=req.getParameter("mail");
-			
+			System.out.println(mail);
 				EmpService empSvc = new EmpService();
 				EmpVO empVO=empSvc.getbymailandbirthday(mail, birthday);
 			   if(empVO==null) {
@@ -942,20 +1033,28 @@ return;
 					successView.forward(req, res);
 					return;
 			   }
-			   else {
-				   JavaMail javaMail=new JavaMail();
-				   javaMail.setRECIPIENT(mail);
-				   String authCode=genAuthCode();
-				String text="您的驗證碼為["+authCode+"]請在修改頁面重新設定您的密碼";
-				   javaMail.setTXT(text);
-				   javaMail.sendMail();
-			session.setAttribute("authCode", authCode);
-				   Integer empId=empVO.getEmpId();
+			  
+			   else { 
 				   
-				   
-				   String param = "?empId="+empVO.getEmpId();
-				   
-				   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"+param); // 成功轉交listEmps_ByCompositeQuery.jsp
+				   try {
+					JavaMailDuplicate javaMail=new JavaMailDuplicate();
+					javaMail.sendMail();
+				   } catch(Exception e) {
+					   e.printStackTrace();
+				   }
+				  
+//				   javaMail.setRECIPIENT(mail);
+//				   String authCode=genAuthCode();
+//				String text="您的驗證碼為["+authCode+"]請在修改頁面重新設定您的密碼";
+//				   javaMail.setTXT(text);
+//				   javaMail.sendMail();
+//			session.setAttribute("authCode", authCode);
+//				   Integer empId=empVO.getEmpId();
+//				   
+//				   
+//				   String param = "?empId="+empVO.getEmpId();
+				   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"); 
+//				   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"+param); // 成功轉交listEmps_ByCompositeQuery.jsp
 					successView.forward(req, res);
 					return;
 			   }

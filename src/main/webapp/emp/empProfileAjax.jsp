@@ -230,6 +230,8 @@
 													value="${empVO.birthday}" class="form-control"
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
+													<font color="red">${errorMsgs.dupmail}</font>
+													${errorMsgs.dupmail}
 											</div>
 										</div>
 

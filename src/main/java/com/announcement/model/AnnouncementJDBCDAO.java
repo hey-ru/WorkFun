@@ -215,6 +215,9 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			if (announcementVO.getAnnouncement_content() != null) {
 				sb.append("announcement_content=?, ");
 			}
+			if (announcementVO.getAnnouncement_status() != null) {
+				sb.append("announcement_status=?, ");
+			}
 			
 sb.append("announcement_id=? ");
 			
@@ -227,6 +230,10 @@ sb.append("announcement_id=? ");
 			if (announcementVO.getAnnouncement_content() != null) {
 				count++;
 				pstmt.setString(count, announcementVO.getAnnouncement_content());
+			}
+			if (announcementVO.getAnnouncement_content() != null) {
+				count++;
+				pstmt.setByte(count, announcementVO.getAnnouncement_status());
 			}
 			count++;
 			

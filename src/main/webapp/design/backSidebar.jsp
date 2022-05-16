@@ -163,45 +163,6 @@
 				</c:forEach>	
             
              
-            <c:forEach var="permissionIds" items="${empPm}">
-				<c:if test="${permissionIds==1}" var="condition">
-            
-            
-               <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>公告管理</span>
-                </a>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="buttons.html">新增公告</a>
-                        <a class="collapse-item" href="cards.html">修改公告</a>
-                        <a class="collapse-item" href="cards.html">查詢公告</a>
-                        <a class="collapse-item" href="cards.html">刪除公告</a>
-                    </div>
-                </div>
-            </li>
-                    
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>塗鴉牆管理</span>
-                </a>
-                <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-
-                        <a class="collapse-item" href="cards.html">查詢貼文</a>
-                        <a class="collapse-item" href="cards.html">刪除貼文</a>
-                    </div>
-                </div>
-            </li>
-            
-               </c:if> 
-				</c:forEach>	
             
         </ul>
         <!-- End of Sidebar -->

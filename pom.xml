@@ -9,8 +9,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
-	<dependencies>
+	<dependencies>	
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
@@ -73,7 +72,7 @@
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>4.0.3</version>
-		</dependency>
+		</dependency> 
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>

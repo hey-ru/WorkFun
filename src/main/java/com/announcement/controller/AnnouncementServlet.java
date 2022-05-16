@@ -56,7 +56,7 @@ public class AnnouncementServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
-		System.out.println(871);
+	
 		String action = req.getParameter("action");
 HttpSession session=req.getSession();
 Map<String, String> errorMap=new LinkedHashMap<String, String>();
@@ -180,7 +180,8 @@ if("getOne".equals(action)) {
 				 "&announcer="+  announcementVO.getAnnouncer()+
 				 "&announcer_name="  +empService.getOneEmp(announcementVO.getAnnouncer()).getEmpName()+
 				       "&announcement_title="  +announcementVO.getAnnouncement_title()+
-				       "&announcement_content="+announcementVO.getAnnouncement_content();
+				       "&announcement_content="+announcementVO.getAnnouncement_content()+
+				       "&announcement_status="+announcementVO.getAnnouncement_status();;
 				    
 				     
 		String url = "/announcement/frontAnnouncement.jsp"+param;
@@ -217,7 +218,7 @@ if("getOne_For_Update".equals(action)) {
 				 "&announcer_name="  +empService.getOneEmp(announcementVO.getAnnouncer()).getEmpName()+
 				       "&announcement_title="  +announcementVO.getAnnouncement_title()+
 				       "&announcement_content="+announcementVO.getAnnouncement_content()+
-				       "&getAnnouncement_status="+announcementVO.getAnnouncement_status();
+				       "&announcement_status="+announcementVO.getAnnouncement_status();
 				     
 		String url = "/announcement/updateAnnouncement.jsp"+param;
 		RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
@@ -251,6 +252,7 @@ if("update".equals(action)) {
 		
 	}
 	
+	
 	if(!errorMap.isEmpty()) {
 		RequestDispatcher failureView = req
 				.getRequestDispatcher("/back/backmain.jsp");
@@ -264,9 +266,10 @@ if("update".equals(action)) {
 	Integer quantity= Integer.valueOf(req.getParameter("quantity"));
 	Integer totalImg=oldquantity+quantity;
 	Announcement_mappingService annmapSvc=new Announcement_mappingService();
-	System.out.println(oldquantity);
-	System.out.println(quantity);
+
 	AnnouncementVO announcementVO=new AnnouncementVO();
+	
+	announcementVO.setAnnouncement_status(Byte.valueOf(req.getParameter("announcement_status")));
 	announcementVO.setAnnouncement_content(announcement_content);
 	announcementVO.setAnnouncement_title(announcement_title);
 	announcementVO.setAnnouncement_id(announcement_id);
@@ -279,7 +282,7 @@ else {
 	
 
 	for(int i=0;i<imgNumArr.length;i++) {
-		System.out.println(imgNumArr[i]);
+		
 		String filePoint=imgNumArr[i]+"$";
 		Integer imgNum=Integer.valueOf(imgNumArr[i]);
 		Announcement_mappingVO announcement_mappingVO= new Announcement_mappingVO();

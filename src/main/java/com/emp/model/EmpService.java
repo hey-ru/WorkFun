@@ -33,6 +33,26 @@ public class EmpService {
 
 	
 	}
+    public Integer selectMail(String mail) {
+    	
+    	
+    	return dao.selectMail(mail);
+    }
+  public Integer selectMail(String mail,Integer empId) {
+    	
+    	
+    	return dao.selectMail(mail,empId);
+    }
+  public Integer selectExtension(String extension) {
+  	
+  	
+  	return dao.selectExtension(extension);
+  }
+public Integer selectExtension(String extension,Integer empId) {
+  	
+  	
+  	return dao.selectExtension(extension,empId);
+  }
 	
 	public byte[] uploadImage(Part part) throws IOException {
 		InputStream ins= part.getInputStream();
@@ -128,15 +148,15 @@ public int updateEmp(EmpVO empVO,Connection con) {
 	
 	
 	
-	public static void main(String[] args) {
-		EmpService empSvc = new EmpService();
-	    List<EmpVO> list = empSvc.getAll();
-	    for (EmpVO empVO : list) {
-			System.out.println(empVO.getEmpId());
-			System.out.println(empVO.getEmpName());
-			System.out.println(empVO.getBirthday());
-		}
-	}
+//	public static void main(String[] args) {
+//		EmpService empSvc = new EmpService();
+//	    List<EmpVO> list = empSvc.getAll();
+//	    for (EmpVO empVO : list) {
+//			System.out.println(empVO.getEmpId());
+//			System.out.println(empVO.getEmpName());
+//			System.out.println(empVO.getBirthday());
+//		}
+//	}
 	
 	
 	

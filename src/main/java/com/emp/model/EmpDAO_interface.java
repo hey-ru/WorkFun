@@ -20,7 +20,13 @@ public interface EmpDAO_interface {
      	EmpVO selectForLogin(String mail, String password,Connection con);
         public EmpVO findbymailandbirthday(String mail,java.sql.Date birthday);
         public EmpVO findbymailandbirthday(String mail,java.sql.Date birthday,Connection con);
-     	
+        public Integer selectMail(String mail);
+        public Integer selectMail(String mail,Integer empId);
+        public Integer selectExtension(String extension);
+        public Integer selectExtension(String extension,Integer empId);
+       
+        public List<EmpVO> selectByExtension(String extension);
+        public List<EmpVO> selectByEmpName(String empName);
           //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //        public List<EmpVO> getAll(Map<String, String[]> map); 
 }

@@ -25,8 +25,11 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
-	private static final String LOGIN_STMT = "select * from emp where mail = ? and emp_password = ? ";
 	
+	
+	private static final String SELECT_MAILWITHID = "select mail from emp where mail = ? and emp_id != ? limit 1 ;  ";
+	private static final String LOGIN_STMT = "select * from emp where mail = ? and emp_password = ? ";
+	private static final String SELECT_MAIL = "select mail from emp where mail = ? limit 1 ;  ";
 	private static final String INSERT_STMT = "INSERT INTO emp (dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT emp_id,dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp order by emp_id ";
 	private static final String GET_ONE_STMT = "SELECT dep_id,emp_name,hire_date,resign_date,phone,extension,emp_password,hobby,skill,emp_profile,mail,birthday,emp_status FROM emp where emp_id = ?";
@@ -196,9 +199,7 @@ int count=0;
 			if (newemp.getHiredate() != null) {
 				sb.append("hire_date=?, ");
 			}
-			if (newemp.getResigndate() != null) {
-				sb.append("resign_date=?, ");
-			}
+			
 			if (newemp.getPhone() != null) {
 				sb.append("phone=?, ");
 			}
@@ -226,7 +227,13 @@ int count=0;
 			if (newemp.getEmpStatus() != null) {
 				sb.append("emp_status=?, ");
 			}
-	
+			if(newemp.getResigndate()!=null)
+			{
+				sb.append("resign_date=?, ");
+			}	
+			else {
+				sb.append("resign_date=NULL, ");
+			}
 				sb.append("emp_id=? ");
 			
 			sb.append("where emp_id = ? ");
@@ -298,7 +305,13 @@ int count=0;
 				pstmt.setInt(count, newemp.getEmpStatus());
 			} 
 			
-		
+			if (newemp.getResigndate() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getResigndate());
+			} 
+			else {
+
+			}
 			
 			count++;
 			pstmt.setInt(count, newemp.getEmpId()); 
@@ -359,9 +372,7 @@ int count=0;
 			if (newemp.getHiredate() != null) {
 				sb.append("hire_date=?, ");
 			}
-			if (newemp.getResigndate() != null) {
-				sb.append("resign_date=?, ");
-			}
+			
 			if (newemp.getPhone() != null) {
 				sb.append("phone=?, ");
 			}
@@ -389,7 +400,14 @@ int count=0;
 			if (newemp.getEmpStatus() != null) {
 				sb.append("emp_status=?, ");
 			}
-	
+			if(newemp.getResigndate()!=null)
+			{
+				sb.append("resign_date=?, ");
+			}	
+			else {
+				sb.append("resign_date=NULL, ");
+			}
+		
 				sb.append("emp_id=? ");
 			
 			sb.append("where emp_id = ? ");
@@ -413,10 +431,7 @@ int count=0;
 				pstmt.setDate(count, newemp.getHiredate());
 			} 
 			
-			if (newemp.getResigndate() != null) {
-				count++;
-				pstmt.setDate(count, newemp.getResigndate());
-			} 
+			
 			
 			if (newemp.getPhone() != null) {
 				count++;
@@ -461,7 +476,15 @@ int count=0;
 				pstmt.setInt(count, newemp.getEmpStatus());
 			} 
 			
-		
+			if (newemp.getResigndate() != null) {
+				count++;
+				pstmt.setDate(count, newemp.getResigndate());
+			} 
+			else {
+				
+			
+
+			}
 			
 			count++;
 			pstmt.setInt(count, newemp.getEmpId()); 
@@ -632,6 +655,120 @@ return 1;
 		}
 return empVO;
 	}
+	
+	public Integer selectMail(String mail) {
+		Integer col;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(SELECT_MAIL, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+
+			pstmt.setString(1, mail);
+
+			rs = pstmt.executeQuery();
+			
+			
+			rs.last();
+		
+			col = rs.getRow();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return col;
+	}
+	
+	public Integer selectMail(String mail,Integer empId) {
+		Integer col;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			
+
+			try {
+				Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(SELECT_MAILWITHID, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+
+			pstmt.setString(1, mail);
+
+			pstmt.setInt(2, empId);
+
+			rs = pstmt.executeQuery();
+			
+			
+			rs.last();
+		
+			col = rs.getRow();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return col;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public EmpVO findByPrimaryKey(Integer empno,Connection oneConnection) {
 
 		EmpVO empVO = null;
@@ -964,7 +1101,9 @@ return list;
 
 	public static void main(String[] args) throws IOException {
 
-//		EmpDAO dao = new EmpDAO();
+		EmpJDBCDAO dao = new EmpJDBCDAO();
+		
+	System.out.println(dao.selectMail("1"));
 //		EmpVO empVO1 = new EmpVO();
 //		FileInputStream in = new FileInputStream("/Users/lin/tomcat.gif");
 //		byte[] buf = new byte[in.available()];
@@ -1136,8 +1275,11 @@ return list;
 
 //		
 //		dao.delete(new Integer (1000));
-
+//
 //		EmpVO empVO3 = dao.findByPrimaryKey(1001);
+//		Date date=null;
+//		empVO3.setResigndate(date);
+//		dao.update(empVO3);
 //		System.out.print(empVO3.getEmpName() + ",");
 //		System.out.print(empVO3.getDepId() + ",");
 //		System.out.print(empVO3.getEmpPassword() + ",");
@@ -1181,6 +1323,30 @@ return list;
 
 	@Override
 	public EmpVO findbymailandbirthday(String mail, Date birthday, Connection con) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer selectExtension(String extension) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer selectExtension(String extension, Integer empId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EmpVO> selectByExtension(String extension) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EmpVO> selectByEmpName(String empName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

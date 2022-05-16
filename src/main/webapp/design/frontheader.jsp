@@ -53,19 +53,20 @@
                             </div>
                         </div>
                     </li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropbtn">塗鴉牆</button>
-                            <div class="dropdown-content">
-                                <a href="#">Link 1</a>
-                                <a href="#">Link 2</a>
-                                <a href="#">Link 3</a>
-                            </div>
-                        </div>
-                    </li>
+                 
                 </ul>
                 </nav>
-
+  <li> 
+                            <div >   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
+							enctype="multipart/form-data">
+                               <input type="text"> 
+                               </FORM>
+                                  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
+							enctype="multipart/form-data">
+                                 <input type="text">
+                                 </FORM> 
+                            </div>
+                        </li>
                         <!-- 個人頁面dropdown -->
                         <nav class="navbar order-last">
                         <ul class="navbar-right">
@@ -80,6 +81,7 @@
                                 </div>
                             </div>
                         </li>
+                      
                         
                         <li class="nav-item dropdown pe-3">
 

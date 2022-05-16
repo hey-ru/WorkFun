@@ -190,6 +190,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 													value="${empVO.phone}" class="form-control" placeholder=""
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
+													<font color="red">	${errorMsgs.phone}</font>
 											</div>
 										</div>
 
@@ -200,6 +201,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 													value="${empVO.extension}" class="form-control"
 													 aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
+														<font color="red">	${errorMsgs.extension}${errorMsgs.dupextension}</font>
 											</div>
 										</div>
 
@@ -232,6 +234,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 													value="${empVO.mail}" class="form-control"
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
+												<font color="red">${errorMsgs.dupmail}</font>	
 											</div>
 										</div>
 
@@ -245,9 +248,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 													aria-describedby="basic-addon2">
 											</div>
 										</div>
-										<div>
-										<font color="red">${errorMsgs.empId}${errorMsgs.empName}${errorMsgs.depId}${errorMsgs.hiredate}${errorMsgs.phone}${errorMsgs.extension}${errorMsgs.birthday}</font>
-										</div>
+										
 
 
 

@@ -60,14 +60,14 @@
                                            <input
 										type="TEXT" name="mail" size="45" value="${param.mail}"
 										class="form-control" aria-label="Username" placeholder="mail"
-										aria-describedby="basic-addon1">
+										aria-describedby="basic-addon1">${errorMsgs.mail}
                                         </div>
                                         
                                     <br>
                                       <input
 										type="text" name="birthday" size="45" value="${param.birthday}"
 										class="form-control" aria-label="Username" placeholder="如19940619"
-										aria-describedby="basic-addon1">${errorMsgs.forgot}
+										aria-describedby="basic-addon1">${errorMsgs.birthday}${errorMsgs.forgot}
                                      <br>
                                      
                                     <br>
