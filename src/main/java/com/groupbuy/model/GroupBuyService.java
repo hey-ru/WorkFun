@@ -13,8 +13,8 @@ public class GroupBuyService {
 	private GroupBuyDAO_interface dao;
 
 	public GroupBuyService() {
-//		dao = new GroupBuyDAO();
-		dao=new GroupBuyJDBCDAO();
+		dao = new GroupBuyDAO();
+//		dao=new GroupBuyJDBCDAO();
 	}
 
 	public GroupBuyVO addGroupBuy(Integer shop_id,String shop_name,Integer gb_owner,Timestamp start_time,Timestamp end_time,Timestamp arr_time,Integer gb_status,Integer min_amt) {

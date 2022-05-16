@@ -54,20 +54,5 @@ public class AddGBServlet extends HttpServlet {
 					RequestDispatcher successView = req.getRequestDispatcher(url); 
 					successView.forward(req, res);
 				}
-				
-				
-//				GroupBuyService gbSvc = new GroupBuyService();
-//			     GroupBuyVO groupBuyVO = gbSvc.getOneGB(1002);
-//			 Timestamp aTimestamp= groupBuyVO.getEnd_time();
-//			 System.out.println(aTimestamp);
-//			 Long aLong=aTimestamp.getTime();
-//			 Long b=new GregorianCalendar().getTime().getTime();
-//			 Long cLong=System.currentTimeMillis();
-//			 
-//			   Timestamp bTimestamp=new Timestamp((aLong-b));
-//			   System.out.println(aLong);
-//			   System.out.println(b);
-
-		
 	}
 }

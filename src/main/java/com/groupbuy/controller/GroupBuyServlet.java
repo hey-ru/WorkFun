@@ -51,7 +51,7 @@ public class GroupBuyServlet extends HttpServlet {
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				HttpSession session = req.getSession();
 				session.setAttribute("groupBuyVO", groupBuyVO);
-				System.out.println(groupBuyVO.toString());
+				
 				
 				//再取得一次店家菜單物件集合,以顯示於填寫揪團單畫面
 				MenuService menuService = new MenuService();
@@ -261,7 +261,7 @@ public class GroupBuyServlet extends HttpServlet {
 	
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());
 				String shop_name = req.getParameter("shop_name");
-				System.out.println(shop_name);
+				
 				Integer gb_owner = Integer.valueOf(req.getParameter("gb_owner").trim());
 				
 				Timestamp start_time = null;

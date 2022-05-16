@@ -338,7 +338,6 @@ public class GroupBuyJDBCDAO implements GroupBuyDAO_interface {
 			          + jdbcUtil_CompositeQuery.get_WhereCondition(map)
 			          + " ORDER BY gb_status, end_time DESC ";
 				pstmt = con.prepareStatement(finalSQL);
-				System.out.println("●●finalSQL(by DAO) = "+finalSQL);
 			
 			rs = pstmt.executeQuery();
 
