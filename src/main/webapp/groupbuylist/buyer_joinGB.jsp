@@ -25,7 +25,7 @@ int orderNumber = 1;
 	margin-top: 20px;
 /* 	margin-right: auto; */
 	margin-left: auto;
-	background-color: #DDCFC2;
+	background-color: #D7CDD5;
 	padding: 30px;
 	border-radius: 10px;
 }
@@ -85,7 +85,7 @@ tbody td {
 			<div class="row">
 			<!-- ====================== 左 ====================== -->
 			<div id="mainleft" class="col-4" style="height: max-content;font-weight:bold; font-family: Andale Mono, monospace;">
-              <h3 class="card-title" style="text-align: center; background-color: #DBD2C9;"><strong>${groupBuyVO.shop_name}</strong></h3>
+              <h4 class="card-title" style="text-align: center; background-color:#ECE3E8;"><strong>${groupBuyVO.shop_name}</strong></h4>
               <p>💁‍♂️團主: ${groupBuyVO.empVO.empName} &nbsp 📞分機: ${groupBuyVO.empVO.extension}<br>
               <jsp:useBean id="now" class="java.util.Date" />
               截止時間: <fmt:formatDate value="${groupBuyVO.end_time}" pattern="yyyy-MM-dd HH:mm"/> <br>
@@ -253,6 +253,19 @@ tbody td {
 				$(this).css("background-color", "#ffffff");
 			});
 		});
+		
+		//SweetAlert
+		$('#button').click(function() {
+			Swal.fire({
+				position : 'top-end',
+				icon : 'success',
+				title : '下單成功🙌 前往訂購紀錄',
+				showConfirmButton : false,
+				timer : 1500
+			})
+		});
+		
+		
 	</script>
 
 </body>

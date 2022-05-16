@@ -107,6 +107,7 @@ td {
 													<input type="submit" class="btn btn-secondary btn-sm"
 														value="編輯"> <input
 														type="hidden" name="menu_id" value="${menu.menu_id}">
+													<input 	type="hidden" name="shop_id" value="${menu.shop_id}">
 													<input type="hidden" name="action"
 														value="getMenuItem_For_Update">
 												</FORM>

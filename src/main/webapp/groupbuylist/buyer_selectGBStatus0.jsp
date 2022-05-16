@@ -116,8 +116,8 @@ td {
 								</div>
 								<input type="hidden" name="action"
 									value="listByCompositeQueryGBList">
-								<!-- 									傳遞揪團中參數 -->
-								<!-- 									<input type="hidden" name="is_pay" value="0"> -->
+								<!--buyer參數-->
+								<input type="hidden" name="buyer" value="${empVO.empId}">
 								<button type="submit" class="btn btn-dark mb-2 mt-1 col"
 									style="display: inline-block;">搜尋</button>
 							</form>

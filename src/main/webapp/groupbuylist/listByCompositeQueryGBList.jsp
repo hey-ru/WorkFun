@@ -71,6 +71,9 @@ int orderNumber = 1;
 								    <a class="nav-link" 
 								    href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp">所有參團</a>
 								  </li>
+								  <li class="nav-item"><a class="nav-link"
+										href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet?action=Query&buyer=${empVO.empId}&gb.gb_status=0">參團中</a>
+									</li>
 								  <li class="nav-item">
 								    <a class="nav-link" 
 								    href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet?action=listByCompositeQuery&buyer=${empVO.empId}&g.gb_status=0">歷史訂單</a>
@@ -103,7 +106,8 @@ int orderNumber = 1;
 											style="border: gray solid 2px;" name="g.shop_name">
 									</div>
 									<input type="hidden" name="action" value="listByCompositeQueryGBList">
-<!-- 									傳遞揪團中參數 -->
+								<!--buyer參數-->
+								<input type="hidden" name="buyer" value="${empVO.empId}">
 									<button type="submit" class="btn btn-dark mb-2 mt-1 col"
 										style="display: inline-block;">搜尋</button>
 								</form>

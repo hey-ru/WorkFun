@@ -74,12 +74,12 @@ pageContext.getAttribute("shop_id");
 										<label for=" item"><strong>品 項 <strong></label>
 										<input type="text" required size=30px id="item"
 											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
-											class="form-control" placeholder="輸入名稱" name="item" value="">
+											class="form-control" placeholder="輸入名稱" name="item" id="item" value=""/>
 									</div>
 									<div class="form-group" style="text-align: center;">
 										<label for=" price">金 額 </label> 
-										<input type="number" required
-											class="form-control" placeholder="輸入金額" name="price" min="1"
+										<input type="number" required size=20px
+											class="form-control" placeholder="輸入金額" name="price" min="1" max="1000"
 											value="">
 									</div>
 									<div class="form-group">
@@ -149,8 +149,8 @@ $("#item").blur(function(){
                                             </div>
                                             <div class="form-group">
                                                     <label for="price"></label>
-                                                    <input type="number" required
-                                                    class="form-control" placeholder="輸入金額" name="price" min="1"
+                                                    <input type="number" required size=20px
+                                                    class="form-control" placeholder="輸入金額" name="price" min="1" max="1000" 
                                                     value="">
                                             </div>
                                             <div class="form-group">

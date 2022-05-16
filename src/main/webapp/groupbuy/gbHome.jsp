@@ -41,7 +41,7 @@ int itemsPerPage = 10;
 		<main>
 
 			<section id="portfolio" class="portfolio"
-				style="background-color: #F2EEE5; padding: 120px;">
+				style="background-color: #F2EEE5; ">
 				<div class="container" data-aos="fade-up">
 					<div class="section-title">
 						<h2>🍽️ 今天我想來點...</h2>

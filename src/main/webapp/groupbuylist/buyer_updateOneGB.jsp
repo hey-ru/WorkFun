@@ -111,12 +111,12 @@ td {
 										<td>${blist.price}</td>
 										<!-- 數量 -->
 										<td><input type="number" class="quantity" required
-											min="0" max="100" name="qty" value="${blist.qty}"> <!-- 小計 -->
+											min="1" max="100" name="qty" value="${blist.qty}"> <!-- 小計 -->
 										<td>$<span id="total">${blist.price*blist.qty}</span></td>
 										<!-- 備註 -->
 										<td><input type="text" name="remark"
 											pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
-											size="20" value="${blist.remark}"></td>
+											size="25" value="${blist.remark}"></td>
 										<!-- [刪除請求] -->
 										<td><a
 											href="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet
@@ -140,8 +140,8 @@ td {
 							<!-- [修改請求] -->
 							<div style="text-align: right;">
 								<input type="hidden" name="action" value="updateMany"> <input
-									type="submit" class="btn btn-success"
-									onclick="javascript:return window.alert('已送出修改')" value="送出訂單">
+									type="submit" class="btn btn-success" id="btn" value="送出訂單">
+								<!-- 									 onclick="javascript:return window.alert('已送出修改')" -->
 							</div>
 						</FORM>
 					</div>
@@ -159,7 +159,7 @@ td {
 	<%@ include file="/design/frontfooter.jsp"%>
 	<!-- ======= js ======= -->
 	<%@ include file="/design/frontjs.jsp"%>
-
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
 		// 	動態顯示計算金額
 		$(document).ready(
@@ -194,6 +194,17 @@ td {
 			$("input").blur(function() {
 				$(this).css("background-color", "#ffffff");
 			});
+		});
+
+		//SweetAlert
+		$('#btn').click(function() {
+			Swal.fire({
+				position : 'top-end',
+				icon : 'success',
+				title : '修改完成',
+				showConfirmButton : false,
+				timer : 1500
+			})
 		});
 	</script>
 

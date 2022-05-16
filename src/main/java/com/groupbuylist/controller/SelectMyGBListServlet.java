@@ -63,7 +63,6 @@ public class SelectMyGBListServlet extends HttpServlet {
 			GroupBuyVO groupBuyVO = gbSvc.getOneGB(gb_id);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-//			HttpSession session = req.getSession();
 			req.setAttribute("buyerlist", list);
 			req.setAttribute("groupBuyVO", groupBuyVO);
 
@@ -111,9 +110,9 @@ public class SelectMyGBListServlet extends HttpServlet {
 			GroupBuyVO groupBuyVO = gbSvc.getOneGB(gb_id);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ***************/
-			HttpSession session = req.getSession();
-			session.setAttribute("buyerlist", list);
-			session.setAttribute("groupBuyVO", groupBuyVO);
+//			HttpSession session = req.getSession();
+			req.setAttribute("buyerlist", list);
+			req.setAttribute("groupBuyVO", groupBuyVO);
 
 			// 跳轉至該訂單畫面
 			String url = "/groupbuylist/buyer_updateOneGB.jsp";

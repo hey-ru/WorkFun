@@ -88,7 +88,7 @@ td {
 								</ul>
 							</div>
 						</div>
-						<!-- 							萬用查詢功能 -->
+						<!-- 萬用查詢功能 -->
 						<div class="col-10" style="height: 60px; display: inline-block;">
 							<form class="my-1" METHOD="post"
 								ACTION="<%=request.getContextPath()%>/groupbuylist/selectmygblistservlet">
@@ -115,8 +115,8 @@ td {
 								</div>
 								<input type="hidden" name="action"
 									value="listByCompositeQueryGBList">
-								<!-- 									傳遞揪團中參數 -->
-								<!-- 									<input type="hidden" name="is_pay" value="0"> -->
+								<!--buyer參數-->
+								<input type="hidden" name="buyer" value="${empVO.empId}">
 								<button type="submit" class="btn btn-dark mb-2 mt-1 col"
 									style="display: inline-block;">搜尋</button>
 							</form>
@@ -217,7 +217,7 @@ td {
 												<%-- 																	<c:out value="${mygb.groupBuyVO.end_time lt now}"/>  --%>
 												<!-- 判斷截止時間是否為揪團中-->
 												<input type="submit" onclick="myAlertFunction(event)"
-													class="btn btn-secondary btn-sm" value="退團"
+													class="btn btn-secondary btn-sm" value="退團" id="btn"
 													${mygb.groupBuyVO.gb_status eq 0 ? '' : 'hidden="hidden"'} />
 											</FORM>
 										</td>
@@ -244,15 +244,8 @@ td {
 </body>
 
 <script>
-	document.getElementById("delete-confirm").addEventListener("click",
-			function() {
-				swal({
-					title : "😭😭😭",
-					icon : "warning",
-					buttons : true,
-					dangerMode : true
-				});
-			});
+
+
 </script>
 
 </html>
