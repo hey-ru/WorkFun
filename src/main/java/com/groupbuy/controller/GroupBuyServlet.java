@@ -275,11 +275,11 @@ public class GroupBuyServlet extends HttpServlet {
 				try {
 					end_time = Timestamp.valueOf(req.getParameter("end_time"));
 					if(end_time.compareTo(start_time)<=0) {
-						end_time = null;
+						end_time = new java.sql.Timestamp((long)(System.currentTimeMillis()));
 						errorMsgs.put("end_time","請再確認截止時間必須晚於開始時間!");
 					}
 				} catch (IllegalArgumentException e) {
-					end_time = null;
+					end_time = new java.sql.Timestamp((long)(System.currentTimeMillis()));
 					errorMsgs.put("end_time","請輸入截止時間!");
 				}
 				

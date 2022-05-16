@@ -278,14 +278,14 @@ left:0;
             });
         
         
-        $("#min_amt").blur(function(){
+//         $("#min_amt").blur(function(){
       	  
-       	 if($(this).val() >= 0){
-                 $('#min_amterror').text('')
-             }else{
-                 $('#min_amterror').text('請輸入0以上數字')
-             }
-         });
+//        	 if($(this).val() >= 0){
+//                  $('#min_amterror').text('')
+//              }else{
+//                  $('#min_amterror').text('請輸入0以上數字')
+//              }
+//          });
 
         
 </script>
