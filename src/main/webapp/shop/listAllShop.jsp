@@ -52,7 +52,7 @@ body {
 							</h5>
 						</div>
 						<div class="col-3" style="height: 20px; display: inline-block;">
-							<a href="<%=request.getContextPath()%>/shop/listAllShop.jsp"><strong>回揪團列表</strong></a>
+							<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>回揪團列表</strong></a>
 						</div>
 					</div>
 				</div>
