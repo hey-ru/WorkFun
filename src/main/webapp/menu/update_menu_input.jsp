@@ -44,20 +44,22 @@
 										name="form1">
 										<table class="table table-borderless">
 											<tr>
-												<td><strong>店家 :</strong></td>
+												<td><strong>店 家 :</strong></td>
 												<td><strong>${shopVO.shop_name}</strong></td>
 											</tr>
 											<tr>
-												<td><strong>品項 :</strong></td>
-												<td><input type="TEXT" name="item" size="45"
-													value="${param.item}" /></td>
-												<td>${errorMsgs.item}</td>
+												<td><strong>品 項 :</strong></td>
+												<td><input type="text"  required name="item" size="30" id="item"
+													pattern="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\s\\(\\-\\)\\]*$"
+													value="${param.item}" />
+												<br><p style="color:red;"><strong >${errorMsgs.item}</strong></p></td>
+											    <td><strong><span id="itemError" style="color:red;"></span></strong></td>
 											</tr>
 											<tr>
-												<td><strong>價格 :</strong></td>
-												<td><input type="TEXT" name="price" size="45"
-													value="${param.price}" /></td>
-												<td>${errorMsgs.price}</td>
+												<td><strong>價 格 :</strong></td>
+												<td><input type="number"  required name="price" size="45" min="1"
+													value="${param.price}" />
+												<br><p style="color:red;"><strong >${errorMsgs.price}</strong></p></td>
 											</tr>
 											<tr>
 												<td><strong>狀態 :</strong></td>
@@ -72,7 +74,7 @@
 										<input type="hidden" name="action" value="update">
 										<input type="hidden" name="menu_id" value="${param.menu_id}">
 										<input type="hidden" name="shop_id" value="${param.shop_id}">
-										<input type="submit" value="送出修改" class="btn btn-dark ">
+										<input type="submit" value="確定修改" class="btn btn-dark ">
 									</div>
 									</FORM>
 								</div>
@@ -88,6 +90,16 @@
 	<%@ include file="/design/frontjs.jsp"%>
 
 	<script>
+	$("#item").blur(function(){
+  	  if($(this).val() == ''  ||  $(this).val()==null){
+  		  $('#itemError').text('未輸入品項名稱!')
+  	  }else if(reg.test($(this).val())){
+            $('#itemError').text('')
+        }
+  	  else{
+            $('#itemError').text('輸入格式錯誤😵 格式:中、日、英文、數字、空格() + - _')
+        }
+    });
 	</script>
 
 </body>

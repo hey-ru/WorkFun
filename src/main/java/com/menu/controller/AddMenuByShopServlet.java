@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.menu.model.MenuService;
 import com.menu.model.MenuVO;
@@ -42,7 +43,8 @@ public class AddMenuByShopServlet extends HttpServlet {
 			/***************************
 			 * 2.轉交給新增畫面
 			 *****************************************/
-			req.setAttribute("shop_id", shop_id);
+			HttpSession session = req.getSession();
+			session.setAttribute("shop_id", shop_id);
 			String url = "/menu/addMenu.jsp";
 
 			RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -51,43 +53,59 @@ public class AddMenuByShopServlet extends HttpServlet {
 		}
 
 // [新增多筆項目]
-		if ("insert".equals(action)) { // 來自listmenubyshop.jsp的請求
+		if ("insertMany".equals(action)) { // 來自listmenubyshop.jsp的請求
 
-			Map<String, String[]> errorMsgs = new LinkedHashMap<String, String[]>();
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 **********************/
 
 			// 取得參數
-			Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
+			String shop_id = req.getParameter("shop_id");
+			System.out.println( shop_id);
 
+			// 品項例外處理
 			String[] item = req.getParameterValues("item");
-// 錯誤處理(改前台驗證)
-//			String itemReg = "^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\\(\\-\\)]*$";
-//			Set<String> keys = errorMsgs.keySet();
-//			int count = 0;
-//			for (String key : keys) {
-//				String value = errorMsgs.get(key)[0];
-//				if (value == null || value.trim().length() == 0) {
-//					errorMsgs.put("item", new String[] {"品項: 請勿空白"});
-//				} else if (!value.trim().matches(itemReg)) { // 正則(規)表示式(regular-expression)
-//					errorMsgs.put("item", new String[] {"品項: 只能是中、日、英文字母、數字、_、-和()"});
-//				}
-//			}
-//
+			String remarkReg = "^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\s\\(\\-\\)]*$";
+			for (String itemstr : item) {
+				if ( itemstr == null || itemstr.trim().length() == 0) {
+					errorMsgs.put("item", "品項請勿空白");
+				} 
+				if ((itemstr.trim().length() != 0) && !itemstr.trim().matches(remarkReg)) { // 正則(規)表示式(regular-expression)
+					errorMsgs.put("item", "輸入格式錯誤😵 格式:中、日、英文、數字、空格() + - _");
+				}
+				System.out.println( itemstr);
+			}
+
+			//價格例外處理
 			String[] price = req.getParameterValues("price");
-//錯誤處理
 //			String priceReg = "^[0-9]*$";
-//			for (int i = 0; i <= price.length; i++) {
-//				if (price[i] == null || price[i].trim().length() == 0) {
-//					errorMsgs.put("price", "金額: 請勿空白");
-//				} else if (!price[i].trim().matches(priceReg)) { // 正則(規)表示式(regular-expression)
-//					errorMsgs.put("price", "價格請填數字");
+			for (String pricestr : price) {
+				try {
+					Integer.valueOf(pricestr.trim());
+				} catch (NumberFormatException e) {
+					errorMsgs.put("price", "請填入數字");
+				}
+				if (pricestr == null || pricestr.trim().length() == 0) {
+					errorMsgs.put("price", "金額: 請勿空白");
+				}
+				if (Integer.valueOf(pricestr) <= 0) {
+					errorMsgs.put("price", "價格應大於零!");
+				}
+//				if (Integer.valueOf(pricestr) > 1000) {
+//					errorMsgs.put("price", "單價過高...請洽詢總務申請上架權限");
 //				}
-//			}
+//				 else if (!pricestr.trim().matches(priceReg)) { // 正則(規)表示式(regular-expression)
+//						errorMsgs.put("price", "價格請填數字");
+//					}
+				System.out.println(pricestr);
+			}
+			
+			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/menu/addMenu.jsp");
 				failureView.forward(req, res);
+				System.out.println("輸入有例外:"+errorMsgs);
 				return; // 程式中斷
 			}
 
@@ -98,16 +116,16 @@ public class AddMenuByShopServlet extends HttpServlet {
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
 			// 再取得一次店家菜單物件集合回應,以顯示於店家菜單畫面
-			List<MenuVO> menuList = menuService.getByShopId(shop_id);
+			List<MenuVO> menuList = menuService.getByShopId(Integer.valueOf(shop_id));
+//			HttpSession session = req.getSession();
 			req.setAttribute("menuList", menuList);
-			req.setAttribute("shop_id", shop_id);
+//			req.setAttribute("shop_id", shop_id);
 
 			String url = "/menu/listMenuByShop.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
 			successView.forward(req, res);
 			System.out.println(shop_id + "店家菜單新增成功!");
 		}
-
 
 // [新增單筆項目]
 //		if ("insert".equals(action)) { // 來自listmenubyshop.jsp的請求

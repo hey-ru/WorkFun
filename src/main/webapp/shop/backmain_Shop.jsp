@@ -105,7 +105,7 @@ td {
 											<div class="form-groupf" style="display: inline-block">
 												<input type="text" class="form-control"
 													id="exampleFormControlInput1" placeholder="輸入店名"
-												<!-- 													style="border: gray solid 2px;" name="shop_name"> -->
+													style="border: gray solid 2px;" name="shop_name">
 											</div>
 											<input type="hidden" name="action"
 												value="listByCompositeQueryBack">
@@ -229,6 +229,7 @@ td {
 											<%@ include file="/design/page2.file"%>
 										</div>
 									
+							
 							
 							
 							</div>

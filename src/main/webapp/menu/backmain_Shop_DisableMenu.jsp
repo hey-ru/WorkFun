@@ -92,7 +92,7 @@ int itemsPerPage = 10;
 								<div class="row">
 									<div class="col-11" style="height: 20px; display: inline-block;">
 										<h5>
-											<strong>[後台] 菜單未上架明細</strong>
+											<strong>菜單下架清單</strong>
 										</h5>
 									</div>
 									<div class="col-1" style="height: 20px; display: inline-block;">
@@ -130,6 +130,7 @@ int itemsPerPage = 10;
 										<tbody>
 
 											<c:forEach var="menu" items="${menuListDisable}">
+												<c:if test="${(menu.price) > 0}">
 												<tr>
 													<td>${menu.menu_id}</td>
 													<td>${menu.item}</td>
@@ -151,6 +152,7 @@ int itemsPerPage = 10;
 														</FORM>
 													</td>
 												</tr>
+												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>

@@ -66,27 +66,39 @@ public class UpdateMenuByShopServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				//菜單編號
 				Integer menu_id = Integer.valueOf(req.getParameter("menu_id").trim());
-				//項目
+				
+				// 品項例外處理
 				String item = req.getParameter("item");
 				String itemReg ="^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\s\\(\\-\\)]*$";
 				if (item == null || item.trim().length() == 0) {
-					errorMsgs.put("item", "品項: 請勿空白");
+					errorMsgs.put("item", "品項請勿空白");
 				} else if (!item.trim().matches(itemReg)) { // 正則(規)表示式(regular-expression)
-					errorMsgs.put("item", "品項:只能是中、日、英文字母、數字、_、-、+空格和()");
+					errorMsgs.put("item", "輸入格式錯誤😵 格式:中、日、英文、數字、空格() + - _");
 				}
-				//價格
+				
+				//價格例外處理
 				Integer price = null;
 				try {
 					price = Integer.valueOf(req.getParameter("price").trim());
 				} catch (NumberFormatException e) {
-					errorMsgs.put("price", "價格請填數字");
+					errorMsgs.put("price", "請填入數字");
 				}
-				//項目狀態
+				if (price == null || price == 0) {
+					errorMsgs.put("price", "品項請勿空白");
+				}
+				if (price <= 0) {
+					errorMsgs.put("price", "價格應大於零!");
+				}
+//				if (price > 1000) {
+//					errorMsgs.put("price", "單價過高...請洽詢總務申請上架權限");
+//				}
+				
+				//品項狀態例外處理
 				Integer is_item = null;
 				try {
 					 is_item = Integer.valueOf(req.getParameter("is_item").trim());
-				} catch (NumberFormatException e) {
-					errorMsgs.put("is_item", "項目狀態請選擇下架或上架");
+				} catch (Exception e) {
+					errorMsgs.put("is_item", "品項狀態請選擇下架或上架");
 				}
 				// 店家編號FK shop_id
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id").trim());

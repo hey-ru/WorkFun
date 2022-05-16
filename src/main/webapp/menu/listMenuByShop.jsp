@@ -117,10 +117,26 @@ td {
 							</div>
 							<!-- 新增菜單請求 -->
 							<div class="col-2" style="display:inline-block;">
-								<a 
-									href="${pageContext.request.contextPath}/menu/addMenu.jsp?shop_id=${param.shop_id}">
-									<button type="button" class="btn btn btn-lg" style="background-color:#A392A2; color:white;"><strong>我要新增🍴</strong></button>
-								</a>
+<!-- 								<a  -->
+<%-- 									href="${pageContext.request.contextPath}/menu/addMenu.jsp?shop_id=${param.shop_id}"> --%>
+<!-- 									<button type="button" class="btn btn btn-lg" style="background-color:#A392A2; color:white;"><strong>我要新增🍴</strong></button> -->
+<!-- 								</a> -->
+								
+								<!-- ======= 新增菜單 ======= -->
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/menu/addmenubyshop"
+												style="margin-bottom: 0px;">
+												<input type="submit" class="btn btn btn-lg"
+													style="background-color:#A392A2; color:white;"
+													value="我要新增🍴"> <input type="hidden" name="gb_id"
+													value="${groupBuyVO.gb_id}"> <input type="hidden"
+													name="shop_id" value="${shopVO.shop_id}"> <input
+													type="hidden" name="action" value="getShop_For_AddMenu">
+											</FORM>
+								
+								
+								
+								
 							</div>
 						</div>
 					</div>
