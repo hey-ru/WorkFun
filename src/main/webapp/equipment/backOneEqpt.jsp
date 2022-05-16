@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.equipment.model.*"%>
 <%@ page import="java.util.*"%>
 
@@ -7,22 +8,22 @@
 <html lang="zh-TW">
 
 <head>
-
 <%@ include file="/design/backcss.jsp"%>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>WorkFunBack</title>
+<title>WorkFunBack</title>
 
 <%@ include file="/design/frontmetacss.jsp"%>
+
 <style>
 th {
 	vertical-align: middle;
 	text-align: center;
-	height: 50px;
 }
 
 td {
@@ -35,38 +36,51 @@ td {
 	overflow-x: visible;
 }
 
-.row {
-	margin-top: 20px;
-}
-
-.col-sm-12 {
-	margin: auto;
-	padding: 0px 40px;
-}
-
-.my-1 {
-	margin: auto;
-	padding: 0px 25px;
-}
-
-.col-10 {
-	width: 80%;
-}
-
-.mt-2 {
-	padding-right: 20px;
-	margin: auto;
-	margin-right: 35px;
-}
-
 .wrapper {
 	overflow-x: hidden;
 }
-</style>
-</head>
 
-<body>
-	<div class="wrapper">
+.page1 {
+	position: relative;
+	left: 30px;
+	top: 15px;
+}
+
+</style>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<%@ include file="/design/backSidebar.jsp"%>
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav bg-dark ml-auto">
+
+						<!-- Nav Item - User Information -->
+						<li class="nav-item no-arrow pr-4"><a
+							href="<%=request.getContextPath()%>/home/home.jsp"> <i
+								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+								Back Home</a>
+						</li>
+
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
 		<!-- ======= Header ======= -->
 <%-- 		<%@ include file="/design/frontheader.jsp"%> --%>
 
@@ -75,7 +89,7 @@ td {
 			<div class="card shadow mb-4">
 				<!--                    <div style="height: var(--header-height); margin-bottom:10px;"></div> -->
 				<!-- ============== Card Header ============== -->
-				<div class="card-header py-3" style="background-color: #b0c4de">
+				<div class="card-header py-3" style="background-color: #dcdcdc">
 					<div class="row">
 												<div class="col-11" style="height: 20px; display: inline-block;">
 <!-- 													<h5> -->
@@ -101,22 +115,22 @@ td {
 										aria-controls="dataTable" rowspan="1" colspan="1"
 										aria-sort="ascending"
 										aria-label="Name: activate to sort column descending"
-										style="width: 50px;">器材編號</th>
+										>器材編號</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Position: activate to sort column ascending"
-										style="width: 50px;">器材名稱</th>
+										>器材名稱</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Position: activate to sort column ascending"
-										style="width: 10px;">金額</th>
+										>金額</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Office: activate to sort column ascending"
-										style="width: 100px;">狀態</th>
+										>狀態</th>
 
 <!-- 									<th class="sorting" tabindex="0" aria-controls="dataTable" -->
 <!-- 										rowspan="1" colspan="1" -->
@@ -126,27 +140,27 @@ td {
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Office: activate to sort column ascending"
-										style="width: 200px;">詳細規格</th>
+										>詳細規格</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Salary: activate to sort column ascending"
-										style="width: 10px;">圖片1</th>
+										>圖片1</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Salary: activate to sort column ascending"
-										style="width: 10px;">圖片2</th>
+										>圖片2</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Salary: activate to sort column ascending"
-										style="width: 10px;">圖片3</th>
+										>圖片3</th>
 
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Salary: activate to sort column ascending"
-										style="width: 10px;">修改</th>
+										></th>
 
 								</tr>
 
@@ -200,7 +214,7 @@ td {
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
 											style="margin-bottom: 0px;">
-											<input type="submit" value="修改"> <input type="hidden"
+											<input type="submit" value="修改" class="btn btn-dark mb-2 mt-1 col" style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;"> <input type="hidden"
 												name="equipmentId" value="${equipmentVO.equipmentId}"> <input
 												type="hidden" name="action" value="getOne_For_Update">
 										</FORM>
@@ -227,12 +241,27 @@ td {
 
 		<!-- ======= 內容結束 ======= -->
 
+				
+				<!-- /.container-fluid -->				
+			</div>
+			<!-- End of Main Content -->
+		</div>
+	<!-- End of Content Wrapper -->
 	</div>
+	<!-- End of Page Wrapper -->
 
-	<!-- ======= Footer ======= -->
-<%-- 	<%@ include file="/design/frontfooter.jsp"%> --%>
-	<!-- ======= js ======= -->
-	<%@ include file="/design/frontjs.jsp"%>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+<%@ include file="/design/backjs.jsp"%>
+
+<script type="text/javascript">
+// 		$("tbody tr").css("background-color", function(index) {
+// 			return index % 2 == 0 ? "#dcdcdc" : "";
+// 		});
+</script>
 
 </body>
 

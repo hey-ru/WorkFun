@@ -31,7 +31,6 @@ int itemsPerPage = 10;
 th {
 	vertical-align: middle;
 	text-align: center;
-	height: 50px;
 }
 
 td {
@@ -42,30 +41,6 @@ td {
 
 .table-responsive {
 	overflow-x: visible;
-}
-
-.row {
-	margin-top: 20px;
-}
-
-.col-sm-12 {
-	margin: auto;
-	padding: 0px 40px;
-}
-
-.my-1 {
-	margin: auto;
-	padding: 0px 25px;
-}
-
-.col-10 {
-	width: 80%;
-}
-
-.mt-2 {
-	padding-right: 20px;
-	margin: auto;
-	margin-right: 35px;
 }
 
 .wrapper {
@@ -117,11 +92,12 @@ td {
 				<!-- End of Topbar -->
 
 
+	                <div class="container-fluid pl-0">
+                    <!-- 內容放這 -->
+                  <main id="main" class="main">
 
-				<!-- ======= 內容開始 ======= -->
-
-
-
+				<!-- ============== Card Header ============== -->
+				<div class="card-body">
 				<div class="row">
 					<div class="col-10" style="height: 60px; display: inline-block;">
 						<form class="my-1" METHOD="post"
@@ -153,9 +129,8 @@ td {
 								style="display: inline-block; width: 100px;">搜尋</button>
 						</form>
 					</div>
-				</div>
 
-				<div class="col-2 mt-2" style="left: 0;">
+				<div class="col-2 mt-2" style="left: -25px;">
 
 					<a
 						href='${pageContext.request.contextPath}/equipment/backAddEqpt.jsp'><button
@@ -165,9 +140,9 @@ td {
 
 			</div>
 
-			<div class="page1">
-				<%@ include file="/design/page1_ByCompositeQuery.file"%>
-			</div>
+<!-- 			<div class="page1"> -->
+<%-- 				<%@ include file="/design/page1_ByCompositeQuery.file"%> --%>
+<!-- 			</div> -->
 
 
 			<div class="row">
@@ -233,7 +208,7 @@ td {
 
 						</thead>
 
-
+						<%@ include file="/design/page1_ByCompositeQuery.file"%>
 						<tbody>
 
 							<c:forEach var="equipmentVO" items="${listByCompositeQuery}"
@@ -302,7 +277,9 @@ td {
 		</div>
 		<!-- End of Main Content -->
 	</div>
-
+</div>
+</div>
+</main>
 
 
 	<!-- End of Content Wrapper -->

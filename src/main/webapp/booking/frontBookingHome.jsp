@@ -152,6 +152,7 @@ pageContext.setAttribute("list", list);
 				</div>
 			</div>
 			<%@ include file="/design/page2.file"%>
+			</div>
 		</section>
 	</main>
 	<!-- End #main -->

@@ -330,6 +330,7 @@ public class EquipmentServlet extends HttpServlet {
 			}if(price > 1000000) {
 				errorMsgs.put("price", "金額請小於100w");
 			}
+			System.out.println(price);
 
 //			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
 

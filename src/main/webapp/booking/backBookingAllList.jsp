@@ -29,6 +29,7 @@ int itemsPerPage = 10;
 <title>WorkFunBack</title>
 
 <style>
+
 .col-sm-6 {
 	flex: 0 0 100%;
 	max-width: 100%;
@@ -37,6 +38,11 @@ int itemsPerPage = 10;
 .table-responsive {
 	overflow-x: hidden;
 }
+
+.card-body {
+    padding: 10px;
+}
+
 </style>
 
 </head>
@@ -109,9 +115,9 @@ int itemsPerPage = 10;
 										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=3">逾期歸還</a>
 									</li>
 
-									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=4">未歸還</a>
-									</li>
+<!-- 									<li class="nav-item"><a class="nav-link" -->
+<%-- 										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=4">未歸還</a> --%>
+<!-- 									</li> -->
 
 									<li class="nav-item"><a class="nav-link"
 										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=5">已登記預約</a>
@@ -208,7 +214,7 @@ int itemsPerPage = 10;
 														<td><fmt:formatDate value="${bookingVO.endDate}"
 																pattern="yyyy-MM-dd" /></td>
 
-														<td><c:if test="${bookingVO.returnStatus == 1}">
+														<td><c:if test="${bookingVO.returnStatus == 3}">
 																<c:choose>
 																	<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
 																	<c:when test="${bookingVO.dateDiff == 1}">逾期 1 天</c:when>
@@ -218,7 +224,7 @@ int itemsPerPage = 10;
 																</c:choose>
 															</c:if></td>
 
-														<td><c:if test="${bookingVO.returnStatus == 1}">
+														<td><c:if test="${bookingVO.returnStatus == 3}">
 																<c:choose>
 																	<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
 																	<c:when test="${bookingVO.dateDiff == 1}">罰金$ ${1 * bookingVO.equipmentVO.price * 0.3}</c:when>

@@ -210,7 +210,7 @@ EmpService empSvc = new EmpService();
 														<td><fmt:formatDate value="${bookingVO.endDate}"
 																pattern="yyyy-MM-dd" /></td>
 
-														<td><c:if test="${bookingVO.returnStatus == 1}">
+														<td><c:if test="${bookingVO.returnStatus == 3}">
 																<c:choose>
 																	<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
 																	<c:when test="${bookingVO.dateDiff == 1}">逾期 1 天</c:when>
@@ -220,7 +220,7 @@ EmpService empSvc = new EmpService();
 																</c:choose>
 															</c:if></td>
 
-														<td><c:if test="${bookingVO.returnStatus == 1}">
+														<td><c:if test="${bookingVO.returnStatus == 3}">
 																<c:choose>
 																	<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
 																	<c:when test="${bookingVO.dateDiff == 1}">罰金$ ${1 * bookingVO.equipmentVO.price * 0.3}</c:when>

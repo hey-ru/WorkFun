@@ -103,9 +103,9 @@
 													</label>
 													<div class="col-sm-10">
 														<select name="eqStatus" id="">
-															<option value="" selected>請選擇狀態</option>
-															<option value="0" ${(param.eqStatus==0)? 'selected':'' }>上架</option>
+<!-- 															<option value="" selected>請選擇狀態</option> -->
 															<option value="3" ${(param.eqStatus==3)? 'selected':'' }>下架</option>
+															<option value="0" ${(param.eqStatus==0)? 'selected':'' }>上架</option>
 														</select> <font color=#ff0000>${errorMsgs.eqStatus}</font>
 													</div>
 												</div>
