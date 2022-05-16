@@ -27,7 +27,7 @@
 		<!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column bg-white">
 
             <!-- Main Content -->
             <div id="content">
@@ -39,7 +39,7 @@
                     <ul class="navbar-nav bg-dark ml-auto">
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item no-arrow">
+                        <li class="nav-item no-arrow pr-4">
                          <a href="<%=request.getContextPath()%>/home/home.jsp"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Back Home</a>
                         </li>
@@ -52,7 +52,9 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- 內容放這 -->
-
+                    <div style="height:100px;"></div>
+                    
+                    <img src="<%=request.getContextPath()%>/back/back.png" class="img-fluid" alt="welcome">
 
                     <!-- /.container-fluid -->
                 </div>

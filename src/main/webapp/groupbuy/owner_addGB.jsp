@@ -271,6 +271,12 @@ left:0;
   		  }
  	});
         
+        $("#end_time").blur(function(){
+        	if($(this).val() == ''){
+      		  $('#end_timeerror').text('請填入截止時間!')
+      	  }
+            });
+        
         
         $("#min_amt").blur(function(){
       	  

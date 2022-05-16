@@ -48,7 +48,7 @@
                     <ul class="navbar-nav bg-dark ml-auto">
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item no-arrow">
+                        <li class="nav-item no-arrow pr-4">
                          <a href="<%=request.getContextPath()%>/home/home.jsp"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Back Home</a>
                         </li>
