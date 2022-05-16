@@ -83,6 +83,10 @@ public class BookingService {
 	public List<BookingVO> getBookingAllDate(Integer equipmentId) {
 		return dao.getBookingAllDate(equipmentId);
 	}
+	
+	public List<BookingVO> getBanDate(Integer equipmentId){
+		return dao.getBanDate(equipmentId);
+	}
 
 	public List<BookingVO> getAllByCQ(Map<String, String[]> map) {
 		return dao.getAllByCQ(map);

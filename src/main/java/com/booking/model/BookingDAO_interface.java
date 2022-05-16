@@ -43,5 +43,8 @@ public interface BookingDAO_interface {
 	public List<BookingVO> getAllDate();
 	
 	public void update(BookingVO bookingVO);
+	
+	// 取得被預約日期
+	public List<BookingVO> getBanDate(Integer equipmentId);
 
 }

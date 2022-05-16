@@ -7,11 +7,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 
-<!-- BookingService bookingService = new BookingService(); -->
-<!-- List<BookingVO> list = bookingService.getBookingAllDate(); -->
-<!-- pageContext.setAttribute("list", list); -->
+
+
 <%
 Integer equipmentId = Integer.valueOf(request.getParameter("equipmentId"));
+
+BookingService bookingService = new BookingService();
+List<BookingVO> list = bookingService.getBanDate(equipmentId);
+pageContext.setAttribute("list", list);
 
 EquipmentService equipmentSvc = new EquipmentService();
 EquipmentVO equipmentVO = equipmentSvc.getByEqId(equipmentId);
@@ -205,38 +208,198 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
     
 
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
+     
+//  	======================================================================
+ 		
+	
+	
+     let startDate = [
+        <c:forEach items="${list}" var="bookingVO" >
+       new Date('<fmt:formatDate value="${bookingVO.startDate}"
+			pattern="yyyy-MM-dd"/>'),
+        </c:forEach>
+    ];
+    
+//     console.log(startDate);
 
+	let endDate = [
+        <c:forEach items="${list}" var="bookingVO" >
+      new Date('<fmt:formatDate value="${bookingVO.endDate}"
+			pattern="yyyy-MM-dd"/>'),
+        </c:forEach>
+    ];
 	
+// 	console.log(endDate);
+
+function getDatesInRange(a, b) {
+
+    const dates = [];
+
+	let aTime = a.getTime();
+	let bTime = b.getTime();
+	if(bTime < aTime) { // swap
+		let tmp = aTime;
+		aTime = bTime;
+		bTime = tmp;
+	}
 	
-	$.datetimepicker.setLocale('zh');
-     $('#start_time').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-	       timepicker:false,
-// 		   value:   new Date(),
-		   onShow:function(){
-			   this.setOptions({
-				minDate:0,
-				minTime:0,
-				maxDate:$('#end_time').val()?$('#end_time').val():false
-			   })
-		   }
-     });
-     
-     $('#end_time').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-	       timepicker:false,
-		   //value: '${end_time}', // value:   new Date(),
-		  onShow:function(){
-			   this.setOptions({
-				
-			    minDate:$('#start_time').val()?$('#start_time').val():false,
-			   })
-			  }
-	});
-     
-     
+    let aDate = new Date(aTime);
+    let bDate = new Date(bTime);
+
+    while (aTime <= bTime) {
+    	let time = new Date(aTime);
+    	let month = time.getMonth() + 1;
+    	if(month < 10) {
+    		month = ('0' + month);
+    	}
+    	let timeStr = time.getFullYear() + '/' + month + '/' + time.getDate();
+    	dates.push(timeStr);
+        aTime += 1000 * 60 * 60 * 24;
+//         aDate.setDate(aDate.getDate() + 1);
+//         aTime = aDate.getTime();
+    }
+    return dates;
+}
+
+const set = new Set();
+for(let i = 0; i < startDate.length; i++) {
+	let arr = getDatesInRange(startDate[i], endDate[i]);
+	for(let j = 0; j < arr.length; j++) {
+		set.add(arr[j]);
+	}
+}
+const disabledDates = Array.from(set); // set -> array
+console.log(disabledDates);
+
+console.log("===========");
+let today = new Date();
+let month = today.getMonth() + 1;
+if(month < 10) {
+	month = ('0' + month);
+}
+let timeStr = today.getFullYear() + '/' + month + '/' + today.getDate();
+console.log(timeStr);
+console.log("===========");
+
+$.datetimepicker.setLocale('zh');
+$('#start_time').datetimepicker({
+      theme: '',              //theme: 'dark',
+      format:'Y-m-d',         //format:'Y-m-d H:i:s',
+	  disabledDates: disabledDates, // 去除特定不含
+	  minDate: timeStr,
+      timepicker:false,
+	   onShow:function(){
+		   this.setOptions({
+			   
+			maxDate:$('#end_time').val()?$('#end_time').val():false
+		   })
+	   }
+});
+
+$('#end_time').datetimepicker({
+      theme: '',              //theme: 'dark',
+      format:'Y-m-d',         //format:'Y-m-d H:i:s',
+      timepicker:false,
+	  disabledDates: disabledDates, // 去除特定不含
+	   //value: '${end_time}', // value:   new Date(),
+	  onShow:function(){
+		   this.setOptions({
+			
+		    minDate:$('#start_time').val()?$('#start_time').val():false,
+		   })
+		  }
+});
+
+
+// console.log(startDate);
+// console.log(endDate);
+
+// let j = 0;
+// for (let i of startDate) {
+//     for (j; j < endDate.length; j++) {
+//         console.log(getDatesInRange(new Date(i), new Date(endDate[j])));
+//         break;
+//     }
+//     ++j;
+// }
+
+// let year;
+// // 帶入[0]
+// let date = new Date(Date.parse(startDate[0]));
+
+// // 取出年 yyyy
+// year = date.getUTCFullYear();
+
+// // 取出月 mm (月從 0 開始)
+// let month;
+// month = date.getUTCMonth() +1;
+
+// // 取出日 dd
+// let day;
+// day = date.getUTCDate();
+
+
+// let disabledDates = [];
+
+// let startDay;  
+// for(let i= 0 ; i < startDate.length ; i++){
+// 	  let year = new Date(Date.parse(startDate[i])).getUTCFullYear();
+// 	  let month = new Date(Date.parse(startDate[i])).getUTCMonth() +1;
+// 	  let day = new Date(Date.parse(startDate[i])).getUTCDate();
+// 	  startDay = year+'-'+month+'-'+day;
+// 		console.log(startDay);
+// // 	  disabledDates.append(today);
+// // 	  console.log(today1);
+// 	}
+// let startDay1 = new Date(startDay);
+
+// let endDay;
+// for(let i= 0 ; i < endDate.length ; i++){
+// 	  let year = new Date(Date.parse(endDate[i])).getUTCFullYear();
+// 	  let month = new Date(Date.parse(endDate[i])).getUTCMonth() +1;
+// 	  let day = new Date(Date.parse(endDate[i])).getUTCDate();
+// 	  endDay = year+'-'+month+'-'+day;
+// 	  console.log(endDay);
+// // 	  disabledDates.splice(today2);
+// // 	  console.log(disabledDates.splice(today2));
+// 	} 
+
+// let endDay1 = new Date(endDay);
+	
+// // function getDatesInRange(startDate, endDate) {
+// // 	  const date = new Date(startDate.getTime());
+
+// // 	  const dates = [];
+	  
+// // 	  	let year;
+		
+// // 		// 取出年 yyyy
+// // 		year = date.getUTCFullYear();
+		
+// // 		// 取出月 mm (月從 0 開始)
+// // 		let month;
+// // 		month = date.getUTCMonth() +1;
+		
+// // 		// 取出日 dd
+// // 		let day;
+// // 		day = date.getUTCDate();
+		  
+// // 		let allDay = year+'-'+month+'-'+day;
+
+// // 	  while (date <= endDate) {
+// // 	    dates.push(allDay);
+// // 	    date.setDate(date.getDate() + 1);
+// // 	  }
+
+// // 	  return dates;
+// // 	}
+	
+// // 	console.log(getDatesInRange(startDay1, endDay1));
+
+
+// // let today = year+'/'+month+'/'+day;
+
+         
 	</script>
 
 </body>

@@ -150,7 +150,6 @@ pageContext.setAttribute("list", list);
 						</div>
 					</c:forEach>
 				</div>
-			</div>
 			<%@ include file="/design/page2.file"%>
 			</div>
 		</section>

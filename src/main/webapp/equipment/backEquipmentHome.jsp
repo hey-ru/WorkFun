@@ -135,7 +135,7 @@ td {
 <!-- 									</select> -->
 <!-- 								</div> -->
 
-								<div class="form-group col-3" style="display: inline-block">
+								<div class="form-group col-3" style="display: inline-block;">
 									<input type="text" class="form-control"
 										id="exampleformControlInput1" placeholder="輸入器材名稱"
 										style="border: gray solid 2px;" name="eq_name"

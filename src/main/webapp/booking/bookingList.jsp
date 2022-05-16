@@ -24,6 +24,10 @@ int itemsPerPage = 10;
 	flex: 0 0 auto;
 	width: 100%;
 }
+
+.table-responsive {
+    overflow-x: hidden;
+}
 </style>
 
 
@@ -71,44 +75,44 @@ int itemsPerPage = 10;
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 100px;">預約單編號</th>
+													>預約單編號</th>
 
 												<th class="sorting sorting_asc" tabindex="0"
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 80px;">員工編號</th>
+													>員工編號</th>
 
 												<th class="sorting sorting_asc" tabindex="0"
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 80px;">器材名稱</th>
+													>器材名稱</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 100px;">預約起訖日</th>
+													>預約起訖日</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 100px;">預約歸還日</th>
+													>預約歸還日</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 80px;">預約狀態</th>
+													>預約狀態</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 80px;">逾期天數</th>
+													>逾期天數</th>
 
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
-													style="width: 80px;">逾期罰金</th>
+													>逾期罰金</th>
 
 												<!-- <th class="sorting" tabindex="0" aria-controls="dataTable" -->
 												<!-- rowspan="1" colspan="1" -->
@@ -151,10 +155,10 @@ int itemsPerPage = 10;
 												<td><c:if test="${bookingVO.returnStatus == 3}">
 														<c:choose>
 															<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
-															<c:when test="${bookingVO.dateDiff == 1}">逾期 1 天</c:when>
-															<c:when test="${bookingVO.dateDiff == 2}">逾期 2 天</c:when>
-															<c:when test="${bookingVO.dateDiff == 3}">逾期 3 天</c:when>
-															<c:when test="${bookingVO.dateDiff > 3}">逾期 3 天以上</c:when>
+															<c:when test="${bookingVO.dateDiff == 1}">逾期 <font color="#FF0000">1</font> 天</c:when>
+															<c:when test="${bookingVO.dateDiff == 2}">逾期 <font color="#FF0000">2</font> 天</c:when>
+															<c:when test="${bookingVO.dateDiff == 3}">逾期 <font color="#FF0000">3</font> 天</c:when>
+															<c:when test="${bookingVO.dateDiff > 3}">逾期 <font color="#FF0000">3</font> 天以上</c:when>
 														</c:choose>
 													</c:if></td>
 
@@ -166,21 +170,13 @@ int itemsPerPage = 10;
 												<td><c:if test="${bookingVO.returnStatus == 3}">
 														<c:choose>
 															<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
-															<c:when test="${bookingVO.dateDiff == 1}">罰金$ ${1 * bookingVO.equipmentVO.price * 0.3}</c:when>
-															<c:when test="${bookingVO.dateDiff == 2}">罰金$ ${2 * bookingVO.equipmentVO.price * 0.3}</c:when>
-															<c:when test="${bookingVO.dateDiff == 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.3}</c:when>
-															<c:when test="${bookingVO.dateDiff > 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.3}</c:when>
+															<c:when test="${bookingVO.dateDiff == 1}">罰金$ <fmt:formatNumber value="${1 * bookingVO.equipmentVO.price * 0.3}"/></c:when>
+															<c:when test="${bookingVO.dateDiff == 2}">罰金$ <fmt:formatNumber value="${2 * bookingVO.equipmentVO.price * 0.3}"/></c:when>
+															<c:when test="${bookingVO.dateDiff == 3}">罰金$ <fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.3}"/></c:when>
+															<c:when test="${bookingVO.dateDiff > 3}">罰金$ <fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.3}"/></c:when>
 														</c:choose>
 													</c:if></td>
-
-
-
-
-
-
 											</tr>
-
-
 										</c:forEach>
 
 									</table>

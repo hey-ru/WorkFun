@@ -242,10 +242,9 @@ int itemsPerPage = 10;
 														<form method="post"
 															action="<%=request.getContextPath()%>/booking/booking.do">
 
-															<td><label for="inputNumber"
-																class="col-sm-2 col-form-label"></label> <select
-																size="1" name="returnStatus" size="45"
-																style="margin-right: 20px;">
+															<td>
+<!-- 															<label for="inputNumber" class="col-sm-2 col-form-label"></label>  -->
+															<select size="1" name="returnStatus" size="45" style="margin-right: 20px;">
 																	<option value="0"
 																		${(bookingVO.returnStatus==0)? 'selected':'' }>已歸還</option>
 																	<option value="1"

@@ -61,6 +61,8 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 	
 	private static final String UPDATE = "UPDATE booking set ";
 	
+	private static final String GET_BAN_DATE = "select start_date , end_date from booking where equipment_id = ?";
+	
 	// ========================================================================
 	@Override
 	public void insertBooking(BookingVO bookingVO) {
@@ -709,6 +711,62 @@ public class BookingJDBCDAO implements BookingDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_BOOKING_ALL_DATE);
+
+			pstmt.setInt(1, equipmentId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				bookingVO = new BookingVO();
+				bookingVO.setStartDate(rs.getTimestamp("start_date"));
+				bookingVO.setEndDate(rs.getTimestamp("end_date"));
+				list.add(bookingVO);
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<BookingVO> getBanDate(Integer equipmentId) {
+
+		List<BookingVO> list = new ArrayList<BookingVO>();
+		BookingVO bookingVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_BAN_DATE);
 
 			pstmt.setInt(1, equipmentId);
 
