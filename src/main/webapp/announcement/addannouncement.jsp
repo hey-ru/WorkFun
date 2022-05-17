@@ -62,9 +62,11 @@
 							<div
 								style="border: 3px blue solid; width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
 								<div class="input-group mb-3" style="margin-top: 0px;">
-									<span class="input-group-text" id="xx">發布者</span> <a
-										
-									>${empVO.empName}</a>
+									<span class="input-group-text" id="xx">發布者</span> 
+										<input
+										type="text" name="announcer" size="45" value="${empVO.empName}"
+										readonly class="form-control-plaintext" id="staticEmail">
+									
 									<input
 										type="hidden" name="announcer" size="45" value="${empVO.empId}"
 										class="form-control" aria-label="Username"

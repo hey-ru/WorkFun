@@ -106,15 +106,21 @@
 			<td>${announcement.announcement_content}</td>
 				<td>${announcement.announcement_time}</td>
 		
-				
-						<td>${announcement.announcement_status}</td>
+				<c:choose>
+				<c:when test="${announcement.announcement_status==1}">
+						<td>公開</td>
+						</c:when>
 							<%-- <td style="width:300px;"><img 
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVOSearch.empId}
 									"
 												class="img-fluid"
 											></td> --%>
-							
+										<c:otherwise>
+										<td>非公開</td>
+										</c:otherwise>	
+											
+							</c:choose>
 										
 			
 			<td>

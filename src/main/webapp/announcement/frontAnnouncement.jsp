@@ -86,11 +86,11 @@ tbody td {
 						
 						
 						
-						<div id="mainleft" class="col-4" style="height: max-content;font-weight:bold; font-family: Andale Mono, monospace;">
+						<div id="mainleft" class="col-4" style="height: max-content;font-weight:bold; font-family: Andale Mono, monospace;margin-left:400px;margin-top:100px">
               <h3 class="card-title" style="text-align: center; background-color: #DBD2C9;"><strong>${param.announcement_title}</strong></h3>
               <p>💁‍♂️發布者: ${param.announcer_name} <br>
               <jsp:useBean id="now" class="java.util.Date" />
-              內容: ${param.announcement_content}<br>
+              	內容:<a style="word-break: break-all">${param.announcement_content}</a> <br>
            
               <!-- Slides with fade transition -->
               <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -113,7 +113,7 @@ tbody td {
 											>	
                 </div> 
 			  
-			  <a>true</a>
+		
 			  
 			  
 			  </c:when>
@@ -128,8 +128,7 @@ tbody td {
 												
 											>	
                 </div> 
-			  
-			  <a>false</a>
+		
 			  
 			  
 			  </c:otherwise>

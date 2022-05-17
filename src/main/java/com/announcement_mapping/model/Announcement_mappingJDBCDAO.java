@@ -24,7 +24,7 @@ public class Announcement_mappingJDBCDAO implements Announcement_mappingDAO_inte
 	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "call InsertRecord(?,?) ";
-	private static final String GET_ALL_STMT = "select announcement_id,announcementImg_id,announcementImg FROM announcement_mapping order by announcement_id ";
+	private static final String GET_ALL_STMT = "select announcement_id,announcementImg_id,announcementImg FROM announcement_mapping order by announcement_id  ";
 	private static final String GET_ONE_STMT = "SELECT *  FROM announcement_mapping where announcement_id = ? ";
 	private static final String DELETE = "DELETE FROM announcement_mapping where announcement_id = ? and announcementImg_id = ? ;";
 	//private static final String UPDATE = "UPDATE permission_mapping set announcementImg=?  where announcement_id = ? and announcementImg_id = ? ";
