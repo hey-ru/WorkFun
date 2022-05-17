@@ -63,7 +63,7 @@
                       
                                <input type="hidden" name="action" value="selectByExtension">
                                </FORM>
-                               <font color="red">${errorMsgs.extensionwhite}  ${errorMsgs.extensionReg}</font> 
+
                                </div>
                                        
                                <div style="margin-top:20px">
@@ -72,7 +72,7 @@
                                  <input type="text"placeholder="輸入姓名查詢" name="empName" style="width:125px">
                                     <input type="hidden" name="action" value="selectByEmpName">
                                  </FORM> 
-                                     <font color="red">${errorMsgs.empNamewhite}</font> 
+                                    
                             </div>
                    
                         <!-- 個人頁面dropdown -->
