@@ -50,7 +50,7 @@ pageContext.setAttribute("list", list);
 		<section id="portfolio" class="portfolio">
 			<div class="container" data-aos="fade-up">
 				<div class="section-title">
-					<h2>租 大於 買 = z 大於 b</h2>
+					<h2>預約器材</h2>
 					<p></p>
 				</div>
 
@@ -139,7 +139,7 @@ pageContext.setAttribute("list", list);
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
 										style="margin-bottom: 0px;">
-										<input type="submit" class="btn btn-outline-warning"value="點我預約"> 
+										<input type="submit" class="btn btn-outline-warning"value="我要預約"> 
 										<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
 										<input type="hidden" name="action" value="showEquipment">
 

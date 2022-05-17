@@ -6,12 +6,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <%
-BookingService bookingSvc = new BookingService();
-List<BookingVO> list = bookingSvc.getAll();
-pageContext.setAttribute("list", list);
-EmpService empSvc = new EmpService();
-int itemsPerPage = 10;
+Integer bookingId = Integer.valueOf(request.getParameter("bookingId"));
+
+BookingService bookingService = new BookingService();
+BookingVO bookingVO = bookingService.getByBookingId(bookingId);
+pageContext.setAttribute("bookingVO", bookingVO);
 %>
 
 <!DOCTYPE html>
@@ -29,7 +30,6 @@ int itemsPerPage = 10;
 <title>WorkFunBack</title>
 
 <style>
-
 .col-sm-6 {
 	flex: 0 0 100%;
 	max-width: 100%;
@@ -40,9 +40,8 @@ int itemsPerPage = 10;
 }
 
 .card-body {
-    padding: 10px;
+	padding: 10px;
 }
-
 </style>
 
 </head>
@@ -84,7 +83,7 @@ int itemsPerPage = 10;
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-<!-- 								<div class="container-fluid"> -->
+				<!-- 								<div class="container-fluid"> -->
 				<!-- 					內容放這 -->
 
 				<!-- ============== Card Body ============== -->
@@ -134,13 +133,16 @@ int itemsPerPage = 10;
 						<div class="col-11 row"
 							style="height: 60px; display: inline-block;">
 
-							<form class="my-1 col-6" METHOD="post" ACTION="<%=request.getContextPath()%>/booking/booking.do" name="formsearch">
+							<form class="my-1 col-6" METHOD="post"
+								ACTION="<%=request.getContextPath()%>/booking/booking.do"
+								name="formsearch">
 								<div class="form-groupf" style="display: inline-block">
 									<input type="text" class="form-control" id="booking_id"
 										placeholder="查詢訂單編號" style="border: gray solid 2px;"
 										name="booking_id">
 								</div>
-								<input type="hidden" name="action" value="listByCompositeQuery">
+								<input type="hidden" name="action"
+									value="listByCompositeQuery">
 								<button type="submit" class="btn btn-dark mb-2 mt-1 col-2"
 									style="display: inline-block;">搜尋</button>
 							</form>
@@ -200,12 +202,12 @@ int itemsPerPage = 10;
 
 											</thead>
 
-											<%@ include file="/design/page1.file"%>
+								
 											<tbody>
-												<c:forEach var="bookingVO" items="${list}"
-													begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+									
 
 													<tr>
+														<tr>
 														<td>${bookingVO.bookingId}</td>
 														<td>${bookingVO.empId}</td>
 														<td>${bookingVO.equipmentVO.eqName}</td>
@@ -227,10 +229,10 @@ int itemsPerPage = 10;
 														<td><c:if test="${bookingVO.returnStatus == 3}">
 																<c:choose>
 																	<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
-																	<c:when test="${bookingVO.dateDiff == 1}">罰金$ <fmt:formatNumber value="${1 * bookingVO.equipmentVO.price * 0.2}"/></c:when>
-																	<c:when test="${bookingVO.dateDiff == 2}">罰金$ <fmt:formatNumber value="${2 * bookingVO.equipmentVO.price * 0.2}"/></c:when>
-																	<c:when test="${bookingVO.dateDiff == 3}">罰金$ <fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.2}"/></c:when>
-																	<c:when test="${bookingVO.dateDiff > 3}">罰金$ <fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.2}"/></c:when>
+																	<c:when test="${bookingVO.dateDiff == 1}">罰金$ ${1 * bookingVO.equipmentVO.price * 0.2}</c:when>
+																	<c:when test="${bookingVO.dateDiff == 2}">罰金$ ${2 * bookingVO.equipmentVO.price * 0.2}</c:when>
+																	<c:when test="${bookingVO.dateDiff == 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.2}</c:when>
+																	<c:when test="${bookingVO.dateDiff > 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.2}</c:when>
 																</c:choose>
 															</c:if></td>
 
@@ -239,69 +241,62 @@ int itemsPerPage = 10;
 
 
 
-														<form method="post"
-															action="<%=request.getContextPath()%>/booking/booking.do">
+														<form method="post"	action="<%=request.getContextPath()%>/booking/booking.do">
 
 															<td>
-<!-- 															<label for="inputNumber" class="col-sm-2 col-form-label"></label>  -->
-															<select size="1" name="returnStatus" size="45" style="margin-right: 20px;">
-																	<option value="0"
-																		${(bookingVO.returnStatus==0)? 'selected':'' }>已歸還</option>
-																	<option value="1"
-																		${(bookingVO.returnStatus==1)? 'selected':'' }>租借中</option>
-																	<option value="2"
-																		${(bookingVO.returnStatus==2)? 'selected':'' }>未領取器材</option>
-																	<option value="3"
-																		${(bookingVO.returnStatus==3)? 'selected':'' }>逾期歸還(需罰金)</option>
-																	<option value="4"
-																		${(bookingVO.returnStatus==4)? 'selected':'' }>未歸還(需罰金)</option>
-																	<option value="5"
-																		${(bookingVO.returnStatus==5)? 'selected':'' }>已登記預約</option>
-															</select> ${errorMsgs.returnStatus}
-																<div>
-																	<input type="hidden" name="action"
-																		value="updateReturnStatus"> <input
-																		type="hidden" name="bookingId"
-																		value="${bookingVO.bookingId}"> 
-<!-- 																		<input -->
-<!-- 																		type="hidden" name="returnStatus" -->
-<%-- 																		value="${bookingVO.returnStatus}">  --%>
-																		<input
-																		type="submit" value="修改狀態" class="btn-info" style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
-																</div></td>
+<!-- 															<label for="inputNumber" class="col-sm-2 col-form-label"> -->
+<!-- 															</label> -->
+																<div class="col-sm-10">
+																	<select name="returnStatus">
+																		<option value="0" ${(bookingVO.returnStatus == 0 )? 'selected':'' }>已歸還</option>
+																		<option value="1" ${(bookingVO.returnStatus == 1 )? 'selected':'' }>租借中</option>
+																		<option value="2" ${(bookingVO.returnStatus == 2 )? 'selected':'' }>未領取器材</option>
+																		<option value="3" ${(bookingVO.returnStatus == 3 )? 'selected':'' }>逾期歸還(需罰金)</option>
+																		<option value="4" ${(bookingVO.returnStatus == 4 )? 'selected':'' }>未歸還(需罰金)</option>
+																		<option value="5" ${(bookingVO.returnStatus == 5 )? 'selected':'' }>已登記預約</option>
+																	</select>
+																
+																	<div>
+																		<input type="hidden" name="action" value="updateReturnStatus">
+																		<input type="hidden" name="bookingId" value="${bookingVO.bookingId}"> 
+<%-- 																		<input type="hidden" name="returnStatus" value="${bookingVO.returnStatus}">  --%>
+																		<input type="submit" value="修改狀態" class="btn-info" style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
+																	</div>
+																</div>
 														</form>
 
-												</c:forEach>
 											</tbody>
 										</table>
-										<%@ include file="/design/page2.file"%>
-
 									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- /.container-fluid -->
+					
 				</div>
-				<!-- End of Main Content -->
+				<!-- /.container-fluid -->
 			</div>
-			<!-- End of Content Wrapper -->
+			<!-- End of Main Content -->
+		</div>
+		<!-- End of Content Wrapper -->
+	</div>
+	<!-- End of Page Wrapper -->
 
-			<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
 
-			<!-- Scroll to Top Button-->
-			<a class="scroll-to-top rounded" href="#page-top"> <i
-				class="fas fa-angle-up"></i>
-			</a>
+	<%@ include file="/design/backjs.jsp"%>
 
-			<%@ include file="/design/backjs.jsp"%>
-
-
-			<script type="text/javascript">
-				$("tbody tr").css("background-color", function(index) {
-					return index % 2 == 0 ? "#dcdcdc" : "";
-				});
-			</script>
+	<script type="text/javascript">
+		$("tbody tr").css("background-color", function(index) {
+			return index % 2 == 0 ? "#dcdcdc" : "";
+		});
+	</script>
 </body>
+
+
 
 </html>
