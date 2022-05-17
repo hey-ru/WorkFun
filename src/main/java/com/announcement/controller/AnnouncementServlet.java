@@ -118,7 +118,7 @@ if("insert".equals(action)) {
 	else {
 		annSvc.insert(announcementVO);
 		
-		RequestDispatcher successView = req.getRequestDispatcher("/announcement/addannouncement.jsp"); 
+		RequestDispatcher successView = req.getRequestDispatcher("/announcement/listallannouncement.jsp"); 
 		successView.forward(req, res);
 		return;
 	}
@@ -129,7 +129,7 @@ if("insert".equals(action)) {
 	
 	
 	
-	RequestDispatcher successView = req.getRequestDispatcher("/announcement/addannouncement.jsp"); 
+	RequestDispatcher successView = req.getRequestDispatcher("/announcement/listallannouncement.jsp"); 
 	successView.forward(req, res);
 	return;
 	
@@ -255,7 +255,7 @@ if("update".equals(action)) {
 	
 	if(!errorMap.isEmpty()) {
 		RequestDispatcher failureView = req
-				.getRequestDispatcher("/back/backmain.jsp");
+				.getRequestDispatcher("/announcement/updateAnnouncement.jsp");
 		failureView.forward(req, res);
 		return;//程式中斷
 		
@@ -335,7 +335,7 @@ else {
 	
 
     	
-    	RequestDispatcher successView = req.getRequestDispatcher("/announcement/addannouncement.jsp"); 
+    	RequestDispatcher successView = req.getRequestDispatcher("/announcement/listallannouncement.jsp"); 
     	successView.forward(req, res);
     	return;
 
@@ -370,11 +370,22 @@ if("deleteImg".equals(action)) {
 	
 	
 
-    	
-    	RequestDispatcher successView = req.getRequestDispatcher("/announcement/addannouncement.jsp"); 
-    	successView.forward(req, res);
-    	return;
+	AnnouncementService annSvc=new AnnouncementService();
+	AnnouncementVO announcementVO=annSvc.findByPrimaryKey(announcement_id);
+EmpService empService=new EmpService();
 
+					
+	/***************************3.查詢完成,準備轉交(Send the Success view)************/
+	String param = "?announcement_id="  +announcementVO.getAnnouncement_id()+
+			 "&announcer="+  announcementVO.getAnnouncer()+
+			 "&announcer_name="  +empService.getOneEmp(announcementVO.getAnnouncer()).getEmpName()+
+			       "&announcement_title="  +announcementVO.getAnnouncement_title()+
+			       "&announcement_content="+announcementVO.getAnnouncement_content()+
+			       "&announcement_status="+announcementVO.getAnnouncement_status();
+			     
+	String url = "/announcement/updateAnnouncement.jsp"+param;
+	RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+	successView.forward(req, res);
 
 
 

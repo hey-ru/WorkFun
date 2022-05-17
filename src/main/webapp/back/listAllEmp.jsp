@@ -22,8 +22,11 @@
 
 <style>
 .img-fluid {
-    max-width: 70px;
+    max-width: 100px;
     height: auto;
+}
+.table td, .table th {
+vertical-align:middle;
 }
 
 </style>
@@ -121,8 +124,7 @@
 		<th>離職日期</th>
 		<th>手機</th>
 		<th>分機</th>
-		<th>興趣</th>
-		<th>專長</th>
+		
 		<th>頭貼</th>
 		<th>信箱</th>
 		<th>生日</th>
@@ -137,17 +139,14 @@
 		
 		<tr>
 			
-			<td>${empVOSearch.empName}</td>
-			<td>${empVOSearch.depId}-[${empVOSearch.depVO.depName}]</td>
+			<td align="center"  style="width:90px;">${empVOSearch.empName}</td>
+			<td style="width:60px;">${empVOSearch.depVO.depName}</td>
 
-			<td>${empVOSearch.hiredate}</td>
-				<td>${empVOSearch.resigndate}</td>
+			<td style="width:90px;">${empVOSearch.hiredate}</td>
+				<td style="width:90px;">${empVOSearch.resigndate}</td>
 			<td>${empVOSearch.phone}</td>
 			<td>${empVOSearch.extension}</td> 
-				<td>${empVOSearch.hobby}</td>
-				
-						<td>${empVOSearch.skill}</td>
-							<td style="width:300px;"><img 
+							<td style="width:150px; "><img 
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVOSearch.empId}
 									"

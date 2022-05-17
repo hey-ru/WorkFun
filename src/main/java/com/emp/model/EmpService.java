@@ -17,6 +17,12 @@ public class EmpService {
 		dao = new EmpDAO();
 		//dao = new EmpJDBCDAO();
 	}
+	  public List<EmpVO> selectByEmpName(String empName){
+		  return dao.selectByEmpName(empName);
+	  }
+	  public List<EmpVO> selectByExtension(String extension){
+		  return dao.selectByExtension(extension);
+	  }
 
 	public EmpVO addEmp(EmpVO empVO) {
 

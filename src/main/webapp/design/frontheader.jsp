@@ -56,17 +56,25 @@
                  
                 </ul>
                 </nav>
-  <li> 
-                            <div >   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
+
+                            <div style="margin-top:20px">   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
-                               <input type="text"> 
+                               <input type="text" placeholder="輸入分機查詢" name="extension" style="width:125px"> 
+                      
+                               <input type="hidden" name="action" value="selectByExtension">
                                </FORM>
+
+                               </div>
+                                       
+                               <div style="margin-top:20px">
                                   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
-                                 <input type="text">
+                                 <input type="text"placeholder="輸入姓名查詢" name="empName" style="width:125px">
+                                    <input type="hidden" name="action" value="selectByEmpName">
                                  </FORM> 
+                                    
                             </div>
-                        </li>
+                   
                         <!-- 個人頁面dropdown -->
                         <nav class="navbar order-last">
                         <ul class="navbar-right">

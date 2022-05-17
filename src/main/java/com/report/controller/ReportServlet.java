@@ -79,16 +79,16 @@ public class ReportServlet extends HttpServlet{
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				Integer reporter = Integer.valueOf(req.getParameter("reporter").trim());
-
+				System.out.println(reporter);
 				Integer handler = Integer.valueOf(req.getParameter("handler").trim());
-
+				System.out.println(handler);
 				String content = req.getParameter("content");
 				System.out.println(content);
-				String contentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
+				String contentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_'\\n\\s\\(\\)\'\"{}\\[\\]\\*&.。?？!！,，：:；;＄$]*$";
 				if (content == null || content.trim().length() == 0) {
 					errorMsgs.put("content","回報內容: 請勿空白");
 				} else if(!content.trim().matches(contentReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字! 不要加符號!!");
+					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字、標點符號!");
 	            }
 				Integer report_type =Integer.valueOf(req.getParameter("report_type").trim());
 				
@@ -178,11 +178,11 @@ public class ReportServlet extends HttpServlet{
 	            }
 			
 				String content = req.getParameter("content");
-				String contentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
+				String contentReg = "^[(\\u4e00-\\u9fa5)_a-zA-Z0-9_'\\\\n\\\\s\\\\(\\\\)\\'\\\"{}\\\\[\\\\]\\\\*&.。?？!！,，：:；;＄$]*$";
 				if (content == null || content.trim().length() == 0) {
 					errorMsgs.put("content","回報內容: 請勿空白");
 				} else if(!content.trim().matches(contentReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字");
+					errorMsgs.put("content","回報內容: 只能是中、英文字母、數字、標點符號");
 	            }
 				ReportVO oldreportVO = new ReportService().getOneReport(report_id);
 							

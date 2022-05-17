@@ -75,7 +75,7 @@ td {
 						<div class="col-11 row"
 							style="height: 60px; display: inline-block;">
 							<div class=col-8>
-								<ul class="nav nav-tabs">
+								<ul class="nav nav-pills">
 									<li class="nav-item"><a class="nav-link"
 										href="<%=request.getContextPath()%>/groupbuylist/buyer_selectGB.jsp">所有參團</a>
 									</li>
@@ -244,8 +244,7 @@ td {
 </body>
 
 <script>
-
-
+	
 </script>
 
 </html>

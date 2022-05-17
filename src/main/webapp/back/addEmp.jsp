@@ -112,7 +112,7 @@
 										type="TEXT" name="mail" size="45" value="${param.mail}"
 										class="form-control" aria-label="Recipient's username"
 										aria-describedby="basic-addon2" required="required">
-										<font color="red">${errorMsgs.dupmail}</font>
+										<font color="red">${errorMsgs.dupmail}${errorMsgs.mailcheck}</font>
 									
 								</div>
 								

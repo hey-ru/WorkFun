@@ -25,8 +25,8 @@ public class EmpDAO implements EmpDAO_interface {
 	
 
 	
-	private static final String LIKE_EMP_NAME = "select emp_name ,extension  from emp where  emp_name like  %?%  ;  ";
-	private static final String LIKE_EXTENSION = "select emp_name ,extension  from emp where  extension like  %?%  ;  ";
+	
+	private static final String LIKE_EXTENSION = "select emp_name ,extension  from emp where  extension =  ?  ;  ";
 	private static final String SELECT_EXTENSIONWITHID = "select extension from emp where extension = ? and emp_id != ? limit 1 ;  ";
 private static final String SELECT_EXTENSION = "select extension from emp where extension = ? limit 1 ;  ";
 	private static final String SELECT_MAIL = "select mail from emp where mail = ? limit 1 ;  ";
@@ -59,9 +59,10 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 
 				con = getConectPool().getConnection();
 				pstmt = con.prepareStatement(LIKE_EXTENSION);
-			
-				rs = pstmt.executeQuery();
 				pstmt.setString(1, extension);
+				
+				rs = pstmt.executeQuery();
+				
 				while (rs.next()) {
 					
 
@@ -95,11 +96,16 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 			
 		 
 	 }
+	 
+	 
+	 
 	 public List<EmpVO> selectByEmpName(String empName){
 		 List<EmpVO> list = new ArrayList<EmpVO>();
 			EmpVO empVO = null;
 
-		
+			  String LIKE_EMP_NAME = "select emp_name ,extension  from emp where  emp_name like  '%"+
+			  		 empName+
+			  		"%'";
 
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -113,10 +119,10 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 				// FROM emp order by emp_id";
 
 				con = getConectPool().getConnection();
-				pstmt = con.prepareStatement(LIKE_EXTENSION);
-			
+				pstmt = con.prepareStatement(LIKE_EMP_NAME);
+				
 				rs = pstmt.executeQuery();
-				pstmt.setString(1, empName);
+			
 				while (rs.next()) {
 					
 
@@ -888,8 +894,8 @@ return col;
 	
 	
 	public String findEmpNameByExtension(String extension) {
-
-		
+List<EmpVO> list=new ArrayList<EmpVO>();
+		EmpVO empVO=null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -897,7 +903,7 @@ String empName = null;
 		try {
 			
 			con = getConectPool().getConnection();
-			pstmt = con.prepareStatement(LIKE_EMP_NAME);
+			pstmt = con.prepareStatement(LIKE_EXTENSION);
 			
 
 			pstmt.setString(1, extension);
@@ -906,10 +912,10 @@ String empName = null;
 
 			while (rs.next()) {
 				// empVo Domain objects
-				
+				empVO = new EmpVO();
 				// dep_id,emp_name,hire_date,phone,extension,hobby FROM emp where emp_id = ?";
-			
-				empName=(rs.getString("emp_name"));
+			empVO.setEmpName(rs.getString("emp_name"));
+			empVO.setExtension(rs.getString("extension"));
 			
 
 			}

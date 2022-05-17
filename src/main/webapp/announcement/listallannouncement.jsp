@@ -11,6 +11,7 @@
 <html lang="en">
 
 <head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <%@ include file="/design/backcss.jsp"%>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,8 +25,16 @@
 .img-fluid {
     max-width: 70px;
     height: auto;
+    
 }
-
+.table td, .table th {
+vertical-align:middle;
+}
+.ellipsis {
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
 </style>
 
 </head>
@@ -100,21 +109,27 @@
 		<tr>
 		<td>${announcement.announcement_id}</td>
 			<td>${announcement.empVO.empName}</td>
-			<td>${announcement.announcement_title}</td>
+			<td style="width:150px;">${announcement.announcement_title}</td>
 			
 
-			<td>${announcement.announcement_content}</td>
+			<td class="JQellipsis" style="width:300px;">${announcement.announcement_content}</td>
 				<td>${announcement.announcement_time}</td>
 		
-				
-						<td>${announcement.announcement_status}</td>
+				<c:choose>
+				<c:when test="${announcement.announcement_status==1}">
+						<td>公開</td>
+						</c:when>
 							<%-- <td style="width:300px;"><img 
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVOSearch.empId}
 									"
 												class="img-fluid"
 											></td> --%>
-							
+										<c:otherwise>
+										<td>非公開</td>
+										</c:otherwise>	
+											
+							</c:choose>
 										
 			
 			<td>
@@ -152,7 +167,18 @@
         </a>
      
 <%@ include file="/design/backjs.jsp"%>
-
+<script>
+$(function(){
+    var len = 50; // 超過50個字以"..."取代
+    $(".JQellipsis").each(function(i){
+        if($(this).text().length>len){
+            $(this).attr("title",$(this).text());
+            var text=$(this).text().substring(0,len-1)+"...";
+            $(this).text(text);
+        }
+    });
+});
+</script>
 </body>
 
 </html>

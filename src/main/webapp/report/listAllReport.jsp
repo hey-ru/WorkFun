@@ -22,7 +22,6 @@ int itemsPerPage = 10;
 <style>
  *{
       box-sizing: border-box;  /*預設值content-box*/
-
       }
 #findreporter{
 	display: inline-block;
@@ -161,8 +160,10 @@ int itemsPerPage = 10;
 													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne">
 													<button type="button" value="getOneReport" class="btn btn-info">查閱此回報</button></a></td>
 													<c:if test="${empVO.empId ==reportVO.reporter}">
+													<c:if test="${reportVO.status != 4}">;
 													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=getOne_forUpdate">
 													<button type="button" value="getOne_forUpdate" class="btn btn-info">更新此回報</button></a></td>
+													</c:if>
 													<c:if test="${reportVO.status == 2}">
 													<td><a href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=reject">
 													<button type="button" value="reject" class="btn btn-info">退回</button></a></td>

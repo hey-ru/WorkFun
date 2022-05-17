@@ -66,8 +66,9 @@
 										class="form-control" aria-label="Username" 
 										aria-describedby="basic-addon1">
 										 <input type="hidden" name="empId" value="${param.empId}"> 
-                                        </div>    ${errorMsgs.password}
-                                         ${errorMsgs.comparepassword}
+										 <font color="red"> ${errorMsgs.password} ${errorMsgs.checkPassword}${errorMsgs.comparepassword}</font>
+                                        </div>   
+                                     
                                         
                                     <br>
                                      

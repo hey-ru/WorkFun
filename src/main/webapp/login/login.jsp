@@ -57,20 +57,23 @@
 										type="TEXT" name="mail" size="45" value="${param.mail}"
 										class="form-control" aria-label="Username"
 										aria-describedby="basic-addon1">
-                                        </div>${errorMsgs.mail}
+										<font color="red">${errorMsgs.mail}${errorMsgs.mailcheck}</font>
+                                        </div>
                                       <input
 										type="text" name="empPassword" size="45" value="${param.empPassword}"
 										class="form-control" aria-label="Username"
 										aria-describedby="basic-addon1">${errorMsgs.empPassword}
+										
+										<font color="red">${errorMsgs.empPassword}${errorMsgs.checkPassword}</font>
                                       <br>
                                        <input
 										type="submit" value="登入" class="input-group-text bg-info"
 										id="basic-addon2" style="width:345px; color:white; justify-content: center;">
-                                        <hr>
+                                       
                                         ${errorMsgs.login}
-                                        <a href="" class="btn btn-google btn-user btn-block">
+                                     <!--    <a href="" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
+                                        </a> -->
                                         
                                         <input type="hidden" name="action" value="frontLogin"> 
                                     </FORM>

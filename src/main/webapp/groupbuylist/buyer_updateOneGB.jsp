@@ -58,7 +58,7 @@ td {
 					<div class="row">
 						<div class="col-11" style="height: 20px; display: inline-block;">
 							<h5>
-								<strong>參團明細</strong>
+								<strong>修改參團</strong>
 							</h5>
 						</div>
 						<div class="col-1" style="height: 20px; display: inline-block;">

@@ -117,14 +117,13 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 								<p class="col-lg-3 col-md-4 label"></p>
 
 
-								<h4 class="card-title">${equipmentVO.spec}</h4>
+								<h4 class="card-title"><font color="#0000C6">${equipmentVO.spec}</font></h4>
 								<p class="small fst-italic"></p>
 								<h6 class="card-title">
-									<span style="text-decoration: line-through">器材金額</span>
-									(逾期罰金一天為商品30%，最多至90%)
+									🚨 <span style="text-decoration: line-through">器材金額</span>
+									(逾期罰金一天為商品20%，最多至60%) 🚨
 								</h6>
-								<p class="small fst-italic">
-									<font color="#FF0000">$${equipmentVO.price}</font>
+								<p class="small fst-italic">   <font color="#FF0000">$${equipmentVO.price}</font>
 								</p>
 
 							</div>
@@ -149,13 +148,13 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 										value="${param.endDate}" required />
 								</div>
 								<div class="col-sm-5">
-									<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block;" value="我要預約" onclick='alertTest()'>
-										<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
-										<input type="hidden" name="empId" value="${empVO.empId}"> 
-										<input type="hidden" name="startDate" value="${bookingVO.startDate}">
-									<input type="hidden" name="endDate" value="${bookingVO.endDate}"> <input type="hidden"
-										name="returnStatus" value="${bookingVO.returnStatus}">
-									<input type="hidden" name="action" value="insert" onclick="alertTest();"> 
+									<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block; font-weight:bold;" value="點我預約" id="reservationBtn" >
+									<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
+									<input type="hidden" name="empId" value="${empVO.empId}"> 
+									<input type="hidden" name="startDate" value="${bookingVO.startDate}">
+									<input type="hidden" name="endDate" value="${bookingVO.endDate}"> 
+									<input type="hidden" name="returnStatus" value="${bookingVO.returnStatus}">
+									<input type="hidden" name="action" value="insert"> 
 									
 								</div>
 							</form>
@@ -181,6 +180,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
 	
@@ -194,17 +194,27 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 		$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=equipment&id_key=equipment_id&id=${equipmentVO.equipmentId}')
 	});
 	
-    function alertTest() {
-    Swal.fire({
-    	  title: '預約成功 ! ',
-    	  text: '記得取貨哦 ! 喵喵喵喵喵喵 ~  ',
-    	  imageUrl: '<%=request.getContextPath()%>/booking/images/giphy.gif',
-    	  imageWidth: 300,
-    	  imageHeight: 300,
-    	  timer: 3000,
-    	  imageAlt: 'Custom image',
+    $('#reservationBtn').click(function(){
+	    if($("#start_time").val() === '' || $("#end_time").val() === '' ){
+	    	Swal.fire({
+	    		 icon: 'error',
+	    		  title: '殘念',
+	    		  text: '請選擇正確的日期 ! ',	    		  
+	    	});
+	    	return false;
+	    }else{
+
+    	Swal.fire({
+	    	  title: '預約成功 ! ',
+	    	  text: '記得取貨哦 ! 喵喵喵喵喵喵 ~  ',
+	    	  imageUrl: '<%=request.getContextPath()%>/booking/images/giphy.gif',
+	    	  imageWidth: 300,
+	    	  imageHeight: 300,
+	    	  timer: 4000,
+	    	  imageAlt: 'Custom image'
     	});
-    }
+    	}
+    });
     
 
 	<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
@@ -220,7 +230,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
         </c:forEach>
     ];
     
-//     console.log(startDate);
+    console.log(startDate);
 
 	let endDate = [
         <c:forEach items="${list}" var="bookingVO" >
@@ -229,7 +239,9 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
         </c:forEach>
     ];
 	
-// 	console.log(endDate);
+	console.log(endDate);
+
+
 
 function getDatesInRange(a, b) {
 
@@ -249,25 +261,33 @@ function getDatesInRange(a, b) {
     while (aTime <= bTime) {
     	let time = new Date(aTime);
     	let month = time.getMonth() + 1;
+    	let day =  time.getDate();
     	if(month < 10) {
     		month = ('0' + month);
     	}
-    	let timeStr = time.getFullYear() + '/' + month + '/' + time.getDate();
+    	if(day < 10){
+    		day = '0' + day;
+    	}
+    	console.log("getDate() = "+time.getDate());
+    	let timeStr = time.getFullYear() + '/' + month + '/' + day;
     	dates.push(timeStr);
         aTime += 1000 * 60 * 60 * 24;
 //         aDate.setDate(aDate.getDate() + 1);
 //         aTime = aDate.getTime();
     }
+    console.log("dates = " + dates);
     return dates;
 }
 
 const set = new Set();
 for(let i = 0; i < startDate.length; i++) {
 	let arr = getDatesInRange(startDate[i], endDate[i]);
+	console.log("arr = "+arr);
 	for(let j = 0; j < arr.length; j++) {
 		set.add(arr[j]);
 	}
 }
+
 const disabledDates = Array.from(set); // set -> array
 console.log(disabledDates);
 
@@ -300,8 +320,9 @@ $('#end_time').datetimepicker({
       theme: '',              //theme: 'dark',
       format:'Y-m-d',         //format:'Y-m-d H:i:s',
       timepicker:false,
-	  disabledDates: disabledDates, // 去除特定不含
-	   //value: '${end_time}', // value:   new Date(),
+	  disabledDates: disabledDates,// 去除特定不含
+	  minDate: timeStr,
+	  timepicker:false,   
 	  onShow:function(){
 		   this.setOptions({
 			
@@ -309,6 +330,30 @@ $('#end_time').datetimepicker({
 		   })
 		  }
 });
+
+
+// <====================================================>
+
+// let start = new Date(Date.parse($('#start_time').val()) + 24*60*60*1000);
+// let startMonth = start.getMonth() +1;
+// let startDate = start.getDate();
+// if (startMonth < 10)
+// 	startMonth = "0" + startMonth;
+// if (startDate < 10)
+// 	startDate = "0" + startDate;
+// let startval = start.getFullYear() + "/" + startMonth + "/" + startDate;
+
+// $('#start_time').blur(e => {
+//     $('#end_time').attr({
+//         'min': startval
+// //         'max': lastday   //可設可不設(區間)
+//     })
+// })
+
+// <====================================================>
+
+
+
 
 
 // console.log(startDate);

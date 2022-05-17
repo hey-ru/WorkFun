@@ -29,7 +29,14 @@
 
 
 
+<style>
+.borderg{
+border: 1px solid #d1d3e2;
+color: #6e707e;
+padding:0.375rem 0.75rem;
 
+}
+</style>
 
 </head>
 
@@ -76,10 +83,9 @@
 							<div
 								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
 								<div class="input-group mb-3" style="margin-top: 0px;">
-									<span class="input-group-text" id="xx">發布者</span> <a
-										
-										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1">${param.announcer_name}</a>
+									<span class="input-group-text" id="xx">發布者</span> 		<input
+										type="text" name="announcer" size="45" value="${empVO.empName}"
+										readonly class="form-control-plaintext" id="staticEmail">
 								
 							 <input
 										type="hidden" name="announcer" size="45" value="${param.announcer}"
@@ -91,17 +97,16 @@
 							
 
 								<div class="input-group mb-3">
-									<span class="input-group-text" id="basic-addon2">公告標題</span> <input
+									<span class="input-group-text" id="basic-addon2">公告標題</span> <input 
 										type="TEXT" name="announcement_title" size="45" value="${param.announcement_title}"
-										class="form-control" required="required"
-										aria-label="Recipient's username"
-										aria-describedby="basic-addon2"> 
+										 required="required" class="borderg"
+										> 
 
 								</div>
 								
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="basic-addon2">公告內容</span> 
-									<textarea name="announcement_content" rows="3" cols="20" style="width:810px">${param.announcement_content}</textarea>
+									<textarea name="announcement_content" rows="15" cols="30" class="borderg" style="width:826px">${param.announcement_content}</textarea>
 									
 									
 							
@@ -175,7 +180,7 @@
 								</div>
 						</FORM>
 							
-							<div style=" border: 3px blue solid;width: 300px;  height: 600px; margin-top: 300px;margin-left: 600px ">
+							<div style=" width: 300px;  height: 600px; margin-top: 640px;margin-left: 540px ">
 								<c:forEach var="announcement_mapping" items="${list}" >
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
 							enctype="multipart/form-data">

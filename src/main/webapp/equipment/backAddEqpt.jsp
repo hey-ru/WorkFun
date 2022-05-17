@@ -93,8 +93,7 @@
 													<label for="inputText" class="col-sm-2 col-form-label">金額:
 													</label>
 													<div class="col-sm-10">
-														<input name="price" type="text" class="form-control"
-															value="${param.price}"> <font color=#ff0000>${errorMsgs.price}</font>
+														<input name="price" type="text" class="form-control" maxlength="8" value="${param.price}"> <font color=#ff0000>${errorMsgs.price}</font>
 													</div>
 												</div>
 
@@ -102,7 +101,7 @@
 													<label for="inputNumber" class="col-sm-2 col-form-label">器材狀態:
 													</label>
 													<div class="col-sm-10">
-														<select name="eqStatus" id="">
+														<select name="eqStatus" id="" style="margin-top: 7px;">
 <!-- 															<option value="" selected>請選擇狀態</option> -->
 															<option value="3" ${(param.eqStatus==3)? 'selected':'' }>下架</option>
 															<option value="0" ${(param.eqStatus==0)? 'selected':'' }>上架</option>
@@ -138,9 +137,9 @@
 													</label>
 													<div class="col-sm-10">
 														<input type="hidden" name="spec1" id="spec1"
-															class="form-control" value="${param.spec}" />
+															class="form-control" value="" />
 														<textarea name="spec" id="spec" rows="9" cols="64"
-															class="form-control"></textarea>
+															class="form-control">${param.spec}</textarea>
 														<font color=#ff0000>${errorMsgs.spec}</font>
 													</div>
 												</div>

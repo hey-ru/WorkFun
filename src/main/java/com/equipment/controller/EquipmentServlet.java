@@ -225,9 +225,14 @@ public class EquipmentServlet extends HttpServlet {
 //				errorMsgs.put("eqName", "器材名稱: 只能是中文，英文字母、数字及_");
 //			}
 
-			Integer price = null;
+			Integer price = 0;
 			try {
 				price = Integer.valueOf(req.getParameter("price").trim());
+				if(price < 0) {
+					errorMsgs.put("price", "請輸入大於0的數字");
+				}else if(price > 1000000) {
+					errorMsgs.put("price", "金額請小於100w");
+				}
 			} catch (NumberFormatException e) {
 				errorMsgs.put("price", "金額請填數字");
 			}
@@ -320,17 +325,19 @@ public class EquipmentServlet extends HttpServlet {
 //				errorMsgs.put("eqName", "器材名稱: 只能是中文，英文字母、数字及_");
 //			}
 
-			Integer price = null;
+			Integer price = 0;
 			try {
 				price = Integer.valueOf(req.getParameter("price").trim());
+				if(price < 0) {
+					errorMsgs.put("price", "請輸入大於0的數字");
+				}else if(price > 1000000) {
+					errorMsgs.put("price", "金額請小於100w");
+				}
 			} catch (NumberFormatException e) {
 				errorMsgs.put("price", "金額請填數字");
-			}if(price <= 0) {
-				errorMsgs.put("price", "請輸入大於0的數字");
-			}if(price > 1000000) {
-				errorMsgs.put("price", "金額請小於100w");
 			}
-			System.out.println(price);
+			
+//			System.out.println(price);
 
 //			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
 

@@ -4,6 +4,7 @@ package com.emp.controller;
 import static com.util.String2SQLDate.strToDate;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,7 +28,9 @@ import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.permission.model.PermissionService;
 import com.permissionmapping.model.PermissionMappingService;
-import com.util.JavaMailDuplicate;
+import com.util.JavaMail;
+import static com.util.JavaMail.genAuthCode;
+
 
 
 
@@ -48,7 +51,7 @@ public class EmpServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session=req.getSession();
 //		 Connection con=(Connection)session.getAttribute("con");
-		
+		res.setContentType("text/html;charset=UTF-8");
 		
 	
 		
@@ -217,10 +220,16 @@ public class EmpServlet extends HttpServlet {
 				
 //				String empProfile = req.getParameter("empProfile");
 				
-				String mail = req.getParameter("mail").trim();
+				String mail = (req.getParameter("mail"));
+				String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@gmail.com";
+				
 				if (mail == null || mail.trim().length() == 0) {
 					errorMsgs.put("mail","信箱請勿空白");
 				}
+				else if(!mail.trim().matches(checkEmail)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("mailcheck","請輸入google信箱");
+	            }
+			
 				
 				java.sql.Date birthday = null;
 				try {
@@ -363,10 +372,15 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				
 //				String empProfile = req.getParameter("empProfile");
 				
-				String mail = req.getParameter("mail").trim();
+				String mail = (req.getParameter("mail"));
+				String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@gmail.com";
+				
 				if (mail == null || mail.trim().length() == 0) {
 					errorMsgs.put("mail","信箱請勿空白");
 				}
+				else if(!mail.trim().matches(checkEmail)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("mailcheck","請輸入xxx@gmail格式");
+	            }
 				
 				java.sql.Date birthday = null;
 				try {
@@ -457,6 +471,106 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 		}
 
+if ("selectByExtension".equals(action)) {
+	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+	String extension= req.getParameter("extension");
+	String extensionReg = "^\\d{4}$";
+	if (extension == null || extension.trim().length() == 0) {
+		errorMsgs.put("extensionwhite","請勿空白");
+	} else if(!extension.trim().matches(extensionReg)) { //以下練習正則(規)表示式(regular-expression)
+		errorMsgs.put("extensionReg","請輸入4個數字");
+    }
+	
+	if (!errorMsgs.isEmpty()) {
+		RequestDispatcher failureView = req
+				.getRequestDispatcher("/home/home.jsp");
+		failureView.forward(req, res);
+		return; //程式中斷
+	}
+
+	EmpService empService=new EmpService();
+	List<EmpVO> list=empService.selectByExtension(extension);
+	System.out.println(list.size());
+	
+	if(list.size()==0) {
+//		PrintWriter out=res.getWriter();
+//	
+//
+//		out.print("<script type='text/javascript'>alert('alert提示框2!');</script>");
+//		out.flush();
+		
+	
+		
+		RequestDispatcher failureView = req
+				.getRequestDispatcher("/home/home.jsp");
+		failureView.forward(req, res);
+	
+		return; 
+	}
+	req.setAttribute("list", list);
+	String url = "/home/selectExtension.jsp";
+	RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+	successView.forward(req, res);
+	
+
+//	if (empName == null || empName.trim().length() == 0) {
+//		errorMsgs.put("empName","員工姓名: 請勿空白");
+//	} else if(!empName.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
+//		errorMsgs.put("empName","員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+//    }
+	
+	
+	
+}
+if ("selectByEmpName".equals(action)) {
+	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+	String empName= req.getParameter("empName");
+	
+	if (empName == null || empName.trim().length() == 0) {
+		errorMsgs.put("empNamewhite","請勿空白");
+	} 
+	
+	if (!errorMsgs.isEmpty()) {
+		RequestDispatcher failureView = req
+				.getRequestDispatcher("/home/home.jsp");
+		failureView.forward(req, res);
+		return; //程式中斷
+	}
+
+	EmpService empService=new EmpService();
+	List<EmpVO> list=empService.selectByEmpName(empName);
+	System.out.println(list.size());
+	
+	if(list.size()==0) {
+//		PrintWriter out=res.getWriter();
+//	
+//
+//		out.print("<script type='text/javascript'>alert('alert提示框2!');</script>");
+//		out.flush();
+		
+	
+		
+		RequestDispatcher failureView = req
+				.getRequestDispatcher("/home/home.jsp");
+		failureView.forward(req, res);
+	
+		return; 
+	}
+	req.setAttribute("list", list);
+	String url = "/home/selectExtension.jsp";
+	RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+	successView.forward(req, res);
+	
+	
+	
+	
+	
+}
+
+
+
         if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			
         	
@@ -500,8 +614,8 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 				if (extension == null || extension.trim().length() == 0) {
 					errorMsgs.put("extension","分機請勿空白");
 				}
-				if ( extension.trim().length() == 4) {
-					errorMsgs.put("extension","分機長度為4");
+				if ( extension.trim().length() != 4) {
+					errorMsgs.put("extension","分機長度需為四");
 				}
 				String hobby = req.getParameter("hobby").trim();
 				String skill = req.getParameter("skill").trim();
@@ -521,6 +635,8 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 					errorMsgs.put("birthday","請輸入生日");
 				}
 				String password=req.getParameter("birthday").trim().replaceAll("\\pP","");//完全清除標點
+				String afterpassword="Birth"+password;
+				System.out.println(afterpassword);
 
 				EmpVO newempVO = new EmpVO();
 				newempVO.setEmpName(empName);
@@ -530,7 +646,7 @@ if ("updateFront".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 				newempVO.setHobby(hobby);
 				newempVO.setSkill(skill);
-				newempVO.setEmpPassword(password);
+				newempVO.setEmpPassword(afterpassword);
 				newempVO.setEmpProfile(headimg);
 				
 				newempVO.setBirthday(birthday);
@@ -713,14 +829,18 @@ return;
 //				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					String mail = (req.getParameter("mail"));
-				
+					String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@gmail.com";
+					
 					if (mail == null || mail.trim().length() == 0) {
 						errorMsgs.put("mail","帳號請勿空白");
 					}
+					else if(!mail.trim().matches(checkEmail)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.put("mailcheck","請輸入google信箱");
+		            }
 				
 					
 					
-
+					String checkPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
 
 					
 					
@@ -730,6 +850,9 @@ return;
 					if (empPassword == null || empPassword.trim().length() == 0) {
 						errorMsgs.put("empPassword","密碼請勿空白");
 					}
+					else if(!empPassword.trim().matches(checkPassword)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.put("checkPassword","請輸入包含英文大小寫和數字，最少8個字最多16個字");
+		            }
 					
 					
 				
@@ -1006,9 +1129,15 @@ return;
 				if (req.getParameter("birthday") == null || req.getParameter("birthday").trim().length() == 0) {
 					errorMsgs.put("birthday","生日請勿空白");
 				}
-				if (req.getParameter("mail") == null || req.getParameter("mail").trim().length() == 0) {
-					errorMsgs.put("birthday","信箱請勿空白");
+				String mail = (req.getParameter("mail"));
+				String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@gmail.com";
+				
+				if (mail == null || mail.trim().length() == 0) {
+					errorMsgs.put("mail","信箱請勿空白");
 				}
+				else if(!mail.trim().matches(checkEmail)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("mailcheck","請輸入google信箱");
+	            }
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -1022,8 +1151,7 @@ return;
 				
 	java.sql.Date birthday=strToDate(req.getParameter("birthday"));
 System.out.println(birthday);
-			 String mail=req.getParameter("mail");
-			System.out.println(mail);
+			
 				EmpService empSvc = new EmpService();
 				EmpVO empVO=empSvc.getbymailandbirthday(mail, birthday);
 			   if(empVO==null) {
@@ -1036,25 +1164,23 @@ System.out.println(birthday);
 			  
 			   else { 
 				   
-				   try {
-					JavaMailDuplicate javaMail=new JavaMailDuplicate();
+			
+					JavaMail javaMail=new JavaMail();
 					javaMail.sendMail();
-				   } catch(Exception e) {
-					   e.printStackTrace();
-				   }
+				
 				  
-//				   javaMail.setRECIPIENT(mail);
-//				   String authCode=genAuthCode();
-//				String text="您的驗證碼為["+authCode+"]請在修改頁面重新設定您的密碼";
-//				   javaMail.setTXT(text);
-//				   javaMail.sendMail();
-//			session.setAttribute("authCode", authCode);
-//				   Integer empId=empVO.getEmpId();
+				   javaMail.setRECIPIENT(mail);
+				   String authCode=genAuthCode();
+				String text="您的驗證碼為["+authCode+"]請在修改頁面重新設定您的密碼";
+				   javaMail.setTXT(text);
+				   javaMail.sendMail();
+			session.setAttribute("authCode", authCode);
+				 
 //				   
 //				   
-//				   String param = "?empId="+empVO.getEmpId();
-				   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"); 
-//				   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"+param); // 成功轉交listEmps_ByCompositeQuery.jsp
+				   String param = "?empId="+empVO.getEmpId();
+				//   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"); 
+				   RequestDispatcher successView = req.getRequestDispatcher("/login/verify.jsp"+param); // 成功轉交listEmps_ByCompositeQuery.jsp
 					successView.forward(req, res);
 					return;
 			   }
@@ -1093,8 +1219,7 @@ System.out.println(birthday);
 		   
 		   
 		   
-		   if ("forgotchangepassword".equals(action)) { // 來自addEmp.jsp的請求  
-			   
+		   if ("forgotchangepassword".equals(action)) {
 
 				Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 				req.setAttribute("errorMsgs", errorMsgs);
@@ -1102,16 +1227,22 @@ System.out.println(birthday);
 		
 				String newpassword1=req.getParameter("newpassword1");
 				EmpService empSvc=new EmpService();
-			
+				String checkPassword="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
 				String newpassword2=req.getParameter("newpassword2");
 				EmpVO empVO=empSvc.getOneEmp(empId);
 				if (newpassword1 == null || newpassword1.trim().length() == 0 || newpassword2 == null || newpassword2.trim().length() == 0) {
 					errorMsgs.put("password","密碼請勿空白");
 				}
-				if(!newpassword1.equals(newpassword2)) {
-					errorMsgs.put("comparepassword","密碼不一致");
-					
+				else if(!newpassword1.trim().matches(checkPassword)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("checkPassword","請輸入包含英文大小寫和數字，最少8個字");
+			    }
+				else if(!newpassword2.trim().matches(checkPassword)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("checkPassword","請輸入包含英文大小寫和數字，最少8個字");
+			    }
+				else if (!newpassword1.equals(newpassword2)) {
+					errorMsgs.put("checkPassword","密碼不一致");
 				}
+			
 				
 				
 				if (!errorMsgs.isEmpty()) {
@@ -1141,11 +1272,23 @@ System.out.println(birthday);
 	EmpVO sessEmpVO=(EmpVO)session.getAttribute("empVO");
 		
 	String nowpassword=req.getParameter("nowpassword");
-	
+
+	String checkPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
 	
 	if(!sessEmpVO.getEmpPassword().equals(nowpassword)) {
 		errorMsgs.put("nowpassword","密碼錯誤");
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
 	
 	
 	
@@ -1158,18 +1301,27 @@ System.out.println(birthday);
 				if (newpassword1 == null || newpassword1.trim().length() == 0 || newpassword2 == null || newpassword2.trim().length() == 0) {
 					errorMsgs.put("password","密碼請勿空白");
 				}
-				if(!newpassword1.equals(newpassword2)) {
+				else if(!newpassword1.trim().matches(checkPassword)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("checkPassword","請輸入包含英文大小寫和數字，最少8個字");
+			    }
+				else if(!newpassword2.trim().matches(checkPassword)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("checkPassword","請輸入包含英文大小寫和數字，最少8個字");
+			    }
+				else if (!newpassword1.equals(newpassword2)) {
 					errorMsgs.put("comparepassword","密碼不一致");
-					
 				}
-				
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/login/reset.jsp");
+							.getRequestDispatcher("/emp/frontProfile.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
+				
+				
+				
+				
+				
 				EmpVO empVO=new EmpVO();
 				empVO.setEmpId(sessEmpVO.getEmpId());
 //				sessEmpVO.setEmpPassword(newpassword2);
@@ -1178,7 +1330,7 @@ System.out.println(birthday);
 				
 				
 				
-				  RequestDispatcher successView = req.getRequestDispatcher("/emp/empfront.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				  RequestDispatcher successView = req.getRequestDispatcher("/emp/frontProfile.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 					successView.forward(req, res);
 				
 			

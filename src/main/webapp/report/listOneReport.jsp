@@ -29,7 +29,7 @@
                             style="width:900px;position:absolute; height:630px; top:45%; margin-top:-160px;margin-left: 14%;">
                             <div class="input-group mb-3" style="margin-top: 0px;">
                                 <span class="input-group-text" id="basic-addon1">標題</span>
-                                 <span>${reportVO.title}</span>
+                                 <input readonly style="text-align:center" value="${reportVO.title}"/>
                                     
                             </div>
 
@@ -39,7 +39,9 @@
 													<c:if test="${reportVO.report_type==1}">損壞報修</c:if>
 													<c:if test="${reportVO.report_type==2}">軟硬體問題</c:if>
 													<c:if test="${reportVO.report_type==3}">其他</c:if></span>
+								 <span style="width:100px"></span>
                                 <span class="input-group-text" id="basic-addon2">處理狀況</span>
+                               
                                <span><c:if test="${reportVO.status==0}">已發送</c:if>
 													<c:if test="${reportVO.status==1}">處理中</c:if>
 													<c:if test="${reportVO.status==2}">待確認</c:if>
@@ -50,20 +52,19 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">回報建立時間</span>
                                <span><fmt:formatDate value="${reportVO.starttime}" pattern="yyyy-MM-dd HH:mm "/></span>
-                                  
+                                  <span style="width:100px"></span>
                                 <span class="input-group-text" id="basic-addon2">回報最新編輯時間</span>
-                              <span><fmt:formatDate value="${reportVO.updatetime}" pattern="yyyy-MM-dd HH:mm "/></span>  
+                              <span><fmt:formatDate value="${reportVO.updatetime}" pattern="yyyy-MM-dd HH:mm "/></span> 
+                              <span style="width:100px"></span> 
                                 <span class="input-group-text" id="basic-addon2">回報結束時間</span>
                               <span><fmt:formatDate value="${reportVO.endtime}" pattern="yyyy-MM-dd HH:mm "/></span>
                                 
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon2">回報人</span>
-                             <span>${reportVO.empVO1.empName}</span>
-                                
+                                <input readonly style="text-align:center" value="${reportVO.empVO1.empName}"/>
                                 <span class="input-group-text" id="basic-addon2">處理人</span>
-                              <span>${reportVO.empVO2.empName}</span>
-                                  
+                                <input readonly style="text-align:center" value="${reportVO.empVO2.empName}"/>
                             </div>
                             <label for="basic-url" class="form-label">回報內容</label>
                             <div class="input-group mb-3" style=" height:200px">

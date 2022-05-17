@@ -70,6 +70,10 @@ public class EquipmentService {
 	public List<EquipmentVO> getAll() {
 		return dao.getALL();
 	}
+	
+	public List<EquipmentVO> getOnTheShelf(Integer eq_status){
+		return dao.getOnTheShelf(eq_status);
+	}
 
 	public EquipmentVO getLast() {
 		return dao.getLast();

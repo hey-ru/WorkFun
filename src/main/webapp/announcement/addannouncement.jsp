@@ -15,7 +15,14 @@
     <meta name="author" content="">
 
     <title>WorkFunBack</title>
+<style>
+.borderg{
+border: 1px solid #d1d3e2;
+color: #6e707e;
+padding:0.375rem 0.75rem;
 
+}
+</style>
 
 </head>
 
@@ -60,11 +67,11 @@
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
 							enctype="multipart/form-data">
 							<div
-								style="border: 3px blue solid; width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
+								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
 								<div class="input-group mb-3" style="margin-top: 0px;">
-									<span class="input-group-text" id="xx">發布者</span> <a
-										
-									>${empVO.empName}</a>
+									<span class="input-group-text" id="xx">發布者</span> 
+										<a class="borderg">${empVO.empName}</a>
+									
 									<input
 										type="hidden" name="announcer" size="45" value="${empVO.empId}"
 										class="form-control" aria-label="Username"
@@ -75,7 +82,7 @@
 								<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon2">公告標題</span> <input
 										type="TEXT" name="announcement_title" size="45" value="${param.titile}"
-										 required="required"
+										 required="required" class="borderg"
 										> 
 
 							
@@ -85,7 +92,7 @@
 
 								<div class="input-group mb-3">
 									<span class="input-group-text" id="basic-addon2">公告內容</span> 
-									<textarea name="announcement_content" rows="3" cols="20" style="width:826px">${param.content}</textarea>
+									<textarea name="announcement_content" rows="15" cols="30" style="width:826px" class="borderg">${param.content}</textarea>
 									
 									
 							

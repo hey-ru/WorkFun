@@ -29,7 +29,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "INSERT INTO announcement (announcer,announcement_title,announcement_content) VALUES (?,?,?) ";
-	private static final String GET_ALL_STMT = "select announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement order by announcement_id ";
+	private static final String GET_ALL_STMT = "select announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement order by announcement_id desc ";
 	private static final String GET_ONE_STMT = "select announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement where announcement_id = ? ";
 	private static final String DELETE = "DELETE FROM announcement where announcement_id = ?  ;";
 	private static final String UPDATE = "UPDATE announcement set ";

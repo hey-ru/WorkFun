@@ -146,7 +146,7 @@ int itemsPerPage = 10;
 																	
 															</tr>
 														</thead>
-														<thead>
+														<tbody>
 															<%@ include file="/design/page1.file"%>
 															<c:forEach var="reportVO" items="${list}"
 																begin="<%=pageIndex%>"
@@ -191,7 +191,7 @@ int itemsPerPage = 10;
 														</c:if>
 																</tr>
 															</c:forEach>
-														</thead>
+														</tbody>
 													
 													</table>
 													<%@ include file="/design/page2.file"%>
@@ -222,6 +222,11 @@ int itemsPerPage = 10;
 
        
 <%@ include file="/design/backjs.jsp"%>
+<script type="text/javascript">
+$("tbody tr").css("background-color", function(index) {
+    return index%2==0?"lightgray":"";
+});
+</script>
 </body>
 
 </html>

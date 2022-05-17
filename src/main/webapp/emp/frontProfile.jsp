@@ -234,7 +234,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 													value="${empVO.mail}" class="form-control"
 													aria-label="Recipient's username"
 													aria-describedby="basic-addon2">
-												<font color="red">${errorMsgs.dupmail}</font>	
+												<font color="red">${errorMsgs.dupmail}${errorMsgs.mailcheck}</font>	
 											</div>
 										</div>
 
@@ -296,6 +296,8 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 												<input name="newpassword1" type="password"
 													class="form-control" id="newPassword">
 											</div>
+											<font color="red">${errorMsgs.	nowpassword }</font>
+										
 										</div>
 
 										<div class="row mb-3">
@@ -305,7 +307,9 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 												<input name="newpassword2" type="password"
 													class="form-control" id="renewPassword">
 											</div>
+												<font color="red">	${errorMsgs.mailcheck }</font>
 										</div>
+									
 
 										<div class="text-center">
 											<button type="submit" class="btn btn-primary">確認修改密碼</button>

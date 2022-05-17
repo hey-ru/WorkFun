@@ -34,6 +34,8 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 	
 	//	private static final String GET_ALL_QUERY = "SELECT equipment_id,eq_name,price,eq_status,introduction,spec FROM equipment FROM equipment where eq_name like \"%\"?\"%\"";
 
+	private static final String GET_ON_THE_SHELF = "select * from equipment where eq_status = ?";
+	
 	@Override
 	public void insert(EquipmentVO equipmentVO) {
 
@@ -371,6 +373,73 @@ public class EquipmentJDBCDAO implements EquipmentDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<EquipmentVO> getOnTheShelf(Integer eq_status) {
+		List<EquipmentVO> list = new ArrayList<EquipmentVO>();
+		EquipmentVO equipmentVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ON_THE_SHELF);
+
+			pstmt.setInt(1, eq_status);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				equipmentVO = new EquipmentVO();
+				equipmentVO.setEquipmentId(rs.getInt("equipment_id"));
+				equipmentVO.setEqName(rs.getString("eq_name"));
+				equipmentVO.setPrice(rs.getInt("price"));
+				equipmentVO.setEqStatus(rs.getInt("eq_status"));
+//				equipmentVO.setIntroduction(rs.getString("introduction"));
+				equipmentVO.setSpec(rs.getString("spec"));
+				equipmentVO.setImg1(rs.getBytes("img1"));
+				equipmentVO.setImg2(rs.getBytes("img2"));
+				equipmentVO.setImg3(rs.getBytes("img3"));
+				list.add(equipmentVO);
+			}
+			
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 
 	@Override
 	public List<EquipmentVO> getALL() {

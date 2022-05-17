@@ -12,6 +12,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.post_comment.model.Post_CommentVO;
+import com.post_image.model.Post_ImageVO;
+
 public class PostDAO implements PostDAO_interface{
 	
 	private static DataSource ds = null;
@@ -224,6 +227,18 @@ public class PostDAO implements PostDAO_interface{
 		}
 		
 		return list;
+	}
+
+	@Override
+	public List<Post_ImageVO> getImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Post_CommentVO> getComment() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
