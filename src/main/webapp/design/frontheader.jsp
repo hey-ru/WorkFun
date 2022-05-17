@@ -75,9 +75,9 @@
                             <div class="dropdown">
                                 <i class="bi bi-chat-dots" style="font-size:25px"></i>
                                 <div class="dropdown-content nav-item-right">
-                                    <a href="#">聊天一</a>
-                                    <a href="#">聊天二</a>
-                                    <a href="#">聊天三</a>
+                                    <a href="<%=request.getContextPath()%>/chat/chatRoomPublic.jsp">聊天囉</a>
+<!--                                     <a href="#">聊天二</a> -->
+<!--                                     <a href="#">聊天三</a> -->
                                 </div>
                             </div>
                         </li>
