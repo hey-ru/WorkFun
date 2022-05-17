@@ -227,7 +227,7 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.put("mail","信箱請勿空白");
 				}
 				else if(!mail.trim().matches(checkEmail)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("mailcheck","請輸入xxx@gmail");
+					errorMsgs.put("mailcheck","請輸入google信箱");
 	            }
 			
 				
@@ -835,7 +835,7 @@ return;
 						errorMsgs.put("mail","帳號請勿空白");
 					}
 					else if(!mail.trim().matches(checkEmail)) { //以下練習正則(規)表示式(regular-expression)
-						errorMsgs.put("mailcheck","請輸入gmail帳號");
+						errorMsgs.put("mailcheck","請輸入google信箱");
 		            }
 				
 					
@@ -1136,7 +1136,7 @@ return;
 					errorMsgs.put("mail","信箱請勿空白");
 				}
 				else if(!mail.trim().matches(checkEmail)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("mailcheck","請輸入xxx@gmail格式");
+					errorMsgs.put("mailcheck","請輸入google信箱");
 	            }
 				
 				if (!errorMsgs.isEmpty()) {
