@@ -91,7 +91,7 @@ pageContext.getAttribute("shop_id");
 					</div>
 					<div style="text-align: end; padding: 30;">
 						<input type="hidden" class="form-control" name="shop_id"
-							value="${param.shop_id}"> <input type="hidden"
+							value="${shopVO.shop_id}"> <input type="hidden"
 							name="action" value="insertMany"> <input type="submit"
 							class="btn btn-dark" value="送出新增">
 					</div>

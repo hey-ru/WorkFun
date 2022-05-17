@@ -134,7 +134,7 @@ tbody td {
 									</h3>
 								</div>
 								<div class="col-5" style="height: 20px; display: inline-block; text-align:center;">
-										<h5 style="color:red;">${errorMsgs.msgQty} ${errorMsgs.remark}</h5>
+										<h5 style="color:red;"><strong>${errorMsgs.msgQty} ${errorMsgs.remark}</strong></h5>
 								</div>
 								<div class="col-3" style="height: 20px; display: inline-block;text-align: end;">
 									<a href="<%=request.getContextPath()%>/groupbuy/gbHome.jsp"><strong>瀏覽其他團</strong></a>
@@ -259,7 +259,7 @@ tbody td {
 			Swal.fire({
 				position : 'top-end',
 				icon : 'success',
-				title : '下單成功🙌 前往訂購紀錄',
+				title : '送出訂購 前往訂購紀錄',
 				showConfirmButton : false,
 				timer : 1500
 			})
