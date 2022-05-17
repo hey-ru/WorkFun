@@ -206,8 +206,51 @@ public class SecondHandServlet extends HttpServlet {
 
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("secondHandVO", newSecondHandVO); // 資料庫update成功後,正確的的secondHandVO物件,存入req
-				String url = "/secondhand/secondHandHome.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交seondHandHome.jsp
+				String url = "/secondhand/listByMySaled.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listByMySaled.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+//			} catch (Exception e) {
+//				errorMsgs.put("修改資料失敗",e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/secondhand/updateSecondHand.jsp");
+//				failureView.forward(req, res);
+//			}
+		}
+		
+		if ("updateToDel".equals(action)) { // 來自updateSecondHand.jsp的請求
+			
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+//			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				
+				Integer second_hand_id = Integer.valueOf(req.getParameter("second_hand_id").trim());
+				
+				SecondHandVO newSecondHandVO = new SecondHandVO();
+				newSecondHandVO.setIs_enable(0);
+				newSecondHandVO.setsecond_hand_id(second_hand_id);
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/secondhand/updateSecondHand.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+				}
+				
+				/***************************2.開始修改資料*****************************************/
+//				SecondHandService secondHandService = new SecondHandService();
+//				SecondHandVO secondHandVO = secondHandService.updateSecondHand(bid_winner, deal_price, name, bottom_price, top_price, start_time, end_time, is_deal, img1, img2, img3, second_hand_id);
+				SecondHandService secondHandService = new SecondHandService();
+				secondHandService.updateSecondHand(newSecondHandVO);
+
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("secondHandVO", newSecondHandVO); // 資料庫update成功後,正確的的secondHandVO物件,存入req
+				String url = "/secondhand/listByMySaled.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listByMySaled.jsp
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/

@@ -20,6 +20,7 @@ public class SecondHandVO implements java.io.Serializable {
 	private Timestamp start_time;
 	private Timestamp end_time;
 	private Integer is_deal;
+	private Integer is_enable;
 	private byte[] img1;
 //	private String img1;
 	private byte[] img2;
@@ -110,6 +111,14 @@ public class SecondHandVO implements java.io.Serializable {
 		this.is_deal = is_deal;
 	}
 	
+	public Integer getIs_enable() {
+		return is_enable;
+	}
+
+	public void setIs_enable(Integer is_enable) {
+		this.is_enable = is_enable;
+	}
+
 	public byte[] getImg1() {
 		return img1;
 	}

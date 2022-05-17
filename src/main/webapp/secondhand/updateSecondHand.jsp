@@ -130,13 +130,20 @@ body {
 								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label"></label>
 									<div class="col-sm-10">
-										<input type="hidden" name="action" value="insert"> <input
-											type="submit" id="submit" class="btn btn-primary" value="新增商品">
+										<input type="hidden" name="action" value="update">
+										<input type="submit" id="submit" class="btn btn-primary" value="更新競標">
+
 									</div>
 								</div>
 
 							</form>
-
+							<form METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form2">
+								<div>
+									<input name="second_hand_id" type="hidden" class="form-control" value="${param.second_hand_id}">
+									<input type="hidden" name="action" value="updateToDel">
+									<input type="submit" class="btn btn-primary" value="刪除競標" style="margin-left: 450px;margin-top: -111px;">
+								</div>
+							</form>
 						</div>
 					</div>
 
@@ -252,7 +259,7 @@ body {
 		}
 	});
 	
-	submitDisable();
+// 	submitDisable();
 	
 	function submitDisable() {
 		document.getElementById("submit").disabled = true;

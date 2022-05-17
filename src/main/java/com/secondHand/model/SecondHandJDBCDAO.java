@@ -29,12 +29,12 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 //	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
 //	private static final String GET_BY_ID = "SELECT e.emp_name as saler_name,b.bid_id as bid_id,b.bidder as bidder,b.price as bid_price,sh.second_hand_id,sh.saler,sh.bid_winner,sh.deal_price,sh.name,sh.bottom_price,sh.top_price,sh.start_time,sh.end_time,sh.is_deal,sh.img1,sh.img2,sh.img3,sh.create_time,sh.update_time FROM second_hand sh join emp e on sh.saler = e.emp_id join bid b on sh.second_hand_id = b.second_hand_id where sh.second_hand_id = ?";
 	private static final String GET_BY_ID = "SELECT e1.emp_name as saler_name,e1.phone as saler_phone,e1.extension as saler_extension,e2.emp_name as bidder_name,b.bid_id as bid_id,b.bidder as bidder,b.price as bid_price,sh.* FROM second_hand sh JOIN emp e1 on e1.emp_id = sh.saler JOIN bid b on sh.second_hand_id = b.second_hand_id LEFT JOIN emp e2 on e2.emp_id = b.bidder WHERE sh.second_hand_id = ?";
-	private static final String GET_BY_SALER = "SELECT * FROM second_hand where saler = ?";
-	private static final String GET_BY_BID_WINNER = "SELECT * FROM second_hand where bid_winner = ?";
-	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
-	private static final String GET_BY_IS_DEAL = "SELECT second_hand_id,saler,name,start_time,end_time,is_deal,img1 FROM second_hand where is_deal = ?";
-	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand order by second_hand_id";
-	private static final String GET_ALL_DATE_STMT = "SELECT second_hand_id,is_deal,start_time,end_time FROM second_hand order by second_hand_id";
+	private static final String GET_BY_SALER = "SELECT * FROM second_hand WHERE is_enable <> 0 AND saler = ?";
+	private static final String GET_BY_BID_WINNER = "SELECT * FROM second_hand where is_enable <> 0 AND bid_winner = ?";
+	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where is_enable <> 0 AND name like \"%\"?\"%\"";
+	private static final String GET_BY_IS_DEAL = "SELECT second_hand_id,saler,name,start_time,end_time,is_deal,img1 FROM second_hand where is_enable <> 0 and is_deal = ?";
+	private static final String GET_ALL_STMT = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand WHERE is_enable <> 0 order by second_hand_id";
+	private static final String GET_ALL_DATE_STMT = "SELECT second_hand_id,is_deal,start_time,end_time FROM second_hand where is_enable <> 0 order by second_hand_id";
 
 	@Override
 	public void insert(SecondHandVO secondHandVO) {
@@ -214,6 +214,9 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			if (newSecondHandVO.getIs_deal() != null) {
 				sb.append("is_deal=?, ");
 			}
+			if (newSecondHandVO.getIs_enable() != null) {
+				sb.append("is_enable=?, ");
+			}
 			if (newSecondHandVO.getImg1() != null) {
 				sb.append("img1=?, ");
 			}
@@ -258,6 +261,10 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			if (newSecondHandVO.getIs_deal() != null) {
 				count++;
 				pstmt.setInt(count, newSecondHandVO.getIs_deal());
+			}
+			if (newSecondHandVO.getIs_enable() != null) {
+				count++;
+				pstmt.setInt(count, newSecondHandVO.getIs_enable());
 			}
 			if (newSecondHandVO.getImg1() != null) {
 				count++;
@@ -726,9 +733,14 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			String finalSQL = "select * from second_hand " + jdbcUtil_CompositeQuery.get_WhereCondition(map)
-					+ "order by second_hand_id";
+					+ "and is_enable <> 0 order by second_hand_id";
+//			System.out.println(finalSQL.substring(30, 39));
+//			System.out.println("is_enable".equals(finalSQL.substring(30, 39)));
+			if ("is_enable".equals(finalSQL.substring(30, 39))) {
+				finalSQL = "select * from second_hand where is_enable <> 0 order by second_hand_id";
+			}
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -789,9 +801,14 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			String finalSQL = "select * from second_hand " + jdbcUtil_CompositeQuery.get_WhereCondition(map)
-					+ "order by second_hand_id";
+					+ "and is_enable <> 0 order by second_hand_id";
+//			System.out.println(finalSQL.substring(30, 39));
+//			System.out.println("is_enable".equals(finalSQL.substring(30, 39)));
+			if ("is_enable".equals(finalSQL.substring(30, 39))) {
+				finalSQL = "select * from second_hand where is_enable <> 0 order by second_hand_id";
+			}
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -852,9 +869,14 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			String finalSQL = "select * from second_hand " + jdbcUtil_CompositeQuery.get_WhereCondition(map)
-					+ "order by second_hand_id";
+					+ "and is_enable <> 0 order by second_hand_id";
+//			System.out.println(finalSQL.substring(30, 39));
+//			System.out.println("is_enable".equals(finalSQL.substring(30, 39)));
+			if ("is_enable".equals(finalSQL.substring(30, 39))) {
+				finalSQL = "select * from second_hand where is_enable <> 0 order by second_hand_id";
+			}
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
