@@ -9,7 +9,6 @@ SecondHandService secondHandSvc = new SecondHandService();
 List<SecondHandVO> list = secondHandSvc.getAllByIsDeal(1);
 pageContext.setAttribute("list", list);
 int itemsPerPage = 9;
-String thisPage = "";
 %>
 
 <!DOCTYPE html>
@@ -45,6 +44,10 @@ String thisPage = "";
 	border: 2px solid #3399ff;
 	color: white;
 	font-weight: bold;
+}
+
+body {
+	background-color: #DAE5FF;
 }
 </style>
 
@@ -118,6 +121,7 @@ String thisPage = "";
 									<p>[競標開始時間 ${secondHandVO.start_time}]</p>
 									<p>[競標截止時間 ${secondHandVO.end_time}]</p>
 									<div class="portfolio-links" style="display:flex;">
+<!-- 										登入者就是拍賣人 -->
 										<c:if test="${empVO.empId == secondHandVO.saler}">
 											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" style="margin-bottom: 0px; margin-right: 5px;">
 												<input type="submit" value="修改" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("0") != -1 ? "" : "hidden"} >
@@ -129,6 +133,7 @@ String thisPage = "";
 												<input type="hidden" name="second_hand_id" value="${secondHandVO.second_hand_id}">
 											</FORM>
 										</c:if>
+<!-- 										登入者不是拍賣人 -->
 										<c:if test="${empVO.empId != secondHandVO.saler}"> 
 											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/bid/bidHomeWS.jsp" style="margin-bottom: 0px; margin-right: 5px;">
 													<input type="submit" value="參加競標" class="submitbtn" ${secondHandVO.is_deal.toString().indexOf("1") != -1 ? "" : "hidden"} >

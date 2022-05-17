@@ -256,8 +256,8 @@ public class SecondHandServlet extends HttpServlet {
 				if (bottom_price < 0) {
 					errorMsgs.put("bottom_price", "請輸入大於0的數字");
 				}
-				if (bottom_price > 100000000) {
-					errorMsgs.put("bottom_price", "請輸入小於50,000,000的數字");
+				if (bottom_price > 10000000) {
+					errorMsgs.put("bottom_price", "請輸入小於10,000,000的數字");
 				}
 				System.out.println(bottom_price);
 

@@ -28,7 +28,7 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 	private static final String UPDATE = "UPDATE second_hand set ";// StringBuilder
 //	private static final String GET_BY_ID = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where second_hand_id = ?";
 //	private static final String GET_BY_ID = "SELECT e.emp_name as saler_name,b.bid_id as bid_id,b.bidder as bidder,b.price as bid_price,sh.second_hand_id,sh.saler,sh.bid_winner,sh.deal_price,sh.name,sh.bottom_price,sh.top_price,sh.start_time,sh.end_time,sh.is_deal,sh.img1,sh.img2,sh.img3,sh.create_time,sh.update_time FROM second_hand sh join emp e on sh.saler = e.emp_id join bid b on sh.second_hand_id = b.second_hand_id where sh.second_hand_id = ?";
-	private static final String GET_BY_ID = "SELECT e1.emp_name as saler_name,e2.emp_name as bidder_name,b.bid_id as bid_id,b.bidder as bidder,b.price as bid_price,sh.* FROM second_hand sh JOIN emp e1 on e1.emp_id = sh.saler JOIN bid b on sh.second_hand_id = b.second_hand_id LEFT JOIN emp e2 on e2.emp_id = b.bidder WHERE sh.second_hand_id = ?";
+	private static final String GET_BY_ID = "SELECT e1.emp_name as saler_name,e1.phone as saler_phone,e1.extension as saler_extension,e2.emp_name as bidder_name,b.bid_id as bid_id,b.bidder as bidder,b.price as bid_price,sh.* FROM second_hand sh JOIN emp e1 on e1.emp_id = sh.saler JOIN bid b on sh.second_hand_id = b.second_hand_id LEFT JOIN emp e2 on e2.emp_id = b.bidder WHERE sh.second_hand_id = ?";
 	private static final String GET_BY_SALER = "SELECT * FROM second_hand where saler = ?";
 	private static final String GET_BY_BID_WINNER = "SELECT * FROM second_hand where bid_winner = ?";
 	private static final String GET_BY_NAME = "SELECT second_hand_id,saler,bid_winner,deal_price,name,bottom_price,top_price,start_time,end_time,is_deal,img1,img2,img3,create_time,update_time FROM second_hand where name like \"%\"?\"%\"";
@@ -329,6 +329,8 @@ public class SecondHandJDBCDAO implements SecondHandDAO_interface {
 			while (rs.next()) {
 				EmpVO empVO1 = new EmpVO();
 				empVO1.setEmpName(rs.getString("saler_name"));
+				empVO1.setPhone(rs.getString("saler_phone"));
+				empVO1.setExtension(rs.getString("saler_extension"));
 				
 				EmpVO empVO2 = new EmpVO();
 				empVO2.setEmpName(rs.getString("bidder_name"));

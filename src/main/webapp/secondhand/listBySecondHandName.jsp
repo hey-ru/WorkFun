@@ -21,6 +21,10 @@ pageContext.setAttribute("list", list);
 	height: 400px;
 	display: flex
 }
+
+body {
+	background-color: #DAE5FF;
+}
 </style>
 
 </head>
