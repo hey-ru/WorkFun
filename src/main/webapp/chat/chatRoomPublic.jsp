@@ -8,6 +8,14 @@
 <%@ include file="/design/frontmetacss.jsp"%>
 
 <link href="${pageContext.request.contextPath}/chat/chatRoomPublic.css" rel="stylesheet">
+
+<style>
+	body {
+		background-image:
+ 			url("${pageContext.request.contextPath}/design/sheep.gif");
+		background-size: cover;
+	}
+</style>
 </head>
 
 <body onload="connect();" onunload="disconnect();">
@@ -22,7 +30,7 @@
 		<div class="container">
 
 			<!--       上面標題 -->
-			<h3 class=" text-center">WorkFun首家線上群聊上線啦！！！</h3>
+			<h3 class=" text-center">WorkFun八卦版</h3>
 
 
 			<div class="messaging">
@@ -70,7 +78,7 @@
 						<!--   輸入聊天內容的地方 -->
 						<div class="type_msg">
 							<div class="input_msg_write">
-								<input type="text" id="message" class="write_msg" placeholder="Type a message" onkeydown="if (event.keyCode == 13) sendMessage();"/>
+								<input type="text" id="message" class="write_msg" placeholder="Type a message" style="background-color: rgba(255, 255, 255, 0.8)" onkeydown="if (event.keyCode == 13) sendMessage();"/>
 								<button class="msg_send_btn" type="button" onclick="sendMessage();">
 									<i class="bi bi-send-fill" aria-hidden="true"></i>
 								</button>

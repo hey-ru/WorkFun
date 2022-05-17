@@ -69,8 +69,8 @@ body {
 	<!-- End Header -->
 
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-	<main id="main">
-
+	<main class="wrapper">
+		<div style="height: var(--header-height);"></div>
 		<section id="portfolio" class="portfolio">
 			<div class="container" data-aos="fade-up">
 
@@ -113,7 +113,7 @@ body {
 									<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}
 									"
 									class="img-fluid"
-									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
+									alt="" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
 								<div class="portfolio-info">
 									<h4>${secondHandVO.name}</h4>
 									<p>[競標開始時間 ${secondHandVO.start_time}]</p>

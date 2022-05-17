@@ -169,20 +169,16 @@ body {
 									<c:if test="${empVO.empId != secondHandVO.bidVO.bidder}">此商品已經被<span style="font-size: 24px;font-weight: 600;">${secondHandVO.empVO2.empName}</span>買走了</c:if>
 								</c:if>
 							</div>
-							<c:if test="${secondHandVO.saler != empVO.empId}">
-								<c:if test="${secondHandVO.is_deal == 1}">
-<%-- 									<c:if test="${secondHandVO.bidVO.bidder != empVO.empId}"> --%>
-										<div class="form-group col-4" style="display: inline-block">
+							<div class="form-group col-4" style="margin-left: 30px;margin-top: 25px;display: flex">
+								<c:if test="${secondHandVO.saler != empVO.empId}">
+									<c:if test="${secondHandVO.is_deal == 1}">
 											<div class="form-group col-4" style="margin-top:10px;">
 												<input type="number" class="form-control"
 		 											id="inputPrice" placeholder="輸入競標金額"
 													style="border: gray solid 2px;  width:150px;" name="price"
-<%-- 													onchange="if (value <= Number(document.getElementById('currentPrice').innerHTML) {}" --%>
-<%-- 		 											都沒人競標過 --%>
 		 											<c:if test="${secondHandVO.bidVO.bidder==0}">
 		 												oninput="if(value >= ${secondHandVO.top_price}){value = ${secondHandVO.top_price}};
 				 												 if(value < 0){value = 0};"
-<%-- 		 												if(value <= Number(document.getElementById('currentPrice').innerHTML)){value = Number(document.getElementById('currentPrice').innerHTML)}" --%>
 		 												
 <%-- 		 												預設值 --%>
 		 												value="${secondHandVO.bottom_price}"
@@ -191,27 +187,25 @@ body {
 		 											<c:if test="${secondHandVO.bidVO.bidder!=0}">
 			 											oninput="if(value >= ${secondHandVO.top_price}){value = ${secondHandVO.top_price}};
 			 													 if(value < 0){value = 0};"
-<%--			 											if(value <= Number(document.getElementById('currentPrice').innerHTML)){value = Number(document.getElementById('currentPrice').innerHTML)+1}" --%>
 			 											
 <%-- 			 											預設值 --%>
 			 											value="${secondHandVO.bidVO.price+1}"
 		 											</c:if>
 												>
 											</div>
-											<input type="submit" class="btn btn-primary" id="sendPrice" style="display: inline-block; margin-top:10px;" value="我要出價" onclick="sendPrice();"></input>
+											<input type="submit" class="btn btn-primary" id="sendPrice" style="margin-top:4px; margin-left:100px;" value="我要出價" onclick="sendPrice();"></input>
+									</c:if>
+								</c:if>
+								<c:if test="${secondHandVO.saler != empVO.empId}">
+									<c:if test="${secondHandVO.is_deal == 1}">
+										<div class="form-group col-3" style="display: inline-block; margin-left: 20px">
+											<input type="submit" class="btn btn-primary" id="buyItem" style="display: inline-block; margin-top:4px;" value="我要直購" onclick="buyItem();">
 										</div>
-<%-- 									</c:if> --%>
+									</c:if>
 								</c:if>
-							</c:if>
+							</div>
 							
-<%-- 							${empVO.empId} --%>
-							<c:if test="${secondHandVO.saler != empVO.empId}">
-								<c:if test="${secondHandVO.is_deal == 1}">
-									<div class="form-group col-3" style="display: inline-block; margin-left: 20px">
-										<input type="submit" class="btn btn-primary" id="buyItem" style="display: inline-block; margin-top:10px;" value="我要直購" onclick="buyItem();">
-									</div>
-								</c:if>
-							</c:if>
+							
 <%-- 							${param.second_hand_id} --%>
 <%-- 							<%=request.getParameter("second_hand_id")%> --%>
 						</div>

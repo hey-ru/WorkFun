@@ -59,8 +59,8 @@ body {
 	<!-- End Header -->
 
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-	<main id="main">
-
+	<main class="wrapper">
+		<div style="height: var(--header-height);"></div>
 		<section id="portfolio" class="portfolio">
 			<div class="container" data-aos="fade-up">
 
