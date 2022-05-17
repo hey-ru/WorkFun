@@ -131,9 +131,21 @@ int itemsPerPage = 10;
 																	aria-controls="dataTable" rowspan="1" colspan="1"
 																	aria-label="Salary: activate to sort column ascending"
 																	style="">回報狀態</th>
+																<th class="sorting" tabindex="0"
+																	aria-controls="dataTable" rowspan="1" colspan="1"
+																	aria-label="Salary: activate to sort column ascending"
+																	style="">處理</th>
+																<th class="sorting" tabindex="0"
+																	aria-controls="dataTable" rowspan="1" colspan="1"
+																	aria-label="Salary: activate to sort column ascending"
+																	style="">轉發</th>
+																<th class="sorting" tabindex="0"
+																	aria-controls="dataTable" rowspan="1" colspan="1"
+																	aria-label="Salary: activate to sort column ascending"
+																	style="">完成</th>	
 															</tr>
 														</thead>
-														<thead>
+														<tbody>
 															<%@ include file="/design/page1.file"%>
 															<c:forEach var="reportVO" items="${list}"
 																begin="<%=pageIndex%>"
@@ -169,16 +181,18 @@ int itemsPerPage = 10;
 																			<button type="button" value="getOne_forModify"
 																				class="btn btn-info">轉發</button>
 																	</a></td>
+																	<c:if test="${reportVO.status!=0}">
 																	<td><a
 																		href="/CGA101G3/reportServlet?report_id=${reportVO.report_id}&action=complete">
 																			<button type="button" value="complete"
 																				class="btn btn-info">完成</button>
 																	</a></td>
+																	</c:if>
 														</c:if>
 														</c:if>
 																</tr>
 															</c:forEach>
-														</thead>
+														</tbody>
 													
 													</table>
 													<%@ include file="/design/backReportPage2.file"%>
@@ -209,6 +223,11 @@ int itemsPerPage = 10;
 
        
 <%@ include file="/design/backjs.jsp"%>
+<script type="text/javascript">
+$("tbody tr").css("background-color", function(index) {
+    return index%2==0?"lightgray":"";
+});
+</script>
 </body>
 
 </html>

@@ -1,6 +1,9 @@
 package com.post.model;
 
 import java.sql.Timestamp;
+import java.util.List;
+import com.post_comment.model.Post_CommentVO;
+import com.post_image.model.Post_ImageVO;
 
 public class PostVO implements java.io.Serializable{ 
 	
@@ -16,6 +19,21 @@ public class PostVO implements java.io.Serializable{
 	private Timestamp post_createtime;
 	private Timestamp post_updatetime;
 	private Integer is_disable;
+	private List<Post_CommentVO> pcVO;
+	private List<Post_ImageVO> piVO;
+	
+	public List<Post_CommentVO> getPcVO() {
+		return pcVO;
+	}
+	public void setPcVO(List<Post_CommentVO> pcVO) {
+		this.pcVO = pcVO;
+	}
+	public List<Post_ImageVO> getPiVO() {
+		return piVO;
+	}
+	public void setPiVO(List<Post_ImageVO> piVO) {
+		this.piVO = piVO;
+	}
 	public Integer getPost_id() {
 		return post_id;
 	}

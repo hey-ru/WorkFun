@@ -100,7 +100,7 @@
                             </div>
                             <label for="basic-url" class="form-label">回報內容</label>
                             <div class="input-group mb-3" style=" height:200px">
-                                <textarea class="form-control" aria-label="With textarea">${repVO.content}</textarea>
+                                <textarea readonly class="form-control" aria-label="With textarea">${repVO.content}</textarea>
                             </div>
 
                             <div class="input-group mb-3">
@@ -125,14 +125,28 @@
 								 <input class="form-control" aria-label="Username" type="hidden"
                    						 aria-describedby="basic-addon1" name="report_id" value="${repVO.report_id}">
                                 <span class="input-group-text">處理訊息</span>
-                            	<input class="form-control" aria-label="Username" type="text"
+                            	<input class="form-control" aria-label="Username" type="text" id="comment" required
                     						aria-describedby="basic-addon1" name="comment" value="${recVO.comment}">
-                    						<p style="color :red">${errorMsgs.comment}</p>	
-                    			
+                    						<p style="color :red" id="comment_error">${errorMsgs.comment}</p>	
+                    			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                    					<script type="text/javascript">
+    
+										    let rule1=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\s\\(\\-\\)\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]*$/;
+										    $("#comment").blur(function(){
+										  	  if($(this).val() == ''){
+										  		  $('#comment_error').text('請填入處理訊息!')
+										  	  }else if(rule1.test($(this).val())){
+										            $('#comment_error').text('')
+										        }else{
+										            $('#comment_error').text('處理訊息:只能是中英文字母、數字、全型標點符號')
+										        }
+										    });	
+          								</script>   						
                     			</div>
                     		<div class="input-group mb-3">
                  	 			<label class="input-group-text" for="inputGroupFile01">Upload</label>
-                				<input type="file" value="${recVO.report_comment_image}" name="report_comment_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:150px; width:150px" id="pic" />
+                				<input id="imgInp" type="file" value="${recVO.report_comment_image}" name="report_comment_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])">
+                				<img id="blah" src="#" alt="your image" style="width:250px;height:250px" />
                 				<input type="text" style="display:none;" name="action" value="insert">
 								<button type="submit" value="送出新增">送出</button>
                             </div> 
@@ -152,7 +166,16 @@
         </a>
      
 <%@ include file="/design/backjs.jsp"%>
-
+	 <script>
+    imgInp.onchange = evt => {
+    	  const [file] = imgInp.files
+    	  if (file) {
+    	    blah.src = URL.createObjectURL(file)
+    	  }
+    	}
+    
+    
+    </script>
 </body>
 
 </html>

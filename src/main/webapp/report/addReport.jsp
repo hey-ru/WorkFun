@@ -50,18 +50,20 @@
             </div>
             
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">標題</span>
-                <input type="text" class="form-control" aria-label="Username" name="title"
+                <span class="input-group-text" id="basic-addon1">標題</span><font color=red><b>*</b></font>
+                <input type="text" class="form-control" aria-label="Username" required name="title" id="title"
                     aria-describedby="basic-addon1" value="${param.title}">
-                    <p style="color :red">${errorMsgs.title}</p>
+                    
+                    <span style="color :red" id="title_error">${errorMsgs.title}</span>
             </div>
 
 
-            <label for="basic-url" class="form-label">回報內容</label>
+            <label for="basic-url" class="form-label">回報內容</label><font color=red><b>*</b></font>
             <div class="input-group mb-3" style=" height:150px">
                 <input id="cent" type="hidden" class="form-control" aria-label="Recipient's username" name="content1"
                     aria-describedby="basic-addon2" value="${param.content}">
-                   <textarea name="content" rows="20" cols="50" id="tarea" style="height:150px;width:1000px"></textarea><span style="color :red">${errorMsgs.content}</span>
+                   <textarea required name="content" rows="20" cols="50" required id="tarea" style="height:150px;width:1000px"></textarea>
+                   <span style="color :red" id="content_error">${errorMsgs.content}</span>
                    
             </div>
             <div style="height:10px">
@@ -69,9 +71,10 @@
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupFile01">Upload</label>
-                <input type="file" value="${param.report_image}" name="report_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])"><img style="height:200px; width:200px; padding:5px"  id="pic" />
+                <input id="imgInp" type="file" value="${param.report_image}" name="report_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])">
+               	<img id="blah" src="#" alt="your image" style="width:250px;height:250px" />
                 <input type="text" style="display:none;" name="action" value="insert">
-				<button type="submit" value="送出新增">送出</button>
+				<button type="submit" value="送出新增" style=" border:red 1px solid; width:100px;height:100px">送出</button>
             </div>
         </div>
         </FORM>
@@ -85,6 +88,44 @@
 
     <!-- Template Main JS File -->
     <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+    
+    <script>
+    imgInp.onchange = evt => {
+    	  const [file] = imgInp.files
+    	  if (file) {
+    	    blah.src = URL.createObjectURL(file)
+    	  }
+    	}
+    
+    
+    </script>
+    
+  	<script type="text/javascript">
+    
+    let rule1=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\s\\(\\-\\)]*$/;
+    $("#title").blur(function(){
+  	  if($(this).val() == ''){
+  		  $('#title_error').text('請填入標題!')
+  	  }else if(rule1.test($(this).val())){
+            $('#title_error').text('')
+        }else{
+            $('#title_error').text('標題名稱:只能是中英文字母、數字')
+        }
+    });
+
+    let rule2=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\s\\(\\-\\)\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]*$/;
+    $("#tarea").blur(function(){
+    	  if($(this).val() == ''){
+      		  $('#content_error').text('請填入回報內容!')
+      	  }else if(rule2.test($(this).val())){
+                $('#content_error').text('')
+            }else{
+                $('#content_error').text('回報內容:只能是中英文字母、數字、全型標點符號')
+            }
+        });
+</script>
+    
+    
     <script>
     $('.rptype').click( function(e){
     	console.log(e.target.value);

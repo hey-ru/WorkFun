@@ -34,7 +34,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	private static final String REJECT = "update report set status = 1 where report_id = ?";
 	private static final String COMPLETE = "update report set status = 2 where report_id = ?";
 	private static final String CANCEL = "update report set status = 3 where report_id = ?";
-	private static final String ALL_COMPLETED = "update report set status = 4 where report_id = ?";
+	private static final String ALL_COMPLETED = "update report set status = 4 , endtime = current_timestamp() where report_id = ?";
 	
 //	private static final String HANDLE_REPORT = "select e1.emp_name as reporterName, e2.emp_name as handlerName,r.report_id, rc.report_id, reporter, handler, starttime, updatetime, endtime, content, status,report_image, report_type, title , comment , report_comment_image , createtime from report r join emp e1 on e1.emp_id = r.reporter join emp e2 on e2.emp_id = r.handler left join report_comment rc on r.report_id = rc.report_id Where r.report_id = ?";
 	
