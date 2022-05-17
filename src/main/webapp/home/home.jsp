@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.announcement.model.*"%>
 	<%@ page import="java.util.*"%>
@@ -41,29 +42,33 @@
     <!-- ======= Hero Section ======= -->
     <section id="hero" class="d-flex">        
             <div id="sectionannouncement"style="margin-left:100px;margin-top:100px;width: 85vw;  min-height: 80vh;">
+			<div style="height:50px;"></div>
 			<div class="row">
-                  <div class="col-12">
+			<div class="col-6"></div>
+                  <div class="col-4">
                   <!-- Advanced Tables -->
                 
-                   <div class="table-responsive bg-white" ">
+                   <div class="table-responsive" style="font-family: Andale Mono, monospace;">
 					<table class="table table-hover text-dark" id="dataTables-example">
                        <tr>
-                       	<th class="text-dark bg-info">Tibame大事紀</th>
+                       	<th class="text-light" style="background-color:#97A5C0;"><h5><strong>📢 W o r k F u n 公 告 	</strong></h5></th>
 						<!-- <th></th> -->
 						
 					   </tr>
 						<%@ include file="/home/page1.file" %> 
+						<tbody>
 						<c:forEach var="announcement" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							
 					   <tr>
-					   	<td >
+					   	<td>
 					   	<a class="text-dark"
 					   	 href="<%=request.getContextPath()%>/announcementServlet?action=getOne&announcement_id=${announcement.announcement_id}">${announcement.announcement_title}</a>
-                              <div>  ${announcement.announcement_time}</div> 
+                              <div class="text-end"> <fmt:formatDate value="${announcement.announcement_time}" pattern="yyyy-MM-dd HH:mm"/> </div> 
 					   	</td>
 					   	
 					   </tr>
 						</c:forEach>
+						</tbody>
 					</table>
 							<div >
 							<%@ include file="/home/page2.file" %>
@@ -89,66 +94,14 @@
          
        
     <!-- ======= js ======= -->
-<<<<<<< Updated upstream
+
         <%@ include file="/design/frontjs.jsp" %> 
-<%-- =======
-        <%@ include file="/design/frontjs.jsp" %>
-         
-    
-    <div 
-								style="border: 3px blue solid; width: 400px;  height: 200px; margin-top:-200px;margin-left:500px;z-index:120;position: relative;background-color:white">
-    
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- Advanced Tables -->
-                                <div class="panel panel-default">
-                                   
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                        
-                                      
-                                        
-                                        
-                                            <table class="table table-striped table-bordered table-hover" 
-                                                id="dataTables-example" style="z-index:100;position: relative;">
-                                               <tr >
-                                            	<th >Tibame大事紀</th>
-		
-		
-	
-		<!-- <th></th> -->
-		
-		
-	</tr>
-	<%@ include file="page1.file" %> 
-	<c:forEach var="announcement" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-		
-		<tr>
-		
-			
-			<td ><a href="<%=request.getContextPath()%>/announcementServlet?action=getOne&announcement_id=${announcement.announcement_id}">${announcement.announcement_title}</a></td>
-			
+        <script type="text/javascript">
+$("tbody tr").css("background-color", function(index) {
+    return index%2==0?"#BECBD3":"#DEE1CB";
+});
 
-						
-							
-										
-			
-		
-		</tr>
-	</c:forEach>
-</table>
-<%@ include file="page2.file" %>
-</div>
-</div>
-</div>
-</div>
-
-                    <!-- /.container-fluid -->
-                </div>
-    </div>
-    
->>>>>>> Stashed changes --%>
-
+</script>
     
 </body>
 
