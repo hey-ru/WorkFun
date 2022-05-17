@@ -39,10 +39,10 @@ pageContext.setAttribute("list", list);
 	<section id="hero" class="d-flex">
 
 		<div id="sectionannouncement"
-			style="margin-left: 100px; margin-top: 250px; width: 85vw; min-height: 80vh;">
+			style="margin-left: 100px; margin-top: 320px; width: 85vw; min-height: 80vh;">
 			
 			
-			<div style="height: 5px;">
+			<div style="height: 1px;">
 				<div class="container d-flex flex-column align-items-center"
 					data-aos="zoom-in" data-aos-delay="100">
 					<h1>Welcome to WorkFun</h1>
