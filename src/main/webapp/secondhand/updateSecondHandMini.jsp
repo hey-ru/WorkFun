@@ -14,6 +14,10 @@
 	height: 400px;
 	display: flex
 }
+
+body {
+	background-color: #DAE5FF;
+}
 </style>
 
 </head>
@@ -27,7 +31,7 @@
 			<div class="row">
 				<div class="col-lg-6" style="width: 100%">
 
-					<div class="card">
+					<div class="card" style="background-color: #DAE5FF;">
 						<div class="card-body">
 							<h5 class="card-title">新增二手商品</h5>
 							

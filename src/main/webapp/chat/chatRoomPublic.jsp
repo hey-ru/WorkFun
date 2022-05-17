@@ -94,12 +94,12 @@
 	<%@ include file="/design/frontjs.jsp"%>
 	
 	<script>
-		var MyPoint = "/Public/${empVO.empId}/${empVO.empName}";
+		var MyPoint = "/Public/10001/${empVO.empId}/${empVO.empName}";
 		var host = window.location.host; //localhost:8081/
 		var path = window.location.pathname; //WebSocketChatWeb
 		var webCtx = path.substring(0, path.indexOf('/', 1));
 		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
-						 //ws://localhost:8081/WebSocketChatWeb/Public/${empVO.empId}/${empVO.empName}
+						 //ws://localhost:8081/WebSocketChatWeb/Public/10001/${empVO.empId}/${empVO.empName}
 	
 		var webSocket;
 	
@@ -122,8 +122,7 @@
 				if(${empVO.empId} != jsonObj.userId) {
 //	 				別人傳的訊息
 
-// 					這個\r\n為啥沒效
-					context.innerHTML = jsonObj.userName + " : \r\n" + message;
+					context.innerHTML ="<b font-weight:900; style='font-size: 18px;''>" + jsonObj.userName + "</b> <br>" + message;
 
 					var received_withd_msg = document.createElement("div");
 					var received_msg = document.createElement("div");
@@ -172,10 +171,11 @@
 			var message = inputMessage.value.trim();
 	
 			if (message === "") {
-				alert("Input a message");
+// 				alert("Input a message");
 				inputMessage.focus();
 			} else {
 				var jsonObj = {
+					"chatRoomId" : "10001",
 					"userId" : ${empVO.empId},
 					"userName" : "${empVO.empName}",
 					"message" : message

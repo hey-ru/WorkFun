@@ -390,6 +390,12 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 	}
 
 	@Override
+	public List<SecondHandVO> getByBidWinner(Integer bid_winner) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public List<SecondHandVO> getByName(String name) {
 		List<SecondHandVO> list = new ArrayList<SecondHandVO>();
 		SecondHandVO secondHandVO = null;
@@ -572,6 +578,18 @@ public class SecondHandDAO implements SecondHandDAO_interface {
 		return list;
 	}
 	
+	@Override
+	public List<SecondHandVO> getAllBySaler(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SecondHandVO> getAllByBidWinner(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public List<SecondHandVO> getAll(Map<String, String[]> map) {
 		List<SecondHandVO> list = new ArrayList<SecondHandVO>();

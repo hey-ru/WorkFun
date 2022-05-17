@@ -54,6 +54,10 @@ String thisPage = "test";
 	color: white;
 	font-weight: bold;
 }
+
+body {
+	background-color: #DAE5FF;
+}
 </style>
 
 </head>
