@@ -78,8 +78,8 @@ pageContext.getAttribute("shop_id");
 									</div>
 									<div class="form-group" style="text-align: center;">
 										<label for=" price">金 額 </label> 
-										<input type="number" required size=20px
-											class="form-control" placeholder="輸入金額" name="price" min="1" max="1000"
+										<input type="number" required size=30px
+											class="form-control" placeholder="數字" name="price" min="1" max="1000"
 											value="">
 									</div>
 									<div class="form-group">
@@ -150,7 +150,7 @@ $("#item").blur(function(){
                                             <div class="form-group">
                                                     <label for="price"></label>
                                                     <input type="number" required size=20px
-                                                    class="form-control" placeholder="輸入金額" name="price" min="1" max="1000" 
+                                                    class="form-control" placeholder="數字" name="price" min="1" max="1000" 
                                                     value="">
                                             </div>
                                             <div class="form-group">

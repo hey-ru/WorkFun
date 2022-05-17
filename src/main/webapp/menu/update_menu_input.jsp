@@ -13,12 +13,12 @@
 
 </head>
 
-<body  style="background-color: #DBD4C6;">
+<body>
 
 	<%@ include file="/design/frontheader.jsp"%>
 
 	<!-- ====================== 內容開始 ====================== -->
-	<main id="main" class="main" style="height: 50vh;background-color: #DBD4C6">
+	<main id="main" class="main" style="height: 50vh;>
 		<div style="background-color: #DBD4C6;">
 			<!-- ============== Card Header ============== -->
 			<div class="card-header py-3" style="background-color: #b0c4de">
@@ -35,7 +35,7 @@
 			</div>
 			<!-- ============== Card Body ============== -->
 
-						<div class="col-lg-12" >
+						<div class="col-lg-6" >
 							<div class="card" style="background-color: #DBD4C6;ALIGN-ITEMS: CENTER;">
 								<div class="card-body">
 
