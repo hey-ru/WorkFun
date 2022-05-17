@@ -89,67 +89,24 @@
          
        
     <!-- ======= js ======= -->
-<<<<<<< Updated upstream
+
         <%@ include file="/design/frontjs.jsp" %> 
-<%-- =======
-        <%@ include file="/design/frontjs.jsp" %>
-         
-    
-    <div 
-								style="border: 3px blue solid; width: 400px;  height: 200px; margin-top:-200px;margin-left:500px;z-index:120;position: relative;background-color:white">
-    
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- Advanced Tables -->
-                                <div class="panel panel-default">
-                                   
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                        
-                                      
-                                        
-                                        
-                                            <table class="table table-striped table-bordered table-hover" 
-                                                id="dataTables-example" style="z-index:100;position: relative;">
-                                               <tr >
-                                            	<th >Tibame大事紀</th>
-		
-		
-	
-		<!-- <th></th> -->
-		
-		
-	</tr>
-	<%@ include file="page1.file" %> 
-	<c:forEach var="announcement" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-		
-		<tr>
-		
-			
-			<td ><a href="<%=request.getContextPath()%>/announcementServlet?action=getOne&announcement_id=${announcement.announcement_id}">${announcement.announcement_title}</a></td>
-			
 
-						
-							
-										
-			
-		
-		</tr>
-	</c:forEach>
-</table>
-<%@ include file="page2.file" %>
-</div>
-</div>
-</div>
-</div>
+<script type="text/javascript">
 
-                    <!-- /.container-fluid -->
-                </div>
-    </div>
-    
->>>>>>> Stashed changes --%>
+let rule1=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\s\\(\\-\\)]*$/;
+$("#title").blur(function(){
+ if($(this).val() == ''){
+  $('#title_error').text('請填入標題!')
+ }else if(rule1.test($(this).val())){
+        $('#title_error').text('')
+    }else{
+        $('#title_error').text('標題名稱:只能是中日英文字母、數字')
+    }
+});
 
-    
+
+</script>
 </body>
 
 </html>
