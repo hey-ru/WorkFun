@@ -35,9 +35,11 @@ public interface EquipmentDAO_interface {
 
 	// 萬用查詢
 	public List<EquipmentVO> getAllQuery(Map<String, String[]> map);
-
 	
 	// 查詢那個器材被預約區間
 	public List<EquipmentVO> getEqBookingDate(Integer equipmentId);
+	
+	// 取得上下架商品
+	public List<EquipmentVO> getOnTheShelf(Integer eq_status);
 
 }

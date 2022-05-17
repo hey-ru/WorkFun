@@ -93,8 +93,7 @@
 													<label for="inputText" class="col-sm-2 col-form-label">金額:
 													</label>
 													<div class="col-sm-10">
-														<input name="price" type="text" class="form-control"
-															value="${param.price}"> <font color=#ff0000>${errorMsgs.price}</font>
+														<input name="price" type="text" class="form-control" maxlength="8" value="${param.price}"> <font color=#ff0000>${errorMsgs.price}</font>
 													</div>
 												</div>
 

@@ -5,12 +5,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 
-
+<!-- 強制把尋找寫死為0 -->
 <%
-EquipmentService equipmentSvc = new EquipmentService();
-List<EquipmentVO> list = equipmentSvc.getAll();
+EquipmentService equipmentService = new EquipmentService();
+List<EquipmentVO> list = equipmentService.getOnTheShelf(0);
 pageContext.setAttribute("list", list);
+
 %>
+<!-- List<EquipmentVO> list = equipmentSvc.getAll(); -->
+<!-- EquipmentService equipmentSvc = new EquipmentService(); -->
+<!-- pageContext.setAttribute("list", list); -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +54,7 @@ pageContext.setAttribute("list", list);
 		<section id="portfolio" class="portfolio">
 			<div class="container" data-aos="fade-up">
 				<div class="section-title">
-					<h2>預約器材</h2>
+					<h2>📢 預約器材</h2>
 					<p></p>
 				</div>
 

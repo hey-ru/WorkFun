@@ -148,7 +148,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 										value="${param.endDate}" required />
 								</div>
 								<div class="col-sm-5">
-									<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block;" value="點我預約" id="reservationBtn">
+									<input type="submit" class="btn btn-primary mb-2 mt-1 col" style="display: inline-block; font-weight:bold;" value="點我預約" id="reservationBtn" >
 									<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
 									<input type="hidden" name="empId" value="${empVO.empId}"> 
 									<input type="hidden" name="startDate" value="${bookingVO.startDate}">

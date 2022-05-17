@@ -77,7 +77,7 @@
 		
 		<section class="section">
 			<div class="row">
-				<div class="col-lg-6" style="width: 100%; margin:auto;">
+				<div class="col-lg-6" style="width: 100%; margin:auto;" >
 
 					<div class="card">
 						<div class="card-body">
@@ -112,7 +112,7 @@
 									<label for="inputText" class="col-sm-2 col-form-label">金額:
 									</label>
 									<div class="col-sm-10">
-										<input name="price" type="text" class="form-control"
+										<input name="price" type="text" class="form-control" maxlength="8"
 											value="${param.price}"> <font color=#ff0000>${errorMsgs.price}</font>
 									</div>
 								</div>
@@ -199,15 +199,15 @@
 						<div class="col-1"></div>
 						<div class="col-4">
 							<div style="height: 150px; padding: 5px;">
-								<img
-									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${param.equipmentId}&table=equipment&pic=img1"
-									style="max-height: 100%;" id="oldpic1"> <img id="pic1"
-									style="max-height: 100%;">
+								<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${param.equipmentId}&table=equipment&pic=img1"
+									style="max-height: 100%;" id="oldpic1"> 
+									<img id="pic1" style="max-height: 100%;">
 							</div>
+							
 							<div style="height: 150px; padding: 5px;">
-								<img
-									src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${param.equipmentId}&table=equipment&pic=img2"
-									style="max-height: 100%;" id="oldpic2"> <img id="pic2"
+								<img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=equipment_id&id=${param.equipmentId}&table=equipment&pic=img2"
+									style="max-height: 100%;" id="oldpic2"> 
+									<img id="pic2"
 									style="max-height: 100%;">
 							</div>
 							<div style="height: 150px; padding: 5px;">
