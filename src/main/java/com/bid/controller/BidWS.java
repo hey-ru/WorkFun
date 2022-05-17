@@ -65,7 +65,7 @@ public class BidWS {
 				session.getAsyncRemote().sendText(data);
 //				推送資訊同時,可以在這邊new一個service,將資訊更新至資料庫
 		}
-		System.out.println("Data received: " + data);
+//		System.out.println("Data received: " + data);
 		
 		Gson gson = new Gson();
 		JsonObject jsonObject = gson.fromJson(data, JsonObject.class);

@@ -31,15 +31,15 @@ pageContext.setAttribute("secondHandVO", secondHandVO);
 
 </head>
 
-<body style="height: auto">
+<body onload="connect();" onunload="disconnect();">
 
-	<!-- ======= Header ======= -->
-	<%@ include file="/design/frontheader.jsp"%>
-	<!-- End Header -->
-	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
-	<main id="main">
-
-		<section class="section profile">
+ <!-- ======= Header ======= -->
+ <%@ include file="/design/frontheader.jsp"%>
+ <!-- End Header -->
+ <!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
+ 	<main class="wrapper">
+ 		<div style="height: var(--header-height);"></div>
+ 		<section class="section profile">
 			<div class="row">
 				<div class="col-xl-6">
 
