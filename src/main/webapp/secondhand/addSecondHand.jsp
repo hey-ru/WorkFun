@@ -206,7 +206,7 @@ body {
             $('#name_error').text("");
             checkSubmit();
         }else{
-            $('#name_error').text('請輸入20字內的中、英文或數字');
+            $('#name_error').text('請輸入20字內的中、英文、數字或()');
             checkSubmit();
         }
     });

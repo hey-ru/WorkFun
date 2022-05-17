@@ -99,7 +99,7 @@ body {
 							<div class="form-group col-3" style="display: inline-block">
 								<input type="text" class="form-control"
 									id="exampleFormControlInput1" placeholder="輸入名稱"
-									style="border: gray solid 2px;" name="name" value="${param.name}">
+									style="border: gray solid 2px;" name="name">
 							</div>
 							<%-- <input type="hidden" name="action" value="listSecondHands_ByCompositeQuery"> --%>
 							<input type="hidden" name="saler" value="${empVO.empId}">
