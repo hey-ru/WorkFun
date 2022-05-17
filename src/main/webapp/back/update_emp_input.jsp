@@ -130,7 +130,7 @@
 										class="input-group-text" id="basic-addon2">信箱</span> <input
 										type="TEXT" name="mail" size="45" value="${param.mail}" required="required"
 										class="form-control" aria-label="Recipient's username"
-										aria-describedby="basic-addon2"><font color="red">${errorMsgs.dupmail}</font>
+										aria-describedby="basic-addon2"><font color="red">${errorMsgs.dupmail}${errorMsgs.mailcheck}</font>
 								</div>
 								<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon2">雇用日期</span> <input

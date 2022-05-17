@@ -59,6 +59,7 @@
 					   	<td >
 					   	<a class="text-dark"
 					   	 href="<%=request.getContextPath()%>/announcementServlet?action=getOne&announcement_id=${announcement.announcement_id}">${announcement.announcement_title}</a>
+                              <div>  ${announcement.announcement_time}</div> 
 					   	</td>
 					   	
 					   </tr>
