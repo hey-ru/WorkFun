@@ -29,8 +29,8 @@ public class BookingRun implements Runnable {
 //			Integer booking_id = bookingVO.getBookingId();
 //			Long targetTime=new GregorianCalendar().getTime().getTime();
 			// System.out.println(secondHandVO.getStart_time());
+			
 			if (bookingVO.getReturnStatus() == 1) {
-
 				if (bookingVO.getEndDate().before(new Timestamp(new GregorianCalendar().getTime().getTime()))) {
 					// System.out.println(secondHandVO.getStart_time().before(new Timestamp(new
 					// GregorianCalendar().getTime().getTime())));
@@ -42,7 +42,8 @@ public class BookingRun implements Runnable {
 			
 			
 			if(bookingVO.getReturnStatus() == 5) {
-				if(bookingVO.getStartDate().before(new Timestamp(new GregorianCalendar().getTime().getTime()+86400000))) {
+				if(bookingVO.getStartDate().before(new Timestamp(new GregorianCalendar().getTime().getTime()))) {
+//					System.out.println(bookingVO.getStartDate().before(new Timestamp(new GregorianCalendar().getTime().getTime()+86400000)));
 					bookingVO.setReturnStatus(2);
 					bookingService.updateBooking(bookingVO);
 				}
@@ -75,3 +76,5 @@ public class BookingRun implements Runnable {
 		}
 	}	
 }
+
+

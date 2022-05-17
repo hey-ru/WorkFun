@@ -51,11 +51,11 @@ public class ReportCommentServlet extends HttpServlet{
 					System.out.println(report_id);
 					String comment = req.getParameter("comment");
 					System.out.println(comment);
-					String commentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
+					String commentReg = "^[(\\u4e00-\\u9fa5)_a-zA-Z0-9_'\\\\n\\\\s\\\\(\\\\)\\'\\\"{}\\\\[\\\\]\\\\*&.。?？!！,，：:；;＄$]*$";
 					if (comment == null || comment.trim().length() == 0) {
 						errorMsgs.put("comment","處理訊息: 請勿空白");
 					} else if(!comment.trim().matches(commentReg)) { //以下練習正則(規)表示式(regular-expression)
-						errorMsgs.put("comment","處理訊息: 只能是中、英文字母、數字");
+						errorMsgs.put("comment","處理訊息: 只能是中、英文字母、數字、標點符號");
 		            }
 					
 					System.out.println(errorMsgs);
@@ -136,11 +136,11 @@ public class ReportCommentServlet extends HttpServlet{
 						Integer status = Integer.valueOf(req.getParameter("status"));
 						System.out.println(status);
 						String comment = req.getParameter("comment");
-						String commentReg = "^[(\u4e00-\u9fa5)_a-zA-Z0-9_\\n\\s\\(\\)]*$";
+						String commentReg = "^[(\\u4e00-\\u9fa5)_a-zA-Z0-9_'\\\\n\\\\s\\\\(\\\\)\\'\\\"{}\\\\[\\\\]\\\\*&.。?？!！,，：:；;＄$]*$";
 						if (comment == null || comment.trim().length() == 0) {
 							errorMsgs.put("comment","處理訊息: 請勿空白");
 						} else if(!comment.trim().matches(commentReg)) { //以下練習正則(規)表示式(regular-expression)
-							errorMsgs.put("comment","處理訊息: 只能是中、英文字母、數字");
+							errorMsgs.put("comment","處理訊息: 只能是中、英文字母、數字、標點符號");
 			            }
 						Report_CommentService recSvc = new Report_CommentService();
 						System.out.println(errorMsgs);

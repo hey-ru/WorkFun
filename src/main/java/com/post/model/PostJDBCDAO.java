@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.post_comment.model.Post_CommentVO;
+import com.post_image.model.Post_ImageVO;
+
 public class PostJDBCDAO implements PostDAO_interface {
 
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -16,10 +19,120 @@ public class PostJDBCDAO implements PostDAO_interface {
 	String passwd = "cga101-03";
 
 	private static final String INSERT_STMT = "INSERT INTO post (emp_id,post_title,post_content,post_video,is_disable) VALUES (?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM post p join post_image pi on p.post_id = pi.post_id";
+	private static final String GET_ALL_STMT = "SELECT * FROM post ";
+	private static final String GET_COMMENT = "SELECT * FROM post_comment where post_id = ?";
+	private static final String GET_IMAGE = "SELECT * FROM post_image where post_id = ?";
+	
+	
 	private static final String GET_ONE_STMT = "SELECT post_id,emp_id,post_title,post_content,post_video,post_createtime,post_updatetime,is_disable FROM post where post_id = ?";
 	private static final String UPDATE = "UPDATE post set ";
 
+	@Override
+	public List<Post_ImageVO> getImage() {
+		List<Post_ImageVO> list = new ArrayList<Post_ImageVO>();
+		Post_ImageVO piVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_IMAGE);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				piVO = new Post_ImageVO();			
+				piVO.setImage(rs.getBytes("image"));
+				
+				list.add(piVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+
+	@Override
+	public List<Post_CommentVO> getComment() {
+		List<Post_CommentVO> list = new ArrayList<Post_CommentVO>();
+		Post_CommentVO pcVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_COMMENT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				pcVO = new Post_CommentVO();
+				pcVO.setEmp_id(rs.getInt("emp_id"));
+				pcVO.setComment_createtime(rs.getTimestamp("comment_createtime"));
+				pcVO.setComment_updatetime(rs.getTimestamp("comment_updatetime"));
+				pcVO.setPost_comment(rs.getString("post_comment"));
+				
+				list.add(pcVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	
+	
 	@Override
 	public void insert(PostVO postVO) {
 		Connection con = null;
@@ -224,7 +337,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				postVO = new PostVO();
+				postVO = new PostVO();			
 				postVO.setPost_id(rs.getInt("post_id"));
 				postVO.setEmp_id(rs.getInt("emp_id"));
 				postVO.setPost_title(rs.getString("post_title"));

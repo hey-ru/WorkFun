@@ -108,9 +108,9 @@ EmpService empSvc = new EmpService();
 										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=3">逾期歸還</a>
 									</li>
 
-									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=4">未歸還</a>
-									</li>
+<!-- 									<li class="nav-item"><a class="nav-link" -->
+<%-- 										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=4">未歸還</a> --%>
+<!-- 									</li> -->
 
 									<li class="nav-item"><a class="nav-link"
 										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=5">已登記預約</a>
@@ -223,10 +223,10 @@ EmpService empSvc = new EmpService();
 														<td><c:if test="${bookingVO.returnStatus == 3}">
 																<c:choose>
 																	<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
-																	<c:when test="${bookingVO.dateDiff == 1}">罰金$ ${1 * bookingVO.equipmentVO.price * 0.3}</c:when>
-																	<c:when test="${bookingVO.dateDiff == 2}">罰金$ ${2 * bookingVO.equipmentVO.price * 0.3}</c:when>
-																	<c:when test="${bookingVO.dateDiff == 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.3}</c:when>
-																	<c:when test="${bookingVO.dateDiff > 3}">罰金$ ${3 * bookingVO.equipmentVO.price * 0.3}</c:when>
+																	<c:when test="${bookingVO.dateDiff == 1}">罰金$ <fmt:formatNumber value="${1 * bookingVO.equipmentVO.price * 0.2}"/></c:when>
+																	<c:when test="${bookingVO.dateDiff == 2}">罰金$ <fmt:formatNumber value="${2 * bookingVO.equipmentVO.price * 0.2}"/></c:when>
+																	<c:when test="${bookingVO.dateDiff == 3}">罰金$ <fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.2}"/></c:when>
+																	<c:when test="${bookingVO.dateDiff > 3}">罰金$ <fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.2}"/></c:when>
 																</c:choose>
 															</c:if></td>
 
@@ -237,8 +237,9 @@ EmpService empSvc = new EmpService();
 
 														<form method="post"	action="<%=request.getContextPath()%>/booking/booking.do">
 
-															<td><label for="inputNumber"
-																class="col-sm-2 col-form-label"></label>
+															<td>
+<!-- 															<label for="inputNumber" class="col-sm-2 col-form-label"> -->
+<!-- 															</label> -->
 																<div class="col-sm-10">
 																	<select name="returnStatus">
 																		<option value="0" ${(bookingVO.returnStatus == 0 )? 'selected':'' }>已歸還</option>
@@ -253,7 +254,7 @@ EmpService empSvc = new EmpService();
 																		<input type="hidden" name="action" value="updateReturnStatus">
 																		<input type="hidden" name="bookingId" value="${bookingVO.bookingId}"> 
 <%-- 																		<input type="hidden" name="returnStatus" value="${bookingVO.returnStatus}">  --%>
-																		<input type="submit" value="修改狀態" class="btn-info">
+																		<input type="submit" value="修改狀態" class="btn-info" style="background-color: #007FFF; color: #FFFFFF; font-weight: bold;">
 																	</div>
 																</div>
 														</form>

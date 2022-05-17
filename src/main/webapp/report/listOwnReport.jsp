@@ -128,7 +128,7 @@
 													style="">回報狀態</th>
 											</tr>
 										</thead>
-										<thead>
+										<tbody>
 								<%@ include file="/design/page1.file"%>
 											<c:forEach var="reportVO" items="${list}" begin="<%=pageIndex%>"
 										end="<%=pageIndex+rowsPerPage-1%>">
@@ -163,7 +163,7 @@
 												</tr>
 											</c:forEach>
 
-										</thead>
+										</tbody>
 									</table>
 								<%@ include file="/design/page2.file"%>
 							</div>
@@ -180,6 +180,10 @@
 
 	<!-- Vendor JS Files -->
 	<%@ include file="/design/frontjs.jsp"%>
-
+	<script type="text/javascript">
+$("tbody tr").css("background-color", function(index) {
+    return index%2==0?"lightgray":"";
+});
+</script>
 </body>
 </html>

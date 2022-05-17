@@ -161,7 +161,7 @@ public class BookingServlet extends HttpServlet {
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("bookingVO", bookingVO);
-			String url = "/booking/backBookingAllList.jsp";
+			String url = "/booking/backOneBooking.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}

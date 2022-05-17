@@ -110,7 +110,7 @@
                             </div>
                             <label for="basic-url" class="form-label">回報內容</label>
                             <div class="input-group mb-3" style=" height:200px">
-                                <textarea class="form-control" aria-label="With textarea">${repVO.content}</textarea>
+                                <textarea readonly class="form-control" aria-label="With textarea">${repVO.content}</textarea>
                             </div>
 
                             <div class="input-group mb-3">
@@ -135,13 +135,13 @@
 								 <input class="form-control" aria-label="Username" type="hidden"
                    						 aria-describedby="basic-addon1" name="report_id" value="${repVO.report_id}">
                                 <span class="input-group-text">處理訊息</span>
-                            	<input class="form-control" aria-label="Username" type="text"
+                            	<input class="form-control" aria-label="Username" type="text" required
                     						aria-describedby="basic-addon1" name="comment" value="${recVO.comment}">
                     						<p style="color :red">${errorMsgs.comment}</p>
                     			</div>
                     		<div class="input-group">       				
                 				<input type="text" style="display:none;" name="action" value="update">
-								<button type="submit" value="送出修改/轉發">送出</button>
+								<button type="submit" value="送出修改/轉發" style="margin-top:20px; border:red 1px solid; width:100px; height:100px;">送出</button>
                             </div> 
                             </FORM>
                         </div>

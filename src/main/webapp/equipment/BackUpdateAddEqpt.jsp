@@ -29,6 +29,9 @@
     padding: 10px;
 }
 
+.col-sm-10 {
+    top: 7px;
+}
 
 </style>
 

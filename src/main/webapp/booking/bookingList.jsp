@@ -141,9 +141,9 @@ int itemsPerPage = 10;
 												<td><c:choose>
 														<c:when test="${bookingVO.returnStatus == 0}">已歸還</c:when>
 														<c:when test="${bookingVO.returnStatus == 1}">租借中</c:when>
-														<c:when test="${bookingVO.returnStatus == 2}">未領取器材</c:when>
-														<c:when test="${bookingVO.returnStatus == 3}">逾期歸還(需罰金)</c:when>
-														<c:when test="${bookingVO.returnStatus == 4}">未歸還(需罰金)</c:when>
+														<c:when test="${bookingVO.returnStatus == 2}">⚠️ 未領取器材</c:when>
+														<c:when test="${bookingVO.returnStatus == 3}">💸💸 逾期歸還(需罰金)</c:when>
+														<c:when test="${bookingVO.returnStatus == 4}">💸💸 未歸還(需罰金)</c:when>
 														<c:when test="${bookingVO.returnStatus == 5}">已登記預約</c:when>
 													</c:choose></td>
 
@@ -170,19 +170,20 @@ int itemsPerPage = 10;
 												<td><c:if test="${bookingVO.returnStatus == 3}">
 														<c:choose>
 															<c:when test="${bookingVO.dateDiff <= 0}"></c:when>
-															<c:when test="${bookingVO.dateDiff == 1}">罰金$ <fmt:formatNumber value="${1 * bookingVO.equipmentVO.price * 0.3}"/></c:when>
-															<c:when test="${bookingVO.dateDiff == 2}">罰金$ <fmt:formatNumber value="${2 * bookingVO.equipmentVO.price * 0.3}"/></c:when>
-															<c:when test="${bookingVO.dateDiff == 3}">罰金$ <fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.3}"/></c:when>
-															<c:when test="${bookingVO.dateDiff > 3}">罰金$ <fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.3}"/></c:when>
+															<c:when test="${bookingVO.dateDiff == 1}">罰金$ <font color="#FF0000"><fmt:formatNumber value="${1 * bookingVO.equipmentVO.price * 0.2}"/></font></c:when>
+															<c:when test="${bookingVO.dateDiff == 2}">罰金$ <font color="#FF0000"><fmt:formatNumber value="${2 * bookingVO.equipmentVO.price * 0.2}"/></font></c:when>
+															<c:when test="${bookingVO.dateDiff == 3}">罰金$ <font color="#FF0000"><fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.2}"/></font></c:when>
+															<c:when test="${bookingVO.dateDiff > 3}">罰金$ <font color="#FF0000"><fmt:formatNumber value="${3 * bookingVO.equipmentVO.price * 0.2}"/></font></c:when>
 														</c:choose>
 													</c:if></td>
 											</tr>
 										</c:forEach>
 
 									</table>
+									<%@ include file="/design/page2.file"%>
 									<div style="display: inline-block; width: 50px;"></div>
 									<div style="display: inline-block; margin-bottom: 10px;">
-										<%@ include file="/design/page2.file"%>
+										
 									</div>
 								</div>
 							</div>

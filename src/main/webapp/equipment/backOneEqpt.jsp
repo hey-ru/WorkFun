@@ -18,7 +18,7 @@
 
 <title>WorkFunBack</title>
 
-<%@ include file="/design/frontmetacss.jsp"%>
+<%-- <%@ include file="/design/frontmetacss.jsp"%> --%>
 
 <style>
 th {
@@ -96,7 +96,7 @@ td {
 <!-- 														<strong>店家資訊</strong> -->
 <!-- 													</h5> -->
 												</div>
-						<div class="col-1" style="height: 20px; display: inline-block;">
+						<div class="col-1" style="height: 20px; display: inline-block; right: 50px; padding: inherit;">
 							<a
 								href="<%=request.getContextPath()%>/equipment/backEquipmentHome.jsp"><strong>回器材列表</strong></a>
 						</div>
