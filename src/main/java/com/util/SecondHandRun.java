@@ -60,10 +60,10 @@ public class SecondHandRun implements Runnable {
 					}
 					else {
 						secondHandVO.setIs_deal(2);
-						secondHandService.updateSecondHand(secondHandVO);
 						System.out.println("設定成2");
 						secondHandVO.setBid_winner(secondHandService.getOneById(second_hand_id).getBidVO().getBidder());
 						secondHandVO.setDeal_price(secondHandService.getOneById(second_hand_id).getBidVO().getPrice());
+						secondHandService.updateSecondHand(secondHandVO);
 					
 					}
 				
