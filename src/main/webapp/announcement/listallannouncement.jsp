@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<%@ page import="java.util.*"%>
 <%@ page import="com.announcement.model.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	    AnnouncementService annSvc = new AnnouncementService();
 	    List<AnnouncementVO> list = annSvc.getAll();
@@ -113,7 +114,8 @@ text-overflow: ellipsis;
 			
 
 			<td class="JQellipsis" style="width:300px;">${announcement.announcement_content}</td>
-				<td>${announcement.announcement_time}</td>
+				<td>		<fmt:formatDate value="${announcement.announcement_time}"
+													pattern="yyyy-MM-dd HH:mm" /></td>
 		
 				<c:choose>
 				<c:when test="${announcement.announcement_status==1}">
