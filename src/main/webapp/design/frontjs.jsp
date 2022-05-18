@@ -28,3 +28,23 @@
         <script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
 <!--         SweetAlert -->
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript">
+		let rule1 = /^\d{4}$/;
+		$("#extension").blur(function() {
+			if ($(this).val() == '') {
+				$('#extension_error').text('請勿空白!')
+			} else if (rule1.test($(this).val())) {
+				$('#extension_error').text('')
+			} else {
+				$('#extension_error').text('請輸入四個數字')
+			}
+		});
+	</script>
+	 <script type="text/javascript">
+		
+		$("#selectname").blur(function() {
+			if ($(this).val() == '') {
+				$('#selectname_error').text('請勿空白!')
+			} 
+		});
+	</script>
