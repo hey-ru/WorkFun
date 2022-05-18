@@ -140,7 +140,7 @@ td {
 							<!-- [修改請求] -->
 							<div style="text-align: right;">
 								<input type="hidden" name="action" value="updateMany"> <input
-									type="submit" class="btn btn-success" id="btn" value="送出訂單">
+									type="submit" class="btn btn-success" id="btn" value="確定修改">
 								<!-- 									 onclick="javascript:return window.alert('已送出修改')" -->
 							</div>
 						</FORM>

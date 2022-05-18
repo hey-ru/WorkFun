@@ -16,7 +16,6 @@ int menuNumber = 1;
 <head>
 <%@ include file="/design/frontmetacss.jsp"%>
 <style>
-
 .main {
 	overflow-x: hidden;
 }
@@ -34,9 +33,6 @@ td {
 .table table-dark {
 	overflow-x: hidden;
 }
-
-
-
 </style>
 
 </head>
@@ -46,7 +42,7 @@ td {
 		<%@ include file="/design/frontheader.jsp"%>
 
 		<!-- ====================== 內容開始 ====================== -->
-		<main id="main" class="main" >
+		<main id="main" class="main">
 			<!-- ======= Portfolio Section ======= -->
 
 			<div class="card shadow mb-4">
@@ -65,17 +61,30 @@ td {
 				</div>
 
 
-				<section id="portfolio" class="portfolio" style="background-color: #DCDDDF;">
+				<section id="portfolio" class="portfolio"
+					style="background-color: #DCDDDF;">
 					<div class="container" data-aos="fade-up">
 
 						<!-- ============== Card Body ============== -->
 						<div class="row" style="place-content: center;">
-							<div class="col-2" style="display:inline-block;"></div>
-							<div 
-								style="width: 750px; align-self: center; color: white; background-color:#818C98; display: inline-block;">
+							<!-- ======= 上傳菜單csv檔 ======= -->
+							<div class="col-2" style="display: inline-block;">
+<!-- 								<FORM method="post" enctype="multipart/form-data" -->
+<%-- 									action="<%=request.getContextPath()%>/menu/uploadcsvservlet"> --%>
+<!-- 									<input type="file" name="csvfile" accept=".csv" class="form-control" id="formFile" -->
+<%-- 										value="${shopVO.shop_id}"> <input type="hidden" --%>
+<!-- 										name="action" value="uploadcsv"> <input type="hidden" -->
+<%-- 										name="shop_id" value="${shopVO.shop_id}"> <input --%>
+<!-- 										type="submit" class="btn btn-primary btn-sm"value="上傳CSV檔"> -->
+<!-- 								</FORM> -->
+							</div>
+
+<!-- 							<div class="col-1" style="display: inline-block;"></div> -->
+							<div
+								style="width: 750px; align-self: center; color: white; background-color: #818C98; display: inline-block;">
 								<div class="card-header"
 									style="text-align: center; margin: 20px;">
-									<h4>${shopVO.shop_name}&nbsp; M e n u</h4>
+									<h4>${shopVO.shop_name}&nbsp;Menu</h4>
 								</div>
 
 								<table class="table table-hover table-dark">
@@ -105,40 +114,31 @@ td {
 												<FORM METHOD="post"
 													ACTION="<%=request.getContextPath()%>/menu/updatemenubyshop">
 													<input type="submit" class="btn btn-secondary btn-sm"
-														value="編輯"> <input
-														type="hidden" name="menu_id" value="${menu.menu_id}">
-													<input 	type="hidden" name="shop_id" value="${menu.shop_id}">
-													<input type="hidden" name="action"
-														value="getMenuItem_For_Update">
+														value="編輯"> <input type="hidden" name="menu_id"
+														value="${menu.menu_id}"> <input type="hidden"
+														name="shop_id" value="${menu.shop_id}"> <input
+														type="hidden" name="action" value="getMenuItem_For_Update">
 												</FORM>
 											</td>
 										</tr>
 									</c:forEach>
 								</table>
 							</div>
-							<!-- 新增菜單請求 -->
-							<div class="col-2" style="display:inline-block;">
-<!-- 								<a  -->
-<%-- 									href="${pageContext.request.contextPath}/menu/addMenu.jsp?shop_id=${param.shop_id}"> --%>
-<!-- 									<button type="button" class="btn btn btn-lg" style="background-color:#A392A2; color:white;"><strong>我要新增🍴</strong></button> -->
-<!-- 								</a> -->
-								
-								<!-- ======= 新增菜單 ======= -->
-											<FORM METHOD="post"
-												ACTION="<%=request.getContextPath()%>/menu/addmenubyshop"
-												style="margin-bottom: 0px;">
-												<input type="submit" class="btn btn btn-lg"
-													style="background-color:#A392A2; color:white;"
-													value="我要新增🍴"> <input type="hidden" name="gb_id"
-													value="${groupBuyVO.gb_id}"> <input type="hidden"
-													name="shop_id" value="${shopVO.shop_id}"> <input
-													type="hidden" name="action" value="getShop_For_AddMenu">
-											</FORM>
-								
-								
-								
-								
+							<!-- ======= 新增菜單 ======= -->
+							<div class="col-2" style="display: inline-block;">
+								<FORM METHOD="post"
+									ACTION="<%=request.getContextPath()%>/menu/addmenubyshop"
+									style="margin-bottom: 0px;">
+									<input type="submit" class="btn btn btn-lg"
+										style="background-color: #A392A2; color: white;"
+										value="我要新增🍴"> <input type="hidden" name="gb_id"
+										value="${groupBuyVO.gb_id}"> <input type="hidden"
+										name="shop_id" value="${shopVO.shop_id}"> <input
+										type="hidden" name="action" value="getShop_For_AddMenu">
+								</FORM>
 							</div>
+
+
 						</div>
 					</div>
 				</section>

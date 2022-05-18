@@ -117,9 +117,7 @@ public class AddMenuByShopServlet extends HttpServlet {
 			/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
 			// 再取得一次店家菜單物件集合回應,以顯示於店家菜單畫面
 			List<MenuVO> menuList = menuService.getByShopId(Integer.valueOf(shop_id));
-//			HttpSession session = req.getSession();
 			req.setAttribute("menuList", menuList);
-//			req.setAttribute("shop_id", shop_id);
 
 			String url = "/menu/listMenuByShop.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listMenuByShop.jsp
