@@ -72,7 +72,7 @@
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupFile01">Upload</label>
                 <input id="imgInp" type="file" value="${param.report_image}" name="report_image" accept="image/*" oninput="pic.src=window.URL.createObjectURL(this.files[0])">
-               	<img id="blah" src="#" alt="your image" style="width:250px;height:250px" />
+               	<img id="blah" src="#" alt="your image" style="width:220px;height:220px" />
                 <input type="text" style="display:none;" name="action" value="insert">
 				<button type="submit" value="送出新增" style=" border:red 1px solid; width:100px;height:100px">送出</button>
             </div>
