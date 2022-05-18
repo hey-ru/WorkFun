@@ -17,7 +17,7 @@ pageContext.setAttribute("list", list);
 <style>
 #hero {
 	width: 100%;
-	max-height: calc(100vh - var(- -footer-height));
+	max-height: calc(100vh - var(--footer-height));
 	background: url("<%=request.getContextPath()%>/home/img/homepic.png");
 	background-size: cover;
 	box-sizing: border-box;
@@ -36,13 +36,11 @@ pageContext.setAttribute("list", list);
 	<!-- End Header -->
 
 	<!-- ======= Hero Section ======= -->
-	<section id="hero" class="d-flex">
-
-		<div id="sectionannouncement"
-			style="margin-left: 100px; margin-top: 320px; width: 85vw; min-height: 80vh;">
-			
-			
-			<div style="height: 1px;">
+	<section id="hero">
+	
+		<div class="row">
+	
+			<div class="col-12" style="height: 1px;">
 				<div class="container d-flex flex-column align-items-center"
 					data-aos="zoom-in" data-aos-delay="100">
 					<h1>Welcome to WorkFun</h1>
@@ -50,6 +48,12 @@ pageContext.setAttribute("list", list);
 				</div>
 
 			</div>
+		</div>
+		<div id="sectionannouncement"
+			style="margin-left: 100px; margin-top: 200px; width: 85vw; min-height: 40vh;">
+			
+			
+			
 			
 			<div class="row" >
 				<div class="col-6"></div>
