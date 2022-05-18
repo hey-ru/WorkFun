@@ -36,7 +36,7 @@ pageContext.setAttribute("list", list);
 </style>
 
 </head>
-<body>
+<body style="background-color:#EFEFF1;">
 
 	<!-- ======= Header ======= -->
 
