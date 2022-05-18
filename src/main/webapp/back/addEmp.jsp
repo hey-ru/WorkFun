@@ -134,7 +134,7 @@
 											<div class="col-md-8 col-lg-9">
 											
 												<input type="file" name="empProfile" size="45"
-												 class="form-control"
+												 class="form-control-plaintext"
 													id="profile">
 													<img id="profileimg">
 												<div class="pt-2">
@@ -143,10 +143,7 @@
 											</div>
 									
 								</div>
-								<input type="file" name="empProfile" size="45"
-										value="${param.empProfile}" 	
-										id="profile" required="required">
-	<div><img id="profileimg"></div>
+							
 	
 
 								<div class="input-group mb-3">
