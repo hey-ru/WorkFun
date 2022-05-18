@@ -123,7 +123,7 @@ pageContext.setAttribute("list", list);
 					<c:forEach var="equipmentVO" items="${list}" begin="<%=pageIndex%>"
 						end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="col-lg-4 col-md-6 portfolio-item filter-card">
-							<div class="portfolio-wrap">
+							<div class="portfolio-wrap" style="right: -48px;">
 								<div
 									style="color: white; padding: 5px; z-index: 99; background: #BFC8D7; height: 100px; width: 300px;">
 									<h5>

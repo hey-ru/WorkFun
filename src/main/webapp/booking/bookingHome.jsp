@@ -39,6 +39,15 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
 	height: 151px; /* height:  151px; */
 }
+
+.card-title {
+    margin-bottom: 40px;
+}
+
+.col-sm-5 {
+    margin-bottom: 20px;
+}
+
 </style>
 
 
@@ -52,11 +61,11 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 	<!-- content 如果頁面要可以往下滑就改一下main的height值吧 -->
 	<main id="main">
 
-		<section class="section profile">
+		<section class="section profile" style="padding: 10px 30px;">
 			<div class="row">
 				<div class="col-xl-6">
 
-					<div class="card">
+					<div class="card" style="border: 0;">
 						<div
 							class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
@@ -102,7 +111,7 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 
 				<div class="col-xl-6">
 
-					<div class="card">
+					<div class="card" style="border: 0;">
 						<div class="card-body pt-3">
 
 							<div class="tab-content pt-2">
@@ -123,14 +132,14 @@ pageContext.setAttribute("equipmentVO", equipmentVO);
 									🚨 <span style="text-decoration: line-through">器材金額</span>
 									(逾期罰金一天為商品20%，最多至60%) 🚨
 								</h6>
-								<p class="small fst-italic">   <font color="#FF0000">$${equipmentVO.price}</font>
+								<p class="small fst-italic" style="margin-top:-30px;">   <font color="#FF0000">$${equipmentVO.price}</font>
 								</p>
 
 							</div>
 							<form class="my-1" method="post" id="form"
 								action="<%=request.getContextPath()%>/booking/booking.do"
 								name="form1">
-								<label for="start_time" class="col-sm-2 col-form-label">租借日
+								<label for="start_time" class="col-sm-2 col-form-label">起始日
 									: </label>
 								<div class="col-sm-5">
 									<input name="startDate" id="start_time" type="text"
