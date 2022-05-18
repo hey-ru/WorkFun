@@ -116,8 +116,8 @@ body {
 									alt="" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
 								<div class="portfolio-info">
 									<h4>${secondHandVO.name}</h4>
-									<p>[競標開始時間 ${secondHandVO.start_time}]</p>
-									<p>[競標截止時間 ${secondHandVO.end_time}]</p>
+									<p>[競標開始時間 ${secondHandVO.start_time.toString().substring(0, secondHandVO.start_time.toString().indexOf("."))}]</p>
+									<p>[競標截止時間 ${secondHandVO.end_time.toString().substring(0, secondHandVO.end_time.toString().indexOf("."))}]</p>
 									<div class="portfolio-links" style="display:flex;">
 										<c:if test="${empVO.empId == secondHandVO.saler}">
 											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" style="margin-bottom: 0px; margin-right: 5px;">

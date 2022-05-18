@@ -93,10 +93,11 @@ body {
 									<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}
 									"
 									class="img-fluid"
-									alt"" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
+									alt="" style="max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
 								<div class="portfolio-info">
 									<h4>${secondHandVO.name}</h4>
-									<p>[競標截止時間 ${secondHandVO.end_time}]</p>
+									<p>[競標開始時間 ${secondHandVO.start_time.toString().substring(0, secondHandVO.start_time.toString().indexOf("."))}]</p>
+									<p>[競標截止時間 ${secondHandVO.end_time.toString().substring(0, secondHandVO.end_time.toString().indexOf("."))}]</p>
 									<div class="portfolio-links">
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet"
@@ -119,6 +120,7 @@ body {
 				</div>
 
 				<%@ include file="/design/page2.file"%>
+			</div>
 		</section>
 	</main>
 	<!-- End #main -->
