@@ -134,7 +134,7 @@ text-overflow: ellipsis;
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input type="submit" value="修改" class="btn btn-outline-dark">
 			      <input type="hidden" name="announcement_id"  value="${announcement.announcement_id}"> 
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>

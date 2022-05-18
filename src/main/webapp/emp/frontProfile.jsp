@@ -48,7 +48,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 							<div class="tab-content pt-2">
 
 								<div class="tab-pane fade show active profile-overview"
-									id="profile-overview">
+									id="profile-overview" style="height: max-content;font-weight:bold; font-family: Andale Mono, monospace;">
 									<h5 class="card-title">關於我</h5>
 									<p >員工編號:${empVO.empId}</p>
 <p >大頭照 <img style="width:200px;height:200px"
@@ -61,7 +61,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 						
 										<div class="row">
-									<div class="col-lg-9 col-md-8">姓名：${empVO.empName}</div>
+									<div >姓名：${empVO.empName}</div>
 									
 										
 									</div>
@@ -115,7 +115,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 							enctype="multipart/form-data">
 										<div class="row mb-3">
 											<label for="profileImage"
-												class="col-md-4 col-lg-3 col-form-label">照片
+												class="col-md-4 col-lg-3 col-form-label">大頭照
 										</label> <img style="width:200px;height:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
@@ -124,7 +124,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 												
 											>
 											<div class="row mb-3">
-											<label for="about" class="col-md-4 col-lg-3 col-form-label">編號</label>
+											
 											<div class="col-md-8 col-lg-9">
 												<input type="hidden" name="empId" size="45"
 													value="${empVO.empId}" class="form-control"
@@ -148,11 +148,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 													id="profile">
 													<img id="profileimg">
 												<div class="pt-2">
-													<a href="#" class="btn btn-primary btn-sm"
-														title="Upload new profile image"><i
-														class="bi bi-upload"></i></a> <a href="#"
-														class="btn btn-danger btn-sm"
-														title="Remove my profile image"><i class="bi bi-trash"></i></a>
+													
 												</div>
 											</div>
 										</div>
@@ -259,7 +255,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 										<div class="text-center">
 											<input type="hidden" name="action" value="updateFront">
-											<button type="submit" class="input-group-text"
+											<button type="submit" class="btn btn-outline-dark"
 												id="basic-addon2">確認修改</button>
 										</div>
 									</form>
@@ -312,7 +308,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 									
 
 										<div class="text-center">
-											<button type="submit" class="btn btn-primary">確認修改密碼</button>
+											<button type="submit" class="btn btn-outline-dark">確認修改密碼</button>
 										</div>
 										<input type="hidden" name="action" value="frontchangepassword">
 									</form>

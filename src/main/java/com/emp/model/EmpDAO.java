@@ -26,7 +26,7 @@ public class EmpDAO implements EmpDAO_interface {
 
 	
 	
-	private static final String LIKE_EXTENSION = "select emp_name ,extension  from emp where  extension =  ?  ;  ";
+	private static final String LIKE_EXTENSION = "select emp_name ,extension,dep_id  from emp where  extension =  ?  ;  ";
 	private static final String SELECT_EXTENSIONWITHID = "select extension from emp where extension = ? and emp_id != ? limit 1 ;  ";
 private static final String SELECT_EXTENSION = "select extension from emp where extension = ? limit 1 ;  ";
 	private static final String SELECT_MAIL = "select mail from emp where mail = ? limit 1 ;  ";
@@ -72,6 +72,7 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 					empVO.setEmpName(rs.getString("emp_name"));
 					
 					empVO.setExtension(rs.getString("extension"));
+					empVO.setDepId(rs.getInt("dep_id"));
 					
 					list.add(empVO); // Store the row in the list
 				}
@@ -103,7 +104,7 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 		 List<EmpVO> list = new ArrayList<EmpVO>();
 			EmpVO empVO = null;
 
-			  String LIKE_EMP_NAME = "select emp_name ,extension  from emp where  emp_name like  '%"+
+			  String LIKE_EMP_NAME = "select emp_name ,extension ,dep_id from emp where  emp_name like  '%"+
 			  		 empName+
 			  		"%'";
 
@@ -132,7 +133,7 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 					empVO.setEmpName(rs.getString("emp_name"));
 					
 					empVO.setExtension(rs.getString("extension"));
-					
+					empVO.setDepId(rs.getInt("dep_id"));
 					list.add(empVO); // Store the row in the list
 				}
 

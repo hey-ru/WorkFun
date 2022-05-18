@@ -26,6 +26,9 @@
     max-width: 50px;
     height: auto;
 }
+.table td, .table th {
+vertical-align:middle;
+}
 
 </style>
 
@@ -323,20 +326,17 @@
                                             <table class="table table-striped table-bordered table-hover"
                                                 id="dataTables-example">
                                                <tr>
-		<th>員工編號</th>
 		<th>員工姓名</th>
 		<th>部門</th>
 		<th>雇用日期</th>
 		<th>離職日期</th>
 		<th>手機</th>
 		<th>分機</th>
-		<th>興趣</th>
-		<th>專長</th>
+		
 		<th>頭貼</th>
 		<th>信箱</th>
 		<th>生日</th>
-		<th></th>
-		<th></th>
+		<th>狀態</th>
 		
 		
 	</tr>
@@ -367,7 +367,7 @@
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input type="submit" value="修改" class="btn btn-outline-dark">
 			     <input type="hidden" name="empId"  value="${empVO.empId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>

@@ -21,7 +21,7 @@ import java.sql.Date;
 
 public class Announcement_mappingDAO implements Announcement_mappingDAO_interface {
 	
-
+//連線池未完成
 	private static final String INSERT_STMT = "call InsertRecord(?,?) ";
 	private static final String GET_ALL_STMT = "select announcement_id,announcementImg_id,announcementImg FROM announcement_mapping order by announcement_id ";
 	private static final String GET_ONE_STMT = "SELECT *  FROM announcement_mapping where announcement_id = ? ";
@@ -203,8 +203,8 @@ public class Announcement_mappingDAO implements Announcement_mappingDAO_interfac
 
 	}
 //
-	public List<Announcement_mappingVO> findByPrimaryKey(Integer announcement_id) {
-		List<Announcement_mappingVO> list= new ArrayList<Announcement_mappingVO>();
+	public List<Integer> findByPrimaryKey(Integer announcement_id) {
+		List<Integer> list= new ArrayList<Integer>();
 		Announcement_mappingVO Announcement_mappingVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -227,7 +227,7 @@ public class Announcement_mappingDAO implements Announcement_mappingDAO_interfac
 								Announcement_mappingVO.setAnnouncementImg_id(rs.getInt("announcementImg_id"));
 
 								Announcement_mappingVO.setAnnouncementImg(rs.getBytes("announcementImg"));
-								list.add(Announcement_mappingVO);
+								list.add(announcement_id);
 
 							
 								

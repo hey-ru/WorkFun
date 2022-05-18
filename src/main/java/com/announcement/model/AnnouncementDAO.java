@@ -16,7 +16,7 @@ import java.sql.*;
 
 
 public class AnnouncementDAO implements AnnouncementDAO_interface {
-
+//連線池未完成
 
 	private static final String INSERT_STMT = "INSERT INTO announcement (announcer,announcement_title,announcement_content) VALUES (?,?,?) ";
 	private static final String GET_ALL_STMT = "select announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement order by announcement_id ";
@@ -517,5 +517,15 @@ announcementVO.setAnnouncement_status(rs.getByte("announcement_status"));
 //		
 //			System.out.println();
 //		}
+	}
+	@Override
+	public List<AnnouncementVO> getAllWithImg(Integer announcement_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int updateWithImg(AnnouncementVO announcementVO, List<Announcement_mappingVO> list) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

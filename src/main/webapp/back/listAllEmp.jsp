@@ -95,10 +95,10 @@ vertical-align:middle;
          </c:forEach>   
        </select>
            
-       <b>雇用日期:</b>
+       <b>雇用日期:</b>	
 	   <input name="hiredate" id="f_date1" type="text"> 
 		        
-        <input type="submit" value="送出">
+        <input type="submit" value="送出" class="btn btn-outline-dark">
         <input type="hidden" name="action" value="listEmps_ByCompositeQuery">
      </FORM>
   </li>
@@ -167,7 +167,7 @@ vertical-align:middle;
 		</c:choose>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input type="submit" value="修改" class="btn btn-outline-dark">
 			     <input type="hidden" name="empId"  value="${empVOSearch.empId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>

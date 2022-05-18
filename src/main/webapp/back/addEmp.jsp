@@ -130,18 +130,29 @@
 
 								<div class="input-group mb-3">
 									<label class="input-group-text" for="inputGroupFile01">大頭照</label>
-									<input type="file" name="empProfile" size="45"
-										value="${param.empProfile}" class="form-control"
-										id="profile" required="required">
+									
+											<div class="col-md-8 col-lg-9">
+											
+												<input type="file" name="empProfile" size="45"
+												 class="form-control"
+													id="profile">
+													<img id="profileimg">
+												<div class="pt-2">
+													
+												</div>
+											</div>
 									
 								</div>
+								<input type="file" name="empProfile" size="45"
+										value="${param.empProfile}" 	
+										id="profile" required="required">
 	<div><img id="profileimg"></div>
 	
 
 								<div class="input-group mb-3">
 
 									<input type="hidden" name="action" value="insert"> <input
-										type="submit" value="送出新增" class="input-group-text"
+										type="submit" value="送出新增"  class="btn btn-outline-dark"
 										id="basic-addon2">
 								</div>
 								</div>

@@ -116,14 +116,14 @@ pageContext.setAttribute("list", list);
 
 
 	<script type="text/javascript">
-		let rule1 = /^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\s\\(\\-\\)]*$/;
-		$("#title").blur(function() {
+		let rule1 = ^\d{4}$;
+		$("#extension").blur(function() {
 			if ($(this).val() == '') {
-				$('#title_error').text('請填入標題!')
+				$('#extension_error').text('請勿空白!')
 			} else if (rule1.test($(this).val())) {
-				$('#title_error').text('')
+				$('#extension_error').text('')
 			} else {
-				$('#title_error').text('標題名稱:只能是中日英文字母、數字')
+				$('#extension_error').text('請輸入四個數字')
 			}
 		});
 	</script>

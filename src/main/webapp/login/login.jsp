@@ -14,7 +14,7 @@
 
     <title>Login</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template-->	
     <link href="<%=request.getContextPath()%>/assets4login/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -24,7 +24,7 @@
     <link href="<%=request.getContextPath()%>/assets4login/css/sb-admin-2.min.css" rel="stylesheet">
  	<style>
  	.bg-login-image {
-    background: url(<%=request.getContextPath()%>/assets4login/img/dog.jpeg);
+    background: url(<%=request.getContextPath()%>/assets4login/img/dog1.jpeg);
     
 }
  	</style>
@@ -47,24 +47,27 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">WorkFun</h1>
+                                        <h1 class="h4 text-gray-900 mb-4" style="font-size: 3rem;">WorkFun</h1>
                                     </div>
                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
                                         <div class="form-group">
-                                        
+                                        <a style="font-size: 1.5rem">帳號</a>
                                            <input
 										type="TEXT" name="mail" size="45" value="${param.mail}"
 										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1">
+										aria-describedby="basic-addon1" placeholder="請輸入google信箱">
 										<font color="red">${errorMsgs.mail}${errorMsgs.mailcheck}</font>
+										<br>
                                         </div>
+                                         <a style="font-size: 1.5rem">密碼</a>
                                       <input
-										type="text" name="empPassword" size="45" value="${param.empPassword}"
+										type="password" name="empPassword" size="45" value="${param.empPassword}"
 										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1">${errorMsgs.empPassword}
+										aria-describedby="basic-addon1" placeholder="請輸入包含英文大小寫以及數字">
 										
 										<font color="red">${errorMsgs.empPassword}${errorMsgs.checkPassword}</font>
+                                      <br>
                                       <br>
                                        <input
 										type="submit" value="登入" class="input-group-text bg-info"
@@ -77,7 +80,9 @@
                                         
                                         <input type="hidden" name="action" value="frontLogin"> 
                                     </FORM>
+                                    <br>
                                     <hr>
+                                    <br>
                                     <div class="text-center">
                                         <a class="small" href="<%=request.getContextPath()%>/login/forgot.jsp">Forgot Password?</a>
                                     </div>

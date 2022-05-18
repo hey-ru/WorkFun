@@ -63,7 +63,7 @@
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
 							<div
-								style="border: 3px blue solid; width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
+								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
 								<div class="input-group mb-3" style="margin-top: 0px;">
 									<span class="input-group-text" id="xx">員工姓名</span> <input
 										type="TEXT" name="empName" size="45" value="${param.empName}"
@@ -149,7 +149,7 @@
 								<div class="input-group mb-3">
 	<input type="hidden" name="empId" value="${param.empId}"> 
 									<input type="hidden" name="action" value="update"> <input
-										type="submit" value="修改" class="input-group-text"
+										type="submit" value="修改" class="btn btn-outline-dark"
 										id="basic-addon2">
 								</div>
 								</div>

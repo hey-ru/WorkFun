@@ -174,7 +174,7 @@ padding:0.375rem 0.75rem;
 								<div class="input-group mb-3">
 	<input type="hidden" name="announcement_id" value="${param.announcement_id}"> 
 									<input type="hidden" name="action" value="update"> <input
-										type="submit" value="修改" class="input-group-text"
+										type="submit" value="確認修改" class="btn btn-outline-dark"
 										id="basic-addon2">
 								</div>
 								</div>
@@ -184,10 +184,10 @@ padding:0.375rem 0.75rem;
 								<c:forEach var="announcement_mapping" items="${list}" >
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
 							enctype="multipart/form-data">
-								${announcement_mapping}
+						
 									<input type="hidden" name="announcementImg_id" value="${announcement_mapping}" >	
 								<input
-										type="submit" value="刪除" class="input-group-text"
+										type="submit" value="刪除" class="btn btn-outline-dark"
 										id="basic-addon2" style="z-index:100;position: relative;">
 											<input type="hidden" name="announcement_id" value="${param.announcement_id}"> 
 											<input type="hidden" name="action" value="deleteImg"> 

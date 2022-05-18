@@ -59,7 +59,10 @@
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
 													style="width: 100px;">分機</th>
-											
+											<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Position: activate to sort column ascending"
+													style="width: 100px;">部門</th>
 											</tr>
 										</thead>
 
@@ -70,6 +73,7 @@
 										<tr>
 											<td>${emp.empName}</td>
 											<td>${emp.extension}</td>
+												<td>${emp.depVO.depName}</td>
 											
 										</tr>
 									</c:forEach>

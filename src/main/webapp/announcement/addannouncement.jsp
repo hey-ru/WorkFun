@@ -120,7 +120,7 @@ padding:0.375rem 0.75rem;
 	
 									<input type="hidden" name="action" value="insert"> 
 									<input
-										type="submit" value="建立公告" class="input-group-text"
+										type="submit" value="建立公告" class="btn btn-outline-dark"
 										id="basic-addon2">
 								</div>
 								</div>

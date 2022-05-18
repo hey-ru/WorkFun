@@ -484,7 +484,7 @@ if ("selectByExtension".equals(action)) {
 	
 	if (!errorMsgs.isEmpty()) {
 		RequestDispatcher failureView = req
-				.getRequestDispatcher("/home/home.jsp");
+				.getRequestDispatcher("/home/notfound.jsp");
 		failureView.forward(req, res);
 		return; //程式中斷
 	}
@@ -503,7 +503,7 @@ if ("selectByExtension".equals(action)) {
 	
 		
 		RequestDispatcher failureView = req
-				.getRequestDispatcher("/home/home.jsp");
+				.getRequestDispatcher("/home/notfound.jsp");
 		failureView.forward(req, res);
 	
 		return; 
@@ -534,7 +534,7 @@ if ("selectByEmpName".equals(action)) {
 	
 	if (!errorMsgs.isEmpty()) {
 		RequestDispatcher failureView = req
-				.getRequestDispatcher("/home/home.jsp");
+				.getRequestDispatcher("/home/notfound.jsp");
 		failureView.forward(req, res);
 		return; //程式中斷
 	}
@@ -553,7 +553,7 @@ if ("selectByEmpName".equals(action)) {
 	
 		
 		RequestDispatcher failureView = req
-				.getRequestDispatcher("/home/home.jsp");
+				.getRequestDispatcher("/home/notfound.jsp");
 		failureView.forward(req, res);
 	
 		return; 
@@ -845,14 +845,17 @@ return;
 					
 					
 					
-					
+					EmpService empSvc = new EmpService();
 					String empPassword = req.getParameter("empPassword").trim();
 					if (empPassword == null || empPassword.trim().length() == 0) {
 						errorMsgs.put("empPassword","密碼請勿空白");
 					}
 					else if(!empPassword.trim().matches(checkPassword)) { //以下練習正則(規)表示式(regular-expression)
 						errorMsgs.put("checkPassword","請輸入包含英文大小寫和數字，最少8個字最多16個字");
-		            }
+		            }else if (!(empSvc.login(mail,empPassword).getResigndate()==null)) {
+		            	errorMsgs.put("checkPassword","已離職員工不可登入");
+					}
+					
 					
 					
 				
@@ -867,7 +870,7 @@ return;
 					
 					/***************************2.開始檢查帳號密碼***************************************/
 					
-					EmpService empSvc = new EmpService();
+					
 					EmpVO empVO=empSvc.login(mail,empPassword);
 				
 				

@@ -34,6 +34,9 @@
 #wrapper #content-wrapper {
 	overflow-x: auto;
 }
+.table td, .table th {
+vertical-align:middle;
+}
 </style>
 </head>
 
@@ -81,51 +84,56 @@
 					<table class="table table-striped table-bordered table-hover"
 						id="dataTables-example">
 						<tr>
-							<th>員工編號</th>
 							<th>員工姓名</th>
-							<th>部門</th>
-							<th>雇用日期</th>
-							<th>離職日期</th>
-							<th>手機</th>
-							<th>分機</th>
-							<th>興趣</th>
-							<th>專長</th>
-							<th>頭貼</th>
-							<th>信箱</th>
-							<th>生日</th>
-							<th>狀態</th>
-							<th></th>
+		<th>部門</th>
+		<th>雇用日期</th>
+		<th>離職日期</th>
+		<th>手機</th>
+		<th>分機</th>
+		
+		<th>頭貼</th>
+		<th>信箱</th>
+		<th>生日</th>
+		<th>狀態</th>
+		<th></th>
 						</tr>
 						<%@ include file="/back/page1_ByCompositeQuery.file"%>
 						<c:forEach var="empVO" items="${listEmps_ByCompositeQuery}"
 							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
-								<td>${empVO.empId}</td>
-								<td>${empVO.empName}</td>
-								<td>${empVO.depId}-[${empVO.depVO.depName}]</td>
+								<td align="center"  style="width:90px;">${empVO.empName}</td>
+			<td style="width:60px;">${empVO.depVO.depName}</td>
 
-								<td>${empVO.hiredate}</td>
-								<td>${empVO.resigndate}</td>
-								<td>${empVO.phone}</td>
-								<td>${empVO.extension}</td>
-								<td>${empVO.hobby}</td>
-
-								<td>${empVO.skill}</td>
-								<td style="width: 300px;"><img
-									src="
+			<td style="width:90px;">${empVO.hiredate}</td>
+				<td style="width:90px;">${empVO.resigndate}</td>
+			<td>${empVO.phone}</td>
+			<td>${empVO.extension}</td> 
+							<td style="width:150px; "><img 
+												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${empVO.empId}
 									"
-									class="img-fluid"></td>
+												class="img-fluid"
+											></td>
 								<td>${empVO.mail}</td>
-								<td>${empVO.birthday}</td>
-
+									<td>${empVO.birthday}</td>
+									<c:choose>
+									<c:when test="${empVO.empStatus==2}">
+										<td>離職</td>
+										</c:when>
+										<c:otherwise>
+											<td>在職</td>
+										</c:otherwise>
+										
+										
+										
+		</c:choose>
 
 
 								<td>
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/empServlet"
 										style="margin-bottom: 0px;">
-										<input type="submit" value="修改"> <input type="hidden"
+										<input type="submit" value="修改" class="btn btn-outline-dark"> <input type="hidden"
 											name="empId" value="${empVO.empId}"> <input
 											type="hidden" name="requestURL"
 											value="<%=request.getServletPath()%>">

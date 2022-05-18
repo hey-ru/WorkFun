@@ -118,7 +118,7 @@
 			
 			<td>
 			   <input type="hidden" name="empId"  value="${empVOSearch.empId}">
-			     <input type="submit" value="修改">
+			     <input type="submit" value="修改" class="btn btn-outline-dark">
 			   
 			     <input type="hidden" name="action"	value="changePermission">
 			  

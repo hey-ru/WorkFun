@@ -59,8 +59,8 @@
 
                             <div style="margin-top:20px">   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
-                               <input type="text" placeholder="輸入分機查詢" name="extension" style="width:125px"> 
-                      
+                               <input type="text" placeholder="輸入分機查詢" name="extension" style="width:125px" id="extension"> 
+                      <a id="extension_error"></a>
                                <input type="hidden" name="action" value="selectByExtension">
                                </FORM>
 
@@ -69,7 +69,7 @@
                                <div style="margin-top:20px">
                                   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
-                                 <input type="text"placeholder="輸入姓名查詢" name="empName" style="width:125px">
+                                 <input type="text"placeholder="輸入姓名查詢" name="empName" style="width:125px" id="empName">
                                     <input type="hidden" name="action" value="selectByEmpName">
                                  </FORM> 
                                     
