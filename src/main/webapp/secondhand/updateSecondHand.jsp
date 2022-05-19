@@ -104,8 +104,11 @@ body {
 									<label for="inputNumber" class="col-sm-2 col-form-label">商品圖片1</label>
 									<div class="col-sm-10">
 										<input class="form-control" type=file name="img1"
-											oninput="pic1.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile0" value="${param.img1}"> <img id="pic1" style="width:500px"/>
+											oninput="pic1.src=window.URL.createObjectURL(this.files[0]);
+													 pic1.style='max-height:300px;max-width:500px;'"
+											id="formFile0" value="${param.img1}">
+											<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${param.second_hand_id}"
+											id="pic1" style="max-height:300px;max-width:500px;"/>
 											<br>${errorMsgs.img1}
 									</div>
 								</div>
@@ -113,8 +116,11 @@ body {
 									<label for="inputNumber" class="col-sm-2 col-form-label">商品圖片2</label>
 									<div class="col-sm-10">
 										<input class="form-control" type=file name="img2"
-											oninput="pic2.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile1" value="${param.img2}"> <img id="pic2" style="width:500px"/>
+											oninput="pic2.src=window.URL.createObjectURL(this.files[0]);
+													 pic2.style='max-height:300px;max-width:500px;'"
+											id="formFile1" value="${param.img2}">
+											<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img2&table=second_hand&id_key=second_hand_id&id=${param.second_hand_id}"
+											id="pic2" style="max-height:300px;max-width:500px;"/>
 											<br>${errorMsgs.img2}
 									</div>
 								</div>
@@ -122,8 +128,11 @@ body {
 									<label for="inputNumber" class="col-sm-2 col-form-label">商品圖片3</label>
 									<div class="col-sm-10">
 										<input class="form-control" type=file name="img3"
-											oninput="pic3.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile2" value="${param.img3}"> <img id="pic3" style="width:500px"/>
+											oninput="pic3.src=window.URL.createObjectURL(this.files[0]);
+													 pic3.style='max-height:300px;max-width:500px;'"
+											id="formFile2" value="${param.img3}">
+											<img src="<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=${param.second_hand_id}"
+											id="pic3" style="max-height:300px;max-width:500px;"/>
 											<br>${errorMsgs.img3}
 									</div>
 								</div>

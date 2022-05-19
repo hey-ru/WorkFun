@@ -87,13 +87,13 @@ public class SecondHandServlet extends HttpServlet {
 				Integer deal_price = null;
 				
 				String name = req.getParameter("name");
-				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_ )]{1,20}$";
 				if (name == null || name.trim().length() == 0) {
 					errorMsgs.put("name", "商品名稱請勿空白");
 				} else if (!name.trim().matches(nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.put("name", "商品名稱只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
-				System.out.println(name);
+//				System.out.println(name);
 				
 				Integer bottom_price = null;
 				try {
@@ -107,7 +107,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (bottom_price > 100000000) {
 					errorMsgs.put("bottom_price", "請輸入小於50,000,000的數字");
 				}
-				System.out.println(bottom_price);
+//				System.out.println(bottom_price);
 
 				Integer top_price = null;
 				try {
@@ -121,7 +121,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (top_price > 100000000) {
 					errorMsgs.put("bottom_price", "請輸入小於100,000,000的數字");
 				}
-				System.out.println(top_price);
+//				System.out.println(top_price);
 
 				java.sql.Timestamp start_time = null;
 				try {
@@ -129,7 +129,10 @@ public class SecondHandServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("start_time", "請輸入開始競標日期時間");
 				}
-				System.out.println(start_time);
+				if (System.currentTimeMillis() >= start_time.getTime()) {
+					errorMsgs.put("start_time", "請輸入大於當前時間");
+				}
+//				System.out.println(start_time);
 
 				java.sql.Timestamp end_time = null;
 				try {
@@ -137,10 +140,10 @@ public class SecondHandServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("end_time", "請輸入開始競標日期時間");
 				}
-//				if (start_time >= end_time) {
-//					errorMsgs.put("bottom_price", "請輸入大於起標價格的數字");
-//				}
-				System.out.println(end_time);
+				if (start_time.getTime() >= end_time.getTime()) {
+					errorMsgs.put("end_time", "請輸入大於競標開始時間");
+				}
+//				System.out.println(end_time);
 				
 				Integer is_deal = 0;
 
@@ -152,7 +155,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (filename1 != null && pic1.getContentType() != null) {
 					img1 = getByteArrayFromPart(pic1);
 				}
-				System.out.println(1);
+//				System.out.println(1);
 
 //				String img2 = req.getParameter("img2");//base64
 				byte[] img2 = null;
@@ -162,7 +165,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (filename2 != null && pic2.getContentType() != null) {
 					img2 = getByteArrayFromPart(pic2);
 				}
-				System.out.println(2);
+//				System.out.println(2);
 				
 //				String img3 = req.getParameter("img3");//base63
 				byte[] img3 = null;
@@ -172,7 +175,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (filename3 != null && pic3.getContentType() != null) {
 					img3 = getByteArrayFromPart(pic3);
 				}
-				System.out.println(3);
+//				System.out.println(3);
 				
 				Integer second_hand_id = Integer.valueOf(req.getParameter("second_hand_id").trim());
 				
@@ -278,17 +281,17 @@ public class SecondHandServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.put("saler", "請填入暫時的拍賣者id");
 				}
-				System.out.println(saler);
+//				System.out.println(saler);
 				// 上面之後要刪掉
 
 				String name = req.getParameter("name");
-				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,20}$";
+				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_ )]{1,20}$";
 				if (name == null || name.trim().length() == 0) {
 					errorMsgs.put("name", "商品名稱請勿空白");
 				} else if (!name.trim().matches(nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.put("name", "商品名稱只能是中、英文字母、數字和_ , 且長度必需在1到20之間");
 				}
-				System.out.println(name);
+//				System.out.println(name);
 
 				Integer bottom_price = null;
 				try {
@@ -302,7 +305,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (bottom_price > 10000000) {
 					errorMsgs.put("bottom_price", "請輸入小於10,000,000的數字");
 				}
-				System.out.println(bottom_price);
+//				System.out.println(bottom_price);
 
 				Integer top_price = null;
 				try {
@@ -316,7 +319,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (top_price > 100000000) {
 					errorMsgs.put("bottom_price", "請輸入小於100,000,000的數字");
 				}
-				System.out.println(top_price);
+//				System.out.println(top_price);
 
 				java.sql.Timestamp start_time = null;
 				try {
@@ -324,7 +327,10 @@ public class SecondHandServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("start_time", "請輸入開始競標日期時間");
 				}
-				System.out.println(start_time);
+				if (System.currentTimeMillis() >= start_time.getTime()) {
+					errorMsgs.put("start_time", "請輸入大於當前時間");
+				}
+//				System.out.println(start_time);
 
 				java.sql.Timestamp end_time = null;
 				try {
@@ -332,10 +338,10 @@ public class SecondHandServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					errorMsgs.put("end_time", "請輸入開始競標日期時間");
 				}
-//				if (start_time >= end_time) {
-//					errorMsgs.put("bottom_price", "請輸入大於起標價格的數字");
-//				}
-				System.out.println(end_time);
+				if (start_time.getTime() >= end_time.getTime()) {
+					errorMsgs.put("end_time", "請輸入大於競標開始時間");
+				}
+//				System.out.println(end_time);
 
 				byte[] img1 = null;
 
@@ -345,7 +351,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (filename1 != null && pic1.getContentType() != null) {
 					img1 = getByteArrayFromPart(pic1);
 				}
-				System.out.println(1);
+//				System.out.println(1);
 
 //				String img2 = req.getParameter("img2");//base64
 				byte[] img2 = null;
@@ -355,7 +361,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (filename2 != null && pic2.getContentType() != null) {
 					img2 = getByteArrayFromPart(pic2);
 				}
-				System.out.println(2);
+//				System.out.println(2);
 				
 //				String img3 = req.getParameter("img3");//base63
 				byte[] img3 = null;
@@ -365,7 +371,7 @@ public class SecondHandServlet extends HttpServlet {
 				if (filename3 != null && pic3.getContentType() != null) {
 					img3 = getByteArrayFromPart(pic3);
 				}
-				System.out.println(3);	
+//				System.out.println(3);	
 				
 				Integer price = 0;
 
@@ -403,7 +409,7 @@ public class SecondHandServlet extends HttpServlet {
 				
 				/*************************** 1.接收請求參數 ****************************************/
 				String name = new String(req.getParameter("name"));
-				System.out.println(name);
+//				System.out.println(name);
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -415,9 +421,9 @@ public class SecondHandServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				SecondHandService secondHandService = new SecondHandService();
 				List<SecondHandVO> list = secondHandService.getAllByName(name);
-				for (SecondHandVO secondHandVO : list) {
-					System.out.println(secondHandVO.toString());
-				}
+//				for (SecondHandVO secondHandVO : list) {
+//					System.out.println(secondHandVO.toString());
+//				}
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -451,7 +457,7 @@ public class SecondHandServlet extends HttpServlet {
 				
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer saler = new Integer(req.getParameter("saler"));
-				System.out.println(saler);
+//				System.out.println(saler);
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -463,9 +469,9 @@ public class SecondHandServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				SecondHandService secondHandService = new SecondHandService();
 				List<SecondHandVO> list = secondHandService.getAllBySaler(saler);
-				for (SecondHandVO secondHandVO : list) {
-					System.out.println(secondHandVO.toString());
-				}
+//				for (SecondHandVO secondHandVO : list) {
+//					System.out.println(secondHandVO.toString());
+//				}
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {

@@ -58,7 +58,7 @@ body {
 							
 							<img
  								src="<%=request.getContextPath()%>/util/DBGifReader?pic=img1&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}"
-								alt="Profile" style="max-height: 420px;" id="showPic">
+								alt="Profile" style="max-height: 420px;max-width: 650px;" id="showPic">
 							
 							<div class="row" style="margin-top: 10px;">
 								<!-- Button trigger modal -->

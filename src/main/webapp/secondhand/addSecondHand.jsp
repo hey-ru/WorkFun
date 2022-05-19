@@ -66,7 +66,7 @@ body {
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">起標價格<font color=red><b>*</b></font></label>
 									<div class="col-sm-10">
-										<input name="bottom_price" type="number" id="bottom_price" required class="form-control" min="0" value="${param.bottom_price}"
+										<input name="bottom_price" type="number" id="bottom_price" required class="form-control" min="0" placeholder="請輸入起標價格" value="${param.bottom_price}"
 											oninput="if(value < 0){value = 0};
 													 if(value > 0){value = Number(value)};
 													 if(value > 10000000){value = 10000000}"
@@ -75,9 +75,9 @@ body {
 									</div>
 								</div>
 								<div class="row mb-3">
-									<label for="inputNumber" class="col-sm-2 col-form-label">直購金額<font color=red><b>*</b></font></label>
+									<label for="inputNumber" class="col-sm-2 col-form-label">直購價格<font color=red><b>*</b></font></label>
 									<div class="col-sm-10">
-										<input name="top_price" type="number" id="top_price" required class="form-control" value="${param.top_price}"
+										<input name="top_price" type="number" id="top_price" required class="form-control" placeholder="請輸入直購價格" value="${param.top_price}"
 											oninput="if(value < 0){value = 0};
 													 if(value > 0){value = Number(value)};
 													 if(value > 100000000){value = 100000000}"
@@ -88,23 +88,24 @@ body {
 								<div class="row mb-3">
 									<label for="inputStartTime" class="col-sm-2 col-form-label">起標時間<font color=red><b>*</b></font></label>
 									<div class="col-sm-10">
-										<input name="start_time" required id="start_time" type="text" class="form-control" value="${param.start_time}"/>
-											${errorMsgs.start_time}<br>
+										<input name="start_time" required id="start_time" type="text" class="form-control" placeholder="請輸入起標時間" value="${param.start_time}"/>
+										<span id="start_time_error" style="color:red;">${errorMsgs.start_time}</span><br>
 									</div>
 								</div>
 								<div class="row mb-3">
 									<label for="inputEndTime" class="col-sm-2 col-form-label">結標時間<font color=red><b>*</b></font></label>
 									<div class="col-sm-10">
-										<input name="end_time" required id="end_time" type="text" class="form-control" value="${param.end_time}"/>
-											${errorMsgs.end_time}<br>
+										<input name="end_time" required id="end_time" type="text" class="form-control" placeholder="請輸入結標時間" value="${param.end_time}"/>
+										<span id="end_time_error" style="color:red;">${errorMsgs.end_time}</span><br>
 									</div>
 								</div>
 								<div class="row mb-3">
 									<label for="inputNumber" class="col-sm-2 col-form-label">商品圖片1</label>
 									<div class="col-sm-10">
 										<input class="form-control" type=file name="img1"
-											oninput="pic1.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile0" value="${param.img1}"> <img id="pic1" style="width:500px"/>
+											oninput="pic1.src=window.URL.createObjectURL(this.files[0]);
+													 pic1.style='max-height:300px;max-width:500px;'"
+											id="formFile0" value="${param.img1}"> <img id="pic1"/>
 											<br>${errorMsgs.img1}
 									</div>
 								</div>
@@ -112,8 +113,9 @@ body {
 									<label for="inputNumber" class="col-sm-2 col-form-label">商品圖片2</label>
 									<div class="col-sm-10">
 										<input class="form-control" type=file name="img2"
-											oninput="pic2.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile1" value="${param.img2}"> <img id="pic2" style="width:500px"/>
+											oninput="pic2.src=window.URL.createObjectURL(this.files[0]);
+													 pic2.style='max-height:300px;max-width:500px;'"
+											id="formFile1" value="${param.img2}"> <img id="pic2" style="width:300px"/>
 											<br>${errorMsgs.img2}
 									</div>
 								</div>
@@ -121,8 +123,9 @@ body {
 									<label for="inputNumber" class="col-sm-2 col-form-label">商品圖片3</label>
 									<div class="col-sm-10">
 										<input class="form-control" type=file name="img3"
-											oninput="pic3.src=window.URL.createObjectURL(this.files[0])"
-											id="formFile2" value="${param.img3}"> <img id="pic3" style="width:500px"/>
+											oninput="pic3.src=window.URL.createObjectURL(this.files[0]);
+													 pic3.style='max-height:300px;max-width:500px;'"
+											id="formFile2" value="${param.img3}"> <img id="pic3" style="width:300px"/>
 											<br>${errorMsgs.img3}
 									</div>
 								</div>
@@ -251,6 +254,32 @@ body {
 			checkSubmit();
 		}
 	});
+	
+// 	$("#pic1").
+	
+// 	$("#start_time").blur(function(){
+// 		if (Number(new Date()) >= Number(Date($("#start_time").val()))) {
+// 			$("#start_time_error").text('請輸入大於當前時間!');
+// 			checkSubmit();
+// 		}else {
+// 			$("#start_time_error").text('');
+// 			checkSubmit();
+// 		}
+// 	});
+	
+// 	$("#end_time").blur(function(){
+// 		if (Number(new Date()) >= Number(Date($("#end_time").val()))) {
+// 			$("#end_time_error").text('請輸入大於當前時間!');
+// 			checkSubmit();
+// 		}else if () {
+// // 			$("#start_time").focus();
+// // 			$("#end_time").focus();
+			
+			
+// 		}
+// 		console.log("end_time : " + $("#end_time").val());
+// 		checkSubmit();
+// 	});
 	
 	submitDisable();
 	
