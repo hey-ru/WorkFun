@@ -126,22 +126,22 @@ td {
 									</tr>
 									<c:set var="sum" value="${sum+(blist.price)*(blist.qty)}"></c:set>
 								</c:forEach>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td><strong>總金額$${sum}</strong></td>
-									<td></td>
-									<td></td>
-								</tr>
+								<!-- 								<tr> -->
+								<!-- 									<td></td> -->
+								<!-- 									<td></td> -->
+								<!-- 									<td></td> -->
+								<!-- 									<td></td> -->
+								<!-- 								<td><strong>總金額$${sum}</strong></td> -->
+								<!-- 									<td></td> -->
+								<!-- 									<td></td> -->
+								<!-- 								</tr> -->
 							</table>
 							<div></div>
 							<!-- [修改請求] -->
 							<div style="text-align: right;">
 								<input type="hidden" name="action" value="updateMany"> <input
-									type="submit" class="btn btn-success" id="btn" value="確定修改">
-								<!-- 									 onclick="javascript:return window.alert('已送出修改')" -->
+									type="submit" class="btn btn-success" id="btn" value="確定修改"
+									${sum == null ? 'hidden="hidden"' : '' }>
 							</div>
 						</FORM>
 					</div>
