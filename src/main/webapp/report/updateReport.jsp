@@ -34,9 +34,9 @@
 			<div
 				style="width: 900px; position: absolute; height: 630px; top: 45%; margin-top: -160px; margin-left: 14%;">
 				<div class="input-group mb-3" style="margin-top: 0px;">
-					<span class="input-group-text" id="basic-addon1">標題</span> <input
+					<span class="input-group-text" id="basic-addon1">標題</span> <input id="title"
 						type="TEXT" name="title" size="45" value="${repVO.title}" />
-						<p style="color :red">${errorMsgs.title}</p>
+						<p style="color :red" id="title_error">${errorMsgs.title}</p>
 
 				</div>
 
@@ -73,9 +73,9 @@
 				</div>
 				<label for="basic-url" class="form-label">回報內容</label>
 				<div class="input-group mb-3" style="height: 200px">
-					<input type="TEXT" class="form-control" aria-label="With textarea"
+					<input type="TEXT" class="form-control" aria-label="With textarea" id="content"
 						name="content" size="200" value="${repVO.content}" />
-						<p style="color :red">${errorMsgs.content}</p>
+						<p style="color :red" id="content_error">${errorMsgs.content}</p>
 				</div>
 
 				<div class="input-group mb-3">
@@ -99,7 +99,7 @@
 			</div>
 			<input type="hidden" name="action" value="update"> 
 			<input type="hidden" name="report_id" value="${repVO.report_id}">
-			<button type="submit" value="送出修改" style="margin-top: 600px;">送出修改</button>
+			<button type="submit" value="送出修改" style="margin-top: 600px;border:red 1px solid; width:100px;height:100px">送出修改</button>
 		</FORM>
 	</main>
 	<!-- ======= Footer ======= -->
@@ -110,6 +110,30 @@
 	<%@ include file="/design/frontjs.jsp"%>
 	<!-- Template Main JS File -->
 	<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+		<script type="text/javascript">
+    
+    let rule1=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\s\\(\\-\\)]*$/;
+    $("#title").blur(function(){
+  	  if($(this).val() == ''){
+  		  $('#title_error').text('請填入標題!')
+  	  }else if(rule1.test($(this).val())){
+            $('#title_error').text('')
+        }else{
+            $('#title_error').text('標題名稱:只能是中英文字母、數字')
+        }
+    });
+
+    let rule2=/^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_\s\\(\\-\\)\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]*$/;
+    $("#content").blur(function(){
+    	  if($(this).val() == ''){
+      		  $('#content_error').text('請填入回報內容!')
+      	  }else if(rule2.test($(this).val())){
+                $('#content_error').text('')
+            }else{
+                $('#content_error').text('回報內容:只能是中英文字母、數字、全型標點符號')
+            }
+        });
+</script>
 </body>
 
 </html>

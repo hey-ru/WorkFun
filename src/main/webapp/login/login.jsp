@@ -24,7 +24,7 @@
     <link href="<%=request.getContextPath()%>/assets4login/css/sb-admin-2.min.css" rel="stylesheet">
  	<style>
  	.bg-login-image {
-    background: url(<%=request.getContextPath()%>/assets4login/img/dog1.jpeg);
+    background: url(<%=request.getContextPath()%>/assets4login/img/dog2.jpeg);
     
 }
  	</style>

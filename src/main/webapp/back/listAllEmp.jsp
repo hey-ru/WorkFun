@@ -139,11 +139,11 @@ vertical-align:middle;
 		
 		<tr>
 			
-			<td align="center"  style="width:90px;">${empVOSearch.empName}</td>
+			<td align="center"  style="width:140px;">${empVOSearch.empName}</td>
 			<td style="width:60px;">${empVOSearch.depVO.depName}</td>
 
-			<td style="width:90px;">${empVOSearch.hiredate}</td>
-				<td style="width:90px;">${empVOSearch.resigndate}</td>
+			<td style="width:100px;">${empVOSearch.hiredate}</td>
+				<td style="width:100px;">${empVOSearch.resigndate}</td>
 			<td>${empVOSearch.phone}</td>
 			<td>${empVOSearch.extension}</td> 
 							<td style="width:150px; "><img 
