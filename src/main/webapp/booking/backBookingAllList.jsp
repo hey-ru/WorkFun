@@ -112,7 +112,7 @@ int itemsPerPage = 10;
 									</li>
 
 									<li class="nav-item"><a class="nav-link"
-										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=3">逾期歸還</a>
+										href="<%=request.getContextPath()%>/booking/booking.do?action=listByCompositeQuery&return_status=3">逾期</a>
 									</li>
 
 <!-- 									<li class="nav-item"><a class="nav-link" -->
@@ -252,7 +252,7 @@ int itemsPerPage = 10;
 																	<option value="2"
 																		${(bookingVO.returnStatus==2)? 'selected':'' }>未領取器材</option>
 																	<option value="3"
-																		${(bookingVO.returnStatus==3)? 'selected':'' }>逾期歸還(需罰金)</option>
+																		${(bookingVO.returnStatus==3)? 'selected':'' }>逾期(需罰金)</option>
 																	<option value="4"
 																		${(bookingVO.returnStatus==4)? 'selected':'' }>未歸還(需罰金)</option>
 																	<option value="5"

@@ -143,7 +143,7 @@ pageContext.setAttribute("list", list);
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/equipment/equipment.do"
 										style="margin-bottom: 0px;">
-										<input type="submit" class="btn btn-outline-warning"value="我要預約"> 
+										<input type="submit" style="font-weight:bold;" class="btn btn-outline-warning"value="我要預約"> 
 										<input type="hidden" name="equipmentId" value="${equipmentVO.equipmentId}"> 
 										<input type="hidden" name="action" value="showEquipment">
 

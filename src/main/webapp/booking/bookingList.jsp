@@ -142,7 +142,7 @@ int itemsPerPage = 10;
 														<c:when test="${bookingVO.returnStatus == 0}">已歸還</c:when>
 														<c:when test="${bookingVO.returnStatus == 1}">租借中</c:when>
 														<c:when test="${bookingVO.returnStatus == 2}">⚠️ 未領取器材</c:when>
-														<c:when test="${bookingVO.returnStatus == 3}">💸💸 逾期歸還(需罰金)</c:when>
+														<c:when test="${bookingVO.returnStatus == 3}">💸💸 逾期(需罰金)</c:when>
 														<c:when test="${bookingVO.returnStatus == 4}">💸💸 未歸還(需罰金)</c:when>
 														<c:when test="${bookingVO.returnStatus == 5}">已登記預約</c:when>
 													</c:choose></td>
