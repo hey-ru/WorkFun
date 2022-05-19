@@ -69,7 +69,7 @@ body {
 
 				</div>
 
-				<div class="row" style="justify-content: end;">
+				<div class="row" style="justify-content: end; margin-bottom:10px;">
 					<div class="col-10"
 						style="height: 60px; display: inline-block; text-align: right;">
 						<form class="my-1" METHOD="post" ACTION="<%=request.getContextPath()%>/secondhand/SecondHandServlet" name="form1">
