@@ -20,7 +20,7 @@ request.setAttribute("oldquantity", oldquantity);
 <%@ include file="/design/frontmetacss.jsp"%>
 <style>
 #mainleft {
-	margin-top: 200px;
+	margin-top: 130px;
 	/* 	margin-right: auto; */
 	/* 	margin-left: 300px; */
 	background-color: #DDCFC2;
@@ -76,7 +76,7 @@ tbody td {
 			<h4>‍發布者: ${param.announcer_name}</h4>
 			<jsp:useBean id="now" class="java.util.Date" />
 			<h4>
-				內容:<a style="word-break: break-all">${param.announcement_content}</a>
+				內容:<a style="word-break: break-all;letter-spacing: 5px;">${param.announcement_content}</a>
 				<br>
 			</h4>
 
@@ -92,7 +92,7 @@ tbody td {
 						<c:choose>
 							<c:when test="${list.get(0)==announcement_mapping}">
 								<div class="carousel-item active">
-									<img style="width: 200px; height: 200px"
+									<img style="width: 200px; height: 200px;margin-left: 250px"
 										src="
 									<%=request.getContextPath()%>/servlet/com.announcement.controller.DBGifReader?announcementImg_id=${announcement_mapping}&announcement_id=${param.announcement_id}
 									"
@@ -105,7 +105,7 @@ tbody td {
 							</c:when>
 							<c:otherwise>
 								<div class="carousel-item ">
-									<img style="width: 200px; height: 200px"
+									<img style="width: 200px; height: 200px;margin-left: 250px"
 										src="
 									<%=request.getContextPath()%>/servlet/com.announcement.controller.DBGifReader?announcementImg_id=${announcement_mapping}&announcement_id=${param.announcement_id}
 									"

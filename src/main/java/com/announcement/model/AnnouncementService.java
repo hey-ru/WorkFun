@@ -27,7 +27,10 @@ public List<AnnouncementVO> getAll(){
 	
 	return dao.getAll();
 }
-
+public List<AnnouncementVO> getAllSelectByStatus() {
+	
+return dao.getAllSelectByStatus();
+}
 public void insertWithImg(AnnouncementVO announcementVO, List<Announcement_mappingVO> list) {
 	dao.insertWithImg(announcementVO, list);
 	

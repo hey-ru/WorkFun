@@ -15,6 +15,7 @@ public interface AnnouncementDAO_interface {
      public void insertWithImg(AnnouncementVO announcementVO, List<Announcement_mappingVO> list);
      public List<AnnouncementVO> getAllWithImg(Integer announcement_id);
  	public int updateWithImg(AnnouncementVO announcementVO, List<Announcement_mappingVO> list);
+	public List<AnnouncementVO> getAllSelectByStatus() ;
      //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //   public List<EmpVO> getAll(Map<String, String[]> map); 
 }

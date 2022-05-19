@@ -82,6 +82,7 @@ padding:0.375rem 0.75rem;
 							enctype="multipart/form-data">
 							<div
 								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
+										<div><h1>修改公告</h1></div>
 								<div class="input-group mb-3" style="margin-top: 0px;">
 									<span class="input-group-text" id="xx">發布者</span> 		<input
 										type="text" name="announcer" size="45" value="${empVO.empName}"
@@ -121,7 +122,7 @@ padding:0.375rem 0.75rem;
 								
 								<c:forEach var="announcement_mapping" items="${list}" >
 									<div class="input-group mb-3">
-圖片${announcement_mapping}
+
 					<img style="width:200px;height:200px"
 												src="
 									<%=request.getContextPath()%>/servlet/com.announcement.controller.DBGifReader?announcementImg_id=${announcement_mapping}&announcement_id=${param.announcement_id}
@@ -175,12 +176,12 @@ padding:0.375rem 0.75rem;
 	<input type="hidden" name="announcement_id" value="${param.announcement_id}"> 
 									<input type="hidden" name="action" value="update"> <input
 										type="submit" value="確認修改" class="btn btn-outline-dark"
-										id="basic-addon2">
+										id="basic-addon2" style="margin:auto">
 								</div>
 								</div>
 						</FORM>
 							
-							<div style=" width: 300px;  height: 600px; margin-top: 640px;margin-left: 540px ">
+							<div style=" width: 300px;  height: 600px; margin-top: 725px;margin-left: 540px ">
 								<c:forEach var="announcement_mapping" items="${list}" >
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
 							enctype="multipart/form-data">
@@ -198,6 +199,9 @@ padding:0.375rem 0.75rem;
 									<br>
 									<br>
 									<br>
+									<br>
+									<br>
+									
 							</c:forEach>
 							</div>
 									</main>

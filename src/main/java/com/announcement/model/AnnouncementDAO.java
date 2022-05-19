@@ -528,4 +528,9 @@ announcementVO.setAnnouncement_status(rs.getByte("announcement_status"));
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public List<AnnouncementVO> getAllSelectByStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

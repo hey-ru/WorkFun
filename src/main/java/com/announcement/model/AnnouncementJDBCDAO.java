@@ -27,7 +27,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 	String url = "jdbc:mysql://cga101-03@database-1.cqm5mb4z5ril.ap-northeast-1.rds.amazonaws.com:3306/CGA101-03?serverTimezone=Asia/Taipei";
 	String userid = "cga101-03";
 	String passwd = "cga101-03";
-
+	private static final String GET_ALL_STMT_STATUS = "select announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement where announcement_status <> 2 order by announcement_id desc ";
 	private static final String INSERT_STMT = "INSERT INTO announcement (announcer,announcement_title,announcement_content) VALUES (?,?,?) ";
 	private static final String GET_ALL_STMT = "select announcement_id,announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement order by announcement_id desc ";
 	private static final String GET_ONE_STMT = "select announcer,announcement_title,announcement_content,announcement_time,announcement_status FROM announcement where announcement_id = ? ";
@@ -485,6 +485,70 @@ sb.append("announcement_id=? ");
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+announcementVO = new AnnouncementVO();
+announcementVO.setAnnouncement_id(rs.getInt("announcement_id"));
+announcementVO.setAnnouncer(rs.getInt("announcer"));
+announcementVO.setAnnouncement_title(rs.getString("announcement_title"));
+announcementVO.setAnnouncement_content(rs.getString("announcement_content"));
+announcementVO.setAnnouncement_time(rs.getTimestamp("announcement_time"));
+announcementVO.setAnnouncement_status(rs.getByte("announcement_status"));
+
+
+				list.add(announcementVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	public List<AnnouncementVO> getAllSelectByStatus() {
+		List<AnnouncementVO> list = new ArrayList<AnnouncementVO>();
+		AnnouncementVO announcementVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			// emp_id,dep_id,emp_name,hire_date,phone,extension,emp_password,mail,emp_status
+			// FROM emp order by emp_id";
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT_STATUS);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

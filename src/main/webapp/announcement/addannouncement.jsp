@@ -68,6 +68,7 @@ padding:0.375rem 0.75rem;
 							enctype="multipart/form-data">
 							<div
 								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
+										<div><h1>新增公告</h1></div>
 								<div class="input-group mb-3" style="margin-top: 0px;">
 									<span class="input-group-text" id="xx">發布者</span> 
 										<a class="borderg">${empVO.empName}</a>
@@ -121,7 +122,7 @@ padding:0.375rem 0.75rem;
 									<input type="hidden" name="action" value="insert"> 
 									<input
 										type="submit" value="建立公告" class="btn btn-outline-dark"
-										id="basic-addon2">
+										id="basic-addon2" style="margin:auto">
 								</div>
 								</div>
 						</FORM>
