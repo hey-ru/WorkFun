@@ -1,6 +1,7 @@
 package com.util;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import java.util.GregorianCalendar;
@@ -37,6 +38,7 @@ public class BookingRun implements Runnable {
 					bookingVO.setReturnStatus(3);
 					bookingVO.setOverdueDate(new Timestamp(new GregorianCalendar().getTime().getTime()));
 					bookingService.updateBooking(bookingVO);
+				System.out.println("改變狀態");
 				}
 			}
 			
@@ -75,6 +77,13 @@ public class BookingRun implements Runnable {
 //		
 		}
 	}	
+//public static void main(String[] args) {
+//	BookingService bookingService = new BookingService();
+//	BookingVO bookingVO = bookingService.getByBookingId(1132);
+////	System.out.println(bookingVO.getStartDate());
+//	System.out.println(new Timestamp(new GregorianCalendar().getTime().getTime()));
+//	System.out.println(new Timestamp (System.currentTimeMillis()));
+//}
 }
 
 

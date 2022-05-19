@@ -314,6 +314,7 @@ public class EquipmentServlet extends HttpServlet {
 
 			req.setAttribute("errorMsgs", errorMsgs);
 
+			
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 			String eqName = req.getParameter("eqName");
 //			String eqNameReg = "^[\\u4e00-\\u9fa5_a-zA-Z0-9]+$";
@@ -337,7 +338,7 @@ public class EquipmentServlet extends HttpServlet {
 				errorMsgs.put("price", "金額請填數字");
 			}
 			
-//			System.out.println(price);
+			System.out.println(price);
 
 //			Integer eqStatus = Integer.valueOf(req.getParameter("eqStatus").trim());
 
