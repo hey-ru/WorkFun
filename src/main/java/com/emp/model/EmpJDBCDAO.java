@@ -1350,5 +1350,11 @@ return list;
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<EmpVO> getAllDAOFront(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	}

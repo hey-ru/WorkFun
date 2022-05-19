@@ -152,7 +152,10 @@ public int updateEmp(EmpVO empVO,Connection con) {
 		return dao.getAllDAO(map);
 	}
 	
-	
+
+	public List<EmpVO> getAllDAOFront(Map<String, String[]> map){
+		return dao.getAllDAOFront(map);
+	}
 	
 //	public static void main(String[] args) {
 //		EmpService empSvc = new EmpService();

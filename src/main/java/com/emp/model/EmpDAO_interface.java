@@ -27,6 +27,9 @@ public interface EmpDAO_interface {
        
         public List<EmpVO> selectByExtension(String extension);
         public List<EmpVO> selectByEmpName(String empName);
+        
+        
+    	public List<EmpVO> getAllDAOFront(Map<String, String[]> map) ;
           //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //        public List<EmpVO> getAll(Map<String, String[]> map); 
 }

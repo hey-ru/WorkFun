@@ -1439,6 +1439,68 @@ if(columnName.contains("emp")||columnName.contains("dep")||columnName.contains("
 sb.append(columnName);
 sb.insert(3,"_");
 }
+else if(columnName.contains("hire"))	
+{
+	
+	sb.append(columnName);
+	sb.insert(4,"_");
+}
+else if(columnName.contains("resign"))	
+{
+	sb.append(columnName);
+	sb.insert(5,"_");
+}
+else {
+	sb.append(columnName);
+}
+	
+String colString=sb.toString();
+System.out.println(colString);
+System.out.println(value);
+
+
+		if ("emp_Id".equals(colString)|| "dep_Id".equals(colString) ) // 用於其他
+			aCondition = colString + "=" + value;
+		else if ("emp_Name".equals(colString)||"phone".equals(colString)||"extension".equals(colString)||"mail".equals(colString) ) // 用於varchar
+			aCondition = colString + " like '%" + value + "%'";
+		
+		else if ("hire_date".equals(colString))                          // 用於date
+			aCondition = colString + "=" + "'"+ value +"'";  
+			// 用於date
+//			aCondition = colString + "=" + "'"+ value +"'";                          //for 其它DB  的 date
+//		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
+		
+		return aCondition + " ";
+	}
+
+	
+	
+//	public  String get_aCondition_For_myDB(String columnName, String value) {
+//
+//		String aCondition = null;
+//
+//		if ("empno".equals(columnName) || "sal".equals(columnName) || "comm".equals(columnName) || "deptno".equals(columnName)) // 用於其他
+//			aCondition = columnName + "=" + value;
+//		else if ("ename".equals(columnName) || "job".equals(columnName)) // 用於varchar
+//			aCondition = columnName + " like '%" + value + "%'";
+//		else if ("hiredate".equals(columnName))                          // 用於date
+//			aCondition = columnName + "=" + "'"+ value +"'";                          //for 其它DB  的 date
+////		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
+//		
+//		return aCondition + " ";
+//	}
+	
+	
+	public static String get_aCondition_For_myDBFront(String columnName, String value) {
+
+		String aCondition = null;
+		StringBuilder sb=new StringBuilder();
+		
+if(columnName.contains("emp")||columnName.contains("dep")||columnName.contains("emp") )		
+{
+sb.append(columnName);
+sb.insert(3,"_");
+}
 
 else if(columnName.contains("hire"))	
 {
@@ -1472,26 +1534,6 @@ System.out.println(value);
 		
 		return aCondition + " ";
 	}
-
-	
-	
-//	public  String get_aCondition_For_myDB(String columnName, String value) {
-//
-//		String aCondition = null;
-//
-//		if ("empno".equals(columnName) || "sal".equals(columnName) || "comm".equals(columnName) || "deptno".equals(columnName)) // 用於其他
-//			aCondition = columnName + "=" + value;
-//		else if ("ename".equals(columnName) || "job".equals(columnName)) // 用於varchar
-//			aCondition = columnName + " like '%" + value + "%'";
-//		else if ("hiredate".equals(columnName))                          // 用於date
-//			aCondition = columnName + "=" + "'"+ value +"'";                          //for 其它DB  的 date
-////		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
-//		
-//		return aCondition + " ";
-//	}
-	
-	
-	
 	
 	
 	
@@ -1532,10 +1574,104 @@ System.out.println(value);
 		return whereCondition.toString();
 	}
 	
+
+	public String get_WhereConditionFront(Map<String, String[]> map) {
+		Set<String> keys = map.keySet();
+		StringBuffer whereCondition = new StringBuffer();
+		int count = 0;
+		for (String key : keys) {
+			String value = map.get(key)[0];
+			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
+				count++;
+				String aCondition = get_aCondition_For_myDBFront(key, value.trim());
+
+				if (count == 1)
+					whereCondition.append(" where " + aCondition);
+				else
+					whereCondition.append(" and " + aCondition);
+
+				System.out.println("有送出查詢資料的欄位數count = " + count);
+			}
+		}
+		
+		return whereCondition.toString();
+	}
 	
 	
 	
 	
+	
+	
+	
+	@Override
+	public List<EmpVO> getAllDAOFront(Map<String, String[]> map) {
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		EmpVO empVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	EmpDAO dao =new EmpDAO();
+		try {
+			
+
+			con = getConectPool().getConnection();
+			String finalSQL = "select emp_name ,extension,dep_id from emp "
+		          + dao.get_WhereConditionFront(map)
+		          + "order by emp_Id";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				empVO = new EmpVO();
+				empVO.setEmpId(rs.getInt("emp_id"));
+				empVO.setDepId(rs.getInt("dep_id"));
+				empVO.setEmpName(rs.getString("emp_name"));
+				empVO.setHiredate(rs.getDate("hire_date"));
+				empVO.setResigndate(rs.getDate("resign_date"));
+				empVO.setPhone(rs.getString("phone"));
+				empVO.setExtension(rs.getString("extension"));
+				empVO.setHobby(rs.getString("hobby"));
+				empVO.setEmpPassword(rs.getString("emp_password"));
+				empVO.setSkill(rs.getString("skill"));
+				empVO.setEmpProfile(rs.getBytes("emp_profile"));
+				empVO.setMail(rs.getString("mail"));
+				empVO.setBirthday(rs.getDate("birthday"));
+				empVO.setEmpStatus(rs.getByte("emp_status"));
+
+				list.add(empVO); // Store the row in the List
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 	
 	
 	@Override

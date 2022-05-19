@@ -58,7 +58,7 @@
                                         <div class="form-group">
                                         
                                            <input
-										type="TEXT" name="newpassword1" size="45" 
+										type="password" name="newpassword1" size="45" 
 										class="form-control" aria-label="Username" 
 										aria-describedby="basic-addon1">
 										<div>
@@ -66,7 +66,7 @@
 										<br>
 										</div>
 										  <input
-										type="TEXT" name="newpassword2" size="45" 
+										type="password" name="newpassword2" size="45" 
 										class="form-control" aria-label="Username" 
 										aria-describedby="basic-addon1">
 										 <input type="hidden" name="empId" value="${param.empId}"> 

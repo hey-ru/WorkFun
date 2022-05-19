@@ -282,6 +282,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 											<div class="col-md-8 col-lg-9">
 												<input name="nowpassword" type="password" class="form-control"
 													id="currentPassword">
+													<font color="red">${errorMsgs.	nowpassword }</font>
 											</div>
 										</div>
 
@@ -292,7 +293,7 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 												<input name="newpassword1" type="password"
 													class="form-control" id="newPassword">
 											</div>
-											<font color="red">${errorMsgs.	nowpassword }</font>
+											
 										
 										</div>
 
@@ -302,8 +303,9 @@ x<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 											<div class="col-md-8 col-lg-9">
 												<input name="newpassword2" type="password"
 													class="form-control" id="renewPassword">
+													<font color="red">	${errorMsgs.checkPassword}</font>
 											</div>
-												<font color="red">	${errorMsgs.mailcheck }</font>
+												
 										</div>
 									
 

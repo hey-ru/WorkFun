@@ -488,6 +488,12 @@ if ("selectByExtension".equals(action)) {
 		failureView.forward(req, res);
 		return; //程式中斷
 	}
+	
+	
+	
+	
+	
+	
 
 	EmpService empService=new EmpService();
 	List<EmpVO> list=empService.selectByExtension(extension);
@@ -495,15 +501,15 @@ if ("selectByExtension".equals(action)) {
 	
 	if(list.size()==0) {
 //		PrintWriter out=res.getWriter();
-//	
+////	
+////
 //
 //		out.print("<script type='text/javascript'>alert('alert提示框2!');</script>");
-//		out.flush();
-		
-	
-		
+//		out.flush();	
 		RequestDispatcher failureView = req
 				.getRequestDispatcher("/home/notfound.jsp");
+		
+		
 		failureView.forward(req, res);
 	
 		return; 
@@ -852,7 +858,10 @@ return;
 					}
 					else if(!empPassword.trim().matches(checkPassword)) { //以下練習正則(規)表示式(regular-expression)
 						errorMsgs.put("checkPassword","請輸入包含英文大小寫和數字，最少8個字最多16個字");
-		            }else if (!(empSvc.login(mail,empPassword).getResigndate()==null)) {
+		            }else if (empSvc.login(mail,empPassword)==null) {
+		            	  errorMsgs.put("checkPassword","帳號或密碼輸入錯誤");
+					}
+					else if (!(empSvc.login(mail,empPassword).getResigndate()==null)) {
 		            	errorMsgs.put("checkPassword","已離職員工不可登入");
 					}
 					
@@ -876,18 +885,9 @@ return;
 				
 					 
 //				EmpVO empVO=empSvc.login(empId,empPassword);
-					  if (empVO == null) {
-						
-							  errorMsgs.put("login","帳號密碼輸入錯誤");
-							   String url = "/login/login.jsp";
-							   
-								RequestDispatcher successView = req.getRequestDispatcher(url); 
-								successView.forward(req, res);	
-								
-							return;
-					  }
+				
 					
-					  else {
+					
 							PermissionMappingService pmSrv=new PermissionMappingService();
 							 List<Integer> empPm=pmSrv.getOneEmpPermissions(empVO.getEmpId());
 						  session.setAttribute("empPm", empPm); //hint 特別標記 用來取得permission
@@ -904,7 +904,7 @@ return;
 							successView.forward(req, res);	
 						
 							return;
-					  }
+					  
 	
 			}
 		   
@@ -1134,12 +1134,15 @@ return;
 				}
 				String mail = (req.getParameter("mail"));
 				String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@gmail.com";
-				
+				String checkBirthday = "^\\d{8}$";
 				if (mail == null || mail.trim().length() == 0) {
 					errorMsgs.put("mail","信箱請勿空白");
 				}
 				else if(!mail.trim().matches(checkEmail)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.put("mailcheck","請輸入google信箱");
+	            }
+				else if(!req.getParameter("birthday").trim().matches(checkBirthday)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("birthday","請輸入正確格式");
 	            }
 				
 				if (!errorMsgs.isEmpty()) {
@@ -1174,7 +1177,7 @@ System.out.println(birthday);
 				  
 				   javaMail.setRECIPIENT(mail);
 				   String authCode=genAuthCode();
-				String text="您的驗證碼為["+authCode+"]請在修改頁面重新設定您的密碼";
+				String text="您的驗證碼為 : \t\t<b font-weight:900; style='font-size: 18px;color:#ff0000;'>"+authCode+"</b><br>請在修改頁面重新設定您的密碼!";
 				   javaMail.setTXT(text);
 				   javaMail.sendMail();
 			session.setAttribute("authCode", authCode);
@@ -1279,7 +1282,7 @@ System.out.println(birthday);
 	String checkPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
 	
 	if(!sessEmpVO.getEmpPassword().equals(nowpassword)) {
-		errorMsgs.put("nowpassword","密碼錯誤");
+		errorMsgs.put("nowpassword","目前密碼錯誤");
 	}
 	
 	
@@ -1311,7 +1314,7 @@ System.out.println(birthday);
 					errorMsgs.put("checkPassword","請輸入包含英文大小寫和數字，最少8個字");
 			    }
 				else if (!newpassword1.equals(newpassword2)) {
-					errorMsgs.put("comparepassword","密碼不一致");
+					errorMsgs.put("checkPassword","密碼不一致");
 				}
 				
 				if (!errorMsgs.isEmpty()) {

@@ -6,7 +6,7 @@
 <%@ page import="java.util.*"%>
 <%
 AnnouncementService annSvc = new AnnouncementService();
-List<AnnouncementVO> list = annSvc.getAll();
+List<AnnouncementVO> list = annSvc.getAllSelectByStatus();
 pageContext.setAttribute("list", list);
 %>
 <!DOCTYPE html>
@@ -89,7 +89,7 @@ pageContext.setAttribute("list", list);
 							</tbody>
 						</table>
 						<div>
-<%-- 							<%@ include file="/home/page2.file"%> --%>
+ 							<%@ include file="/home/page2.file"%> 
 						</div>
 					</div>
 

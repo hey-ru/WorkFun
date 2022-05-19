@@ -3,6 +3,9 @@ package com.util;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
+
 public class String2SQLDate {
 public static java.sql.Date strToDate(String strDate) {
 	String str=strDate;
@@ -15,6 +18,7 @@ public static java.sql.Date strToDate(String strDate) {
 		// TODO: handle exception
 	}
 	java.sql.Date date=new java.sql.Date(d.getTime()); 
+
 	return date;
 	
 	
@@ -33,11 +37,7 @@ public static java.sql.Date strToDate(String strDate) {
 	
 //}
 
-public static void main(String[] args) {
-	String stri="2021-2-2";
-	 String stri2=stri.replaceAll("\\pP","");//完全清除標點
-     System.out.println(stri2);
-}
+
 
 
 

@@ -1,6 +1,7 @@
 package com.filter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -66,10 +68,20 @@ public class backFilter extends HttpFilter implements Filter {
 		List<Integer> empPm =(List<Integer>) session.getAttribute("empPm");
 		
 	
-		if(empPm==null) {
+		if(empPm==null || empPm.size()==0) {
+			
+//			PrintWriter out=res.getWriter();
+//			out.print("<script type='text/javascript'>alert('alert!');</script>");
+//			out.flush();
 			
 			res.sendRedirect(req.getContextPath() + "/home/home.jsp");
-			
+//			RequestDispatcher failureView = req
+//					.getRequestDispatcher("/home/home.jsp");
+//			
+//			
+//			failureView.forward(req, res);
+		
+			return; 
 		}
 		else {
 			

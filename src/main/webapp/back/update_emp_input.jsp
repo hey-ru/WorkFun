@@ -64,6 +64,7 @@
 							enctype="multipart/form-data">
 							<div
 								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
+										<div><h1 style="margin:auto">修改員工帳號</h1></div>
 								<div class="input-group mb-3" style="margin-top: 0px;">
 									<span class="input-group-text" id="xx">員工姓名</span> <input
 										type="TEXT" name="empName" size="45" value="${param.empName}"
@@ -72,17 +73,20 @@
 								</div>
 								<div class="input-group mb-3">
 									<label class="input-group-text" for="inputGroupFile01">大頭照</label>
-									<img style="width:200px;height:200px"
+										</div>
+								
+									<input type="file" name="empProfile" size="45"
+										value="${param.empProfile}"  class="form-control-plaintext"
+										id="profile" >
+										<img id="profileimg">
+								<img style="width:200px;height:200px"
 												src="
 									<%=request.getContextPath()%>/util/DBGifReader?pic=emp_profile&table=emp&id_key=emp_id&id=${param.empId}
 									"
 												class="img-fluid"
 											>
-									<input type="file" name="empProfile" size="45"
-										value="${param.empProfile}" class="form-control"
-										id="profile" >
-										<img id="profileimg">
-								</div>
+							
+							
 								<jsp:useBean id="depSvc" scope="page"
 									class="com.dep.model.DepService" />
 								<div class="input-group mb-3">
@@ -150,7 +154,7 @@
 	<input type="hidden" name="empId" value="${param.empId}"> 
 									<input type="hidden" name="action" value="update"> <input
 										type="submit" value="修改" class="btn btn-outline-dark"
-										id="basic-addon2">
+										id="basic-addon2" style="margin:auto">
 								</div>
 								</div>
 						</FORM>

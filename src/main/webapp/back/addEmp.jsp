@@ -54,12 +54,15 @@
                     <!-- 內容放這 -->
 
 			<main style="height: 120vh; margin-top: -300px;">
+			
 						
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
 							<div
 								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
+								<div><h1>新增員工帳號</h1></div>
 								<div class="input-group mb-3" style="margin-top: 0px;">
+								
 									<span class="input-group-text" id="xx">員工姓名</span> <input
 										type="TEXT" name="empName" size="45" value="${param.empName}"
 										class="form-control" aria-label="Username"
@@ -133,16 +136,20 @@
 									
 											<div class="col-md-8 col-lg-9">
 											
-												<input type="file" name="empProfile" size="45"
-												 class="form-control-plaintext"
-													id="profile">
-													<img id="profileimg">
+											
+												
 												<div class="pt-2">
 													
 												</div>
 											</div>
 									
 								</div>
+								<div>	<input type="file" name="empProfile" size="45"
+												 class="form-control-plaintext"
+													id="profile">
+													
+														<img id="profileimg">
+													<br></div>
 							
 	
 
@@ -150,7 +157,7 @@
 
 									<input type="hidden" name="action" value="insert"> <input
 										type="submit" value="送出新增"  class="btn btn-outline-dark"
-										id="basic-addon2">
+										id="basic-addon2" style="margin:auto">
 								</div>
 								</div>
 						</FORM>
