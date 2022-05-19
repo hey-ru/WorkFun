@@ -24,7 +24,7 @@
     <link href="<%=request.getContextPath()%>/assets4login/css/sb-admin-2.min.css" rel="stylesheet">
  	<style>
  	.bg-login-image {
-    background: url(<%=request.getContextPath()%>/assets4login/img/dog.jpeg);
+    background: url(<%=request.getContextPath()%>/assets4login/img/dog2.jpeg);
     
 }
  	</style>
@@ -52,7 +52,7 @@
                                     <br>
                                         <h1 class="h4 text-gray-900 mb-4">重新設定密碼</h1>
                                     </div>
-                                    ,<br>
+                                    <br>
                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
                                         <div class="form-group">
@@ -61,6 +61,10 @@
 										type="TEXT" name="newpassword1" size="45" 
 										class="form-control" aria-label="Username" 
 										aria-describedby="basic-addon1">
+										<div>
+										<br>
+										<br>
+										</div>
 										  <input
 										type="TEXT" name="newpassword2" size="45" 
 										class="form-control" aria-label="Username" 

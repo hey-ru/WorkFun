@@ -24,7 +24,7 @@
     <link href="<%=request.getContextPath()%>/assets4login/css/sb-admin-2.min.css" rel="stylesheet">
  	<style>
  	.bg-login-image {
-    background: url(<%=request.getContextPath()%>/assets4login/img/dog.jpeg);
+    background: url(<%=request.getContextPath()%>/assets4login/img/dog2.jpeg);
     
 }
  	</style>
@@ -52,27 +52,30 @@
                                     <br>
                                         <h1 class="h4 text-gray-900 mb-4">忘記密碼</h1>
                                     </div>
-                                    ,<br>
+                                    <br>
                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
                                         <div class="form-group">
                                         
                                            <input
 										type="TEXT" name="mail" size="45" value="${param.mail}"
-										class="form-control" aria-label="Username" placeholder="mail"
+										class="form-control" aria-label="Username" placeholder="請輸入google信箱"
 										aria-describedby="basic-addon1">${errorMsgs.mail}
+										
+										<font color="red">${errorMsgs.mail}</font>
                                         </div>
                                         
                                     <br>
                                       <input
 										type="text" name="birthday" size="45" value="${param.birthday}"
-										class="form-control" aria-label="Username" placeholder="如19940619"
-										aria-describedby="basic-addon1">${errorMsgs.birthday}${errorMsgs.forgot}
+										class="form-control" aria-label="Username" placeholder="請輸入生日格式如19940619"
+										aria-describedby="basic-addon1">
+										<font color="red">${errorMsgs.birthday}${errorMsgs.forgot}</font>
                                      <br>
                                      
                                     <br>
                                        <input
-										type="submit" value="驗證送出" class="input-group-text bg-info"
+										type="submit" value="送出" class="input-group-text bg-info"
 										id="basic-addon2" style="width:345px; color:white; justify-content: center;">
                                     
                                   
@@ -80,7 +83,9 @@
                                         
                                         <input type="hidden" name="action" value="forgotpassword"> 
                                     </FORM>
-                                
+                                <br>
+                                <br>
+                                <br>
                                     
                    
                                 </div>
