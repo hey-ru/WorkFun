@@ -142,8 +142,14 @@ td {
 								<input type="hidden" name="action" value="updateMany"> <input
 									type="submit" class="btn btn-success" id="btn" value="確定修改"
 									${sum == null ? 'hidden="hidden"' : '' }>
+								<c:if test="${sum == null}">
+									<h5 style="color:red;">
+										<c:out value="您已刪除所有訂購項目"></c:out>
+									</h5>
+								</c:if>
 							</div>
 						</FORM>
+
 					</div>
 					<div class="col-4" style="display: inline-block;">
 						<%-- 												<img src="<%=request.getContextPath()%>/shop/images/sticker.png"> --%>
