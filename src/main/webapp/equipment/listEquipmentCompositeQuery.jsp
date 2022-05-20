@@ -126,7 +126,7 @@ td {
 							</div>
 							<input type="hidden" name="action" value="listByCompositeQuery">
 							<button type="submit" class="btn btn-dark mb-2 mt-1 col"
-								style="display: inline-block; width: 100px;">搜尋</button>
+								style="display: inline-block; width: 100px; right: 13px;">搜尋</button>
 						</form>
 					</div>
 

@@ -14,7 +14,7 @@ public class MenuService {
 	}
 
 	//一次新增多筆菜單項目
-	public void addMenuMany(String[] newitem, String[] newprice, String shop_id){
+	public void addMenuMany(String[] newitem, String[] newprice, Integer shop_id){
 		
 		/*************************** 2. 輸入格式的錯誤處理 - 開始新增資料 *****************************************/
 
@@ -25,7 +25,8 @@ public class MenuService {
 			menuVO = new MenuVO();
 			menuVO.setItem(newitem[i]);
 			menuVO.setPrice(Integer.valueOf(newprice[i]));
-			menuVO.setShop_id(Integer.valueOf(shop_id));
+			menuVO.setShop_id(shop_id);
+//			menuVO.setShop_id(Integer.valueOf(shop_id));
 			
 			menuAddlist.add(menuVO);
 		}

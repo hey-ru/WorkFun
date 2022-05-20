@@ -43,8 +43,8 @@ public class AddMenuByShopServlet extends HttpServlet {
 			/***************************
 			 * 2.轉交給新增畫面
 			 *****************************************/
-			HttpSession session = req.getSession();
-			session.setAttribute("shop_id", shop_id);
+//			HttpSession session = req.getSession();
+			req.setAttribute("shop_id", shop_id);
 			String url = "/menu/addMenu.jsp";
 
 			RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -61,23 +61,23 @@ public class AddMenuByShopServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 **********************/
 
 			// 取得參數
-			String shop_id = req.getParameter("shop_id");
-			System.out.println( shop_id);
+			Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
+			System.out.println(shop_id);
 
 			// 品項例外處理
 			String[] item = req.getParameterValues("item");
 			String remarkReg = "^[(\u4e00-\u9fa5)(\u0800-\u4e00)a-zA-Z0-9_+\\s\\(\\-\\)]*$";
 			for (String itemstr : item) {
-				if ( itemstr == null || itemstr.trim().length() == 0) {
+				if (itemstr == null || itemstr.trim().length() == 0) {
 					errorMsgs.put("item", "品項請勿空白");
-				} 
+				}
 				if ((itemstr.trim().length() != 0) && !itemstr.trim().matches(remarkReg)) { // 正則(規)表示式(regular-expression)
 					errorMsgs.put("item", "輸入格式錯誤😵 格式:中、日、英文、數字、空格() + - _");
 				}
-				System.out.println( itemstr);
+				System.out.println(itemstr);
 			}
 
-			//價格例外處理
+			// 價格例外處理
 			String[] price = req.getParameterValues("price");
 //			String priceReg = "^[0-9]*$";
 			for (String pricestr : price) {
@@ -100,12 +100,11 @@ public class AddMenuByShopServlet extends HttpServlet {
 //					}
 				System.out.println(pricestr);
 			}
-			
-			
+
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/menu/addMenu.jsp");
 				failureView.forward(req, res);
-				System.out.println("輸入有例外:"+errorMsgs);
+				System.out.println("輸入有例外:" + errorMsgs);
 				return; // 程式中斷
 			}
 

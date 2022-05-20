@@ -83,6 +83,9 @@
                                 <span class="input-group-text">處理訊息</span>
                                 <span class="input-group-text"><fmt:formatDate value="${recVO.createtime}" pattern="yyyy-MM-dd HH:mm "/></span>
                                 <textarea class="form-control" aria-label="With textarea">${recVO.comment}</textarea>
+                                 <c:if test="${recVO.report_comment_image!=null}">
+                              <img src="<%=request.getContextPath()%>/util/DBGifReader?id_key=report_comment_id&id=${recVO.report_comment_id}&table=report_comment&pic=report_comment_image" style="width:220px; height:220px;">
+                              </c:if>
                             </div>
                             </c:forEach>
                         </div>
