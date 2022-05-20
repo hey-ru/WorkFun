@@ -35,6 +35,7 @@ public class AddGBServlet extends HttpServlet {
 				//主揪揪團前先判斷有沒有菜單
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer shop_id = Integer.valueOf(req.getParameter("shop_id"));
+				System.out.println(shop_id);
 				
 				/***************************2.開始查詢資料*****************************************/
 				MenuService menuSvc = new MenuService();
@@ -42,14 +43,17 @@ public class AddGBServlet extends HttpServlet {
 			
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("shop_id", shop_id);
 				
 				if(list.isEmpty()) {
+					req.setAttribute("shop_id", shop_id);
+					System.out.println(shop_id);
 					String url = "/menu/addMenu.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); 
 					successView.forward(req, res);
 					
 				}else {
+					req.setAttribute("shop_id", shop_id);
+					System.out.println(shop_id);
 					String url = "/groupbuy/owner_addGB.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); 
 					successView.forward(req, res);
