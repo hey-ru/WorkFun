@@ -212,6 +212,14 @@
 	   birthday = new java.sql.Date(System.currentTimeMillis());
    }
 %>
+<% 
+  java.sql.Date resigndate = null;
+  try {
+	  resigndate = java.sql.Date.valueOf(request.getParameter("resigndate").trim());
+   } catch (Exception e) {
+	   resigndate = new java.sql.Date(System.currentTimeMillis());
+   }
+%>
 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
@@ -238,7 +246,7 @@
 		   value: '<%=hiredate%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           // minDate:               '', // 去除今日(不含)之前
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
 
@@ -262,7 +270,7 @@
   	    
              //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
              //startDate:	            '2017/07/10',  // 起始日
-             //minDate:               '-1970-01-01', // 去除今日(不含)之前
+             minDate:               '<%=resigndate%>', // 去除今日(不含)之前
              //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
           });
         
