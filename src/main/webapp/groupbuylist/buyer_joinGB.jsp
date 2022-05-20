@@ -259,7 +259,7 @@ tbody td {
 			Swal.fire({
 				position : 'top-end',
 				icon : 'success',
-				title : '送出訂購 前往訂購紀錄',
+				title : '送出訂購',
 				showConfirmButton : false,
 				timer : 1500
 			})
