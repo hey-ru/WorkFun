@@ -113,7 +113,9 @@
 										type="TEXT" name="phone" size="45" value="${param.phone}"
 										class="form-control" required="required"
 										aria-label="Recipient's username"
-										aria-describedby="basic-addon2"> <span
+										aria-describedby="basic-addon2"> 
+										<font color="red">${errorMsgs.dupphone}</font>
+										<span
 										class="input-group-text" id="basic-addon2">分機</span> <input
 										type="TEXT" name="extension" size="45" required="required"
 										value="${param.extension}" class="form-control" placeholder=""

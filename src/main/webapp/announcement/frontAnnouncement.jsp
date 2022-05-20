@@ -92,7 +92,7 @@ tbody td {
 						<c:choose>
 							<c:when test="${list.get(0)==announcement_mapping}">
 								<div class="carousel-item active">
-									<img style="width: 200px; height: 200px;margin-left: 250px"
+									<img style="width: 300px; height: 300px;margin-left: 200px"
 										src="
 									<%=request.getContextPath()%>/servlet/com.announcement.controller.DBGifReader?announcementImg_id=${announcement_mapping}&announcement_id=${param.announcement_id}
 									"
@@ -105,7 +105,7 @@ tbody td {
 							</c:when>
 							<c:otherwise>
 								<div class="carousel-item ">
-									<img style="width: 200px; height: 200px;margin-left: 250px"
+									<img style="width: 300px; height: 300px;margin-left: 200px"
 										src="
 									<%=request.getContextPath()%>/servlet/com.announcement.controller.DBGifReader?announcementImg_id=${announcement_mapping}&announcement_id=${param.announcement_id}
 									"

@@ -65,14 +65,15 @@
 										type="TEXT" name="authCode" size="45" 
 										class="form-control" aria-label="Username" 
 										aria-describedby="basic-addon1">
-                                        </div>${errorMsgs.authCode}
+										<font color="red">${errorMsgs.authCode}</font>
+                                        </div>
                                         
                                     <br>
                                     <br>
                                     <br>
                                     
                                      
-                                     <br>
+                                     
                                      
                                     <br>
                                        <input

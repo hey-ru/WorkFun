@@ -20,13 +20,13 @@ import java.sql.*;
 
 
 public class EmpDAO implements EmpDAO_interface { 
-	
+	private static final String SELECT_PHONEWITHID = "select phone from emp where phone = ? and emp_id != ? limit 1 ;  ";
 	
 	
 
+	private static final String SELECT_PHONE = "select phone from emp where phone = ? limit 1 ;  ";
 	
-	
-	private static final String LIKE_EXTENSION = "select emp_name ,extension,dep_id  from emp where  extension =  ?  ;  ";
+	private static final String LIKE_EXTENSION = "select emp_name ,extension,dep_id,mail  from emp where  extension =  ?  ;  ";
 	private static final String SELECT_EXTENSIONWITHID = "select extension from emp where extension = ? and emp_id != ? limit 1 ;  ";
 private static final String SELECT_EXTENSION = "select extension from emp where extension = ? limit 1 ;  ";
 	private static final String SELECT_MAIL = "select mail from emp where mail = ? limit 1 ;  ";
@@ -58,8 +58,11 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 				// FROM emp order by emp_id";
 
 				con = getConectPool().getConnection();
-				pstmt = con.prepareStatement(LIKE_EXTENSION);
-				pstmt.setString(1, extension);
+				  String LIKE_EXTENSION1 = "select emp_name,phone ,extension ,dep_id,mail from emp where  extension like  '%"+
+						  extension+
+					  		"%'";
+				pstmt = con.prepareStatement(LIKE_EXTENSION1);
+			
 				
 				rs = pstmt.executeQuery();
 				
@@ -70,10 +73,10 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 					empVO = new EmpVO();
 					
 					empVO.setEmpName(rs.getString("emp_name"));
-					
+					empVO.setPhone(rs.getString("phone"));
 					empVO.setExtension(rs.getString("extension"));
 					empVO.setDepId(rs.getInt("dep_id"));
-					
+					empVO.setMail(rs.getString("mail"));
 					list.add(empVO); // Store the row in the list
 				}
 
@@ -104,7 +107,7 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 		 List<EmpVO> list = new ArrayList<EmpVO>();
 			EmpVO empVO = null;
 
-			  String LIKE_EMP_NAME = "select emp_name ,extension ,dep_id from emp where  emp_name like  '%"+
+			  String LIKE_EMP_NAME = "select emp_name,phone ,extension ,dep_id,mail from emp where  emp_name like  '%"+
 			  		 empName+
 			  		"%'";
 
@@ -131,9 +134,10 @@ private static final String SELECT_EXTENSION = "select extension from emp where 
 					empVO = new EmpVO();
 					
 					empVO.setEmpName(rs.getString("emp_name"));
-					
+					empVO.setPhone(rs.getString("phone"));
 					empVO.setExtension(rs.getString("extension"));
 					empVO.setDepId(rs.getInt("dep_id"));
+					empVO.setMail(rs.getString("mail"));
 					list.add(empVO); // Store the row in the list
 				}
 
@@ -845,6 +849,103 @@ Integer col = null;
 return col;
 	}
 	
+public Integer selectPhone(String phone) {
+
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+Integer col = null;
+		try {
+			
+			con = getConectPool().getConnection();
+			pstmt = con.prepareStatement(SELECT_PHONE, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+
+		
+
+			pstmt.setString(1, phone);
+
+			rs = pstmt.executeQuery();
+			
+			
+			rs.last();
+		
+			col = rs.getRow();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+return col;
+	}
+
+public Integer selectPhone(String phone,Integer empId) {
+
+	
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+Integer col = null;
+	try {
+		
+		con = getConectPool().getConnection();
+		pstmt = con.prepareStatement(SELECT_PHONEWITHID, ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+
+		pstmt.setString(1, phone);
+
+		pstmt.setInt(2, empId);
+
+		rs = pstmt.executeQuery();
+		
+		
+		rs.last();
+	
+		col = rs.getRow();
+
+	} catch (SQLException se) {
+		throw new RuntimeException("A database error occured. "
+				+ se.getMessage());
+		// Clean up JDBC resources
+	} finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		}
+	}
+return col;
+}
+
+
 	public Integer selectExtension(String extension,Integer empId) {
 
 		

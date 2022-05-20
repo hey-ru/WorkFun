@@ -1356,5 +1356,17 @@ return list;
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Integer selectPhone(String phone, Integer empId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer selectPhone(String phone) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	}
