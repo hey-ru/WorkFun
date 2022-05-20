@@ -233,8 +233,10 @@ body {
 			$("#showPic").attr('src','<%=request.getContextPath()%>/util/DBGifReader?pic=img3&table=second_hand&id_key=second_hand_id&id=${secondHandVO.second_hand_id}')
 		});
 		
-		document.getElementById("inputPrice").addEventListener("input", showbtn);
-		document.getElementById("inputPrice").addEventListener("keydown", key13);
+		if ("${empVO.empName}" != "${secondHandVO.empVO1.empName}") {
+			document.getElementById("inputPrice").addEventListener("input", showbtn);
+			document.getElementById("inputPrice").addEventListener("keydown", key13);
+		}
 		
 // 		 onkeydown="if (event.keyCode == 13) sendPrice();"
 		function key13() {
