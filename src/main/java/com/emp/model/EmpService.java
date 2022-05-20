@@ -49,6 +49,16 @@ public class EmpService {
     	
     	return dao.selectMail(mail,empId);
     }
+  public Integer selectPhone(String phone) {
+  	
+  	
+  	return dao.selectPhone(phone);
+  }
+  public Integer selectPhone(String phone,Integer empId) {
+  	
+  	
+  	return dao.selectPhone(phone,empId);
+  }
   public Integer selectExtension(String extension) {
   	
   	

@@ -22,6 +22,8 @@ public interface EmpDAO_interface {
         public EmpVO findbymailandbirthday(String mail,java.sql.Date birthday,Connection con);
         public Integer selectMail(String mail);
         public Integer selectMail(String mail,Integer empId);
+        public Integer selectPhone(String phone,Integer empId) ;
+        public Integer selectPhone(String phone) ;
         public Integer selectExtension(String extension);
         public Integer selectExtension(String extension,Integer empId);
        

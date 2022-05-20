@@ -66,7 +66,8 @@
 									<span class="input-group-text" id="xx">員工姓名</span> <input
 										type="TEXT" name="empName" size="45" value="${param.empName}"
 										class="form-control" aria-label="Username"
-										aria-describedby="basic-addon1" required="required">${errorMsgs.empName}
+										aria-describedby="basic-addon1" required="required">
+											<font color="red">	${errorMsgs.empName}</font>
 								</div>
 							
 <jsp:useBean id="depSvc" scope="page"
@@ -92,7 +93,10 @@
 										type="TEXT" name="phone" size="45" value="${param.phone}"
 										class="form-control" required="required"
 										aria-label="Recipient's username"
-										aria-describedby="basic-addon2"> <span
+										aria-describedby="basic-addon2"> 
+										
+									
+										<span
 										class="input-group-text" id="basic-addon2">分機</span> <input
 										type="TEXT" name="extension" size="45"
 										value="${param.extension}" class="form-control" placeholder=""
@@ -103,7 +107,7 @@
 										class="form-control" placeholder=""
 										aria-label="Recipient's username"
 										aria-describedby="basic-addon2">
-										<font color="red">	${errorMsgs.extension}${errorMsgs.dupextension}</font>
+										<font color="red">	${errorMsgs.extension}${errorMsgs.dupextension}${errorMsgs.dupphone}</font>
 
 								</div>
 								<div class="input-group mb-3">
@@ -146,7 +150,7 @@
 								</div>
 								<div>	<input type="file" name="empProfile" size="45"
 												 class="form-control-plaintext"
-													id="profile">
+													id="profile" required="required">
 													
 														<img id="profileimg">
 													<br></div>

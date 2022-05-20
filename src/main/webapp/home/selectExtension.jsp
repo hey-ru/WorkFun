@@ -54,7 +54,11 @@
 													aria-controls="dataTable" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Name: activate to sort column descending"
-													style="width: 30px;">姓名</th>
+													style="width: 70px;">姓名</th>
+														<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Position: activate to sort column ascending"
+													style="width: 100px;">手機</th>
 												<th class="sorting" tabindex="0" aria-controls="dataTable"
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
@@ -63,6 +67,10 @@
 													rowspan="1" colspan="1"
 													aria-label="Position: activate to sort column ascending"
 													style="width: 100px;">部門</th>
+													<th class="sorting" tabindex="0" aria-controls="dataTable"
+													rowspan="1" colspan="1"
+													aria-label="Position: activate to sort column ascending"
+													style="width: 100px;">信箱</th>
 												
 											</tr>
 										</thead>
@@ -73,8 +81,10 @@
 										<c:forEach var="emp" items="${list}">
 										<tr>
 											<td>${emp.empName}</td>
+												<td>${emp.phone}</td>
 											<td>${emp.extension}</td>
 												<td>${emp.depVO.depName}</td>
+															<td>${emp.mail}</td>
 										</tr>
 									</c:forEach>
 									

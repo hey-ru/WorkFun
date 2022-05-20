@@ -156,11 +156,14 @@ vertical-align:middle;
 								<td>${empVOSearch.mail}</td>
 									<td>${empVOSearch.birthday}</td>
 									<c:choose>
-									<c:when test="${empVOSearch.empStatus==2}">
-										<td>離職</td>
+									<c:when test="${empVOSearch.empStatus==0}">
+										<td>未到職</td>
+										</c:when>
+										<c:when test="${empVOSearch.empStatus==1}">
+										<td>在職</td>
 										</c:when>
 										<c:otherwise>
-											<td>在職</td>
+											<td>離職</td>
 										</c:otherwise>
 										
 										
