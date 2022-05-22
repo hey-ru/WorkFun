@@ -209,7 +209,7 @@ body {
             $('#name_error').text("");
             checkSubmit();
         }else{
-            $('#name_error').text('請輸入20字內的中、英文、數字或()');
+            $('#name_error').text('請輸入20字內的中、英文、數字、空格或()');
             checkSubmit();
         }
     });
