@@ -56,19 +56,20 @@
                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
                                         <div class="form-group">
-                                        
+                                        <a style="font-size: 1.5rem">第一次輸入</a>
                                            <input
 										type="password" name="newpassword1" size="45" 
 										class="form-control" aria-label="Username" 
-										aria-describedby="basic-addon1">
+										aria-describedby="basic-addon1" placeholder="請輸入包含英文大小寫以及數字">
 										<div>
 										<br>
 										<br>
 										</div>
+										<a style="font-size: 1.5rem">第二次輸入</a>
 										  <input
 										type="password" name="newpassword2" size="45" 
 										class="form-control" aria-label="Username" 
-										aria-describedby="basic-addon1">
+										aria-describedby="basic-addon1" placeholder="請輸入包含英文大小寫以及數字">
 										 <input type="hidden" name="empId" value="${param.empId}"> 
 										 <font color="red"> ${errorMsgs.password} ${errorMsgs.checkPassword}${errorMsgs.comparepassword}</font>
                                         </div>   

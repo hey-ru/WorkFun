@@ -62,12 +62,12 @@ padding:0.375rem 0.75rem;
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- 內容放這 -->
-<main style="height: 120vh; margin-top: 240px;">
+<main style="height: 120vh; margin-top: 40px;">
 						
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
 							enctype="multipart/form-data">
 							<div
-								style=" width: 900px;  height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
+								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
 										<div><h1>新增公告</h1></div>
 								<div class="input-group mb-3" style="margin-top: 0px;">
 									<span class="input-group-text" id="xx">發布者</span> 
@@ -85,8 +85,15 @@ padding:0.375rem 0.75rem;
 										type="TEXT" name="announcement_title" size="45" value="${param.titile}"
 										 required="required" class="borderg"
 										> 
+										
 
 							
+   <input type="file" id="multiimg" accept="image/gif, image/jpeg, image/png" multiple="multiple" >
+   <div id="imgs" style="width:100%; height: 300px; overflow:scroll;">
+       <p>沒有圖片</p>
+   </div>
+
+
 
 
 								</div>
@@ -108,7 +115,7 @@ padding:0.375rem 0.75rem;
 								<%-- 	<input type="file" name="empProfile" size="45"
 										value="${param.empProfile}" class="form-control"
 										id="inputGroupFile01" > --%>
-										<input  id="quantity" name="quantity" type="hidden">
+									
 										
 								</div>
 							
@@ -118,8 +125,9 @@ padding:0.375rem 0.75rem;
 
 
 								<div class="input-group mb-3">
+							
 	
-									<input type="hidden" name="action" value="insert"> 
+									<input type="hidden" name="action" value="inserttest"> 
 									<input
 										type="submit" value="建立公告" class="btn btn-outline-dark"
 										id="basic-addon2" style="margin:auto">
@@ -182,67 +190,27 @@ function addImg(e) {
 
 </script>
 <script>
-$('#55').css('display', 'initial');
+$("#multiimg").change(function(){
+  $("#imgs").html(""); // 清除預覽
+  readURL(this);
+});
 
-        let quantity = document.getElementById("quantity")
-        let body = document.getElementById("55")
-        let inputnum = 1;
-        quantity.setAttribute("value", inputnum-1)
-        let input = document.createElement("input");
-        let img = document.createElement("img");
-        let br = document.createElement("br");
-        let div = document.createElement("div");
-        div.setAttribute("width",10)
-                div.setAttribute("height",10)
-        input.setAttribute("class", "new")
-            input.setAttribute("name", inputnum)
-        input.setAttribute("id", inputnum)
-        input.setAttribute("type", "file")
-          input.setAttribute("width", 245)
-        input.setAttribute("accept", "image/*")
-        img.setAttribute("width", 200)
-        img.setAttribute("height", 200)
-        body.append(input)
-        body.append(img)
-       body.append(br)
-        document.getElementById(inputnum).onchange = addImg;
-        function addImg(e) {
-            let br1 = document.createElement("br");
-            let url = URL.createObjectURL(e.target.files[0])
-               let div1 = document.createElement("div");
-                div1.setAttribute("width",10)
-                div1.setAttribute("height",10)
-             
-            if (e.target.getAttribute("class") === "new") {
-                inputnum++;
-                e.target.nextSibling.setAttribute("src", url);
-                e.target.removeAttribute("class");
-                input = document.createElement("input");
-                img = document.createElement("img");
-                input.setAttribute("id", inputnum)
-                   input.setAttribute("width", 245)
-                input.setAttribute("class", "new")
-                input.setAttribute("type", "file")
-                    input.setAttribute("name", inputnum)
-                input.setAttribute("accept", "image/*")
-                
-                img.setAttribute("width", 200)
-                img.setAttribute("height", 200)
-                body.append(input)
-                body.append(img)
-         body.append(br1)
-              
-                quantity.setAttribute("value", inputnum - 1)
-            }
-            else {
-                let url = URL.createObjectURL(e.target.files[0])
-                e.target.nextSibling.setAttribute("src", url);
-
-            }
-            document.getElementById(inputnum).onchange = addImg;
-        }
-
-    </script>
+function readURL(input){
+  if (input.files && input.files.length >= 0) {
+    for(var i = 0; i < input.files.length; i ++){
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var img = $("<img width='300' height='200'>").attr('src', e.target.result);
+        $("#imgs").append(img);
+      }
+      reader.readAsDataURL(input.files[i]);
+    }
+  }else{
+     var noPictures = $("<p>沒有圖片</p>");
+     $("#imgs").append(noPictures);
+  }
+}
+</script>
 
 
 </body>

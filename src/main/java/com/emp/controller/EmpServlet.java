@@ -1195,7 +1195,7 @@ System.out.println(birthday);
 				   
 			
 					JavaMail javaMail=new JavaMail();
-					javaMail.sendMail();
+				
 				
 				  
 				   javaMail.setRECIPIENT(mail);

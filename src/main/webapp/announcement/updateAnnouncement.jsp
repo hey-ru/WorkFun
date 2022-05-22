@@ -76,12 +76,12 @@ padding:0.375rem 0.75rem;
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- 內容放這 -->
-<main style="height: 120vh; margin-top: 40px;">
+<main style="height: 120vh; margin-top: 230px;">
 						
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
 							enctype="multipart/form-data">
 							<div
-								style=" width: 900px; position: absolute; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
+								style=" width: 900px; height: 600px; top: 45%; margin-top: -200px; margin-left: 5%;">
 										<div><h1>修改公告</h1></div>
 								<div class="input-group mb-3" style="margin-top: 0px;">
 									<span class="input-group-text" id="xx">發布者</span> 		<input
@@ -181,7 +181,7 @@ padding:0.375rem 0.75rem;
 								</div>
 						</FORM>
 							
-							<div style=" width: 300px;  height: 600px; margin-top: 725px;margin-left: 540px ">
+							<div style=" width: 300px;  height: 600px; margin-top: 40px;margin-left: 540px ">
 								<c:forEach var="announcement_mapping" items="${list}" >
 								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/announcementServlet" name="form1"
 							enctype="multipart/form-data">

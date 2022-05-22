@@ -56,7 +56,7 @@
                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/empServlet" name="form1"
 							enctype="multipart/form-data">
                                         <div class="form-group">
-                                        
+                                         <a style="font-size: 1.5rem">信箱</a>
                                            <input
 										type="TEXT" name="mail" size="45" value="${param.mail}"
 										class="form-control" aria-label="Username" placeholder="請輸入google信箱"
@@ -66,6 +66,7 @@
                                         </div>
                                         
                                     <br>
+                                     <a style="font-size: 1.5rem">生日</a>
                                       <input
 										type="text" name="birthday" size="45" value="${param.birthday}"
 										class="form-control" aria-label="Username" placeholder="請輸入生日格式如19940619"

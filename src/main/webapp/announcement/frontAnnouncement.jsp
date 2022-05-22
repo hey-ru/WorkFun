@@ -68,7 +68,7 @@ tbody td {
 
 		<!-- ======= 內容開始 ======= -->
 		<div id="mainleft" class="col-6"
-			style="height: max-content; font-weight: bold; font-family: Andale Mono, monospace; margin-left: 480px;">
+			style="height: max-content; font-weight: bold; font-family: Andale Mono, monospace; margin-left: 200px;width:800px">
 			<h1 class="card-title"
 				style="text-align: center; background-color: #DBD2C9;">
 				<strong>${param.announcement_title}</strong>

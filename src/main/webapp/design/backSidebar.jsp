@@ -32,8 +32,8 @@
                 <div id="collapseAnn" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="<%=request.getContextPath()%>/announcement/addannouncement.jsp">新增公告</a>
-                       
+                       <%--   <a class="collapse-item" href="<%=request.getContextPath()%>/announcement/addannouncement.jsp">新增公告</a>  --%>
+                         <a class="collapse-item" href="<%=request.getContextPath()%>/announcement/testimages.jsp">新增公告</a> 
                         <a class="collapse-item" href="<%=request.getContextPath()%>/announcement/listallannouncement.jsp">全部公告</a>
                      
                     </div>
