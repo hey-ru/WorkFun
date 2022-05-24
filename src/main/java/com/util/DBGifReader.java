@@ -13,8 +13,6 @@ import javax.sql.DataSource;
 @WebServlet("/util/DBGifReader")
 public class DBGifReader extends HttpServlet {
 
-	Connection con;
-	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		doPost(req, res);
@@ -23,6 +21,19 @@ public class DBGifReader extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
+		Connection con = null;
+		
+		try {
+			Context ctx = new javax.naming.InitialContext();
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
+			con = ds.getConnection();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
 
@@ -63,27 +74,18 @@ public class DBGifReader extends HttpServlet {
 			in.read(b);
 			out.write(b);
 			in.close();		
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
 		}
 	}
 
-	public void init() throws ServletException {
-		try {
-			Context ctx = new javax.naming.InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
-			con = ds.getConnection();
-		} catch (NamingException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void destroy() {
-		try {
-			if (con != null) con.close();
-		} catch (SQLException e) {
-			System.out.println(e);
-		}
-	}
+	
+	
 
 }
