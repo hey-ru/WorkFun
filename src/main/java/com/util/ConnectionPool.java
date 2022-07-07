@@ -13,23 +13,22 @@ public class ConnectionPool {
 	
 	
 	
-	public static DataSource getConectPool() {
-	 DataSource ds = null;
+	public static DataSource ds;
+
 
 	 
-	 
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-		
-		
-		
-		return ds;
+	 static {
+		 try {
+			 Context ctx = new InitialContext();
+			 ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CGA101G3");
+		 } catch (NamingException e) {
+			 e.printStackTrace();
+		 }
+
+
+	 }
 	
-	}
+
 	
 	
 	
